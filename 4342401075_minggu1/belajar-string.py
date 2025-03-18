@@ -4,6 +4,7 @@ y = 'Eka'
 
 #tampilkan variabel x dan y
 print(x)
+print(x)
 print(y)
 
 #tampilkian penggabungan string
