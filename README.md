@@ -1,6 +1,6 @@
 # EcoZense - Aplikasi Web Eco Enzim
 
-![EcoZense Banner](https://img.freepik.com/free-vector/gradient-world-environment-day-banner_23-2150229015.jpg)
+![EcoZense Banner](https://media.discordapp.net/attachments/918866718326145084/1351791694592348191/file.jpg?ex=67dba99f&is=67da581f&hm=d91ed4db7a8075f095cf5f46d5ed59000d3b2353c36b5d3629ae8998e30fa46c&=&format=webp&width=625&height=625)
 
 ## 🌱 Tentang Proyek
 
