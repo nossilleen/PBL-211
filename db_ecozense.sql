@@ -141,6 +141,7 @@ CREATE TABLE `produk_gambar` (
 CREATE TABLE `transaksi` (
   `transaksi_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
+  `lokasi_id` int(11) NOT NULL COMMENT 'Bank sampah tempat transaksi dilakukan',
   `harga_total` int(11) NOT NULL,
   `tanggal` datetime NOT NULL,
   `status` enum('pending','selesai','dibatalkan') NOT NULL DEFAULT 'pending',
@@ -164,6 +165,21 @@ CREATE TABLE `transaksi_item` (
   `harga_satuan` int(11) NOT NULL,
   `subtotal` int(11) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `poin_nasabah`
+--
+
+CREATE TABLE `poin_nasabah` (
+  `poin_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL COMMENT 'ID Nasabah',
+  `lokasi_id` int(11) NOT NULL COMMENT 'ID Bank Sampah',
+  `jumlah_poin` int(11) NOT NULL DEFAULT 0,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -232,6 +248,7 @@ ALTER TABLE `produk_gambar`
 ALTER TABLE `transaksi`
   ADD PRIMARY KEY (`transaksi_id`),
   ADD KEY `FK_nasabah_transaksi` (`user_id`),
+  ADD KEY `FK_transaksi_lokasi` (`lokasi_id`),
   ADD KEY `idx_transaksi_tanggal` (`tanggal`),
   ADD KEY `idx_transaksi_status` (`status`);
 
@@ -242,6 +259,15 @@ ALTER TABLE `transaksi_item`
   ADD PRIMARY KEY (`item_id`),
   ADD KEY `FK_transaksi_item_transaksi` (`transaksi_id`),
   ADD KEY `FK_transaksi_item_produk` (`produk_id`);
+
+--
+-- Indexes for table `poin_nasabah`
+--
+ALTER TABLE `poin_nasabah`
+  ADD PRIMARY KEY (`poin_id`),
+  ADD UNIQUE KEY `user_lokasi_unique` (`user_id`, `lokasi_id`),
+  ADD KEY `FK_poin_user` (`user_id`),
+  ADD KEY `FK_poin_lokasi` (`lokasi_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -302,6 +328,12 @@ ALTER TABLE `transaksi_item`
   MODIFY `item_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `poin_nasabah`
+--
+ALTER TABLE `poin_nasabah`
+  MODIFY `poin_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- Constraints for dumped tables
 --
 
@@ -346,7 +378,8 @@ ALTER TABLE `produk_gambar`
 -- Constraints for table `transaksi`
 --
 ALTER TABLE `transaksi`
-  ADD CONSTRAINT `FK_nasabah_transaksi` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`);
+  ADD CONSTRAINT `FK_nasabah_transaksi` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`),
+  ADD CONSTRAINT `FK_transaksi_lokasi` FOREIGN KEY (`lokasi_id`) REFERENCES `lokasi` (`lokasi_id`);
 
 --
 -- Constraints for table `transaksi_item`
@@ -354,6 +387,13 @@ ALTER TABLE `transaksi`
 ALTER TABLE `transaksi_item`
   ADD CONSTRAINT `FK_transaksi_item_transaksi` FOREIGN KEY (`transaksi_id`) REFERENCES `transaksi` (`transaksi_id`) ON DELETE CASCADE,
   ADD CONSTRAINT `FK_transaksi_item_produk` FOREIGN KEY (`produk_id`) REFERENCES `produk` (`produk_id`);
+
+--
+-- Constraints for table `poin_nasabah`
+--
+ALTER TABLE `poin_nasabah`
+  ADD CONSTRAINT `FK_poin_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `FK_poin_lokasi` FOREIGN KEY (`lokasi_id`) REFERENCES `lokasi` (`lokasi_id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
