@@ -34,7 +34,7 @@ Aplikasi yang akan dibangun adalah aplikasi berbasis website. Adapun fitur yang 
 5. Landing page informatif
 6. Bergabung sebagai nasabah atau anggota program bank sampah
 7. Feedback
-8. Sistem jual/beli produk eco enzim atau sembako menggunakan poin dari penyetoran sampah
+8. Sistem jual/beli produk eco enzim atau sembako menggunakan poin dari penyetoran sampah (poin hanya dapat ditukarkan pada bank sampah tempat nasabah melakukan penyetoran)
 9. Promosi kegiatan dan event
 10. Publikasi produk eco enzim
 
@@ -64,7 +64,7 @@ Produk akan dikembangkan dengan pendekatan metode waterfall. Urutan dalam metode
   - Merancang antarmuka pengguna dengan Figma
   - Membuat class diagram dan activity diagram
   - Merancang alur proses bisnis sistem (pendaftaran, penyetoran sampah, penukaran poin)
-  - Mendesain sistem poin untuk penukaran produk eco enzim dan sembako
+  - Mendesain sistem poin untuk penukaran produk eco enzim dan sembako (dengan batasan poin hanya dapat ditukarkan di bank sampah tempat nasabah menyetor sampah)
 
 ### 3. Implementation
 * **Estimasi**: 5 minggu
@@ -73,8 +73,8 @@ Produk akan dikembangkan dengan pendekatan metode waterfall. Urutan dalam metode
   - Membangun sistem registrasi dan login
   - Mengimplementasikan fitur profil pengguna
   - Membuat sistem pengelolaan artikel dan konten edukasi
-  - Mengembangkan sistem bank sampah (penyetoran dan pemberian poin)
-  - Membangun marketplace untuk produk eco enzim dan sembako
+  - Mengembangkan sistem bank sampah (penyetoran dan pemberian poin spesifik untuk setiap bank sampah)
+  - Membangun marketplace untuk produk eco enzim dan sembako dengan validasi penukaran poin khusus per bank sampah
   - Mengimplementasikan sistem feedback
   - Membuat dashboard untuk pengelola dan admin
 

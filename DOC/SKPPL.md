@@ -121,7 +121,7 @@ Pengguna umum dapat mengakses website EcoZense melalui landing page, di mana mer
 - Menonton video edukasi mengenai Eco Enzim.
 - Membaca artikel terkait Eco Enzim untuk memperdalam pemahaman mereka.
 - Mendaftar sebagai nasabah bank sampah, yang memungkinkan mereka untuk menyetor sampah dan memperoleh poin sebagai bentuk imbalan.
-- Menukarkan poin yang diperoleh dengan produk Eco Enzim yang dihasilkan dari sampah yang dikumpulkan atau menukarnya dengan sembako.
+- Menukarkan poin yang diperoleh dengan produk Eco Enzim yang dihasilkan dari sampah yang dikumpulkan atau menukarnya dengan sembako. Penting untuk dicatat bahwa poin yang diperoleh dari bank sampah tertentu hanya dapat ditukarkan di bank sampah tersebut, tidak dapat ditransfer atau ditukarkan di bank sampah lainnya.
 
 Pengelola bank sampah memiliki peran dalam menerima sampah yang disetor oleh nasabah dan memberikan poin berdasarkan jumlah dan jenis sampah yang disetorkan. Selain itu, pengelola dapat mempublikasikan produk Eco Enzim yang tersedia di website, sehingga pengguna dapat mengecek dan membeli produk tersebut secara langsung melalui sistem.
 
@@ -158,6 +158,7 @@ Berikut adalah alur utama dalam sistem EcoZense:
 - Sistem hanya dapat diakses melalui platform web, belum tersedia dalam bentuk aplikasi mobile.
 - Penyetoran sampah hanya dapat dilakukan di lokasi bank sampah yang terdaftar dalam sistem.
 - Produk Eco Enzim dan sembako yang tersedia bergantung pada stok di masing-masing bank sampah.
+- Poin yang diperoleh dari bank sampah tertentu hanya dapat ditukarkan pada bank sampah tersebut, tidak dapat ditransfer atau digunakan di bank sampah lainnya.
 - Sistem ini hanya mendukung transaksi non-tunai untuk penukaran poin.
 - Informasi yang tersedia dalam sistem hanya terbatas pada konten yang telah diverifikasi oleh admin.
 
@@ -173,7 +174,7 @@ Berikut adalah alur utama dalam sistem EcoZense:
 ### 3.1 Deskripsi Fungsional
 - **SKPL-F01** pengguna dapat membuat akun sebagai nasabah, dan admin dapat mengelola akun pengguna
 - **SKPL-F02** nasabah dapat menyetor sampah dan mendapatkan poin, pengelola bank sampah dapat menilai dan memberikan poin atas penyetoran sampah.
-- **SKPL-F03** nasabah dapat menukar poin dengan produk Eco Enzim atau sembako.
+- **SKPL-F03** nasabah dapat menukar poin dengan produk Eco Enzim atau sembako, dengan ketentuan poin hanya dapat ditukarkan di bank sampah tempat poin tersebut diperoleh.
 - **SKPL-F04** admin dapat menambahkan dan mengedit artikel serta video edukasi tentang Eco Enzim dan pengguna dapat membaca dan memberikan feedback pada artikel.
 - **SKPL-F05** pengelola bank sampah dapat mengunggah dan memperbaharui daftar produk Eco Enzim yang tersedia.
 - **SKPL-F06** admin dapat membuat dan mengelola event terkait program Eco Enzim.
@@ -256,26 +257,29 @@ Pengelolaan akun oleh admin
 | Nomor | PBL/USECASE/03 |
 |-------|----------------|
 | Nama | Penukaran Poin dengan Produk atau Sembako |
-| Deskripsi | Nasabah dapat menukar poin yang telah dikumpulkan dengan produk Eco Enzim atau sembako melalui aplikasi. |
+| Deskripsi | Nasabah dapat menukar poin yang telah dikumpulkan dengan produk Eco Enzim atau sembako melalui aplikasi, dengan syarat poin hanya dapat ditukarkan di bank sampah tempat poin tersebut diperoleh. |
 | Aktor | Nasabah |
-| Kondisi awal | Nasabah memiliki akun dan masuk ke dalam sistem dan Nasabah memiliki saldo poin yang cukup untuk ditukarkan. |
-| Kondisi akhir | Produk Eco Enzim atau sembako berhasil ditukar dan poin nasabah berkurang sesuai jumlah yang digunakan. |
+| Kondisi awal | Nasabah memiliki akun dan masuk ke dalam sistem dan Nasabah memiliki saldo poin yang cukup untuk ditukarkan di bank sampah tempat poin diperoleh. |
+| Kondisi akhir | Produk Eco Enzim atau sembako berhasil ditukar dan poin nasabah di bank sampah tersebut berkurang sesuai jumlah yang digunakan. |
 
 **Skenario Utama**
 1. Nasabah masuk ke dalam aplikasi web Eco Enzim.
 2. Nasabah memilih menu "Tukar Poin".
-3. Sistem menampilkan daftar produk Eco Enzim dan sembako beserta jumlah poin yang diperlukan.
-4. Nasabah memilih produk yang ingin ditukar.
-5. Sistem menampilkan detail penukaran, termasuk jumlah poin yang akan digunakan.
-6. Nasabah mengonfirmasi penukaran.
-7. Sistem memverifikasi ketersediaan stok dan saldo poin nasabah.
-8. Jika poin cukup dan stok tersedia, sistem mengurangi saldo poin nasabah dan memproses penukaran.
-9. Sistem menampilkan notifikasi bahwa penukaran berhasil dan memberikan informasi pengambilan/pengiriman produk.
+3. Sistem menampilkan daftar bank sampah tempat nasabah memiliki poin.
+4. Nasabah memilih bank sampah tempat ia ingin menukarkan poin.
+5. Sistem menampilkan daftar produk Eco Enzim dan sembako beserta jumlah poin yang diperlukan yang tersedia di bank sampah tersebut.
+6. Nasabah memilih produk yang ingin ditukar.
+7. Sistem menampilkan detail penukaran, termasuk jumlah poin yang akan digunakan.
+8. Nasabah mengonfirmasi penukaran.
+9. Sistem memverifikasi ketersediaan stok dan saldo poin nasabah di bank sampah yang dipilih.
+10. Jika poin cukup dan stok tersedia, sistem mengurangi saldo poin nasabah di bank sampah tersebut dan memproses penukaran.
+11. Sistem menampilkan notifikasi bahwa penukaran berhasil dan memberikan informasi pengambilan/pengiriman produk.
 
 **Skenario Alternatif**
-1a. Jika saldo poin nasabah tidak mencukupi → Sistem menampilkan pesan bahwa poin tidak cukup untuk melakukan penukaran.
-3a. Jika stok produk habis → Sistem menampilkan notifikasi bahwa produk tidak tersedia dan meminta nasabah memilih produk lain.
-7a. Jika terjadi kesalahan saat proses penukaran → Sistem membatalkan transaksi dan mengembalikan poin jika sudah terpotong.
+1a. Jika saldo poin nasabah tidak mencukupi di bank sampah yang dipilih → Sistem menampilkan pesan bahwa poin tidak cukup untuk melakukan penukaran.
+3a. Nasabah tidak memiliki poin di bank sampah mana pun → Sistem menampilkan pesan bahwa nasabah belum memiliki poin untuk ditukarkan.
+5a. Jika stok produk habis → Sistem menampilkan notifikasi bahwa produk tidak tersedia dan meminta nasabah memilih produk lain.
+9a. Jika terjadi kesalahan saat proses penukaran → Sistem membatalkan transaksi dan mengembalikan poin jika sudah terpotong.
 
 #### 3.1.5 Use case Pengelolaan Artikel dan Video Edukasi serta Pemberikan Feedback
 
