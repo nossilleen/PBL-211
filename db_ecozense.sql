@@ -94,7 +94,6 @@ CREATE TABLE `user` (
   `password` varchar(255) NOT NULL,
   `no_hp` varchar(15) NOT NULL CHECK (LENGTH(no_hp) >= 10),
   `role` enum('admin','nasabah','pengelola') NOT NULL DEFAULT 'nasabah',
-  `poin` int(11) NOT NULL DEFAULT 0,
   `lokasi_id` int(11) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
@@ -111,7 +110,7 @@ CREATE TABLE `produk` (
   `nama` varchar(50) NOT NULL,
   `kategori` enum('eco_enzim','sembako') NOT NULL DEFAULT 'eco_enzim',
   `status_ketersediaan` enum('Available','Unavailable') NOT NULL DEFAULT 'Available',
-  `harga` int(11) NOT NULL CHECK (harga > 0),
+  `harga` int(11) NOT NULL CHECK (harga >= 0),
   `deskripsi` text DEFAULT NULL,
   `user_id` int(11) DEFAULT NULL COMMENT 'Pengelola yang menyediakan produk',
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
@@ -141,8 +140,9 @@ CREATE TABLE `produk_gambar` (
 CREATE TABLE `transaksi` (
   `transaksi_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `lokasi_id` int(11) NOT NULL COMMENT 'Bank sampah tempat transaksi dilakukan',
-  `harga_total` int(11) NOT NULL,
+  `lokasi_id` int(11) NOT NULL,
+  `harga_total` int(11) NOT NULL CHECK (harga_total >= 0),
+  `jumlah_poin_digunakan` int(11) DEFAULT 0 CHECK (jumlah_poin_digunakan >= 0),
   `tanggal` datetime NOT NULL,
   `status` enum('pending','selesai','dibatalkan') NOT NULL DEFAULT 'pending',
   `metode_pembayaran` enum('transfer','poin') NOT NULL DEFAULT 'transfer',
@@ -177,7 +177,7 @@ CREATE TABLE `poin_nasabah` (
   `poin_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL COMMENT 'ID Nasabah',
   `lokasi_id` int(11) NOT NULL COMMENT 'ID Bank Sampah',
-  `jumlah_poin` int(11) NOT NULL DEFAULT 0,
+  `jumlah_poin` int(11) NOT NULL DEFAULT 0 CHECK (jumlah_poin >= 0),
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
