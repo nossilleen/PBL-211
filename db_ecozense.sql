@@ -170,10 +170,10 @@ CREATE TABLE `transaksi_item` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `poin_nasabah`
+-- Table structure for table `poin`
 --
 
-CREATE TABLE `poin_nasabah` (
+CREATE TABLE `poin` (
   `poin_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL COMMENT 'ID Nasabah',
   `lokasi_id` int(11) NOT NULL COMMENT 'ID Bank Sampah',
@@ -261,9 +261,9 @@ ALTER TABLE `transaksi_item`
   ADD KEY `FK_transaksi_item_produk` (`produk_id`);
 
 --
--- Indexes for table `poin_nasabah`
+-- Indexes for table `poin`
 --
-ALTER TABLE `poin_nasabah`
+ALTER TABLE `poin`
   ADD PRIMARY KEY (`poin_id`),
   ADD UNIQUE KEY `user_lokasi_unique` (`user_id`, `lokasi_id`),
   ADD KEY `FK_poin_user` (`user_id`),
@@ -328,9 +328,9 @@ ALTER TABLE `transaksi_item`
   MODIFY `item_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `poin_nasabah`
+-- AUTO_INCREMENT for table `poin`
 --
-ALTER TABLE `poin_nasabah`
+ALTER TABLE `poin`
   MODIFY `poin_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
@@ -389,9 +389,9 @@ ALTER TABLE `transaksi_item`
   ADD CONSTRAINT `FK_transaksi_item_produk` FOREIGN KEY (`produk_id`) REFERENCES `produk` (`produk_id`);
 
 --
--- Constraints for table `poin_nasabah`
+-- Constraints for table `poin`
 --
-ALTER TABLE `poin_nasabah`
+ALTER TABLE `poin`
   ADD CONSTRAINT `FK_poin_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE,
   ADD CONSTRAINT `FK_poin_lokasi` FOREIGN KEY (`lokasi_id`) REFERENCES `lokasi` (`lokasi_id`) ON DELETE CASCADE;
 COMMIT;
