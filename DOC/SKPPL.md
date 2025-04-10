@@ -418,7 +418,7 @@ Pengguna umum:
 ## 4 Deskripsi Kelas-Kelas
 
 ### 4.1 Class Diagram
-Class diagram EcoZense menggambarkan struktur sistem yang terdiri dari kelas-kelas dan hubungan antar kelas. Kelas utama dalam sistem ini meliputi User, Lokasi, Artikel, Produk, Transaksi, Poin, Feedback, dan ArtikelGambar.
+Class diagram EcoZense menggambarkan struktur sistem yang terdiri dari kelas-kelas dan hubungan antar kelas. Kelas utama dalam sistem ini meliputi User, Lokasi, Artikel, Produk, Transaksi, TransaksiItem, Poin, Feedback, ArtikelGambar, dan ProdukGambar.
 
 ![Class Diagram EcoZense](EcoEnzyme.drawio)
 
@@ -454,8 +454,7 @@ Nama Kelas: Lokasi
 | nama_lokasi | public | string |
 | alamat | public | string |
 | kota | public | string |
-| provinsi | public | string |
-| kode_pos | public | string |
+| kode_pos | public | int |
 
 | Nama Operasi | Visibility (private, public) | Keterangan |
 |--------------|------------------------------|------------|
@@ -505,7 +504,27 @@ Nama Kelas: Produk
 | updateStock | public | Memperbarui status ketersediaan produk setelah terjadi transaksi atau penambahan stok baru. |
 | getProductDetails | public | Mengambil dan menampilkan detail lengkap produk termasuk nama, harga, kategori, dll. Mengembalikan objek Produk. |
 
-### 4.6 Class Transaksi
+### 4.6 Class ProdukGambar
+
+Nama Kelas: ProdukGambar
+
+| Nama Atribut | Visibility (private, public) | Tipe |
+|--------------|------------------------------|------|
+| gambar_id | public | int |
+| produk_id | public | int |
+| file_path | public | varchar |
+| created_at | public | timestamp |
+| updated_at | public | timestamp |
+
+| Nama Operasi | Visibility (private, public) | Keterangan |
+|--------------|------------------------------|------------|
+| uploadImage | public | Mengunggah gambar baru untuk produk tertentu. Menyimpan file gambar ke server dan mencatat informasi gambar di database. |
+| deleteImage | public | Menghapus gambar dari produk dan sistem jika sudah tidak diperlukan. |
+| updateImage | public | Memperbarui file gambar produk. |
+| getImageDetails | public | Mengambil dan menampilkan detail lengkap gambar tertentu. Mengembalikan objek ProdukGambar. |
+| getImageList | public | Mengambil dan menampilkan daftar semua gambar untuk produk tertentu. Mengembalikan daftar objek ProdukGambar. |
+
+### 4.7 Class Transaksi
 
 Nama Kelas: Transaksi
 
@@ -528,7 +547,29 @@ Nama Kelas: Transaksi
 | processPayment | public | Memproses pembayaran dengan mengurangi poin nasabah sesuai jumlah yang digunakan. Mengembalikan boolean yang menunjukkan keberhasilan proses. |
 | getTransactionDetails | public | Mengambil dan menampilkan detail lengkap transaksi termasuk produk yang ditukar, poin yang digunakan, dll. Mengembalikan objek Transaksi. |
 
-### 4.7 Class Poin
+### 4.8 Class TransaksiItem
+
+Nama Kelas: TransaksiItem
+
+| Nama Atribut | Visibility (private, public) | Tipe |
+|--------------|------------------------------|------|
+| item_id | public | int |
+| transaksi_id | public | int |
+| produk_id | public | int |
+| jumlah | public | int |
+| harga_satuan | public | int |
+| subtotal | public | int |
+| created_at | public | timestamp |
+
+| Nama Operasi | Visibility (private, public) | Keterangan |
+|--------------|------------------------------|------------|
+| addItem | public | Menambahkan item baru ke dalam transaksi dengan data produk, jumlah, dan harga satuan. |
+| calculateSubtotal | public | Menghitung subtotal item dengan mengalikan jumlah dengan harga satuan. Mengembalikan nilai integer. |
+| getItemDetails | public | Mengambil dan menampilkan detail lengkap item transaksi termasuk produk yang dibeli, jumlah, harga, dll. Mengembalikan objek TransaksiItem. |
+| deleteItem | public | Menghapus item dari transaksi jika pengguna ingin membatalkan pembelian produk tertentu. |
+| updateQuantity | public | Memperbarui jumlah item dalam transaksi dan menghitung ulang subtotal berdasarkan perubahan jumlah. |
+
+### 4.9 Class Poin
 
 Nama Kelas: Poin
 
@@ -547,7 +588,7 @@ Nama Kelas: Poin
 | transferPoints | public | Memindahkan poin dari satu lokasi ke lokasi lain jika fitur tersebut diizinkan oleh sistem. |
 | getPointHistory | public | Mengambil dan menampilkan riwayat perubahan poin nasabah, termasuk penambahan dan penggunaan. Mengembalikan daftar objek Poin. |
 
-### 4.8 Class Feedback
+### 4.10 Class Feedback
 
 Nama Kelas: Feedback
 
@@ -566,7 +607,7 @@ Nama Kelas: Feedback
 | getFeedbackList | public | Mengambil dan menampilkan daftar semua feedback untuk artikel tertentu. Mengembalikan daftar objek Feedback. |
 | getFeedbackDetails | public | Mengambil dan menampilkan detail lengkap feedback tertentu. Mengembalikan objek Feedback. |
 
-### 4.9 Class ArtikelGambar
+### 4.11 Class ArtikelGambar
 
 Nama Kelas: ArtikelGambar
 
@@ -585,11 +626,9 @@ Nama Kelas: ArtikelGambar
 | getImageDetails | public | Mengambil dan menampilkan detail lengkap gambar tertentu. Mengembalikan objek ArtikelGambar. |
 | getImageList | public | Mengambil dan menampilkan daftar semua gambar untuk artikel tertentu. Mengembalikan daftar objek ArtikelGambar. |
 
-### 4.10 State Machine Diagram
+### 4.12 State Machine Diagram
 
-Bagian ini hanya diisi jika ada kelas yang kompleks. Perubahan status kelas tersebut harus digambarkan dalam bentuk state machine diagram. Boleh dibuat subbab per kelas.
-
-#### 4.10.1 State Machine Diagram - Transaksi
+#### 4.12.1 State Machine Diagram - Transaksi
 
 State Machine Diagram untuk kelas Transaksi menggambarkan perubahan status yang terjadi selama proses transaksi:
 
