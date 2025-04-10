@@ -418,186 +418,193 @@ Pengguna umum:
 ## 4 Deskripsi Kelas-Kelas
 
 ### 4.1 Class Diagram
+Class diagram EcoZense menggambarkan struktur sistem yang terdiri dari kelas-kelas dan hubungan antar kelas. Kelas utama dalam sistem ini meliputi User, Lokasi, Artikel, Produk, Transaksi, Poin, Feedback, dan ArtikelGambar.
 
-Class diagram menggambarkan struktur sistem EcoZense yang terdiri dari 8 kelas utama:
-
-1. **User**: Kelas utama yang merepresentasikan pengguna sistem
-2. **Lokasi**: Kelas yang merepresentasikan lokasi bank sampah
-3. **Artikel**: Kelas yang merepresentasikan konten artikel edukasi
-4. **Produk**: Kelas yang merepresentasikan produk Eco Enzim
-5. **Transaksi**: Kelas yang merepresentasikan transaksi penukaran poin
-6. **Poin**: Kelas yang merepresentasikan sistem poin nasabah
-7. **Feedback**: Kelas yang merepresentasikan komentar pengguna
-8. **ArtikelGambar**: Kelas yang merepresentasikan gambar artikel
+![Class Diagram EcoZense](EcoEnzyme.drawio)
 
 ### 4.2 Class User
 
-**Deskripsi**: Kelas User merepresentasikan pengguna sistem EcoZense yang terdiri dari nasabah, admin, dan pengelola bank sampah.
+Nama Kelas: User
 
-**Atribut**:
-- `user_id`: int (Primary Key)
-- `nama`: string
-- `email`: string
-- `password`: string
-- `no_hp`: string
-- `role`: string
-- `lokasi_id`: int (Foreign Key ke Lokasi)
+| Nama Atribut | Visibility (private, public) | Tipe |
+|--------------|------------------------------|------|
+| user_id | public | int |
+| nama | public | string |
+| email | public | string |
+| password | public | string |
+| no_hp | public | string |
+| role | public | string |
+| lokasi_id | public | int |
 
-**Operasi**:
-- `register()`: void - Mendaftarkan pengguna baru
-- `login()`: boolean - Melakukan autentikasi pengguna
-- `updateProfile()`: void - Memperbarui profil pengguna
-- `changePassword()`: void - Mengubah password pengguna
-- `getRole()`: string - Mendapatkan role pengguna
+| Nama Operasi | Visibility (private, public) | Keterangan |
+|--------------|------------------------------|------------|
+| register | public | Mendaftarkan user baru ke dalam sistem dengan data yang telah diinput oleh pengguna (nama, email, password, dll). Sistem akan memvalidasi data dan menyimpan ke database jika valid. |
+| login | public | Mengautentikasi user berdasarkan email dan password yang dimasukkan. Mengembalikan nilai boolean true jika berhasil, false jika gagal. |
+| updateProfile | public | Memperbarui informasi profile user seperti nama, no_hp, atau data lainnya berdasarkan input pengguna. |
+| changePassword | public | Mengubah password user dengan memverifikasi password lama terlebih dahulu, kemudian menyimpan password baru ke database. |
+| getRole | public | Mengembalikan role/peran user (Nasabah, Admin, atau Pengelola Bank Sampah) yang digunakan untuk otorisasi akses sistem. |
 
 ### 4.3 Class Lokasi
 
-**Deskripsi**: Kelas Lokasi merepresentasikan lokasi bank sampah dalam sistem.
+Nama Kelas: Lokasi
 
-**Atribut**:
-- `lokasi_id`: int (Primary Key)
-- `nama_lokasi`: string
-- `alamat`: string
-- `kota`: string
-- `provinsi`: string
-- `kode_pos`: string
+| Nama Atribut | Visibility (private, public) | Tipe |
+|--------------|------------------------------|------|
+| lokasi_id | public | int |
+| nama_lokasi | public | string |
+| alamat | public | string |
+| kota | public | string |
+| provinsi | public | string |
+| kode_pos | public | string |
 
-**Operasi**:
-- `addLocation()`: void - Menambahkan lokasi baru
-- `updateLocation()`: void - Memperbarui data lokasi
-- `deleteLocation()`: void - Menghapus lokasi
-- `getLocationDetails()`: Lokasi - Mendapatkan detail lokasi
+| Nama Operasi | Visibility (private, public) | Keterangan |
+|--------------|------------------------------|------------|
+| addLocation | public | Menambahkan lokasi bank sampah baru ke dalam sistem dengan data yang diinput oleh pengelola bank sampah. Menyimpan informasi lengkap lokasi ke database. |
+| updateLocation | public | Memperbarui informasi lokasi yang sudah ada seperti nama lokasi, alamat, kota, dll. berdasarkan input pengguna. |
+| deleteLocation | public | Menghapus informasi lokasi dari sistem jika lokasi tersebut tidak lagi beroperasi atau diperlukan. |
+| getLocationDetails | public | Mengambil dan menampilkan detail lengkap dari lokasi bank sampah, termasuk alamat, kota, dll. Mengembalikan objek Lokasi. |
 
 ### 4.4 Class Artikel
 
-**Deskripsi**: Kelas Artikel merepresentasikan konten edukasi tentang Eco Enzim.
+Nama Kelas: Artikel
 
-**Atribut**:
-- `artikel_id`: int (Primary Key)
-- `judul`: string
-- `konten`: text
-- `tanggal_publikasi`: datetime
-- `user_id`: int (Foreign Key ke User)
+| Nama Atribut | Visibility (private, public) | Tipe |
+|--------------|------------------------------|------|
+| artikel_id | public | int |
+| judul | public | string |
+| konten | public | text |
+| tanggal_publikasi | public | datetime |
+| user_id | public | int |
 
-**Operasi**:
-- `createArticle()`: void - Membuat artikel baru
-- `updateArticle()`: void - Memperbarui artikel
-- `deleteArticle()`: void - Menghapus artikel
-- `publishArticle()`: void - Mempublikasikan artikel
-- `getArticleDetails()`: Artikel - Mendapatkan detail artikel
+| Nama Operasi | Visibility (private, public) | Keterangan |
+|--------------|------------------------------|------------|
+| createArticle | public | Membuat artikel baru dengan judul, konten, dan informasi lain yang dimasukkan oleh admin. Menyimpan artikel ke database dengan status draft atau publikasi. |
+| updateArticle | public | Memperbarui informasi artikel yang sudah ada seperti judul, konten, dll. berdasarkan input admin. |
+| deleteArticle | public | Menghapus artikel dari sistem jika sudah tidak relevan atau diperlukan. |
+| publishArticle | public | Mempublikasikan artikel yang masih dalam status draft dengan mengatur tanggal_publikasi dan membuatnya tersedia untuk dibaca pengguna. |
+| getArticleDetails | public | Mengambil dan menampilkan detail lengkap artikel termasuk judul, konten, dll. Mengembalikan objek Artikel. |
 
 ### 4.5 Class Produk
 
-**Deskripsi**: Kelas Produk merepresentasikan produk Eco Enzim yang tersedia di bank sampah.
+Nama Kelas: Produk
 
-**Atribut**:
-- `produk_id`: int (Primary Key)
-- `nama`: string
-- `kategori`: string
-- `status_ketersediaan`: string
-- `harga`: decimal
-- `user_id`: int (Foreign Key ke User)
+| Nama Atribut | Visibility (private, public) | Tipe |
+|--------------|------------------------------|------|
+| produk_id | public | int |
+| nama | public | string |
+| kategori | public | string |
+| status_ketersediaan | public | string |
+| harga | public | decimal |
+| user_id | public | int |
 
-**Operasi**:
-- `addProduct()`: void - Menambahkan produk baru
-- `updateProduct()`: void - Memperbarui produk
-- `deleteProduct()`: void - Menghapus produk
-- `updateStock()`: void - Memperbarui stok produk
-- `getProductDetails()`: Produk - Mendapatkan detail produk
+| Nama Operasi | Visibility (private, public) | Keterangan |
+|--------------|------------------------------|------------|
+| addProduct | public | Menambahkan produk eco enzim baru ke dalam sistem dengan data yang diinput oleh pengelola bank sampah. Menyimpan informasi produk ke database. |
+| updateProduct | public | Memperbarui informasi produk yang sudah ada seperti nama, kategori, harga, dll. berdasarkan input pengelola bank sampah. |
+| deleteProduct | public | Menghapus produk dari sistem jika sudah tidak tersedia atau diperlukan. |
+| updateStock | public | Memperbarui status ketersediaan produk setelah terjadi transaksi atau penambahan stok baru. |
+| getProductDetails | public | Mengambil dan menampilkan detail lengkap produk termasuk nama, harga, kategori, dll. Mengembalikan objek Produk. |
 
 ### 4.6 Class Transaksi
 
-**Deskripsi**: Kelas Transaksi merepresentasikan transaksi penukaran poin dengan produk.
+Nama Kelas: Transaksi
 
-**Atribut**:
-- `transaksi_id`: int (Primary Key)
-- `user_id`: int (Foreign Key ke User)
-- `lokasi_id`: int (Foreign Key ke Lokasi)
-- `harga_total`: decimal
-- `jumlah_poin_digunakan`: int
-- `tanggal`: datetime
-- `status`: string
-- `metode_pembayaran`: string
+| Nama Atribut | Visibility (private, public) | Tipe |
+|--------------|------------------------------|------|
+| transaksi_id | public | int |
+| user_id | public | int |
+| lokasi_id | public | int |
+| harga_total | public | decimal |
+| jumlah_poin_digunakan | public | int |
+| tanggal | public | datetime |
+| status | public | string |
+| metode_pembayaran | public | string |
 
-**Operasi**:
-- `createTransaction()`: void - Membuat transaksi baru
-- `updateStatus()`: void - Memperbarui status transaksi
-- `calculateTotal()`: decimal - Menghitung total transaksi
-- `processPayment()`: boolean - Memproses pembayaran
-- `getTransactionDetails()`: Transaksi - Mendapatkan detail transaksi
+| Nama Operasi | Visibility (private, public) | Keterangan |
+|--------------|------------------------------|------------|
+| createTransaction | public | Membuat transaksi baru ketika nasabah menukar poin dengan produk. Mencatat detail transaksi seperti poin yang digunakan, produk yang ditukar, dll. |
+| updateStatus | public | Memperbarui status transaksi (misalnya "Pending", "Selesai", "Dibatalkan") berdasarkan perkembangan proses transaksi. |
+| calculateTotal | public | Menghitung total harga transaksi berdasarkan produk yang dipilih dan jumlah poin yang digunakan. Mengembalikan nilai decimal. |
+| processPayment | public | Memproses pembayaran dengan mengurangi poin nasabah sesuai jumlah yang digunakan. Mengembalikan boolean yang menunjukkan keberhasilan proses. |
+| getTransactionDetails | public | Mengambil dan menampilkan detail lengkap transaksi termasuk produk yang ditukar, poin yang digunakan, dll. Mengembalikan objek Transaksi. |
 
 ### 4.7 Class Poin
 
-**Deskripsi**: Kelas Poin merepresentasikan sistem poin nasabah bank sampah.
+Nama Kelas: Poin
 
-**Atribut**:
-- `poin_id`: int (Primary Key)
-- `user_id`: int (Foreign Key ke User)
-- `lokasi_id`: int (Foreign Key ke Lokasi)
-- `jumlah_poin`: int
+| Nama Atribut | Visibility (private, public) | Tipe |
+|--------------|------------------------------|------|
+| poin_id | public | int |
+| user_id | public | int |
+| lokasi_id | public | int |
+| jumlah_poin | public | int |
 
-**Operasi**:
-- `addPoints()`: void - Menambahkan poin
-- `usePoints()`: void - Menggunakan poin
-- `getPointBalance()`: int - Mendapatkan saldo poin
-- `transferPoints()`: void - Mentransfer poin
-- `getPointHistory()`: List<Poin> - Mendapatkan riwayat poin
+| Nama Operasi | Visibility (private, public) | Keterangan |
+|--------------|------------------------------|------------|
+| addPoints | public | Menambahkan poin ke akun nasabah setelah penyetoran sampah. Poin ditambahkan berdasarkan jenis dan jumlah sampah yang disetor. |
+| usePoints | public | Mengurangi poin nasabah ketika digunakan untuk menukar dengan produk. Memastikan nasabah memiliki poin yang cukup sebelum transaksi. |
+| getPointBalance | public | Mengambil dan menampilkan saldo poin saat ini untuk nasabah di lokasi bank sampah tertentu. Mengembalikan nilai integer. |
+| transferPoints | public | Memindahkan poin dari satu lokasi ke lokasi lain jika fitur tersebut diizinkan oleh sistem. |
+| getPointHistory | public | Mengambil dan menampilkan riwayat perubahan poin nasabah, termasuk penambahan dan penggunaan. Mengembalikan daftar objek Poin. |
 
 ### 4.8 Class Feedback
 
-**Deskripsi**: Kelas Feedback merepresentasikan komentar pengguna pada artikel.
+Nama Kelas: Feedback
 
-**Atribut**:
-- `feedback_id`: int (Primary Key)
-- `komentar`: text
-- `user_id`: int (Foreign Key ke User)
-- `artikel_id`: int (Foreign Key ke Artikel)
+| Nama Atribut | Visibility (private, public) | Tipe |
+|--------------|------------------------------|------|
+| feedback_id | public | int |
+| komentar | public | text |
+| user_id | public | int |
+| artikel_id | public | int |
 
-**Operasi**:
-- `addFeedback()`: void - Menambahkan feedback
-- `updateFeedback()`: void - Memperbarui feedback
-- `deleteFeedback()`: void - Menghapus feedback
-- `getFeedbackList()`: List<Feedback> - Mendapatkan daftar feedback
-- `getFeedbackDetails()`: Feedback - Mendapatkan detail feedback
+| Nama Operasi | Visibility (private, public) | Keterangan |
+|--------------|------------------------------|------------|
+| addFeedback | public | Menambahkan feedback atau komentar baru pada artikel tertentu. Menyimpan komentar beserta informasi pengguna yang memberikan feedback. |
+| updateFeedback | public | Memperbarui isi feedback yang sudah diberikan oleh pengguna jika diperlukan atau diizinkan. |
+| deleteFeedback | public | Menghapus feedback dari sistem jika tidak sesuai dengan ketentuan atau atas permintaan pengguna. |
+| getFeedbackList | public | Mengambil dan menampilkan daftar semua feedback untuk artikel tertentu. Mengembalikan daftar objek Feedback. |
+| getFeedbackDetails | public | Mengambil dan menampilkan detail lengkap feedback tertentu. Mengembalikan objek Feedback. |
 
 ### 4.9 Class ArtikelGambar
 
-**Deskripsi**: Kelas ArtikelGambar merepresentasikan gambar yang terkait dengan artikel.
+Nama Kelas: ArtikelGambar
 
-**Atribut**:
-- `gambar_id`: int (Primary Key)
-- `artikel_id`: int (Foreign Key ke Artikel)
-- `file_path`: string
-- `judul`: string
+| Nama Atribut | Visibility (private, public) | Tipe |
+|--------------|------------------------------|------|
+| gambar_id | public | int |
+| artikel_id | public | int |
+| file_path | public | string |
+| judul | public | string |
 
-**Operasi**:
-- `uploadImage()`: void - Mengunggah gambar
-- `deleteImage()`: void - Menghapus gambar
-- `updateImage()`: void - Memperbarui gambar
-- `getImageDetails()`: ArtikelGambar - Mendapatkan detail gambar
-- `getImageList()`: List<ArtikelGambar> - Mendapatkan daftar gambar
+| Nama Operasi | Visibility (private, public) | Keterangan |
+|--------------|------------------------------|------------|
+| uploadImage | public | Mengunggah gambar baru untuk artikel tertentu. Menyimpan file gambar ke server dan mencatat informasi gambar di database. |
+| deleteImage | public | Menghapus gambar dari artikel dan sistem jika sudah tidak diperlukan. |
+| updateImage | public | Memperbarui informasi gambar seperti judul atau file gambar itu sendiri. |
+| getImageDetails | public | Mengambil dan menampilkan detail lengkap gambar tertentu. Mengembalikan objek ArtikelGambar. |
+| getImageList | public | Mengambil dan menampilkan daftar semua gambar untuk artikel tertentu. Mengembalikan daftar objek ArtikelGambar. |
 
 ### 4.10 State Machine Diagram
 
-State Machine Diagram menggambarkan alur status transaksi dalam sistem:
+Bagian ini hanya diisi jika ada kelas yang kompleks. Perubahan status kelas tersebut harus digambarkan dalam bentuk state machine diagram. Boleh dibuat subbab per kelas.
 
-1. **Status Transaksi**:
-   - Pending: Transaksi baru dibuat
-   - Processing: Transaksi sedang diproses
-   - Completed: Transaksi berhasil
-   - Failed: Transaksi gagal
-   - Cancelled: Transaksi dibatalkan
+#### 4.10.1 State Machine Diagram - Transaksi
 
-2. **Status Artikel**:
-   - Draft: Artikel dalam proses penulisan
-   - Review: Artikel sedang direview
-   - Published: Artikel dipublikasikan
-   - Archived: Artikel diarsipkan
+State Machine Diagram untuk kelas Transaksi menggambarkan perubahan status yang terjadi selama proses transaksi:
 
-3. **Status Produk**:
-   - Available: Produk tersedia
-   - Out of Stock: Produk habis
-   - Discontinued: Produk tidak dilanjutkan
+1. **Initial State** - Transaksi dimulai
+2. **Pending** - Transaksi telah dibuat tetapi belum diproses
+3. **Processing** - Sistem sedang memproses transaksi (pengurangan poin, verifikasi stok)
+4. **Completed** - Transaksi berhasil diselesaikan
+5. **Cancelled** - Transaksi dibatalkan karena alasan tertentu
+6. **Failed** - Transaksi gagal diproses (misalnya karena poin tidak cukup)
+
+Transisi antar status:
+- Pending → Processing: Ketika transaksi mulai diproses sistem
+- Processing → Completed: Ketika proses berhasil diselesaikan
+- Processing → Failed: Ketika terjadi kegagalan dalam proses
+- Pending/Processing → Cancelled: Ketika pengguna atau sistem membatalkan transaksi
 
 ## 5 Deskripsi Data
 
