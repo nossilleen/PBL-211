@@ -419,11 +419,185 @@ Pengguna umum:
 
 ### 4.1 Class Diagram
 
-### 4.2 Class <nama class>
+Class diagram menggambarkan struktur sistem EcoZense yang terdiri dari 8 kelas utama:
 
-### 4.3 Class <nama class> dan seterusnya
+1. **User**: Kelas utama yang merepresentasikan pengguna sistem
+2. **Lokasi**: Kelas yang merepresentasikan lokasi bank sampah
+3. **Artikel**: Kelas yang merepresentasikan konten artikel edukasi
+4. **Produk**: Kelas yang merepresentasikan produk Eco Enzim
+5. **Transaksi**: Kelas yang merepresentasikan transaksi penukaran poin
+6. **Poin**: Kelas yang merepresentasikan sistem poin nasabah
+7. **Feedback**: Kelas yang merepresentasikan komentar pengguna
+8. **ArtikelGambar**: Kelas yang merepresentasikan gambar artikel
 
-### 4.4 State Machine Diagram
+### 4.2 Class User
+
+**Deskripsi**: Kelas User merepresentasikan pengguna sistem EcoZense yang terdiri dari nasabah, admin, dan pengelola bank sampah.
+
+**Atribut**:
+- `user_id`: int (Primary Key)
+- `nama`: string
+- `email`: string
+- `password`: string
+- `no_hp`: string
+- `role`: string
+- `lokasi_id`: int (Foreign Key ke Lokasi)
+
+**Operasi**:
+- `register()`: void - Mendaftarkan pengguna baru
+- `login()`: boolean - Melakukan autentikasi pengguna
+- `updateProfile()`: void - Memperbarui profil pengguna
+- `changePassword()`: void - Mengubah password pengguna
+- `getRole()`: string - Mendapatkan role pengguna
+
+### 4.3 Class Lokasi
+
+**Deskripsi**: Kelas Lokasi merepresentasikan lokasi bank sampah dalam sistem.
+
+**Atribut**:
+- `lokasi_id`: int (Primary Key)
+- `nama_lokasi`: string
+- `alamat`: string
+- `kota`: string
+- `provinsi`: string
+- `kode_pos`: string
+
+**Operasi**:
+- `addLocation()`: void - Menambahkan lokasi baru
+- `updateLocation()`: void - Memperbarui data lokasi
+- `deleteLocation()`: void - Menghapus lokasi
+- `getLocationDetails()`: Lokasi - Mendapatkan detail lokasi
+
+### 4.4 Class Artikel
+
+**Deskripsi**: Kelas Artikel merepresentasikan konten edukasi tentang Eco Enzim.
+
+**Atribut**:
+- `artikel_id`: int (Primary Key)
+- `judul`: string
+- `konten`: text
+- `tanggal_publikasi`: datetime
+- `user_id`: int (Foreign Key ke User)
+
+**Operasi**:
+- `createArticle()`: void - Membuat artikel baru
+- `updateArticle()`: void - Memperbarui artikel
+- `deleteArticle()`: void - Menghapus artikel
+- `publishArticle()`: void - Mempublikasikan artikel
+- `getArticleDetails()`: Artikel - Mendapatkan detail artikel
+
+### 4.5 Class Produk
+
+**Deskripsi**: Kelas Produk merepresentasikan produk Eco Enzim yang tersedia di bank sampah.
+
+**Atribut**:
+- `produk_id`: int (Primary Key)
+- `nama`: string
+- `kategori`: string
+- `status_ketersediaan`: string
+- `harga`: decimal
+- `user_id`: int (Foreign Key ke User)
+
+**Operasi**:
+- `addProduct()`: void - Menambahkan produk baru
+- `updateProduct()`: void - Memperbarui produk
+- `deleteProduct()`: void - Menghapus produk
+- `updateStock()`: void - Memperbarui stok produk
+- `getProductDetails()`: Produk - Mendapatkan detail produk
+
+### 4.6 Class Transaksi
+
+**Deskripsi**: Kelas Transaksi merepresentasikan transaksi penukaran poin dengan produk.
+
+**Atribut**:
+- `transaksi_id`: int (Primary Key)
+- `user_id`: int (Foreign Key ke User)
+- `lokasi_id`: int (Foreign Key ke Lokasi)
+- `harga_total`: decimal
+- `jumlah_poin_digunakan`: int
+- `tanggal`: datetime
+- `status`: string
+- `metode_pembayaran`: string
+
+**Operasi**:
+- `createTransaction()`: void - Membuat transaksi baru
+- `updateStatus()`: void - Memperbarui status transaksi
+- `calculateTotal()`: decimal - Menghitung total transaksi
+- `processPayment()`: boolean - Memproses pembayaran
+- `getTransactionDetails()`: Transaksi - Mendapatkan detail transaksi
+
+### 4.7 Class Poin
+
+**Deskripsi**: Kelas Poin merepresentasikan sistem poin nasabah bank sampah.
+
+**Atribut**:
+- `poin_id`: int (Primary Key)
+- `user_id`: int (Foreign Key ke User)
+- `lokasi_id`: int (Foreign Key ke Lokasi)
+- `jumlah_poin`: int
+
+**Operasi**:
+- `addPoints()`: void - Menambahkan poin
+- `usePoints()`: void - Menggunakan poin
+- `getPointBalance()`: int - Mendapatkan saldo poin
+- `transferPoints()`: void - Mentransfer poin
+- `getPointHistory()`: List<Poin> - Mendapatkan riwayat poin
+
+### 4.8 Class Feedback
+
+**Deskripsi**: Kelas Feedback merepresentasikan komentar pengguna pada artikel.
+
+**Atribut**:
+- `feedback_id`: int (Primary Key)
+- `komentar`: text
+- `user_id`: int (Foreign Key ke User)
+- `artikel_id`: int (Foreign Key ke Artikel)
+
+**Operasi**:
+- `addFeedback()`: void - Menambahkan feedback
+- `updateFeedback()`: void - Memperbarui feedback
+- `deleteFeedback()`: void - Menghapus feedback
+- `getFeedbackList()`: List<Feedback> - Mendapatkan daftar feedback
+- `getFeedbackDetails()`: Feedback - Mendapatkan detail feedback
+
+### 4.9 Class ArtikelGambar
+
+**Deskripsi**: Kelas ArtikelGambar merepresentasikan gambar yang terkait dengan artikel.
+
+**Atribut**:
+- `gambar_id`: int (Primary Key)
+- `artikel_id`: int (Foreign Key ke Artikel)
+- `file_path`: string
+- `judul`: string
+
+**Operasi**:
+- `uploadImage()`: void - Mengunggah gambar
+- `deleteImage()`: void - Menghapus gambar
+- `updateImage()`: void - Memperbarui gambar
+- `getImageDetails()`: ArtikelGambar - Mendapatkan detail gambar
+- `getImageList()`: List<ArtikelGambar> - Mendapatkan daftar gambar
+
+### 4.10 State Machine Diagram
+
+State Machine Diagram menggambarkan alur status transaksi dalam sistem:
+
+1. **Status Transaksi**:
+   - Pending: Transaksi baru dibuat
+   - Processing: Transaksi sedang diproses
+   - Completed: Transaksi berhasil
+   - Failed: Transaksi gagal
+   - Cancelled: Transaksi dibatalkan
+
+2. **Status Artikel**:
+   - Draft: Artikel dalam proses penulisan
+   - Review: Artikel sedang direview
+   - Published: Artikel dipublikasikan
+   - Archived: Artikel diarsipkan
+
+3. **Status Produk**:
+   - Available: Produk tersedia
+   - Out of Stock: Produk habis
+   - Discontinued: Produk tidak dilanjutkan
 
 ## 5 Deskripsi Data
 

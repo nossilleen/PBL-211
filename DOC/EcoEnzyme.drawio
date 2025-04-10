@@ -1,0 +1,143 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:137.0) Gecko/20100101 Firefox/137.0" version="26.2.9">
+  <diagram id="EcoZense_Class_Diagram" name="EcoZense Class Diagram">
+    <mxGraphModel dx="2219" dy="1982" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="User" value="User" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;" parent="1" vertex="1">
+          <mxGeometry x="-20" y="20" width="160" height="206" as="geometry" />
+        </mxCell>
+        <mxCell id="User_Attributes" value="+ user_id: int&#xa;+ nama: string&#xa;+ email: string&#xa;+ password: string&#xa;+ no_hp: string&#xa;+ role: string&#xa;+ lokasi_id: int" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="User" vertex="1">
+          <mxGeometry y="26" width="160" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="User_Operations" value="+ register(): void&#xa;+ login(): boolean&#xa;+ updateProfile(): void&#xa;+ changePassword(): void&#xa;+ getRole(): string" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="User" vertex="1">
+          <mxGeometry y="126" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="Lokasi" value="Lokasi" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=20;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;" parent="1" vertex="1">
+          <mxGeometry x="-540" y="10" width="170" height="190" as="geometry" />
+        </mxCell>
+        <mxCell id="Lokasi_Attributes" value="+ lokasi_id: int&#xa;+ nama_lokasi: string&#xa;+ alamat: string&#xa;+ kota: string&#xa;+ provinsi: string&#xa;+ kode_pos: string" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="Lokasi" vertex="1">
+          <mxGeometry y="20" width="170" height="104" as="geometry" />
+        </mxCell>
+        <mxCell id="Lokasi_Operations" value="+ addLocation(): void&#xa;+ updateLocation(): void&#xa;+ deleteLocation(): void&#xa;+ getLocationDetails(): Lokasi" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="Lokasi" vertex="1">
+          <mxGeometry y="124" width="170" height="66" as="geometry" />
+        </mxCell>
+        <mxCell id="Artikel" value="Artikel" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;" parent="1" vertex="1">
+          <mxGeometry x="200" y="-90" width="170" height="190" as="geometry" />
+        </mxCell>
+        <mxCell id="Artikel_Attributes" value="+ artikel_id: int&#xa;+ judul: string&#xa;+ konten: text&#xa;+ tanggal_publikasi: datetime&#xa;+ user_id: int" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="Artikel" vertex="1">
+          <mxGeometry y="26" width="170" height="84" as="geometry" />
+        </mxCell>
+        <mxCell id="Artikel_Operations" value="+ createArticle(): void&#xa;+ updateArticle(): void&#xa;+ deleteArticle(): void&#xa;+ publishArticle(): void&#xa;+ getArticleDetails(): Artikel" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="Artikel" vertex="1">
+          <mxGeometry y="110" width="170" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="Produk" value="Produk" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;" parent="1" vertex="1">
+          <mxGeometry x="-25" y="295" width="170" height="200" as="geometry" />
+        </mxCell>
+        <mxCell id="Produk_Attributes" value="+ produk_id: int&#xa;+ nama: string&#xa;+ kategori: string&#xa;+ status_ketersediaan: string&#xa;+ harga: decimal&#xa;+ user_id: int" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="Produk" vertex="1">
+          <mxGeometry y="26" width="170" height="94" as="geometry" />
+        </mxCell>
+        <mxCell id="Produk_Operations" value="+ addProduct(): void&#xa;+ updateProduct(): void&#xa;+ deleteProduct(): void&#xa;+ updateStock(): void&#xa;+ getProductDetails(): Produk" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="Produk" vertex="1">
+          <mxGeometry y="120" width="170" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="Transaksi" value="Transaksi" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;" parent="1" vertex="1">
+          <mxGeometry x="-270" y="160" width="180" height="230" as="geometry" />
+        </mxCell>
+        <mxCell id="Transaksi_Attributes" value="+ transaksi_id: int&#xa;+ user_id: int&#xa;+ lokasi_id: int&#xa;+ harga_total: decimal&#xa;+ jumlah_poin_digunakan: int&#xa;+ tanggal: datetime&#xa;+ status: string&#xa;+ metode_pembayaran: string" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="Transaksi" vertex="1">
+          <mxGeometry y="26" width="180" height="124" as="geometry" />
+        </mxCell>
+        <mxCell id="Transaksi_Operations" value="+ createTransaction(): void&#xa;+ updateStatus(): void&#xa;+ calculateTotal(): decimal&#xa;+ processPayment(): boolean&#xa;+ getTransactionDetails(): Transaksi" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="Transaksi" vertex="1">
+          <mxGeometry y="150" width="180" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="Poin" value="Poin" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;" parent="1" vertex="1">
+          <mxGeometry x="-270" y="-110" width="180" height="190" as="geometry" />
+        </mxCell>
+        <mxCell id="Poin_Attributes" value="+ poin_id: int&#xa;+ user_id: int&#xa;+ lokasi_id: int&#xa;+ jumlah_poin: int" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="Poin" vertex="1">
+          <mxGeometry y="26" width="180" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="Poin_Operations" value="+ addPoints(): void&#xa;+ usePoints(): void&#xa;+ getPointBalance(): int&#xa;+ transferPoints(): void&#xa;+ getPointHistory(): List&lt;Poin&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="Poin" vertex="1">
+          <mxGeometry y="100" width="180" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="Feedback" value="Feedback" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;" parent="1" vertex="1">
+          <mxGeometry x="180" y="180" width="210" height="180" as="geometry" />
+        </mxCell>
+        <mxCell id="Feedback_Attributes" value="+ feedback_id: int&#xa;+ komentar: text&#xa;+ user_id: int&#xa;+ artikel_id: int" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="Feedback" vertex="1">
+          <mxGeometry y="26" width="210" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="Feedback_Operations" value="+ addFeedback(): void&#xa;+ updateFeedback(): void&#xa;+ deleteFeedback(): void&#xa;+ getFeedbackList(): List&lt;Feedback&gt;&#xa;+ getFeedbackDetails(): Feedback" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="Feedback" vertex="1">
+          <mxGeometry y="100" width="210" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="ArtikelGambar" value="ArtikelGambar" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;" parent="1" vertex="1">
+          <mxGeometry x="450" y="-85" width="160" height="180" as="geometry" />
+        </mxCell>
+        <mxCell id="ArtikelGambar_Attributes" value="+ gambar_id: int&#xa;+ artikel_id: int&#xa;+ file_path: string&#xa;+ judul: string" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="ArtikelGambar" vertex="1">
+          <mxGeometry y="26" width="160" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="ArtikelGambar_Operations" value="+ uploadImage(): void&#xa;+ deleteImage(): void&#xa;+ updateImage(): void&#xa;+ getImageDetails(): ArtikelGambar&#xa;+ getImageList(): List&lt;ArtikelGambar&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="ArtikelGambar" vertex="1">
+          <mxGeometry y="100" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="User_Lokasi" value="" style="endArrow=block;endFill=1;endSize=12;html=1;exitX=0.028;exitY=0.697;exitDx=0;exitDy=0;exitPerimeter=0;" parent="1" source="User_Attributes" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="200" y="130" as="sourcePoint" />
+            <mxPoint x="-370" y="113" as="targetPoint" />
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="User_Artikel" value="" style="endArrow=block;endFill=1;endSize=12;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=0.996;exitY=0.819;exitDx=0;exitDy=0;exitPerimeter=0;" parent="1" source="User_Attributes" target="Artikel" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="110" y="-20" as="sourcePoint" />
+            <mxPoint x="440" y="130" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="User_Produk" value="" style="endArrow=block;endFill=1;endSize=12;html=1;exitX=0.5;exitY=1.125;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitPerimeter=0;" parent="1" source="User_Operations" target="Produk" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="200" y="130" as="sourcePoint" />
+            <mxPoint x="40" y="290" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="User_Transaksi" value="" style="endArrow=block;endFill=1;endSize=12;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" parent="1" target="Transaksi_Attributes" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-20" y="120" as="sourcePoint" />
+            <mxPoint x="240" y="290" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="User_Poin" value="" style="endArrow=block;endFill=1;endSize=12;html=1;exitX=0.003;exitY=0.659;exitDx=0;exitDy=0;entryX=1.001;entryY=0.019;entryDx=0;entryDy=0;exitPerimeter=0;entryPerimeter=0;" parent="1" source="User_Attributes" target="Poin_Operations" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="200" y="130" as="sourcePoint" />
+            <mxPoint x="440" y="290" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="User_Feedback" value="" style="endArrow=block;endFill=1;endSize=12;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="User" target="Feedback" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="200" y="130" as="sourcePoint" />
+            <mxPoint x="40" y="450" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Artikel_Feedback" value="" style="endArrow=block;endFill=1;endSize=12;html=1;exitX=0.494;exitY=1.068;exitDx=0;exitDy=0;exitPerimeter=0;" parent="1" source="Artikel_Operations" target="Feedback" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="600" y="130" as="sourcePoint" />
+            <mxPoint x="40" y="450" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Artikel_ArtikelGambar" value="" style="endArrow=block;endFill=1;endSize=12;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="Artikel" target="ArtikelGambar" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="600" y="130" as="sourcePoint" />
+            <mxPoint x="240" y="450" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Lokasi_Transaksi" value="" style="endArrow=block;endFill=1;endSize=12;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" target="Transaksi" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-370" y="110" as="sourcePoint" />
+            <mxPoint x="240" y="290" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Lokasi_Poin" value="" style="endArrow=block;endFill=1;endSize=12;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" target="Poin" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-370" y="110" as="sourcePoint" />
+            <mxPoint x="440" y="290" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
