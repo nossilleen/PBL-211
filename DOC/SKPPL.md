@@ -30,6 +30,7 @@
    1.6 [Ikhtisar Dokumen](#16-ikhtisar-dokumen)  
 
 2. [Deskripsi Umum Perangkat Lunak](#2-deskripsi-umum-perangkat-lunak)
+
    2.1 [Deskripsi Umum Sistem](#21-deskripsi-umum-sistem)  
    2.2 [Proses Bisnis Sistem](#22-proses-bisnis-sistem)  
    2.3 [Karakteristik Pengguna](#23-karakteristik-pengguna)  
@@ -42,6 +43,7 @@
    &nbsp;&nbsp;&nbsp;&nbsp;2.5.5 [Bahasa dan Framework](#255-bahasa-dan-framework)  
 
 3. [Deskripsi Rinci Kebutuhan](#3-deskripsi-rinci-kebutuhan)
+
    3.1 [Deskripsi Fungsional](#31-deskripsi-fungsional)  
    3.2 [Use Case Diagram](#32-use-case-diagram)  
    3.3 [Use Case Pemilih Mengganti Kata Sandi](#33-use-case-pemilih-mengganti-kata-sandi)  
@@ -72,12 +74,14 @@
    &nbsp;&nbsp;&nbsp;&nbsp;3.12.4 [Skema Relasi Antar Tabel](#3124-skema-relasi-antar-tabel)  
 
 4. [Perancangan Antarmuka](#4-perancangan-antarmuka)
+
    4.1 [Antarmuka Landing Page](#41-antarmuka-landing-page)  
    4.2 [Antarmuka Dashboard Admin](#42-antarmuka-dashboard-admin)  
    4.3 [Antarmuka Dashboard Bank Sampah](#43-antarmuka-dashboard-bank-sampah)  
    4.4 [Antarmuka Dashboard Nasabah](#44-antarmuka-dashboard-nasabah)  
 
 5. [Matriks Keterunutan](#5-matriks-keterunutan)
+    
    5.1 [Kebutuhan Fungsional vs Use Case](#51-kebutuhan-fungsional-vs-use-case)  
    5.2 [Kebutuhan Non-Fungsional vs Use Case](#52-kebutuhan-non-fungsional-vs-use-case)  
 
