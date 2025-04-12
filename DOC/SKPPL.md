@@ -10,78 +10,127 @@
 - 4342401066 - Thalita Aurelia Marsim
 - 4342401082 - Agnes Natalia Silalahi
 
-Program Studi Teknologi Rekayasa Perangkat Lunak  
-Politeknik Negeri Batam  
-Jl. Ahmad Yani, Batam 29461  
-2025
+**Program Studi:** Teknologi Rekayasa Perangkat Lunak  
+**Institusi:** Politeknik Negeri Batam  
+**Alamat:** Jl. Ahmad Yani, Batam 29461  
+**Tahun:** 2025
+
+---
+
 ## Daftar Isi
-1. Pendahuluan
-   1.1 Tujuan
-   1.2 Lingkup Masalah
-   1.3 Definisi, Akronim dan Singkatan
-      1.3.1 Definisi
-      1.3.2 Akronim
-   1.4 Aturan Penamaan dan Penomoran
-   1.5 Referensi
-2. Deskripsi Umum Perangkat Lunak
-   2.1 Perspektif Produk
-   2.2 Proses Bisnis Sistem
-   2.3 Karakteristik Pengguna
-   2.4 Batasan
-   2.5 Rancangan Lingkungan Implementasi
-      2.5.1 Sistem Operasi
-      2.5.2 DBMS
-      2.5.3 Alat Pengembangan
-      2.5.4 Sistem Penyimpanan
-      2.5.5 Bahasa dan Framework
-3. Deskripsi Rinci Kebutuhan
-   3.1 Deskripsi Fungsional
-   3.2 Use Case Diagram
-   3.3 Use Case Pemilih Mengganti Kata Sandi
-      3.3.1 Skenario
-4. Perancangan Antarmuka
-5. Matriks Keterunutan
-   5.1 Kebutuhan Fungsional vs Use Case
-   5.2 Kebutuhan Non-Fungsional vs Use Case
+1. [Pendahuluan](#1-pendahuluan)
+   1.1 [Tujuan](#11-tujuan)  
+   1.2 [Lingkup Masalah](#12-lingkup-masalah)  
+   1.3 [Definisi, Akronim dan Singkatan](#13-definisi-akronim-dan-singkatan)  
+   &nbsp;&nbsp;&nbsp;&nbsp;1.3.1 [Definisi](#131-definisi)  
+   &nbsp;&nbsp;&nbsp;&nbsp;1.3.2 [Akronim](#132-akronim)  
+   1.4 [Aturan Penamaan dan Penomoran](#14-aturan-penamaan-dan-penomoran)  
+   1.5 [Referensi](#15-referensi)  
+   1.6 [Ikhtisar Dokumen](#16-ikhtisar-dokumen)  
+
+2. [Deskripsi Umum Perangkat Lunak](#2-deskripsi-umum-perangkat-lunak)
+   2.1 [Deskripsi Umum Sistem](#21-deskripsi-umum-sistem)  
+   2.2 [Proses Bisnis Sistem](#22-proses-bisnis-sistem)  
+   2.3 [Karakteristik Pengguna](#23-karakteristik-pengguna)  
+   2.4 [Batasan](#24-batasan)  
+   2.5 [Rancangan Lingkungan Implementasi](#25-rancangan-lingkungan-implementasi)  
+   &nbsp;&nbsp;&nbsp;&nbsp;2.5.1 [Sistem Operasi](#251-sistem-operasi)  
+   &nbsp;&nbsp;&nbsp;&nbsp;2.5.2 [DBMS](#252-dbms)  
+   &nbsp;&nbsp;&nbsp;&nbsp;2.5.3 [Alat Pengembangan](#253-alat-pengembangan)  
+   &nbsp;&nbsp;&nbsp;&nbsp;2.5.4 [Sistem Penyimpanan](#254-sistem-penyimpanan)  
+   &nbsp;&nbsp;&nbsp;&nbsp;2.5.5 [Bahasa dan Framework](#255-bahasa-dan-framework)  
+
+3. [Deskripsi Rinci Kebutuhan](#3-deskripsi-rinci-kebutuhan)
+   3.1 [Deskripsi Fungsional](#31-deskripsi-fungsional)  
+   3.2 [Use Case Diagram](#32-use-case-diagram)  
+   3.3 [Use Case Pemilih Mengganti Kata Sandi](#33-use-case-pemilih-mengganti-kata-sandi)  
+   &nbsp;&nbsp;&nbsp;&nbsp;3.3.1 [Skenario](#331-skenario)  
+   3.4 [Use Case Penyetoran Sampah dan Pemberian Poin](#34-use-case-penyetoran-sampah-dan-pemberian-poin)  
+   3.5 [Use Case Penukaran Poin dengan Produk atau Sembako](#35-use-case-penukaran-poin-dengan-produk-atau-sembako)  
+   3.6 [Use Case Pengelolaan Artikel dan Video Edukasi serta Pemberikan Feedback](#36-use-case-pengelolaan-artikel-dan-video-edukasi-serta-pemberikan-feedback)  
+   3.7 [Use Case Pembuatan dan Pengelolaan Event Eco Enzim](#37-use-case-pembuatan-dan-pengelolaan-event-eco-enzim)  
+   3.8 [Use Case Memasukan Lokasi Bank Sampah](#38-use-case-memasukan-lokasi-bank-sampah)  
+   3.9 [Deskripsi Kebutuhan Non Fungsional](#39-deskripsi-kebutuhan-non-fungsional)  
+   3.10 [Deskripsi Kelas-Kelas](#310-deskripsi-kelas-kelas)  
+   &nbsp;&nbsp;&nbsp;&nbsp;3.10.1 [Class Diagram](#3101-class-diagram)  
+   &nbsp;&nbsp;&nbsp;&nbsp;3.10.2 [Class User](#3102-class-user)  
+   &nbsp;&nbsp;&nbsp;&nbsp;3.10.3 [Class Lokasi](#3103-class-lokasi)  
+   &nbsp;&nbsp;&nbsp;&nbsp;3.10.4 [Class Artikel](#3104-class-artikel)  
+   &nbsp;&nbsp;&nbsp;&nbsp;3.10.5 [Class Produk](#3105-class-produk)  
+   &nbsp;&nbsp;&nbsp;&nbsp;3.10.6 [Class ProdukGambar](#3106-class-produkgambar)  
+   &nbsp;&nbsp;&nbsp;&nbsp;3.10.7 [Class Transaksi](#3107-class-transaksi)  
+   &nbsp;&nbsp;&nbsp;&nbsp;3.10.8 [Class TransaksiItem](#3108-class-transaksiitem)  
+   &nbsp;&nbsp;&nbsp;&nbsp;3.10.9 [Class Poin](#3109-class-poin)  
+   &nbsp;&nbsp;&nbsp;&nbsp;3.10.10 [Class Feedback](#31010-class-feedback)  
+   &nbsp;&nbsp;&nbsp;&nbsp;3.10.11 [Class ArtikelGambar](#31011-class-artikelgambar)  
+   3.11 [State Machine Diagram](#311-state-machine-diagram)  
+   3.12 [Deskripsi Data](#312-deskripsi-data)  
+   &nbsp;&nbsp;&nbsp;&nbsp;3.12.1 [Entity-Relationship Diagram](#3121-entity-relationship-diagram)  
+   &nbsp;&nbsp;&nbsp;&nbsp;3.12.2 [Daftar Tabel](#3122-daftar-tabel)  
+   &nbsp;&nbsp;&nbsp;&nbsp;3.12.3 [Struktur Tabel](#3123-struktur-tabel)  
+   &nbsp;&nbsp;&nbsp;&nbsp;3.12.4 [Skema Relasi Antar Tabel](#3124-skema-relasi-antar-tabel)  
+
+4. [Perancangan Antarmuka](#4-perancangan-antarmuka)
+   4.1 [Antarmuka Landing Page](#41-antarmuka-landing-page)  
+   4.2 [Antarmuka Dashboard Admin](#42-antarmuka-dashboard-admin)  
+   4.3 [Antarmuka Dashboard Bank Sampah](#43-antarmuka-dashboard-bank-sampah)  
+   4.4 [Antarmuka Dashboard Nasabah](#44-antarmuka-dashboard-nasabah)  
+
+5. [Matriks Keterunutan](#5-matriks-keterunutan)
+   5.1 [Kebutuhan Fungsional vs Use Case](#51-kebutuhan-fungsional-vs-use-case)  
+   5.2 [Kebutuhan Non-Fungsional vs Use Case](#52-kebutuhan-non-fungsional-vs-use-case)  
+
+---
 
 ## 1. Pendahuluan
 
 ### 1.1 Tujuan
 Dokumen ini berisi Spesifikasi Kebutuhan Perangkat Lunak (SKPL) untuk Aplikasi Web Eco Enzim (EcoZense). Tujuan dari penulisan dokumen ini adalah untuk memberikan penjelasan menyeluruh mengenai perangkat lunak yang akan dikembangkan, baik dalam bentuk gambaran umum maupun penjelasan detail mengenai fitur dan kebutuhan sistem. 
 
-Pengguna dari dokumen ini meliputi pengembang perangkat lunak yang akan membangun sistem serta pengguna atau klien yang akan menggunakan aplikasi web ini. Selain itu, dokumen ini juga akan menjadi referensi bagi personel yang terlibat dalam proses pengembangan dan implementasi sistem.  
+**Pengguna dari dokumen ini meliputi:**
+- Pengembang perangkat lunak yang akan membangun sistem
+- Pengguna atau klien yang akan menggunakan aplikasi web
+- Personel yang terlibat dalam proses pengembangan dan implementasi sistem
 
-Dokumen SKPPL ini akan digunakan sebagai acuan utama dalam proses pengembangan perangkat lunak dan sebagai bahan evaluasi selama dan setelah pengembangan berlangsung. Dengan adanya dokumen ini, diharapkan pengembangan Aplikasi Web Eco Enzim dapat berjalan dengan terarah, fokus, dan sesuai dengan kebutuhan, serta menghindari potensi ambiguitas, terutama bagi tim pengembang sistem informasi.  
+**Dokumen SKPPL ini akan digunakan sebagai:**
+- Acuan utama dalam proses pengembangan perangkat lunak
+- Bahan evaluasi selama dan setelah pengembangan berlangsung
+- Panduan untuk menghindari potensi ambiguitas, terutama bagi tim pengembang sistem informasi
 
 ### 1.2 Lingkup Masalah
 EcoZense merupakan sebuah sistem informasi berbasis web yang dikembangkan oleh tim PBL-211 sebagai pusat edukasi dan marketplace produk Eco Enzim. Latar belakang pengembangan aplikasi ini didasari oleh masih rendahnya kesadaran dan pemahaman masyarakat terhadap pentingnya pemanfaatan Eco Enzim dalam menjaga kelestarian lingkungan. 
 
-Permasalahan lingkungan seperti penumpukan sampah organik dan kurangnya pengelolaan limbah rumah tangga menjadi salah satu faktor utama yang mendorong perlunya sebuah platform yang mampu mengedukasi sekaligus memfasilitasi tindakan nyata masyarakat. Meskipun Eco Enzim memiliki banyak manfaat bagi lingkungan, akses terhadap informasi dan produk terkait masih terbatas dan belum terorganisasi secara efektif. 
+**Permasalahan yang dihadapi:**
+1. Penumpukan sampah organik
+2. Kurangnya pengelolaan limbah rumah tangga
+3. Akses terbatas terhadap informasi dan produk Eco Enzim
+4. Belum terorganisasinya informasi secara efektif
 
-EcoZense hadir untuk menjawab permasalahan tersebut dengan menyediakan konten informatif berupa artikel, tutorial, dan panduan praktis mengenai pembuatan serta pemanfaatan Eco Enzim. Aplikasi ini juga terintegrasi dengan program bank sampah, yang memungkinkan masyarakat untuk berpartisipasi dalam penyetoran sampah sekaligus mendapatkan produk Eco Enzim yang dikelola oleh bank sampah. 
-
-Selain sebagai pusat informasi, aplikasi ini berfungsi sebagai marketplace yang mempertemukan bank sampah dan masyarakat dalam kegiatan jual beli produk Eco Enzim. Dengan demikian, sistem ini tidak hanya meningkatkan kesadaran, tetapi juga mendorong praktik ramah lingkungan secara langsung. 
-
-Aplikasi EcoZense dirancang untuk diakses oleh tiga kategori pengguna, yaitu admin, nasabah, dan bank sampah, dengan fungsi dan hak akses yang disesuaikan dengan perannya masing-masing. Diharapkan dengan adanya aplikasi ini, masyarakat dapat lebih mudah memahami dan menerapkan konsep Eco Enzim dalam kehidupan sehari-hari untuk menciptakan lingkungan yang lebih bersih, sehat, dan berkelanjutan. 
+**Solusi yang ditawarkan:**
+1. Menyediakan konten informatif berupa artikel, tutorial, dan panduan praktis
+2. Integrasi dengan program bank sampah
+3. Marketplace untuk mempertemukan bank sampah dan masyarakat
+4. Sistem dengan tiga kategori pengguna (admin, nasabah, bank sampah)
 
 ### 1.3 Definisi, Akronim dan Singkatan
-Definisi dari istilah yang digunakan pada dokumen ini dibuat berdasarkan hasil terjemahan dari IEEE Std 610.12-1990.  
 
-#### Definisi
-- **Nasabah**: Pengguna umum dapat mengakses aplikasi web Eco Enzim untuk memperoleh informasi, edukasi, dan layanan terkait ecoenzim. Sebagai nasabah, mereka memiliki hak untuk menyetor sampah secara langsung ke bank sampah dan menerima poin yang dapat digunakan untuk membeli produk ecoenzim atau sembako.
-- **Admin**: Pengguna dengan hak akses tertinggi yang bertanggung jawab atas pengelolaan sistem, pengaturan pengguna, serta pemantauan dan pemeliharaan aplikasi web Eco Enzim. 
-- **Pengelola bank sampah**: Pengguna ini memiliki akses ke aplikasi Eco Enzim dengan kewenangan mengelola bank sampah, memasukkan lokasi, mempublikasikan produk, serta memberikan poin kepada nasabah. 
-- **Pengguna umum (guest)**: Pengguna ini hanya memiliki akses terhadap artikel atau event, pengguna ini tidak dapat membeli produk di marketplace.
+#### 1.3.1 Definisi
+- **Nasabah**: Pengguna yang dapat mengakses aplikasi web Eco Enzim untuk memperoleh informasi, edukasi, dan layanan terkait ecoenzim. Memiliki hak untuk menyetor sampah dan menerima poin.
+- **Admin**: Pengguna dengan hak akses tertinggi yang bertanggung jawab atas pengelolaan sistem, pengaturan pengguna, serta pemantauan dan pemeliharaan aplikasi.
+- **Pengelola bank sampah**: Pengguna yang memiliki kewenangan mengelola bank sampah, memasukkan lokasi, mempublikasikan produk, serta memberikan poin kepada nasabah.
+- **Pengguna umum (guest)**: Pengguna yang hanya memiliki akses terhadap artikel atau event, tidak dapat membeli produk di marketplace.
 
-#### Akronim
-- SKPPL: Spesifikasi Kebutuhan dan Perancangan Perangkat Lunak 
-- SRDS: Software Requirements and Design Specification (SRDS) 
-- UML: Unified Modelling Language 
-- ERD: Entity Relationship Diagram 
-- DBMS: DataBase Management System 
+#### 1.3.2 Akronim
+| Singkatan | Kepanjangan |
+|-----------|-------------|
+| SKPPL | Spesifikasi Kebutuhan dan Perancangan Perangkat Lunak |
+| SRDS | Software Requirements and Design Specification |
+| UML | Unified Modelling Language |
+| ERD | Entity Relationship Diagram |
+| DBMS | DataBase Management System |
 
 ### 1.4 Aturan Penamaan dan Penomoran
-Penulisan dokumen SKPL ini menggunakan berbagai aturan penamaan dan penomoran yang berbeda untuk bagian-bagian tertentu. Aturan penamaan dan penomoran yang digunakan disesuaikan dengan hal atau bagian tertentu sebagaimana tercantum dalam Tabel 1.
+Penulisan dokumen SKPL ini menggunakan berbagai aturan penamaan dan penomoran yang berbeda untuk bagian-bagian tertentu. Aturan penamaan dan penomoran yang digunakan disesuaikan dengan hal atau bagian tertentu sebagaimana tercantum dalam tabel berikut:
 
 | Hal/Bagian | Aturan Penomoran/Penamaan |
 |------------|--------------------------|
@@ -92,48 +141,79 @@ Penulisan dokumen SKPL ini menggunakan berbagai aturan penamaan dan penomoran ya
 | Use Case | UC-XX menunjukkan use case ke-XX |
 
 ### 1.5 Referensi
-Daftar dokumen yang digunakan sebagai acuan atau rujukan dalam penyusunan dokumen SKPPL ini adalah sebagai berikut:  
+Daftar dokumen yang digunakan sebagai acuan atau rujukan dalam penyusunan dokumen SKPPL ini adalah sebagai berikut:
 
 1. IEEE Std 610.12-1990, IEEE Standard Glossary of Software Engineering Terminology
 2. Panduan Penggunaan dan Pengisian Spesifikasi Perangkat Lunak (SKPL) untuk Sistem Informasi Kalibrasi Alat (ITS)
 3. SKPPL untuk Sistem Informasi Student Advisory Center (ITS)
 
 ### 1.6 Ikhtisar Dokumen
-1. Bab 1 Pendahuluan: Pengantar dokumen SKPL yang berisi tujuan penulisan dokumen, lingkup masalah, serta definisi dan istilah yang digunakan. Selain itu, memberikan deskripsi umum mengenai aplikasi web Eco Enzim (EcoZense) sebagai ikhtisar dokumen SKPL. 
-2. Bab 2 Deskripsi Global Perangkat Lunak: Mendefinisikan perspektif produk perangkat lunak, termasuk tujuan utama aplikasi web Eco Enzim. Asumsi dan ketergantungan yang digunakan dalam pengembangan sistem informasi EcoZense. 
-3. Bab 3 Deskripsi Rinci Kebutuhan: Mendeskripsikan kebutuhan khusus bagi Sistem Informasi EcoZense, yang meliputi kebutuhan antarmuka eksternal, kebutuhan fungsionalitas, kebutuhan performansi, batasan perancangan, atribut sistem perangkat lunak, dan kebutuhan lain dari Sistem Informasi EcoZense.  
+1. **Bab 1 Pendahuluan**: Pengantar dokumen SKPL yang berisi tujuan penulisan dokumen, lingkup masalah, serta definisi dan istilah yang digunakan. Selain itu, memberikan deskripsi umum mengenai aplikasi web Eco Enzim (EcoZense) sebagai ikhtisar dokumen SKPL.
+2. **Bab 2 Deskripsi Global Perangkat Lunak**: Mendefinisikan perspektif produk perangkat lunak, termasuk tujuan utama aplikasi web Eco Enzim. Asumsi dan ketergantungan yang digunakan dalam pengembangan sistem informasi EcoZense.
+3. **Bab 3 Deskripsi Rinci Kebutuhan**: Mendeskripsikan kebutuhan khusus bagi Sistem Informasi EcoZense, yang meliputi kebutuhan antarmuka eksternal, kebutuhan fungsionalitas, kebutuhan performansi, batasan perancangan, atribut sistem perangkat lunak, dan kebutuhan lain dari Sistem Informasi EcoZense.
+
+---
 
 ## 2. Deskripsi Umum Perangkat Lunak
 
 ### 2.1 Deskripsi Umum Sistem
-EcoZense adalah sebuah sistem informasi berbasis web yang dirancang untuk memberikan informasi yang jelas dan mudah diakses mengenai ecoenzim, serta menyediakan layanan bagi pengguna yang ingin berpartisipasi dalam program bank sampah dan menjadi nasabah. Sistem ini dapat diakses oleh pengguna umum (guest), nasabah, pengelola bank sampah, dan admin yang mengelola seluruh aspek informasi dalam aplikasi.  
+EcoZense adalah sebuah sistem informasi berbasis web yang dirancang untuk memberikan informasi yang jelas dan mudah diakses mengenai ecoenzim, serta menyediakan layanan bagi pengguna yang ingin berpartisipasi dalam program bank sampah dan menjadi nasabah. Sistem ini dapat diakses oleh pengguna umum (guest), nasabah, pengelola bank sampah, dan admin yang mengelola seluruh aspek informasi dalam aplikasi.
 
-Pengguna umum dapat mengakses website EcoZense melalui landing page, di mana mereka dapat:  
+**Fitur untuk Pengguna Umum:**
 - Menonton video edukasi mengenai ecoenzim
 - Membaca artikel terkait ecoenzin untuk memperdalam pemahaman mereka
 - Mengikuti Event terkait ecoenzim dalam segala bentuk
 - Mendaftar diri untuk menjadi nasabah
 
-Pengguna umum (guest) yang telah terverifikasi sebagai nasabah dapat mengakses website dengan fitur yang sama seperti pengguna umum. Namun, sebagai nasabah, mereka dapat menyetor sampah ke bank sampah dan memperoleh poin yang dapat ditukarkan untuk membeli produk ecoenzim.
+**Fitur untuk Nasabah:**
+- Akses ke semua fitur pengguna umum
+- Menyetor sampah ke bank sampah
+- Memperoleh poin yang dapat ditukarkan untuk membeli produk ecoenzim
 
-Pengelola bank sampah memiliki peran dalam menerima sampah yang disetor oleh nasabah dan memberikan poin berdasarkan berat sampah yang disetorkan. Selain itu, pengelola dapat mempublikasikan produk Eco Enzim yang tersedia di website, sehingga pengguna dapat mengecek dan membeli produk tersebut secara langsung melalui sistem.  
+**Fitur untuk Pengelola Bank Sampah:**
+- Menerima sampah yang disetor oleh nasabah
+- Memberikan poin berdasarkan berat sampah yang disetorkan
+- Mempublikasikan produk Eco Enzim yang tersedia
+- Mengelola transaksi produk
 
-Admin dalam EcoZense bertanggung jawab untuk: 	 
+**Fitur untuk Admin:**
 - Mengelola seluruh informasi dan materi edukasi dalam sistem
 - Mengatur artikel, video edukasi, dan promosi terkait ecoenzim
 - Mengelola data pengguna, termasuk proses registrasi dan login
 - Mengelola informasi terkait kegiatan dan event yang berhubungan dengan EcoZense
 
-Melalui sistem EcoZense, diharapkan masyarakat dapat dengan mudah mengakses informasi mengenai ecoenzim serta berpartisipasi dalam program bank sampah, yang bertujuan untuk mengurangi limbah, sekaligus menciptakan manfaat ekonomi dan lingkungan.  
-
 ### 2.2 Proses Bisnis Sistem
-Berikut merupakan alur utama dalam sistem EcoZense:  
-1. Pendaftaran Nasabah: Pengguna umum dapat melakukan registrasi untuk bergabung sebagai nasabah bank sampah
-2. Penyetoran Sampah: Nasabah menyetorkan sampah kepada pengelola bank sampah, yang kemudian akan mengevaluasi dan memberikan poin sesuai jenis dan jumlah sampah yang dikumpulkan
-3. Penukaran Poin: Poin yang telah dikumpulkan dapat ditukarkan dengan produk Eco Enzim atau sembako
-4. Publikasi Produk: Pengelola bank sampah dapat memublikasikan informasi produk Eco Enzim yang tersedia
-5. Edukasi dan Promosi: Admin mengelola dan memperbarui konten edukasi terkait Eco Enzim, serta memublikasikan event atau promosi yang berhubungan
-6. Manajemen Pengguna: Admin bertanggung jawab dalam pengelolaan akun nasabah serta aktivitas pengguna dalam sistem
+Berikut merupakan alur utama dalam sistem EcoZense:
+
+1. **Pendaftaran Nasabah**
+   - Pengguna umum melakukan registrasi
+   - Verifikasi data oleh admin
+   - Aktivasi akun nasabah
+
+2. **Penyetoran Sampah**
+   - Nasabah menyetorkan sampah ke bank sampah
+   - Pengelola mengevaluasi sampah
+   - Pemberian poin sesuai jenis dan jumlah sampah
+
+3. **Penukaran Poin**
+   - Nasabah memilih produk
+   - Konversi poin ke produk
+   - Transaksi selesai
+
+4. **Publikasi Produk**
+   - Pengelola mempublikasikan produk
+   - Admin memverifikasi produk
+   - Produk tersedia di marketplace
+
+5. **Edukasi dan Promosi**
+   - Admin membuat konten edukasi
+   - Publikasi event dan promosi
+   - Monitoring feedback pengguna
+
+6. **Manajemen Pengguna**
+   - Admin mengelola akun
+   - Verifikasi pengguna
+   - Monitoring aktivitas
 
 ### 2.3 Karakteristik Pengguna
 
@@ -144,37 +224,66 @@ Berikut merupakan alur utama dalam sistem EcoZense: 
 | Admin | - Mengelola artikel<br>- Mengelola data pengguna<br>- Mengelola promosi kegiatan dan event | - Akses untuk mengelola artikel<br>- Akses untuk create artikel<br>- Akses untuk mempromosi kegiatan dan event<br>- Akses mengelola data user<br>- Akses memverifikasi pengajuan pengguna umum menjadi nasabah dan nasabah menjadi bank sampah | - Pemahaman sistem informasi<br>- Manajemen konten<br>- Manajemen data |
 
 ### 2.4 Batasan
-1. Sistem hanya dapat diakses melalui platform web, belum tersedia dalam bentuk aplikasi mobile
-2. Penyetoran sampah hanya dapat dilakukan di lokasi bank sampah yang terdaftar dalam sistem
-3. Produk Eco Enzim dan sembako yang tersedia bergantung pada stok di masing-masing bank sampah
-4. Sistem ini hanya mendukung transaksi non-tunai untuk penukaran poin
-5. Informasi yang tersedia dalam sistem hanya terbatas pada konten yang telah diverifikasi oleh admin
+1. **Platform Akses**
+   - Sistem hanya dapat diakses melalui platform web
+   - Belum tersedia dalam bentuk aplikasi mobile
+
+2. **Lokasi Penyetoran**
+   - Penyetoran sampah hanya dapat dilakukan di lokasi bank sampah yang terdaftar
+   - Lokasi harus diverifikasi oleh admin
+
+3. **Ketersediaan Produk**
+   - Produk Eco Enzim dan sembako bergantung pada stok bank sampah
+   - Stok harus diperbarui secara berkala
+
+4. **Sistem Pembayaran**
+   - Hanya mendukung transaksi non-tunai
+   - Menggunakan sistem poin untuk transaksi
+
+5. **Konten Informasi**
+   - Informasi terbatas pada konten yang telah diverifikasi
+   - Admin bertanggung jawab atas validasi konten
 
 ### 2.5 Rancangan Lingkungan Implementasi
 
-#### Sistem Operasi
-- Windows Server untuk server
-- Mendukung kestabilan layanan web
-- Kompatibel dengan perangkat lunak pengembangan
+#### 2.5.1 Sistem Operasi
+- **Server:** Windows Server
+- **Fitur:**
+  - Mendukung kestabilan layanan web
+  - Kompatibel dengan perangkat lunak pengembangan
+  - Keamanan tingkat tinggi
 
-#### DBMS
-- MySQL sebagai sistem manajemen basis data
-- Open-source dan handal
-- Menyimpan data pengguna, transaksi, produk, dan log
+#### 2.5.2 DBMS
+- **Database:** MySQL
+- **Karakteristik:**
+  - Open-source dan handal
+  - Menyimpan data pengguna, transaksi, produk, dan log
+  - Mendukung transaksi dan backup otomatis
 
-#### Alat Pengembangan
-- Visual Studio Code (IDE)
-- Git (version control)
-- GitHub (repositori)
+#### 2.5.3 Alat Pengembangan
+- **IDE:** Visual Studio Code
+- **Version Control:** Git
+- **Repository:** GitHub
+- **Kolaborasi:** Discord
 
-#### Sistem Penyimpanan
-- Google Cloud Storage
-- Keandalan tinggi
-- Keamanan dan skalabilitas
+#### 2.5.4 Sistem Penyimpanan
+- **Platform:** Google Cloud Storage
+- **Fitur:**
+  - Keandalan tinggi
+  - Keamanan terjamin
+  - Skalabilitas fleksibel
 
-#### Bahasa dan Framework
-- Backend: PHP dengan Laravel
-- Frontend: Vue.js dan Tailwind
+#### 2.5.5 Bahasa dan Framework
+- **Backend:**
+  - PHP dengan Laravel
+  - RESTful API
+  - JWT Authentication
+
+- **Frontend:**
+  - Vue.js
+  - Tailwind CSS
+
+---
 
 ## 3. Deskripsi Rinci Kebutuhan
 
@@ -212,8 +321,8 @@ Berikut merupakan alur utama dalam sistem EcoZense: 
 - SKPL-F032 Admin dapat mengelola data pengguna.
 
 ### 3.2 Use Case Diagram
-
-Gambar 2. Use Case Diagram Aplikasi Web Eco Enzim
+ 
+Gambar 2. Use Case Diagram Aplikasi Web Eco Enzim 
 
 ### 3.3 Use Case Pemilih Mengganti Kata Sandi
 
@@ -224,15 +333,6 @@ Gambar 2. Use Case Diagram Aplikasi Web Eco Enzim
 - Nama
 - Pengguna dapat membuat akun sebagai nasabah, dan admin dapat mengelola akun pengguna
 - Deskripsi
-- Pengguna dapat melakukan pendaftaran sebagai nasabah, sementara admin memiliki hak untuk mengelola akun pengguna.
-- Aktor
-- Nasabah, Admin
-- Kondisi awal
-- Belum mempunyai akun / Admin ingin mengelola akun pengguna.
-- Kondisi akhir
-- Akun pengguna berhasil dibuat atau dikelola oleh admin.
-- Skenario Utama
-- Pembuatan akun oleh pengguna
 - Pengguna membuka halaman pendaftaran.
 - Sistem menampilkan formulir pendaftaran.
 - Pengguna mengisi data diri (nama, email, password, dll.).
@@ -240,7 +340,7 @@ Gambar 2. Use Case Diagram Aplikasi Web Eco Enzim
 - Sistem memvalidasi data dan menyimpan akun jika inputan valid.
 - Sistem menampilkan pesan sukses bahwa akun berhasil dibuat.
 
-Pengelolaan akun oleh admin
+Pengelolaan akun oleh admin 
 - Admin login ke sistem.
 - Sistem menampilkan daftar akun pengguna yang terdaftar.
 - Admin dapat mencari akun tertentu berdasarkan nama atau email.
@@ -248,7 +348,7 @@ Pengelolaan akun oleh admin
 - Admin dapat mengedit data akun atau menonaktifkan akun pengguna jika diperlukan.
 - Sistem menyimpan perubahan dan menampilkan pesan sukses.
 
-Skenario Alternatif
+Skenario Alternatif 
 - 1a. Pengguna memasukkan data yang tidak valid (seperti email tidak sesuai format biasanya atau password yang terlalu pendek, seperti 3 digit)
 - 1b. Pengguna mencoba mendaftar dengan email yang sudah digunakan, sistem menampilkan pesan bahwa email sudah terdaftar.
 - 4a. Admin mencoba menonaktifkan akun pengguna, tetapi sistem meminta konfirmasi sebelum melakukan tindakan ini.
@@ -263,7 +363,7 @@ Skenario Alternatif
 - Nama
 - Penyetoran sampah dan Pemberian poin
 - Deskripsi
-- Nasabah dapat menyetor sampah dan mendapatkan poin, pengelola bank sampah dapat menilai dan memberikan poin atas penyetoran sampah
+- Nasabah menyetor sampah dan mendapatkan poin, pengelola bank sampah dapat menilai dan memberikan poin atas penyetoran sampah
 - Aktor
 - Nasabah dan Pengelola bank sampah
 - Kondisi awal
@@ -277,7 +377,7 @@ Skenario Alternatif
 - Poin diberikan kepada Nasabah oleh Pengelola bank sampah.
 - Nasabah berhasil menerima poin.
 
-Skenario Alternatif
+Skenario Alternatif 
 - 3a. Aplikasi tidak dapat mengonversi poin.
 
 ### 3.5 Use Case Penukaran Poin dengan Produk atau Sembako
@@ -307,7 +407,7 @@ Skenario Alternatif
 - Jika poin cukup dan stok tersedia, sistem mengurangi saldo poin nasabah dan memproses penukaran.
 - Sistem menampilkan notifikasi bahwa penukaran berhasil dan memberikan informasi pengambilan/pengiriman produk.
 
-Skenario Alternatif
+Skenario Alternatif 
 - 1a. Jika saldo poin nasabah tidak mencukupi → Sistem menampilkan pesan bahwa poin tidak cukup untuk melakukan penukaran.
 - 3a. Jika stok produk habis → Sistem menampilkan notifikasi bahwa produk tidak tersedia dan meminta nasabah memilih produk lain.
 - 7a. Jika terjadi kesalahan saat proses penukaran → Sistem membatalkan transaksi dan mengembalikan poin jika sudah terpotong.
@@ -341,7 +441,7 @@ Skenario Alternatif
 - Sistem menyimpan data dan menampilkan pesan sukses.
 - Admin dapat mengedit atau menghapus artikel/video jika diperlukan
 
-Pengguna umum:
+Pengguna umum: 
 - Pengguna membuka halaman Artikel dan Video Edukasi.
 - Sistem menampilkan daftar artikel dan video.
 - Pengguna memilih artikel untuk dibaca.
@@ -349,7 +449,7 @@ Pengguna umum:
 - Pengguna memberikan komentar atau feedback dan menekan "Kirim".
 - Sistem menyimpan komentar dan menampilkan pesan sukses.
 
-Skenario Alternatif
+Skenario Alternatif 
 - 1a. Jika saldo poin nasabah tidak mencukupi → Sistem menampilkan pesan bahwa poin tidak cukup untuk melakukan penukaran.
 - 3a. Jika stok produk habis → Sistem menampilkan notifikasi bahwa produk tidak tersedia dan meminta nasabah memilih produk lain.
 - 7a. Jika terjadi kesalahan saat proses penukaran → Sistem membatalkan transaksi dan mengembalikan poin jika sudah terpotong.
@@ -379,7 +479,7 @@ Skenario Alternatif
 - Sistem merubah jumlah sesuai yang di ubah bank sampah.
 - Bank sampah dapat mengurangi dan menambah jumlah produk Eco Enzyme.
 
-Skenario Alternatif
+Skenario Alternatif 
 - 1a. Bank sampah salah memasukan username atau password,sistem menampilkan password salah.
 - 4a. Jika Bank sampah meletakkan huruf atau simbol di kolom jumlah stok,system akan gagal menyimpan data yang di perbarui.
 - 4b. Bank sampah tidak melengkapi data,sistem akan menampilkan harap lengkapi data.
@@ -410,7 +510,7 @@ Skenario Alternatif
 - Sistem menampilkan pesan sukses bahwa event telah tersimpan.
 - Admin dapat mengedit atau menghapus event yang sudah dibuat jika diperlukan.
 
-Skenario Alternatif
+Skenario Alternatif 
 - 1a. Admin memasukkan username dan password yang salah dan tidak dapat mengakses halaman manajemen event
 - 3a. Admin memilih untuk mengedit event yang sudah ada dan memperbarui informasinya sebelum menyimpan.
 - 3b. Admin memilih untuk menghapus event yang sudah ada, dan sistem meminta konfirmasi sebelum menghapusnya.
@@ -439,7 +539,7 @@ Skenario Alternatif
 - Sistem memvalidasi data yang dimasukkan.
 - Jika data valid, sistem menyimpan informasi lokasi bank sampah dan mengonfirmasi pendaftaran kepada user.
 
-Skenario Alternatif
+Skenario Alternatif 
 - 3a. Jika data yang dimasukkan tidak valid, sistem menampilkan pesan kesalahan dan meminta user untuk memperbaiki informasi yang salah.
 - 3b. Jika user tidak mengisi semua kolom yang wajib, sistem menampilkan pesan peringatan dan meminta user untuk melengkapi informasi yang diperlukan.
 - 5a. Jika lokasi yang dimasukkan sudah terdaftar sebelumnya, sistem memberikan notifikasi bahwa lokasi tersebut sudah ada dan meminta user untuk memasukkan lokasi yang berbeda.
@@ -658,6 +758,8 @@ Skenario Alternatif
 #### Skema Relasi Antar Tabel
 [Skema relasi akan ditambahkan di sini]
 
+---
+
 ## 4. Perancangan Antarmuka
 
 ### Antarmuka <nama antarmuka> dan seterusnya 
@@ -667,45 +769,50 @@ Skenario Alternatif
 ## 5. Matriks Keterunutan
 
 ### 5.1 Kebutuhan Fungsional vs Use Case
-| Kebutuhan | UC-01 | UC-02 | UC-03 | UC-04 | UC-05 | UC-06 | UC-07 |
-|-----------|-------|-------|-------|-------|-------|-------|-------|
-| SKPL-F01 | - | - | - | - | - | - | X |
-| SKPL-F02 | - | - | - | X | - | - | - |
-| SKPL-F03 | - | - | - | - | - | X | - |
-| SKPL-F04 | X | - | - | - | - | - | - |
-| SKPL-F05 | X | - | - | - | - | - | - |
-| SKPL-F07 | - | X | - | - | - | - | - |
-| SKPL-F08 | - | X | - | - | - | - | - |
-| SKPL-F09 | - | - | X | - | - | - | - |
-| SKPL-F010 | - | - | X | - | - | - | - |
-| SKPL-F011 | - | - | X | - | - | - | - |
-| SKPL-F012 | - | - | X | - | - | - | - |
-| SKPL-F013 | - | - | X | - | - | - | - |
-| SKPL-F014 | - | - | X | - | - | - | - |
-| SKPL-F015 | - | - | X | - | - | - | - |
-| SKPL-F016 | - | - | - | X | - | - | - |
-| SKPL-F017 | - | - | - | X | - | - | - |
-| SKPL-F018 | - | - | - | - | - | - | X |
-| SKPL-F019 | - | - | - | - | - | - | X |
-| SKPL-F020 | - | - | - | - | X | - | - |
-| SKPL-F021 | - | - | - | - | X | - | - |
-| SKPL-F022 | - | - | - | - | X | - | - |
-| SKPL-F023 | - | X | - | - | - | - | - |
-| SKPL-F024 | - | X | - | - | - | - | - |
-| SKPL-F025 | - | X | - | - | - | - | - |
-| SKPL-F026 | - | - | - | - | - | - | X |
-| SKPL-F027 | - | - | - | X | - | - | - |
-| SKPL-F028 | - | - | - | X | - | - | - |
-| SKPL-F029 | - | - | - | - | - | X | - |
-| SKPL-F030 | - | - | - | - | - | X | - |
-| SKPL-F031 | - | - | - | - | - | - | X |
-| SKPL-F032 | X | - | - | - | - | - | - |
+| Kebutuhan | Deskripsi | UC-01 | UC-02 | UC-03 | UC-04 | UC-05 | UC-06 | UC-07 | Prioritas |
+|-----------|-----------|-------|-------|-------|-------|-------|-------|-------|-----------|
+| SKPL-F01 | Menampilkan peta lokasi bank sampah | - | - | - | - | - | - | X | Tinggi |
+| SKPL-F02 | Melihat dan menelusuri artikel | - | - | - | X | - | - | - | Tinggi |
+| SKPL-F03 | Mendaftar pada event | - | - | - | - | - | X | - | Sedang |
+| SKPL-F04 | Membuat akun sebagai nasabah | X | - | - | - | - | - | - | Tinggi |
+| SKPL-F05 | Mengedit profil | X | - | - | - | - | - | - | Sedang |
+| SKPL-F07 | Menerima poin | - | X | - | - | - | - | - | Tinggi |
+| SKPL-F08 | Melihat jumlah poin | - | X | - | - | - | - | - | Tinggi |
+| SKPL-F09 | Membeli produk dengan poin/transfer | - | - | X | - | - | - | - | Tinggi |
+| SKPL-F010 | Memasukkan produk ke keranjang | - | - | X | - | - | - | - | Tinggi |
+| SKPL-F011 | Memasukkan kuantitas produk | - | - | X | - | - | - | - | Tinggi |
+| SKPL-F012 | Memberikan rating produk | - | - | X | - | - | - | - | Rendah |
+| SKPL-F013 | Menerima notifikasi | - | - | X | - | - | - | - | Sedang |
+| SKPL-F014 | Menerima bukti pembayaran | - | - | X | - | - | - | - | Tinggi |
+| SKPL-F015 | Melihat riwayat pembelian | - | - | X | - | - | - | - | Sedang |
+| SKPL-F016 | Memberikan nilai artikel | - | - | - | X | - | - | - | Rendah |
+| SKPL-F017 | Memberikan feedback artikel | - | - | - | X | - | - | - | Sedang |
+| SKPL-F018 | Mengajukan menjadi Bank Sampah | - | - | - | - | - | - | X | Tinggi |
+| SKPL-F019 | Memasukkan lokasi bank sampah | - | - | - | - | - | - | X | Tinggi |
+| SKPL-F020 | Menambahkan produk ecoenzim | - | - | - | - | X | - | - | Tinggi |
+| SKPL-F021 | Mengatur kuantitas produk | - | - | - | - | X | - | - | Tinggi |
+| SKPL-F022 | Mengupdate produk | - | - | - | - | X | - | - | Tinggi |
+| SKPL-F023 | Memasukkan berat sampah | - | X | - | - | - | - | - | Tinggi |
+| SKPL-F024 | Memberikan poin | - | X | - | - | - | - | - | Tinggi |
+| SKPL-F025 | Melihat riwayat transaksi | - | X | - | - | - | - | - | Sedang |
+| SKPL-F026 | Melihat lokasi bank sampah | - | - | - | - | - | - | X | Tinggi |
+| SKPL-F027 | Mengelola artikel | - | - | - | X | - | - | - | Tinggi |
+| SKPL-F028 | Mereview artikel | - | - | - | X | - | - | - | Tinggi |
+| SKPL-F029 | Mengelola event | - | - | - | - | - | X | - | Tinggi |
+| SKPL-F030 | Mereview event | - | - | - | - | - | X | - | Tinggi |
+| SKPL-F031 | Memverifikasi pengajuan | - | - | - | - | - | - | X | Tinggi |
+| SKPL-F032 | Mengelola data pengguna | X | - | - | - | - | - | - | Tinggi |
 
 ### 5.2 Kebutuhan Non-Fungsional vs Use Case
-| Kebutuhan | UC-01 | UC-02 | UC-03 | UC-04 | UC-05 | UC-06 | UC-07 |
-|-----------|-------|-------|-------|-------|-------|-------|-------|
-| SKPL-NF01 | X | X | X | X | X | X | X |
-| SKPL-NF02 | X | X | X | X | X | X | X |
-| SKPL-NF03 | X | X | X | X | X | X | X |
-| SKPL-NF04 | X | X | X | X | X | X | X |
-| SKPL-NF05 | X | X | X | X | X | X | X |
+| Kebutuhan | Deskripsi | UC-01 | UC-02 | UC-03 | UC-04 | UC-05 | UC-06 | UC-07 | Prioritas |
+|-----------|-----------|-------|-------|-------|-------|-------|-------|-------|-----------|
+| SKPL-NF01 | Keamanan | X | X | X | X | X | X | X | Tinggi |
+| SKPL-NF02 | Performa | X | X | X | X | X | X | X | Tinggi |
+| SKPL-NF03 | Ketersediaan | X | X | X | X | X | X | X | Tinggi |
+| SKPL-NF04 | Portabilitas | X | X | X | X | X | X | X | Sedang |
+| SKPL-NF05 | Kemudahan Penggunaan | X | X | X | X | X | X | X | Tinggi |
+
+**Keterangan:**
+- X: Kebutuhan terhubung dengan use case
+- -: Kebutuhan tidak terhubung dengan use case
+- Prioritas: Tinggi (High), Sedang (Medium), Rendah (Low)
