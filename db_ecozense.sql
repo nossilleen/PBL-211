@@ -29,6 +29,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `artikel` (
   `artikel_id` int(11) NOT NULL,
+  'kategori' enum ('event', 'artikel') NOT NULL,
   `judul` varchar(255) NOT NULL,
   `konten` longtext NOT NULL,
   `tanggal_publikasi` date NOT NULL,
@@ -107,10 +108,11 @@ CREATE TABLE `user` (
 
 CREATE TABLE `produk` (
   `produk_id` int(11) NOT NULL,
-  `nama` varchar(50) NOT NULL,
+  `nama_produk` varchar(50) NOT NULL,
   `kategori` enum('eco_enzim','sembako') NOT NULL DEFAULT 'eco_enzim',
   `status_ketersediaan` enum('Available','Unavailable') NOT NULL DEFAULT 'Available',
   `harga` int(11) NOT NULL CHECK (harga >= 0),
+  `rating` decimal(3,1) DEFAULT 0 CHECK (rating >= 0 AND rating <= 5),
   `deskripsi` text DEFAULT NULL,
   `user_id` int(11) DEFAULT NULL COMMENT 'Pengelola yang menyediakan produk',
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
@@ -142,11 +144,11 @@ CREATE TABLE `transaksi` (
   `user_id` int(11) NOT NULL,
   `lokasi_id` int(11) NOT NULL,
   `harga_total` int(11) NOT NULL CHECK (harga_total >= 0),
-  `jumlah_poin_digunakan` int(11) DEFAULT 0 CHECK (jumlah_poin_digunakan >= 0),
+  `poin_used` int(11) DEFAULT 0 CHECK (poin_used >= 0),
   `tanggal` datetime NOT NULL,
   `status` enum('pending','selesai','dibatalkan') NOT NULL DEFAULT 'pending',
-  `metode_pembayaran` enum('transfer','poin') NOT NULL DEFAULT 'transfer',
-  `nomor_referensi` varchar(50) DEFAULT NULL,
+  `pay_method` enum('transfer','poin') NOT NULL DEFAULT 'transfer',
+  `ref_number` varchar(50) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -231,7 +233,7 @@ ALTER TABLE `user`
 ALTER TABLE `produk`
   ADD PRIMARY KEY (`produk_id`),
   ADD KEY `FK_produk_pengelola` (`user_id`),
-  ADD KEY `idx_produk_nama` (`nama`),
+  ADD KEY `idx_produk_nama` (`nama_produk`),
   ADD KEY `idx_produk_status` (`status_ketersediaan`),
   ADD KEY `idx_produk_kategori` (`kategori`);
 
