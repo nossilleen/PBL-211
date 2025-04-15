@@ -2,14 +2,9 @@
 
 ![EcoZense Banner](https://media.discordapp.net/attachments/918866718326145084/1351791694592348191/file.jpg?ex=67dba99f&is=67da581f&hm=d91ed4db7a8075f095cf5f46d5ed59000d3b2353c36b5d3629ae8998e30fa46c&=&format=webp&width=625&height=625)
 
-## 📋 Tentang Proyek
+## Project Overview
 
-EcoZense adalah aplikasi web yang berfungsi sebagai pusat informasi dan edukasi Eco Enzyme. Aplikasi ini bertujuan untuk:
-- Menyediakan informasi yang jelas dan mudah diakses tentang Eco Enzyme
-- Mendorong masyarakat untuk lebih aktif dalam mengelola sampah organik
-- Membangun komunitas yang berbagi pengalaman dan pengetahuan
-- Mengintegrasikan sistem bank sampah untuk penyetoran sampah organik
-- Menyediakan marketplace untuk produk Eco Enzyme dan sembako
+EcoZense is a web application that serves as a marketplace and educational platform for eco enzyme products. It connects waste banks with customers, providing a platform for waste management and eco enzyme product exchange.
 
 ## 🚀 Fitur Utama
 
@@ -40,20 +35,24 @@ EcoZense adalah aplikasi web yang berfungsi sebagai pusat informasi dan edukasi 
 
 ## 🛠️ Teknologi yang Digunakan
 
-### Backend
-- **PHP/Laravel** - Framework utama
-- **MySQL** - Database management system
-- **JWT Authentication** - Sistem autentikasi
-
 ### Frontend
-- **Vue.js** - Framework JavaScript
-- **Tailwind CSS** - Styling framework
-- **Google Maps API** - Integrasi peta
+- Vue.js 3
+- Vue Router
+- Tailwind CSS
+- Vite
+- Axios
+### Backend
+- Laravel
+- MySQL
+- RESTful API
 
-### Infrastruktur
-- **Google Cloud Storage** - Penyimpanan file
-- **Git/GitHub** - Version control
-- **VS Code** - Development environment
+## Project Structure
+
+```
+EcoZense/
+├── frontend/        # Vue.js frontend application
+└── backend/         # Laravel backend API
+```
 
 ## 📊 Struktur Database
 
@@ -77,47 +76,41 @@ Database terdiri dari beberapa tabel utama:
 | Thalita Aurelia Marsim | 4342401066 | UI/UX Designer |
 | Agnes Natalia Silalahi | 4342401082 | Quality Assurance |
 
-## 📚 Dokumentasi Proyek
-
-- [Rencana Pelaksanaan Proyek (RPP)](DOC/RPP.md)
-- [Spesifikasi Kebutuhan dan Perancangan Perangkat Lunak (SKPPL)](DOC/SKPPL.md)
-- [Hasil Wawancara](DOC/wanwancara.md)
-- [Struktur Database](db_ecozense.sql)
-
-## 🚀 Instalasi
-
-1. Clone repository
+1. Clone the repository:
 ```bash
 git clone https://github.com/nossilleen/PBL-211.git
+cd EcoZense
 ```
 
-2. Install dependencies
+2. Setup Frontend:
 ```bash
-composer install
+cd frontend
 npm install
-```
-
-3. Setup environment
-```bash
-cp .env.example .env
-php artisan key:generate
-```
-
-4. Import database
-```bash
-mysql -u username -p database_name < db_ecozense.sql
-```
-
-5. Run migrations
-```bash
-php artisan migrate
-```
-
-6. Start development server
-```bash
-php artisan serve
 npm run dev
 ```
+
+3. Setup Backend:
+```bash
+cd backend
+composer install
+cp .env.example .env
+php artisan key:generate
+php artisan migrate
+php artisan serve
+```
+
+## Development
+
+- Frontend runs on http://localhost:3000
+- Backend API runs on http://localhost:8000
+
+## Contributing
+
+1. Fork the repository
+2. Create your feature branch
+3. Commit your changes
+4. Push to the branch
+5. Create a Pull Request
 
 ## 📝 Metode Pengembangan
 
