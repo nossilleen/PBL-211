@@ -46,32 +46,45 @@
 
    3.1 [Deskripsi Fungsional](#31-deskripsi-fungsional)  
    3.2 [Use Case Diagram](#32-use-case-diagram)  
-   3.3 [Use Case Pemilih Mengganti Kata Sandi](#33-use-case-pemilih-mengganti-kata-sandi)  
-   &nbsp;&nbsp;&nbsp;&nbsp;3.3.1 [Skenario](#331-skenario)  
-   3.4 [Use Case Penyetoran Sampah dan Pemberian Poin](#34-use-case-penyetoran-sampah-dan-pemberian-poin)  
-   3.5 [Use Case Penukaran Poin dengan Produk atau Sembako](#35-use-case-penukaran-poin-dengan-produk-atau-sembako)  
-   3.6 [Use Case Pengelolaan Artikel dan Video Edukasi serta Pemberikan Feedback](#36-use-case-pengelolaan-artikel-dan-video-edukasi-serta-pemberikan-feedback)  
-   3.7 [Use Case Pembuatan dan Pengelolaan Event Eco Enzim](#37-use-case-pembuatan-dan-pengelolaan-event-eco-enzim)  
-   3.8 [Use Case Memasukan Lokasi Bank Sampah](#38-use-case-memasukan-lokasi-bank-sampah)  
-   3.9 [Deskripsi Kebutuhan Non Fungsional](#39-deskripsi-kebutuhan-non-fungsional)  
-   3.10 [Deskripsi Kelas-Kelas](#310-deskripsi-kelas-kelas)  
-   &nbsp;&nbsp;&nbsp;&nbsp;3.10.1 [Class Diagram](#3101-class-diagram)  
-   &nbsp;&nbsp;&nbsp;&nbsp;3.10.2 [Class User](#3102-class-user)  
-   &nbsp;&nbsp;&nbsp;&nbsp;3.10.3 [Class Lokasi](#3103-class-lokasi)  
-   &nbsp;&nbsp;&nbsp;&nbsp;3.10.4 [Class Artikel](#3104-class-artikel)  
-   &nbsp;&nbsp;&nbsp;&nbsp;3.10.5 [Class Produk](#3105-class-produk)  
-   &nbsp;&nbsp;&nbsp;&nbsp;3.10.6 [Class ProdukGambar](#3106-class-produkgambar)  
-   &nbsp;&nbsp;&nbsp;&nbsp;3.10.7 [Class Transaksi](#3107-class-transaksi)  
-   &nbsp;&nbsp;&nbsp;&nbsp;3.10.8 [Class TransaksiItem](#3108-class-transaksiitem)  
-   &nbsp;&nbsp;&nbsp;&nbsp;3.10.9 [Class Poin](#3109-class-poin)  
-   &nbsp;&nbsp;&nbsp;&nbsp;3.10.10 [Class Feedback](#31010-class-feedback)  
-   &nbsp;&nbsp;&nbsp;&nbsp;3.10.11 [Class ArtikelGambar](#31011-class-artikelgambar)  
-   3.11 [State Machine Diagram](#311-state-machine-diagram)  
-   3.12 [Deskripsi Data](#312-deskripsi-data)  
-   &nbsp;&nbsp;&nbsp;&nbsp;3.12.1 [Entity-Relationship Diagram](#3121-entity-relationship-diagram)  
-   &nbsp;&nbsp;&nbsp;&nbsp;3.12.2 [Daftar Tabel](#3122-daftar-tabel)  
-   &nbsp;&nbsp;&nbsp;&nbsp;3.12.3 [Struktur Tabel](#3123-struktur-tabel)  
-   &nbsp;&nbsp;&nbsp;&nbsp;3.12.4 [Skema Relasi Antar Tabel](#3124-skema-relasi-antar-tabel)  
+   3.3 [Use Case Mengakses Website](#33-use-case-mengakses-website)  
+   3.4 [Use Case Mengelola Data Pengguna](#34-use-case-mengelola-data-pengguna)  
+   3.5 [Use Case Memasukkan Alamat dan Lokasi](#35-use-case-memasukkan-alamat-dan-lokasi)  
+   3.6 [Use Case Meng-edit Profil](#36-use-case-meng-edit-profil)  
+   3.7 [Use Case Menginput Berat Sampah dan Mengubahnya Menjadi Poin](#37-use-case-menginput-berat-sampah-dan-mengubahnya-menjadi-poin)  
+   3.8 [Use Case Memberikan Poin](#38-use-case-memberikan-poin)  
+   3.9 [Use Case Menerima Poin](#39-use-case-menerima-poin)  
+   3.10 [Use Case Menukarkan Poin](#310-use-case-menukarkan-poin)  
+   3.11 [Use Case Menambah Produk Ecoenzim](#311-use-case-menambah-produk-ecoenzim)  
+   3.12 [Use Case Mengatur Kuantitas Produk Ecoenzim](#312-use-case-mengatur-kuantitas-produk-ecoenzim)  
+   3.13 [Use Case Memperbarui Produk Ecoenzim](#313-use-case-memperbarui-produk-ecoenzim)  
+   3.14 [Use Case Menambah Produk ke Keranjang](#314-use-case-menambah-produk-ke-keranjang)  
+   3.15 [Use Case Pemilih Mengganti Kata Sandi](#315-use-case-pemilih-mengganti-kata-sandi)  
+   &nbsp;&nbsp;&nbsp;&nbsp;3.15.1 [Skenario](#3151-skenario)  
+   3.16 [Use Case Penyetoran Sampah dan Pemberian Poin](#316-use-case-penyetoran-sampah-dan-pemberian-poin)  
+   3.17 [Use Case Penukaran Poin dengan Produk atau Sembako](#317-use-case-penukaran-poin-dengan-produk-atau-sembako)  
+   3.18 [Use Case Pengelolaan Artikel dan Video Edukasi serta Pemberikan Feedback](#318-use-case-pengelolaan-artikel-dan-video-edukasi-serta-pemberikan-feedback)  
+   3.19 [Use Case Pembuatan dan Pengelolaan Event Eco Enzim](#319-use-case-pembuatan-dan-pengelolaan-event-eco-enzim)  
+   3.20 [Use Case Memasukan Lokasi Bank Sampah](#320-use-case-memasukan-lokasi-bank-sampah)  
+   3.21 [Use Case Meng-edit Profil](#321-use-case-meng-edit-profil)  
+   3.22 [Deskripsi Kebutuhan Non Fungsional](#322-deskripsi-kebutuhan-non-fungsional)  
+   3.23 [Deskripsi Kelas-Kelas](#323-deskripsi-kelas-kelas)  
+   &nbsp;&nbsp;&nbsp;&nbsp;3.23.1 [Class Diagram](#3231-class-diagram)  
+   &nbsp;&nbsp;&nbsp;&nbsp;3.23.2 [Class User](#3232-class-user)  
+   &nbsp;&nbsp;&nbsp;&nbsp;3.23.3 [Class Lokasi](#3233-class-lokasi)  
+   &nbsp;&nbsp;&nbsp;&nbsp;3.23.4 [Class Artikel](#3234-class-artikel)  
+   &nbsp;&nbsp;&nbsp;&nbsp;3.23.5 [Class Produk](#3235-class-produk)  
+   &nbsp;&nbsp;&nbsp;&nbsp;3.23.6 [Class ProdukGambar](#3236-class-produkgambar)  
+   &nbsp;&nbsp;&nbsp;&nbsp;3.23.7 [Class Transaksi](#3237-class-transaksi)  
+   &nbsp;&nbsp;&nbsp;&nbsp;3.23.8 [Class TransaksiItem](#3238-class-transaksiitem)  
+   &nbsp;&nbsp;&nbsp;&nbsp;3.23.9 [Class Poin](#3239-class-poin)  
+   &nbsp;&nbsp;&nbsp;&nbsp;3.23.10 [Class Feedback](#32310-class-feedback)  
+   &nbsp;&nbsp;&nbsp;&nbsp;3.23.11 [Class ArtikelGambar](#32311-class-artikelgambar)  
+   3.24 [State Machine Diagram](#324-state-machine-diagram)  
+   3.25 [Deskripsi Data](#325-deskripsi-data)  
+   &nbsp;&nbsp;&nbsp;&nbsp;3.25.1 [Entity-Relationship Diagram](#3251-entity-relationship-diagram)  
+   &nbsp;&nbsp;&nbsp;&nbsp;3.25.2 [Daftar Tabel](#3252-daftar-tabel)  
+   &nbsp;&nbsp;&nbsp;&nbsp;3.25.3 [Struktur Tabel](#3253-struktur-tabel)  
+   &nbsp;&nbsp;&nbsp;&nbsp;3.25.4 [Skema Relasi Antar Tabel](#3254-skema-relasi-antar-tabel)  
 
 4. [Perancangan Antarmuka](#4-perancangan-antarmuka)
 
@@ -329,227 +342,341 @@ Berikut merupakan alur utama dalam sistem EcoZense:
  
 Gambar 2. Use Case Diagram Aplikasi Web Eco Enzim 
 
-### 3.3 Use Case Pemilih Mengganti Kata Sandi
 
-#### Skenario
-- Identifikasi
-- Nomor
-- UC-01
-- Nama
-- Pengguna dapat membuat akun sebagai nasabah, dan admin dapat mengelola akun pengguna
-- Deskripsi
-- Pengguna membuka halaman pendaftaran.
-- Sistem menampilkan formulir pendaftaran.
-- Pengguna mengisi data diri (nama, email, password, dll.).
-- Pengguna menekan tombol "Daftar".
-- Sistem memvalidasi data dan menyimpan akun jika inputan valid.
-- Sistem menampilkan pesan sukses bahwa akun berhasil dibuat.
+### 3.20 Use Case Memasukan Lokasi Bank Sampah
 
-Pengelolaan akun oleh admin 
-- Admin login ke sistem.
-- Sistem menampilkan daftar akun pengguna yang terdaftar.
-- Admin dapat mencari akun tertentu berdasarkan nama atau email.
-- Admin memilih akun yang ingin dikelola.
-- Admin dapat mengedit data akun atau menonaktifkan akun pengguna jika diperlukan.
-- Sistem menyimpan perubahan dan menampilkan pesan sukses.
+| Identifikasi ||
+|---|---|
+| Nomor | UC-01 |
+| Nama | Memasukkan alamat dan lokasi |
+| Deskripsi | Pengelola bank sampah dapat memasukkan alamat dan lokasi bank sampah untuk memastikan informasi yang disampaikan tepat dan akurat. |
+| Aktor | Pengelola Bank Sampah |
+| Kondisi awal | Pengelola bank sampah telah login ke dalam sistem dan membuka halaman edit lokasi bank sampah. |
+| Kondisi akhir | Alamat dan lokasi bank sampah berhasil disimpan di dalam sistem. |
 
-Skenario Alternatif 
-- 1a. Pengguna memasukkan data yang tidak valid (seperti email tidak sesuai format biasanya atau password yang terlalu pendek, seperti 3 digit)
-- 1b. Pengguna mencoba mendaftar dengan email yang sudah digunakan, sistem menampilkan pesan bahwa email sudah terdaftar.
-- 4a. Admin mencoba menonaktifkan akun pengguna, tetapi sistem meminta konfirmasi sebelum melakukan tindakan ini.
-- 4b. Admin tidak memiliki izin untuk mengedit akun tertentu, sistem menampilkan pesan akses ditolak.
+#### Skenario Utama
+1. Pengelola bank sampah membuka form input lokasi
+2. Sistem menampilkan form input lokasi dan peta
+3. Pengelola bank sampah mengisi alamat lengkap
+4. Pengelola bank sampah menandai lokasi pada peta
+5. Pengelola bank sampah menekan tombol "Simpan"
+6. Sistem menyimpan perubahan dan menampilkan lokasi yang telah diperbarui
 
-### 3.4 Use Case Penyetoran Sampah dan Pemberian Poin
+#### Skenario Alternatif
+3a. Jika form tidak diisi lengkap:
+   - Sistem menampilkan pesan error dan tidak menyimpan perubahan
 
-#### Skenario
-- Identifikasi
-- Nomor
-- UC-02
-- Nama
-- Penyetoran sampah dan Pemberian poin
-- Deskripsi
-- Nasabah menyetor sampah dan mendapatkan poin, pengelola bank sampah dapat menilai dan memberikan poin atas penyetoran sampah
-- Aktor
-- Nasabah dan Pengelola bank sampah
-- Kondisi awal
-- Nasabah melakukan penyetoran sampah
-- Kondisi akhir
-- Sampah telah disetor dan poin dapat diberikan kepada nasabah dari pengelola bank sampah
-- Skenario Utama
-- Nasabah menyetor sampah secara langsung kepada pengelola bank sampah.
-- Pengelola bank sampah menerima sampah, kemudian menimbang sampah.
-- Timbangan sampah dikonversikan menjadi poin pada aplikasi.
-- Poin diberikan kepada Nasabah oleh Pengelola bank sampah.
-- Nasabah berhasil menerima poin.
+4a. Jika lokasi pada peta tidak ditandai:
+   - Sistem menampilkan pesan error untuk menandai lokasi pada peta
 
-Skenario Alternatif 
-- 3a. Aplikasi tidak dapat mengonversi poin.
+### 3.21 Use Case Meng-edit Profil
 
-### 3.5 Use Case Penukaran Poin dengan Produk atau Sembako
+| Identifikasi ||
+|---|---|
+| Nomor | UC-02 |
+| Nama | Meng-edit profil |
+| Deskripsi | Nasabah dapat memperbarui informasi profil untuk memastikan data yang tersimpan tetap akurat. |
+| Aktor | Nasabah |
+| Kondisi awal | Nasabah telah login ke dalam sistem dan membuka halaman edit profil. |
+| Kondisi akhir | Informasi profil nasabah berhasil diperbarui dalam sistem. |
 
-#### Skenario
-- Identifikasi
-- Nomor
-- PBL/USECASE/03
-- Nama
-- Penukaran Poin dengan Produk atau Sembako
-- Deskripsi
-- Nasabah dapat menukar poin yang telah dikumpulkan dengan produk Eco Enzim atau sembako melalui aplikasi.
-- Aktor
-- Nasabah
-- Kondisi awal
-- Nasabah memiliki akun dan masuk ke dalam sistem dan Nasabah memiliki saldo poin yang cukup untuk ditukarkan.
-- Kondisi akhir
-- Produk Eco Enzim atau sembako berhasil ditukar dan poin nasabah berkurang sesuai jumlah yang digunakan.
-- Skenario Utama
-- Nasabah masuk ke dalam aplikasi web Eco Enzim.
-- Nasabah memilih menu "Tukar Poin".
-- Sistem menampilkan daftar produk Eco Enzim dan sembako beserta jumlah poin yang diperlukan.
-- Nasabah memilih produk yang ingin ditukar.
-- Sistem menampilkan detail penukaran, termasuk jumlah poin yang akan digunakan.
-- Nasabah mengonfirmasi penukaran.
-- Sistem memverifikasi ketersediaan stok dan saldo poin nasabah.
-- Jika poin cukup dan stok tersedia, sistem mengurangi saldo poin nasabah dan memproses penukaran.
-- Sistem menampilkan notifikasi bahwa penukaran berhasil dan memberikan informasi pengambilan/pengiriman produk.
+#### Skenario Utama
+1. Nasabah membuka halaman edit profil
+2. Sistem menampilkan form edit profil dengan data yang sudah ada
+3. Nasabah mengubah informasi yang diinginkan
+4. Nasabah menekan tombol "Simpan"
+5. Sistem memvalidasi input
+6. Sistem menyimpan perubahan dan menampilkan profil yang telah diperbarui
 
-Skenario Alternatif 
-- 1a. Jika saldo poin nasabah tidak mencukupi → Sistem menampilkan pesan bahwa poin tidak cukup untuk melakukan penukaran.
-- 3a. Jika stok produk habis → Sistem menampilkan notifikasi bahwa produk tidak tersedia dan meminta nasabah memilih produk lain.
-- 7a. Jika terjadi kesalahan saat proses penukaran → Sistem membatalkan transaksi dan mengembalikan poin jika sudah terpotong.
+#### Skenario Alternatif
+5a. Jika validasi gagal:
+   - Sistem menampilkan pesan error dan tidak menyimpan perubahan
+   - Sistem menampilkan form dengan data yang sudah diisi sebelumnya
+   - Nasabah memperbaiki input yang tidak valid
+### 3.22 Use Case Penukaran Poin
 
-### 3.6 Use Case Pengelolaan Artikel dan Video Edukasi serta Pemberikan Feedback
+| Identifikasi ||
+|---|---|
+| Nomor | UC-03 |
+| Nama | Penukaran Poin |
+| Deskripsi | Nasabah yang telah menyetor sampah akan mendapatkan poin pada EcoZense. |
+| Aktor | Nasabah, Pengelola Bank Sampah |
+| Kondisi awal | Nasabah dan Pengelola Bank Sampah telah login kedalam EcoZense, dan Nasasbah belum menerima poin. |
+| Kondisi akhir | Pemberian poin oleh Pengelola Bank Sampah telah berhasil dan Nasabah mendapatkan poin. |
 
-#### Skenario
-- Identifikasi
-- Nomor
-- PBL/USECASE/04
-- Nama
-- Pengelolaan Artikel dan Video Edukasi serta Pemberikan
-- Deskripsi
-- Admin mengelola (menambah dan mengedit) artikel dan video edukasi.
-- Pengguna umum dapat membaca artikel dan memberikan komentar atau feedback.
-- Aktor
-- Admin dan pengguna umum
-- Kondisi awal
-- Admin telah login ke dalam sistem.
-- Pengguna umum mengakses halaman artikel tanpa perlu login.
-- Kondisi akhir
-- Artikel atau video edukasi berhasil ditambahkan atau diedit oleh Admin.
-- Komentar atau feedback berhasil disimpan dan ditampilkan pada artikel oleh Pengguna Umum.
-- Skenario Utama
-- Admin:
-- Admin login dan diarahkan ke halaman manajemen artikel dan video edukasi
-- Sistem menampilkan daftar artikel dan video edukasi.
-- Admin memilih "Tambah Artikel/Video".
-- Sistem menampilkan form tambah artikel/video.
-- Admin mengisi judul, deskripsi, dan konten (atau mengunggah video), lalu menekan "Simpan".
-- Sistem menyimpan data dan menampilkan pesan sukses.
-- Admin dapat mengedit atau menghapus artikel/video jika diperlukan
+#### Skenario Utama
+1. Nasabah login kedalam EcoZense.
+2. Pengelola Bank Sampah membuka halaman poin pada dashboard.
+3. Pengelola Bank Sampah mencari email Nasabah yang telah menyetor sampah.
+4. Setelah berat sampah ditimbang diluar aplikasi, berat tersebut diinputkan kedalam EcoZense oleh Pengelola Bank Sampah untuk mengkonversikannya menjadi poin.
+5. Pengelola Bank Sampah kemudian dapat mengirim poin kepada nasabah.
+6. Nasabah telah berhasil menerima poin dan dapat dilihat melalui notifikasi.
 
-Pengguna umum: 
-- Pengguna membuka halaman Artikel dan Video Edukasi.
-- Sistem menampilkan daftar artikel dan video.
-- Pengguna memilih artikel untuk dibaca.
-- Sistem menampilkan isi artikel.
-- Pengguna memberikan komentar atau feedback dan menekan "Kirim".
-- Sistem menyimpan komentar dan menampilkan pesan sukses.
+#### Skenario Alternatif
+3a. Jika email tidak ditemukan:
+   - Sistem konversi dan pengiriman poin tidak bisa dilakukan.
 
-Skenario Alternatif 
-- 1a. Jika saldo poin nasabah tidak mencukupi → Sistem menampilkan pesan bahwa poin tidak cukup untuk melakukan penukaran.
-- 3a. Jika stok produk habis → Sistem menampilkan notifikasi bahwa produk tidak tersedia dan meminta nasabah memilih produk lain.
-- 7a. Jika terjadi kesalahan saat proses penukaran → Sistem membatalkan transaksi dan mengembalikan poin jika sudah terpotong.
+### 3.23 Use Case Mengupdate Produk EcoEnzyme
 
-### 3.7 Use Case Pembuatan dan pengelolaan event eco enzim
+| Identifikasi ||
+|---|---|
+| Nomor | UC-04 |
+| Nama | Mengupdate produk EcoEnzyme |
+| Deskripsi | Pengelolah bank sampah dapat mengupdate produk EcoEnzyme |
+| Aktor | Pengelolah bank sampah |
+| Kondisi awal | Pengelolah bank sampah telah login ke halaman produk. |
+| Kondisi akhir | Pengelolah bank sampah berhasil memperbarui produk EcoEnzyme. |
 
-#### Skenario
-- Identifikasi
-- Nomor
-- PBL/USECASE/05
-- Nama
-- Pengelola bank sampah dapat mengunggah dan memperbaharui daftar produk Eco Enzim yang tersedia.
-- Deskripsi
-- Bank sampah dapat mengedit/memparbaharui jumlah produk Eco Enzyme yg masi tersedia.
-- Aktor
-- Bank sampah
-- Kondisi awal
-- Bank sampah login ke dalam sistem dan melihat jumlah stok
-- Kondisi akhir
-- Bank sampah mengedit jumlah produk Eco Enzyme sesuai jumlah yang tersedia.
-- Skenario Utama
-- Setelah login,bank sampah masuk ke halaman barang Eco Enzyme.
-- Bank sampah melihat jumlah stok Eco Enzyme yang tersedia.
-- Bank sampah mencari produk Eco Enzyme di halaman web.
-- Bank sampah merubah jumlah produk Eco Enzyme sesuai jumlah yang tersedia.
-- Bank sampah menekan tombol "Simpan" untuk merubah jumlahnya.
-- Sistem merubah jumlah sesuai yang di ubah bank sampah.
-- Bank sampah dapat mengurangi dan menambah jumlah produk Eco Enzyme.
+#### Skenario Utama
+1. Pengelolah bank sampah memasuki halaman produk
+2. Pengelolah bank sampah menekan tombol "menambah produk"
+3. Sistem membawa ke halaman tambah produk
+4. Pengelolah bank sampah mengisi data produk yang ingin di tambahi lalu tekan menyimpan, sistem otomatis menyimpannya
+5. Pengelolah bank sampah menekan tombol "edit jumlah stok"
+6. Pengelolah bank sampah mengedit jumlah stok sesuai yang tersedia lalu tekan "menyimpan" dan sistem otomatis menyimpannya
+7. Pengelolah bank sampah melihat ada jumlah stok yg sudah habis
+8. Pengelolah bank sampah menekan produknya lalu merubah status produk menjadi stok habis
+9. Begitu pulak jika ingin merubah status menjadi status tersedia
 
-Skenario Alternatif 
-- 1a. Bank sampah salah memasukan username atau password,sistem menampilkan password salah.
-- 4a. Jika Bank sampah meletakkan huruf atau simbol di kolom jumlah stok,system akan gagal menyimpan data yang di perbarui.
-- 4b. Bank sampah tidak melengkapi data,sistem akan menampilkan harap lengkapi data.
-- 6a. Jika terjadi kegagalan sistem saat menyimpan data,sistem akan menampilkan gagal menyimpan dan harap coba lagi.
+#### Skenario Alternatif
+4a. Jika ada data yang kosong:
+   - Sistem akan mengirim pesan error
 
-### 3.8 Use Case Pembuatan dan Pengelolaan Event Eco Enzim
+5a. Jika stok tersisa sedikit:
+   - Akan ada peringatan stok menipis
 
-#### Skenario
-- Identifikasi
-- Nomor
-- PBL/USECASE/06
-- Nama
-- Pembuatan dan pengelolaan event eco enzim
-- Deskripsi
-- Admin dapat membuat dan mengelola event eco enzim
-- Aktor
-- Admin
-- Kondisi awal
-- Admin telah login ke sistem
-- Kondisi akhir
-- Admin berhasil membuat atau mengelola event eco enzim.
-- Skenario Utama
-- Setelah login, admin diarahkan ke halaman manajemen event.
-- Sistem menampilkan daftar event yang sudah ada.
-- Admin memilih opsi untuk membuat event baru.
-- Admin mengisi detail event (nama, deskripsi, tanggal, lokasi, dll.).
-- Admin menekan tombol "Simpan" untuk menyimpan event.
-- Sistem menampilkan pesan sukses bahwa event telah tersimpan.
-- Admin dapat mengedit atau menghapus event yang sudah dibuat jika diperlukan.
+6a. Jika ada data yang kosong:
+   - Sistem akan mengirim pesan error
 
-Skenario Alternatif 
-- 1a. Admin memasukkan username dan password yang salah dan tidak dapat mengakses halaman manajemen event
-- 3a. Admin memilih untuk mengedit event yang sudah ada dan memperbarui informasinya sebelum menyimpan.
-- 3b. Admin memilih untuk menghapus event yang sudah ada, dan sistem meminta konfirmasi sebelum menghapusnya.
-- 5a. Admin tidak mengisi data event secara lengkap, sistem menampilkan pesan kesalahan dan meminta admin melengkapi data sebelum menyimpan.
+### 3.24 Use Case Proses Pembelian Produk Eco Enzim atau Sembako
 
-### 3.9 Use Case Memasukan Lokasi Bank Sampah
+| Identifikasi ||
+|---|---|
+| Nomor | UC-05 |
+| Nama | Proses Pembelian Produk Eco Enzim atau Sembako |
+| Deskripsi | Nasabah dapat melakukan proses pembelian produk eco enzim atau sembako melalui aplikasi EcoZense, yang mencakup menambahkan produk ke dalam keranjang, memilih kuantitas, menyelesaikan pembayaran, memberikan rating, membagikan, atau menandai produk favorit, serta melihat riwayat pembelian. |
+| Aktor | Nasabah dan pengelola bank sampah |
+| Kondisi awal | Nasabah telah masuk ke aplikasi dan berada di halaman toko. |
+| Kondisi akhir | Pembelian produk berhasil dilakukan, aksi lanjutan seperti memberi rating, share, atau favorit telah disimpan, dan riwayat pembelian dapat diakses. |
 
-#### Skenario
-- Identifikasi
-- Nomor
-- PBL/USECASE/07
-- Nama
-- Memasukkan Lokasi Bank Sampah
-- Deskripsi
-- Pendaftar pengelola bank sampah dapat memassukan lokasi yang dikelolanya.
-- Aktor
-- Pengelola bank sampah
-- Kondisi awal
-- User ingin mendaftar menjadi Pengelola bank sampah.
-- Kondisi akhir
-- User berhasil memasukkan lokasi dan terdaftar sebagai pengelola bank sampah.
-- Skenario Utama
-- User mengakses halaman pendaftaran pengelola bank sampah.
-- User mengisi formulir pendaftaran dengan informasi yang diperlukan, termasuk nama, alamat, dan lokasi bank sampah.
-- User mengklik tombol "Kirim" untuk mengirimkan data.
-- Sistem memvalidasi data yang dimasukkan.
-- Jika data valid, sistem menyimpan informasi lokasi bank sampah dan mengonfirmasi pendaftaran kepada user.
+#### Skenario Utama
+1. Nasabah membuka aplikasi EcoZense dan masuk ke halaman toko.
+2. Nasabah menelusuri produk eco enzim atau sembako yang tersedia.
+3. Nasabah memilih produk dan menentukan kuantitas.
+4. Nasabah menekan tombol "Tambahkan ke Keranjang".
+5. Sistem menyimpan produk dan kuantitas ke dalam keranjang dan menampilkan notifikasi keberhasilan.
+6. Nasabah membuka keranjang untuk memeriksa produk dan kuantitas, serta dapat mengubah jumlah kuantitas jika diperlukan.
+7. Nasabah menekan tombol "Beli Sekarang".
+8. Aplikasi menampilkan pilihan metode pembayaran (poin atau transfer).
+9. Nasabah memilih metode pembayaran dan menyelesaikan proses pembayaran sesuai instruksi.
+10. Sistem memverifikasi pembayaran.
+11. Aplikasi menampilkan notifikasi bahwa pembelian berhasil dan menyimpan bukti pembelian.
+12. Nasabah mengakses halaman "Riwayat Pembelian" untuk melihat transaksi yang telah dilakukan.
+13. Nasabah memilih salah satu transaksi untuk melihat detailnya.
+14. Dari halaman riwayat atau produk, nasabah dapat:
+    - Memberikan rating dan ulasan
+    - Membagikan produk ke platform lain
+    - Menandai produk sebagai favorit
+15. Sistem menyimpan seluruh aksi yang dilakukan oleh nasabah.
 
-Skenario Alternatif 
-- 3a. Jika data yang dimasukkan tidak valid, sistem menampilkan pesan kesalahan dan meminta user untuk memperbaiki informasi yang salah.
-- 3b. Jika user tidak mengisi semua kolom yang wajib, sistem menampilkan pesan peringatan dan meminta user untuk melengkapi informasi yang diperlukan.
-- 5a. Jika lokasi yang dimasukkan sudah terdaftar sebelumnya, sistem memberikan notifikasi bahwa lokasi tersebut sudah ada dan meminta user untuk memasukkan lokasi yang berbeda.
+#### Skenario Alternatif
+4a. Sistem gagal menambahkan produk ke keranjang karena gangguan (misalnya koneksi internet):
+   - Aplikasi menampilkan pesan: "Gagal menambahkan produk ke keranjang. Silakan coba lagi."
+   - Nasabah dapat mencoba kembali setelah kendala teratasi.
 
-### 3.10 Deskripsi Kebutuhan Non Fungsional
+6a. Nasabah memasukkan kuantitas yang tidak valid (nol, negatif, atau melebihi stok):
+   - Aplikasi menampilkan pesan: "Kuantitas tidak valid. Silakan masukkan jumlah yang sesuai."
+   - Nasabah memperbaiki kuantitas dan melanjutkan proses.
+
+9a. Nasabah tidak memilih metode pembayaran:
+   - Aplikasi menampilkan pesan: "Silakan pilih metode pembayaran."
+   - Nasabah memilih metode dan melanjutkan.
+
+10a. Pembayaran gagal diproses:
+   - Aplikasi menampilkan pesan: "Pembayaran gagal. Silakan coba lagi atau hubungi pengelola."
+   - Nasabah dapat mencoba ulang atau meminta bantuan.
+
+13a. Data transaksi gagal dimuat:
+   - Sistem menampilkan pesan: "Gagal memuat data. Silakan coba beberapa saat lagi."
+   - Nasabah dapat memuat ulang halaman.
+
+14a. Detail transaksi tidak tersedia:
+   - Sistem menampilkan pesan: "Detail transaksi tidak dapat ditampilkan."
+   - Nasabah dapat kembali ke daftar transaksi atau mencoba ulang.
+
+14b. Nasabah tidak menekan bintang saat memberi rating:
+   - Aplikasi menampilkan pesan: "Silakan tekan bintang sesuai dengan tingkat kepuasan Anda."
+   - Nasabah menekan bintang sesuai kepuasan dan melanjutkan proses.
+
+14c. Nasabah tidak dapat menandai produk sebagai favorit:
+   - Aplikasi menampilkan pesan: "Gagal menandai produk sebagai favorit. Silakan coba lagi."
+   - Nasabah dapat mencoba menekan ikon favorit kembali.
+
+### 3.25 Use Case Mengelola dan Mempebarui Artikel
+
+| Identifikasi ||
+|---|---|
+| Nomor | UC-06 |
+| Nama | Mengelola dan memperbarui artikel |
+| Deskripsi | Admin dapat melihat daftar artikel, menambah artikel baru, mengedit artikel yang sudah ada, atau menghapus artikel yang tidak diperuntukan. |
+| Aktor | Admin |
+| Kondisi awal | Admin login ke sistem dan berada pada halaman manajemen artikel. |
+| Kondisi akhir | Artikel berhasil ditambahkan, diperbarui, atau dihapus dari sistem. |
+
+#### Skenario Utama
+1. Admin membuka menu "Artikel" pada dashboard
+2. Sistem menampilkan daftar artikel yang tersedia
+3. Admin dapat memilih untuk:
+   - Menambahkan artikel baru
+     - Admin mengisi judul, isi, gambar, dll artikel
+     - Menekan tombol "Simpan"
+   - Memperbarui artikel
+     - Admin memilih artikel yang ingin diedit
+     - Admin mengubah data artikel
+     - Menekan tombol "Simpan"
+   - Menghapus artikel
+     - Admin memilih artikel yang ingin dihapus
+     - Menekan tombol "Hapus"
+     - Sistem menghapus artikel dari daftar
+
+#### Skenario Alternatif
+3a. Jika artikel tidak diisi lengkap saat menambah atau memperbarui:
+   - Sistem menampilkan pesan kesalahan dan tidak menyimpan data.
+
+3b. Jika artikel yang ingin diedit atau dihapus tidak ditemukan:
+   - Sistem menampilkan pesan "Artikel tidak ditemukan"
+
+### 3.26 Use Case Melihat, Memberi Nilai, dan Memberi Feedback pada Artikel
+
+| Identifikasi ||
+|---|---|
+| Nomor | UC-07 |
+| Nama | Melihat, memberi nilai, dan memberi feedback pada artikel |
+| Deskripsi | Nasabah dapat Melihat, memberi nilai, dan memberi feedback pada artikel |
+| Aktor | Nasabah |
+| Kondisi awal | Nasabah ingin melihat, memberi nilai, dan memberi feedback pada artikel |
+| Kondisi akhir | Nasabah berhasil melihat, memberi nilai, dan memberi feedback pada artikel |
+
+#### Skenario Utama
+1. Nasabah mengakses halaman utama pada website
+2. Nasabah menekan tombol "artikel"
+3. Nasabah akan diarahkan ke halaman artikel
+4. Nasabah bisa memilih dan menekan artikel yang tertera di halaman tersebut
+5. Nasabah bisa menilai dan memberi feedback pada artikel yang dipilih
+
+#### Skenario Alternatif
+1a. Nasabah mengakses halaman utama, namun koneksi internet terputus:
+   - Sistem menampilkan pesan kesalahan koneksi dan halaman tidak dapat dimuat
+
+2a. Nasabah menekan tombol "Artikel", namun halaman tidak dapat dimuat karena kesalahan server:
+   - Sistem menampilkan pesan bahwa terjadi kesalahan pada server dan meminta nasabah mencoba kembali nanti
+
+3a. Nasabah dialihkan ke halaman artikel, tetapi konten artikel tidak berhasil dimuat:
+   - Sistem menampilkan notifikasi bahwa terjadi gangguan dalam memuat konten
+
+4a. Nasabah tidak menemukan artikel yang diinginkan karena daftar artikel kosong atau belum tersedia:
+   - Sistem menampilkan pesan bahwa belum ada artikel yang tersedia
+
+4b. Nasabah menekan artikel, namun artikel tersebut sudah tidak tersedia (misalnya, telah dihapus oleh admin):
+   - Sistem menampilkan pesan bahwa artikel tidak dapat ditemukan
+
+5a. Nasabah mencoba memberi nilai atau feedback, tetapi data yang dimasukkan tidak sesuai format:
+   - Sistem menampilkan pesan kesalahan dan meminta nasabah memperbaiki input
+
+5b. Nasabah memberi nilai atau feedback, namun terjadi kegagalan saat menyimpan data karena gangguan sistem:
+   - Sistem menampilkan pesan bahwa feedback atau nilai gagal dikirim dan menyarankan untuk mencoba kembali
+
+### 3.27 Use Case Membuat dan Mengelolah Event
+
+| Identifikasi ||
+|---|---|
+| Nomor | UC-08 |
+| Nama | Membuat dan Mengelolah event |
+| Deskripsi | Admin dapat membuat dan mengelolah event EcoEnzyme |
+| Aktor | Admin |
+| Kondisi awal | Admin masuk kedalam sistem |
+| Kondisi akhir | Admin berhasil membuat dan mengelolah event EcoEnzyme |
+
+#### Skenario Utama
+1. Admin masuk ke halaman manajmen event
+2. Sistem menampilkan daftar event yang sudah ada
+3. Admin menekan tombol "membuat event"
+4. Admin mengisi data formulir untuk membua event
+5. Admin menekan tombol "simpan" untuk menyimpan
+6. Sistem otomatis menyimpan event yang sudah dibuat
+7. Admin dapat mengedit dan menghapus event yang di inginkan
+
+#### Skenario Alternatif
+2a. Admin memilih untuk menghapus event yang sudah ada:
+   - Sistem meminta konfirmasi sebelum menghapusnya
+
+4a. Jika ada data yang kosong:
+   - Sistem akan mengirim pesan error
+
+6a. Jika tidak ada jaringan:
+   - Sistem tidak akan menyimpan event
+
+### 3.28 Use Case Melakukan Pendaftaran untuk Sebuah Event
+
+| Identifikasi ||
+|---|---|
+| Nomor | UC-09 |
+| Nama | Melakukan Pendaftaran untuk sebuah event |
+| Deskripsi | Nasabah melakukan pendaftaran untuk sebuah event yang tertera di website |
+| Aktor | Nasabah |
+| Kondisi awal | Nasabah ingin mendaftar untuk sebuah event |
+| Kondisi akhir | Nasabah berhasil mendaftar untuk sebuah event |
+
+#### Skenario Utama
+1. Nasabah mengakses halaman utama
+2. Nasabah mengakses halaman pendaftaran event yang tertera di halaman utama
+3. Nasabah mengisi formulir dan data yang diperlukan
+4. Sistem memvalidasi data yang dimasukkan
+5. Sistem menyimpan data pendaftaran dan menampilkan notifikasi bahwa pendaftaran berhasil
+
+#### Skenario Alternatif
+1a. Nasabah mengakses halaman utama, namun koneksi internet terputus:
+   - Sistem menampilkan pesan kesalahan koneksi dan pengguna tidak dapat melanjutkan proses
+
+2a. Nasabah mengakses halaman pendaftaran event, namun halaman tidak dapat dimuat karena kesalahan server:
+   - Sistem menampilkan pesan bahwa terjadi kesalahan pada server dan meminta nasabah mencoba kembali nanti
+
+3a. Pengguna mengisi formulir pendaftaran, namun data yang dimasukkan tidak lengkap atau tidak sesuai format:
+   - Sistem menampilkan pesan kesalahan dan meminta pengguna untuk mengisi data dengan lengkap atau memperbaikinya
+
+4a. Sistem gagal memvalidasi data karena terjadi gangguan teknis atau kesalahan internal sistem:
+   - Sistem menampilkan pesan bahwa terjadi kesalahan teknis dan meminta pengguna mencoba kembali nanti
+
+### 3.29 Use Case Pengajuan Nasabah menjadi Pengelola Bank Sampah
+
+| Identifikasi ||
+|---|---|
+| Nomor | UC-10 |
+| Nama | Pengajuan Nasabah menjadi Pengelola Bank Sampah |
+| Deskripsi | Nasabah yang ingin menjadi Pengelola Bank Sampah dapat mengajukannya pada EcoZense |
+| Aktor | Nasabah dan Admin |
+| Kondisi awal | Nasabah melakukan pengajuan menjadi Pengelola Bank Sampah |
+| Kondisi akhir | Nasabah telah berhasil menjadi Pengelola Bank Sampah |
+
+#### Skenario Utama
+1. Nasabah memasuki EcoZense
+2. Nasabah memasuki halaman profil kemudian menekan tombol "Appeal"
+3. Nasabah mengisi formulir pengajuan menjadi Pengajuan Bank Sampah kemudian menekan "Submit"
+4. Admin memasuki Dashboard kemudian memilih "Pengajuan" pada Sidebar
+5. Admin mereview pengajuan yang dilakukan nasabah kemudian memverifikasinya
+6. Setelah diverifikasi Nasabah telah berhasil menjadi Pengelola Bank Sampah
+
+#### Skenario Alternatif
+3a. Nasabah tidak memasukkan salah satu data yang diperlukan:
+   - Akan memunculkan error dan perintah untuk mengisi data tersebut
+
+3b. Nasabah yang menekan tombol "Cancel":
+   - Akan memunculkan popup untuk memastikan apakah Nasabah ingin cancel atau tidak
+
+5a. Admin yang menemukan masalah pada data:
+   - Akan menolak verifikasi
+
+### 3.22 Deskripsi Kebutuhan Non Fungsional
 
 | SKPL-Id | Parameter | Kebutuhan |
 |---------|-----------|-----------|
@@ -559,7 +686,7 @@ Skenario Alternatif
 | SKPL-NF04 | Portability | Sistem harus dapat berjalan di browser desktop |
 | SKPL-NF05 | User friendly | Antarmuka pengguna harus intuitif dan mudah digunakan oleh masyarakat umum |
 
-### 3.11 Deskripsi Kelas-Kelas
+### 3.23 Deskripsi Kelas-Kelas
 
 #### Class Diagram
 [Diagram akan ditambahkan di sini]
@@ -737,10 +864,10 @@ Skenario Alternatif
 | getImageDetails | Public | Mengambil detail gambar |
 | getImageList | Public | Mengambil daftar gambar |
 
-### 3.12 State Machine Diagram
+### 3.24 State Machine Diagram
 [Diagram akan ditambahkan di sini]
 
-### 3.13 Deskripsi Data
+### 3.25 Deskripsi Data
 
 #### Entity-Relationship Diagram
 [Diagram akan ditambahkan di sini]
@@ -774,48 +901,49 @@ Skenario Alternatif
 ## 5. Matriks Keterunutan
 
 ### 5.1 Kebutuhan Fungsional vs Use Case
-| Kebutuhan | Deskripsi | UC-01 | UC-02 | UC-03 | UC-04 | UC-05 | UC-06 | UC-07 | Prioritas |
-|-----------|-----------|-------|-------|-------|-------|-------|-------|-------|-----------|
-| SKPL-F01 | Menampilkan peta lokasi bank sampah | - | - | - | - | - | - | X | Tinggi |
-| SKPL-F02 | Melihat dan menelusuri artikel | - | - | - | X | - | - | - | Tinggi |
-| SKPL-F03 | Mendaftar pada event | - | - | - | - | - | X | - | Sedang |
-| SKPL-F04 | Membuat akun sebagai nasabah | X | - | - | - | - | - | - | Tinggi |
-| SKPL-F05 | Mengedit profil | X | - | - | - | - | - | - | Sedang |
-| SKPL-F07 | Menerima poin | - | X | - | - | - | - | - | Tinggi |
-| SKPL-F08 | Melihat jumlah poin | - | X | - | - | - | - | - | Tinggi |
-| SKPL-F09 | Membeli produk dengan poin/transfer | - | - | X | - | - | - | - | Tinggi |
-| SKPL-F010 | Memasukkan produk ke keranjang | - | - | X | - | - | - | - | Tinggi |
-| SKPL-F011 | Memasukkan kuantitas produk | - | - | X | - | - | - | - | Tinggi |
-| SKPL-F012 | Memberikan rating produk | - | - | X | - | - | - | - | Rendah |
-| SKPL-F013 | Menerima notifikasi | - | - | X | - | - | - | - | Sedang |
-| SKPL-F014 | Menerima bukti pembayaran | - | - | X | - | - | - | - | Tinggi |
-| SKPL-F015 | Melihat riwayat pembelian | - | - | X | - | - | - | - | Sedang |
-| SKPL-F016 | Memberikan nilai artikel | - | - | - | X | - | - | - | Rendah |
-| SKPL-F017 | Memberikan feedback artikel | - | - | - | X | - | - | - | Sedang |
-| SKPL-F018 | Mengajukan menjadi Bank Sampah | - | - | - | - | - | - | X | Tinggi |
-| SKPL-F019 | Memasukkan lokasi bank sampah | - | - | - | - | - | - | X | Tinggi |
-| SKPL-F020 | Menambahkan produk ecoenzim | - | - | - | - | X | - | - | Tinggi |
-| SKPL-F021 | Mengatur kuantitas produk | - | - | - | - | X | - | - | Tinggi |
-| SKPL-F022 | Mengupdate produk | - | - | - | - | X | - | - | Tinggi |
-| SKPL-F023 | Memasukkan berat sampah | - | X | - | - | - | - | - | Tinggi |
-| SKPL-F024 | Memberikan poin | - | X | - | - | - | - | - | Tinggi |
-| SKPL-F025 | Melihat riwayat transaksi | - | X | - | - | - | - | - | Sedang |
-| SKPL-F026 | Melihat lokasi bank sampah | - | - | - | - | - | - | X | Tinggi |
-| SKPL-F027 | Mengelola artikel | - | - | - | X | - | - | - | Tinggi |
-| SKPL-F028 | Mereview artikel | - | - | - | X | - | - | - | Tinggi |
-| SKPL-F029 | Mengelola event | - | - | - | - | - | X | - | Tinggi |
-| SKPL-F030 | Mereview event | - | - | - | - | - | X | - | Tinggi |
-| SKPL-F031 | Memverifikasi pengajuan | - | - | - | - | - | - | X | Tinggi |
-| SKPL-F032 | Mengelola data pengguna | X | - | - | - | - | - | - | Tinggi |
+| Kebutuhan | Deskripsi | UC-01 | UC-02 | UC-03 | UC-04 | UC-05 | UC-06 | UC-07 | UC-08 | Prioritas |
+|-----------|-----------|-------|-------|-------|-------|-------|-------|-------|-------|-----------|
+| SKPL-F01 | Menampilkan peta lokasi bank sampah | - | - | - | - | - | - | - | - | Tinggi |
+| SKPL-F02 | Melihat dan menelusuri artikel | - | - | - | X | - | - | - | - | Tinggi |
+| SKPL-F03 | Mendaftar pada event | - | - | - | - | - | X | - | - | Sedang |
+| SKPL-F04 | Membuat akun sebagai nasabah | X | - | - | - | - | - | - | - | Tinggi |
+| SKPL-F05 | Mengedit profil | X | - | - | - | - | - | - | - | Sedang |
+| SKPL-F07 | Menerima poin | - | X | - | - | - | - | - | - | Tinggi |
+| SKPL-F08 | Melihat jumlah poin | - | X | - | - | - | - | - | - | Tinggi |
+| SKPL-F09 | Membeli produk dengan poin/transfer | - | - | X | - | - | - | - | - | Tinggi |
+| SKPL-F010 | Memasukkan produk ke keranjang | - | - | X | - | - | - | - | - | Tinggi |
+| SKPL-F011 | Memasukkan kuantitas produk | - | - | X | - | - | - | - | - | Tinggi |
+| SKPL-F012 | Memberikan rating produk | - | - | X | - | - | - | - | - | Rendah |
+| SKPL-F013 | Menerima notifikasi | - | - | X | - | - | - | - | - | Sedang |
+| SKPL-F014 | Menerima bukti pembayaran | - | - | X | - | - | - | - | - | Tinggi |
+| SKPL-F015 | Melihat riwayat pembelian | - | - | X | - | - | - | - | - | Sedang |
+| SKPL-F016 | Memberikan nilai artikel | - | - | - | X | - | - | - | - | Rendah |
+| SKPL-F017 | Memberikan feedback artikel | - | - | - | X | - | - | - | - | Sedang |
+| SKPL-F018 | Mengajukan menjadi Bank Sampah | - | - | - | - | - | - | X | - | Tinggi |
+| SKPL-F019 | Memasukkan lokasi bank sampah | - | - | - | - | - | - | X | - | Tinggi |
+| SKPL-F020 | Menambahkan produk ecoenzim | - | - | - | - | X | - | - | - | Tinggi |
+| SKPL-F021 | Mengatur kuantitas produk | - | - | - | - | X | - | - | - | Tinggi |
+| SKPL-F022 | Mengupdate produk | - | - | - | - | X | - | - | - | Tinggi |
+| SKPL-F023 | Memasukkan berat sampah | - | X | - | - | - | - | - | - | Tinggi |
+| SKPL-F024 | Memberikan poin | - | X | - | - | - | - | - | - | Tinggi |
+| SKPL-F025 | Melihat riwayat transaksi | - | X | - | - | - | - | - | - | Sedang |
+| SKPL-F026 | Melihat lokasi bank sampah | - | - | - | - | - | - | X | - | Tinggi |
+| SKPL-F027 | Mengelola artikel | - | - | - | X | - | - | - | - | Tinggi |
+| SKPL-F028 | Mereview artikel | - | - | - | X | - | - | - | - | Tinggi |
+| SKPL-F029 | Mengelola event | - | - | - | - | - | X | - | - | Tinggi |
+| SKPL-F030 | Mereview event | - | - | - | - | - | X | - | - | Tinggi |
+| SKPL-F031 | Memverifikasi pengajuan | - | - | - | - | - | - | X | - | Tinggi |
+| SKPL-F032 | Mengelola data pengguna | X | - | - | - | - | - | - | - | Tinggi |
+| SKPL-F010 | Menukarkan poin | - | - | - | - | - | - | - | X | Tinggi |
 
 ### 5.2 Kebutuhan Non-Fungsional vs Use Case
-| Kebutuhan | Deskripsi | UC-01 | UC-02 | UC-03 | UC-04 | UC-05 | UC-06 | UC-07 | Prioritas |
-|-----------|-----------|-------|-------|-------|-------|-------|-------|-------|-----------|
-| SKPL-NF01 | Keamanan | X | X | X | X | X | X | X | Tinggi |
-| SKPL-NF02 | Performa | X | X | X | X | X | X | X | Tinggi |
-| SKPL-NF03 | Ketersediaan | X | X | X | X | X | X | X | Tinggi |
-| SKPL-NF04 | Portabilitas | X | X | X | X | X | X | X | Sedang |
-| SKPL-NF05 | Kemudahan Penggunaan | X | X | X | X | X | X | X | Tinggi |
+| Kebutuhan | Deskripsi | UC-01 | UC-02 | UC-03 | UC-04 | UC-05 | UC-06 | UC-07 | UC-08 | Prioritas |
+|-----------|-----------|-------|-------|-------|-------|-------|-------|-------|-------|-----------|
+| SKPL-NF01 | Keamanan | X | X | X | X | X | X | X | X | Tinggi |
+| SKPL-NF02 | Performa | X | X | X | X | X | X | X | X | Tinggi |
+| SKPL-NF03 | Ketersediaan | X | X | X | X | X | X | X | X | Tinggi |
+| SKPL-NF04 | Portabilitas | X | X | X | X | X | X | X | X | Sedang |
+| SKPL-NF05 | Kemudahan Penggunaan | X | X | X | X | X | X | X | X | Tinggi |
 
 **Keterangan:**
 - X: Kebutuhan terhubung dengan use case
