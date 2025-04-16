@@ -107,6 +107,7 @@ php artisan cache:clear
 
 ## full direktori
 
+```bash
 project-root/
 │
 ├── frontend/                  # Seluruh kode frontend Vue.js
@@ -158,7 +159,7 @@ project-root/
 │   └── SKPPL.md               # Spesifikasi Kebutuhan Perangkat Lunak
 │
 └── README.md                  # Dokumentasi utama proyek
-
+```
 
 
 ## Tips untuk Pemula
