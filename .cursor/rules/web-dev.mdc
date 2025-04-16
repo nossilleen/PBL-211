@@ -1,0 +1,152 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# Web Development Best Practices
+
+## Frontend Development
+
+### Komponen & Struktur
+- Gunakan pendekatan komponen yang modular dan reusable
+- Pisahkan komponen berdasarkan fungsionalitas (presentational vs container)
+- Implementasikan atomic design pattern (atoms, molecules, organisms)
+- Gunakan folder structure yang konsisten:
+  ```
+  src/
+    ├── components/
+    │   ├── common/      # Komponen umum yang reusable
+    │   ├── features/    # Komponen spesifik fitur
+    │   └── layouts/     # Komponen layout
+    ├── pages/          # Halaman aplikasi
+    ├── hooks/          # Custom hooks
+    ├── utils/          # Utility functions
+    └── styles/         # Global styles
+  ```
+
+### State Management
+- Gunakan state management yang sesuai dengan kompleksitas aplikasi
+- Implementasikan state management pattern yang konsisten
+- Pisahkan business logic dari UI components
+- Gunakan context API untuk state yang perlu diakses global
+- Implementasikan proper error handling dan loading states
+
+### Performance
+- Implementasikan lazy loading untuk komponen besar
+- Optimalkan bundle size dengan code splitting
+- Gunakan proper caching strategies
+- Implementasikan proper image optimization
+- Minimalkan re-renders dengan proper memoization
+
+### Testing
+- Tulis unit tests untuk komponen kritis
+- Implementasikan integration tests untuk flow penting
+- Gunakan proper test naming conventions
+- Maintain test coverage yang memadai
+- Automate testing process
+
+## Backend Development
+
+### API Design
+- Gunakan RESTful API principles
+- Implementasikan proper versioning
+- Gunakan proper HTTP methods dan status codes
+- Dokumentasikan API dengan baik
+- Implementasikan proper error handling
+
+### Security
+- Implementasikan proper authentication & authorization
+- Gunakan proper input validation
+- Implementasikan rate limiting
+- Gunakan proper encryption untuk data sensitif
+- Implementasikan proper CORS policies
+
+### Performance
+- Implementasikan proper caching
+- Optimalkan database queries
+- Gunakan proper indexing
+- Implementasikan proper pagination
+- Monitor dan optimize resource usage
+
+### Testing
+- Tulis unit tests untuk business logic
+- Implementasikan integration tests
+- Gunakan proper test naming conventions
+- Maintain test coverage yang memadai
+- Automate testing process
+
+## Database
+
+### Design
+- Gunakan proper normalization
+- Implementasikan proper indexing
+- Gunakan proper data types
+- Dokumentasikan schema dengan baik
+- Implementasikan proper constraints
+
+### Performance
+- Optimalkan queries
+- Implementasikan proper indexing
+- Gunakan proper caching
+- Monitor query performance
+- Implementasikan proper partitioning
+
+### Security
+- Implementasikan proper access control
+- Gunakan proper encryption
+- Implementasikan proper backup strategy
+- Monitor database activity
+- Implementasikan proper audit logging
+
+## DevOps
+
+### CI/CD
+- Implementasikan proper CI/CD pipeline
+- Automate testing process
+- Implementasikan proper deployment strategy
+- Monitor deployment process
+- Implementasikan proper rollback strategy
+
+### Monitoring
+- Implementasikan proper logging
+- Monitor application performance
+- Monitor resource usage
+- Implementasikan proper alerting
+- Maintain proper documentation
+
+### Security
+- Implementasikan proper security scanning
+- Monitor security vulnerabilities
+- Implementasikan proper access control
+- Maintain proper documentation
+- Implementasikan proper backup strategy
+
+## General Best Practices
+
+### Code Quality
+- Gunakan proper linting
+- Implementasikan proper code formatting
+- Gunakan proper naming conventions
+- Dokumentasikan kode dengan baik
+- Review kode secara berkala
+
+### Documentation
+- Dokumentasikan API dengan baik
+- Dokumentasikan schema dengan baik
+- Dokumentasikan deployment process
+- Dokumentasikan security policies
+- Maintain proper README files
+
+### Version Control
+- Gunakan proper branching strategy
+- Implementasikan proper commit messages
+- Review kode secara berkala
+- Maintain proper documentation
+- Implementasikan proper tagging
+
+### Project Management
+- Gunakan proper project tracking
+- Implementasikan proper sprint planning
+- Maintain proper documentation
+- Review progress secara berkala
+- Implementasikan proper feedback loop 
