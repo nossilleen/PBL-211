@@ -873,7 +873,7 @@ Gambar 2. Use Case Diagram Aplikasi Web Eco Enzim
 [Diagram akan ditambahkan di sini]
 
 #### Daftar Tabel
-1. users
+1. user
 2. locations
 3. articles
 4. products
