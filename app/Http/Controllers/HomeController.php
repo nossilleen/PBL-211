@@ -13,7 +13,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        // $this->middleware('auth'); // Middleware auth di-nonaktifkan agar /home bisa diakses publik
     }
 
     /**

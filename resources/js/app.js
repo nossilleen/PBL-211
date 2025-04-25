@@ -5,18 +5,17 @@
  */
 
 import './bootstrap';
-import { createApp } from 'vue';
+// import { createApp } from 'vue';
 
 /**
- * Next, we will create a fresh Vue application instance. You may then begin
- * registering components with the application instance so they are ready
- * to use in your application's views. An example is included for you.
+ * Jika tidak butuh Vue di halaman home, cukup comment semua kode Vue agar tidak error.
+ * Jika butuh, pastikan alias sudah benar di vite.config.js
  */
 
-const app = createApp({});
-
-import ExampleComponent from './components/ExampleComponent.vue';
-app.component('example-component', ExampleComponent);
+// const app = createApp({});
+// import ExampleComponent from './components/ExampleComponent.vue';
+// app.component('example-component', ExampleComponent);
+// app.mount('#app');
 
 /**
  * The following block of code may be used to automatically register your
@@ -29,11 +28,3 @@ app.component('example-component', ExampleComponent);
 // Object.entries(import.meta.glob('./**/*.vue', { eager: true })).forEach(([path, definition]) => {
 //     app.component(path.split('/').pop().replace(/\.\w+$/, ''), definition.default);
 // });
-
-/**
- * Finally, we will attach the application instance to a HTML element with
- * an "id" attribute of "app". This element is included with the "auth"
- * scaffolding. Otherwise, you will need to add an element yourself.
- */
-
-app.mount('#app');

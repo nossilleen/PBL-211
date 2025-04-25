@@ -95,7 +95,6 @@ CREATE TABLE `user` (
   `password` varchar(255) NOT NULL,
   `no_hp` varchar(15) NOT NULL CHECK (LENGTH(no_hp) >= 10),
   `role` enum('admin','nasabah','pengelola') NOT NULL DEFAULT 'nasabah',
-  `lokasi_id` int(11) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -112,7 +111,7 @@ CREATE TABLE `produk` (
   `kategori` enum('eco_enzim','sembako') NOT NULL DEFAULT 'eco_enzim',
   `status_ketersediaan` enum('Available','Unavailable') NOT NULL DEFAULT 'Available',
   `harga` int(11) NOT NULL CHECK (harga >= 0),
-  `rating` decimal(3,1) DEFAULT 0 CHECK (rating >= 0 AND rating <= 5),
+  `suka` int(11) DEFAULT 0 CHECK (suka >= 0),
   `deskripsi` text DEFAULT NULL,
   `user_id` int(11) DEFAULT NULL COMMENT 'Pengelola yang menyediakan produk',
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
@@ -144,29 +143,16 @@ CREATE TABLE `transaksi` (
   `user_id` int(11) NOT NULL,
   `lokasi_id` int(11) NOT NULL,
   `harga_total` int(11) NOT NULL CHECK (harga_total >= 0),
-  `poin_used` int(11) DEFAULT 0 CHECK (poin_used >= 0),
+  `poin_used` int(11) DEFAULT NULL CHECK (
+    (pay_method = 'poin' AND poin_used > 0) OR 
+    (pay_method = 'transfer' AND (poin_used IS NULL OR poin_used = 0))
+  ),
   `tanggal` datetime NOT NULL,
-  `status` enum('pending','selesai','dibatalkan') NOT NULL DEFAULT 'pending',
+  `status` enum('belum dibayar','menunggu konfirmasi','sedang dikirim','selesai','dibatalkan') NOT NULL DEFAULT 'belum dibayar',
   `pay_method` enum('transfer','poin') NOT NULL DEFAULT 'transfer',
-  `ref_number` varchar(50) DEFAULT NULL,
+  `bukti_transfer` varchar(255) DEFAULT NULL COMMENT 'Path file bukti transfer',
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `transaksi_item`
---
-
-CREATE TABLE `transaksi_item` (
-  `item_id` int(11) NOT NULL,
-  `transaksi_id` int(11) NOT NULL,
-  `produk_id` int(11) NOT NULL,
-  `jumlah` int(11) NOT NULL,
-  `harga_satuan` int(11) NOT NULL,
-  `subtotal` int(11) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -224,8 +210,7 @@ ALTER TABLE `user`
   ADD PRIMARY KEY (`user_id`),
   ADD UNIQUE KEY `email` (`email`),
   ADD KEY `idx_user_nama` (`nama`),
-  ADD KEY `idx_user_role` (`role`),
-  ADD KEY `FK_user_lokasi` (`lokasi_id`);
+  ADD KEY `idx_user_role` (`role`);
 
 --
 -- Indexes for table `produk`
@@ -253,14 +238,6 @@ ALTER TABLE `transaksi`
   ADD KEY `FK_transaksi_lokasi` (`lokasi_id`),
   ADD KEY `idx_transaksi_tanggal` (`tanggal`),
   ADD KEY `idx_transaksi_status` (`status`);
-
---
--- Indexes for table `transaksi_item`
---
-ALTER TABLE `transaksi_item`
-  ADD PRIMARY KEY (`item_id`),
-  ADD KEY `FK_transaksi_item_transaksi` (`transaksi_id`),
-  ADD KEY `FK_transaksi_item_produk` (`produk_id`);
 
 --
 -- Indexes for table `poin`
@@ -324,12 +301,6 @@ ALTER TABLE `transaksi`
   MODIFY `transaksi_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `transaksi_item`
---
-ALTER TABLE `transaksi_item`
-  MODIFY `item_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT for table `poin`
 --
 ALTER TABLE `poin`
@@ -359,16 +330,10 @@ ALTER TABLE `feedback`
   ADD CONSTRAINT `FK_user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`);
 
 --
--- Constraints for table `user`
---
-ALTER TABLE `user`
-  ADD CONSTRAINT `FK_user_lokasi` FOREIGN KEY (`lokasi_id`) REFERENCES `lokasi` (`lokasi_id`) ON DELETE SET NULL;
-
---
 -- Constraints for table `produk`
 --
 ALTER TABLE `produk`
-  ADD CONSTRAINT `FK_produk_pengelola` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE SET NULL;
+  ADD CONSTRAINT `FK_produk_pengelola` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE SET NULL WHERE `role` = 'pengelola';
 
 --
 -- Constraints for table `produk_gambar`
@@ -382,13 +347,6 @@ ALTER TABLE `produk_gambar`
 ALTER TABLE `transaksi`
   ADD CONSTRAINT `FK_nasabah_transaksi` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`),
   ADD CONSTRAINT `FK_transaksi_lokasi` FOREIGN KEY (`lokasi_id`) REFERENCES `lokasi` (`lokasi_id`);
-
---
--- Constraints for table `transaksi_item`
---
-ALTER TABLE `transaksi_item`
-  ADD CONSTRAINT `FK_transaksi_item_transaksi` FOREIGN KEY (`transaksi_id`) REFERENCES `transaksi` (`transaksi_id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `FK_transaksi_item_produk` FOREIGN KEY (`produk_id`) REFERENCES `produk` (`produk_id`);
 
 --
 -- Constraints for table `poin`
