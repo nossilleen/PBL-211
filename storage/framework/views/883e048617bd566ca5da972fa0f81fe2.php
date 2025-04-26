@@ -1,7 +1,7 @@
 <!-- resources/views/components/home/program.blade.php -->
 <section
     class="min-h-screen flex items-center"
-    style="background-image: url('{{ asset('images/bg6.jpeg') }}'); background-size: cover; background-position: center;"
+    style="background-image: url('<?php echo e(asset('images/bg6.jpeg')); ?>'); background-size: cover; background-position: center;"
 >
     <div class="container mx-auto px-4 flex justify-center">
         <div
@@ -24,3 +24,4 @@
         </div>
     </div>
 </section>
+<?php /**PATH C:\xampp\htdocs\PBL TRPL211\SAVE FILE 1\PBL-211\resources\views/components/home/program.blade.php ENDPATH**/ ?>

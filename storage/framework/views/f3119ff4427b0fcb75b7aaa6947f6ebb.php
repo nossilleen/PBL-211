@@ -7,7 +7,7 @@
         <!-- Logo - Far Left -->
         <a href="/" class="flex items-center flex-shrink-0 mr-auto" data-aos="fade-right" data-aos-delay="100">
             <div class="bg-transparent p-2 rounded-md">
-                <img src="{{ asset('images/logo.png') }}" alt="EcoZense Logo" class="h-12 md:h-16 w-auto">
+                <img src="<?php echo e(asset('images/logo.png')); ?>" alt="EcoZense Logo" class="h-12 md:h-16 w-auto">
             </div>
         </a>
         
@@ -115,7 +115,7 @@
             navbar.classList.remove('bg-transparent');
             navbar.classList.add('navbar-scrolled');
             // Use the hero background image for navbar when scrolled
-            navbar.style.backgroundImage = "url('{{ asset('images/Frame 2305.png') }}')";
+            navbar.style.backgroundImage = "url('<?php echo e(asset('images/Frame 2305.png')); ?>')";
             navbar.style.backgroundSize = "cover";
             navbar.style.backgroundPosition = "center";
         } else {
@@ -130,3 +130,4 @@
         document.querySelector('.mobile-menu').classList.toggle('hidden');
     });
 </script>
+<?php /**PATH C:\xampp\htdocs\PBL TRPL211\SAVE FILE 1\PBL-211\resources\views/components/home/navbar.blade.php ENDPATH**/ ?>

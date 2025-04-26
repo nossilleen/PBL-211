@@ -1,7 +1,7 @@
 <!-- resources/views/components/home/hero.blade.php -->
 <section
     class="min-h-screen flex items-center"
-    style="background-image: url('{{ asset('images/Frame 2305.png') }}'); background-size: cover; background-position: center;"
+    style="background-image: url('<?php echo e(asset('images/Frame 2305.png')); ?>'); background-size: cover; background-position: center;"
 >
     <div class="container mx-auto px-6 md:px-8 grid md:grid-cols-2 gap-6">
         <div
@@ -26,10 +26,11 @@
         </div>
         <div class="flex items-center justify-center" data-aos="fade-left" data-aos-delay="300">
             <img
-                src="{{ asset('images/bg1.jpeg') }}"
+                src="<?php echo e(asset('images/bg1.jpeg')); ?>"
                 alt="Dashboard Preview"
                 class="rounded-lg shadow-xl w-full max-w-full md:max-w-lg lg:max-w-xl xl:max-w-2xl opacity-80 hover-scale transition-all duration-300"
             />
         </div>
     </div>
 </section>
+<?php /**PATH C:\xampp\htdocs\PBL TRPL211\SAVE FILE 1\PBL-211\resources\views/components/home/hero.blade.php ENDPATH**/ ?>

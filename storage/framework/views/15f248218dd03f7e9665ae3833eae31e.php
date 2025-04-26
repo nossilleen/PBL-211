@@ -1,7 +1,7 @@
 <!-- resources/views/components/home/information-center.blade.php -->
 <section
     class="min-h-screen flex items-center"
-    style="background-image: url('{{ asset('images/bg2.jpeg') }}'); background-size: cover; background-position: center;"
+    style="background-image: url('<?php echo e(asset('images/bg2.jpeg')); ?>'); background-size: cover; background-position: center;"
 >
     <div class="container mx-auto px-4">
         <h2 class="text-3xl font-bold text-center mb-8" data-aos="fade-up">Pusat Informasi</h2>
@@ -15,7 +15,7 @@
             <div data-aos="fade-up" data-aos-delay="200">
                 <div
                     class="bg-cover bg-center rounded-lg overflow-hidden shadow-lg card-hover-effect mb-4"
-                    style="background-image: url('{{ asset('images/bg3.jpeg') }}'); height: 270px;"
+                    style="background-image: url('<?php echo e(asset('images/bg3.jpeg')); ?>'); height: 270px;"
                 >
                     <div class="p-8 flex flex-col justify-between h-full">
                         <h3 class="text-3xl font-bold text-white mb-4">Events</h3>
@@ -90,7 +90,7 @@
             <div data-aos="fade-up" data-aos-delay="400">
                 <div
                     class="bg-cover bg-center rounded-lg overflow-hidden shadow-lg card-hover-effect mb-4"
-                    style="background-image: url('{{ asset('images/bg5.jpeg') }}'); height: 270px;"
+                    style="background-image: url('<?php echo e(asset('images/bg5.jpeg')); ?>'); height: 270px;"
                 >
                     <div class="p-8 flex flex-col justify-between h-full">
                         <h3 class="text-3xl font-bold text-white mb-4">ARTIKEL</h3>
@@ -124,3 +124,4 @@
         </div>
     </div>
 </section>
+<?php /**PATH C:\xampp\htdocs\PBL TRPL211\SAVE FILE 1\PBL-211\resources\views/components/home/information-center.blade.php ENDPATH**/ ?>

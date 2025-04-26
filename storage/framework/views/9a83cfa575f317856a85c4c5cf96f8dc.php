@@ -1,7 +1,7 @@
 <!-- resources/views/components/home/about-us.blade.php -->
 <section
     class="min-h-screen flex items-center"
-    style="background-image: url('{{ asset('images/bg3.jpeg') }}'); background-size: cover; background-position: center;"
+    style="background-image: url('<?php echo e(asset('images/bg3.jpeg')); ?>'); background-size: cover; background-position: center;"
 >
     <div class="container mx-auto px-4 bg-transparent py-10 rounded-lg">
         <h2 class="text-3xl font-bold text-white text-center mb-12" data-aos="fade-up">About us</h2>
@@ -42,3 +42,4 @@
         </div>
     </div>
 </section>
+<?php /**PATH C:\xampp\htdocs\PBL TRPL211\SAVE FILE 1\PBL-211\resources\views/components/home/about-us.blade.php ENDPATH**/ ?>
