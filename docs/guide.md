@@ -5,10 +5,9 @@
 ### 1. Workflow Task-Based 
 
 Untuk mengerjakan fitur baru:
-
-1. **Frontend (Vue.js):**
+1. **Frontend (Laravel + Tailwind):**
    ```
-   Buat Component → Setup Route → Desain UI → Integrasi API → Test → Refine
+   Buat Blade View → Setup Route → Desain UI dengan Tailwind → Integrasi Controller → Test → Refine
    ```
 
 2. **Backend (Laravel):**
