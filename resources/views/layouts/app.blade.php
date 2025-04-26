@@ -10,7 +10,7 @@
     <body class="bg-gray-100">
         <div id="app">
             <!-- Jika halaman home tidak pakai Vue, id="app" tetap aman karena tidak di-mount -->
-            <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+            <nav class="navbar navbar-expand-md navbar-light shadow-sm bg-image-default">
                 <div class="container">
                     <a class="navbar-brand" href="{{ url('/') }}">
                         {{ config('app.name', 'Laravel') }}

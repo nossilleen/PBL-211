@@ -124,25 +124,28 @@ npm run db:reset
 
 ### 🚀 Menjalankan Aplikasi
 ```bash
-# Mode development
-npm run dev
-
-# Jalankan backend API
-npm run serve
+# jalankan frontend dan backend
+npm run all
 ```
 
 ## 📋 Command Penting
-
 | Command | Deskripsi |
 |---------|-----------|
-| `npm run setup` | Setup awal project |
-| `npm run dev` | Jalankan frontend development server |
-| `npm run serve` | Jalankan backend API server |
+| `npm run setup` | Setup awal project (install dependencies, generate key, link storage, migrate database) |
+| `npm run all` | Jalankan frontend dan backend secara bersamaan |
+| `npm run dev` | Jalankan frontend development server dengan Vite |
+| `npm run serve` | Jalankan backend API server Laravel |
 | `npm run build` | Build frontend untuk production |
-| `npm run db:reset` | Reset dan setup ulang database |
-| `npm run clear` | Bersihkan cache Laravel |
+| `npm run db:fresh` | Reset database dengan migrasi baru |
+| `npm run db:seed` | Isi database dengan data seed |
+| `npm run db:reset` | Reset dan setup ulang database dengan data seed |
+| `npm run clear` | Bersihkan cache Laravel (optimize:clear) |
+| `npm run cache:clear` | Bersihkan semua cache (config, route, view) |
 | `npm run test` | Jalankan semua test |
-| `npm run deploy` | Siapkan aplikasi untuk deployment |
+| `npm run lint` | Periksa kode JavaScript dan Vue |
+| `npm run format` | Format kode dengan Prettier |
+| `npm run deploy` | Siapkan aplikasi untuk deployment (build + optimize) |
+
 
 ## 📝 Metode Pengembangan
 

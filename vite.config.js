@@ -17,4 +17,8 @@ export default defineConfig({
             }
         })
     ],
+    // Pastikan Vite dapat mengakses folder images
+    build: {
+        assetsInclude: ['resources/images/**'],
+    }
 });

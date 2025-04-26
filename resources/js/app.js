@@ -28,3 +28,45 @@ import './bootstrap';
 // Object.entries(import.meta.glob('./**/*.vue', { eager: true })).forEach(([path, definition]) => {
 //     app.component(path.split('/').pop().replace(/\.\w+$/, ''), definition.default);
 // });
+
+// Import AOS library untuk animasi scroll
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+
+// Inisialisasi AOS
+document.addEventListener('DOMContentLoaded', () => {
+    AOS.init({
+        duration: 800,
+        easing: 'ease-in-out',
+        once: true,
+        mirror: false
+    });
+});
+
+// Tambahkan smooth scrolling untuk navigasi
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        const targetId = this.getAttribute('href');
+        if (targetId === "#") return;
+        
+        const targetElement = document.querySelector(targetId);
+        if (targetElement) {
+            window.scrollTo({
+                top: targetElement.offsetTop - 100,
+                behavior: 'smooth'
+            });
+        }
+    });
+});
+
+// Toggle mobile menu
+const mobileMenuButton = document.querySelector('.mobile-menu-button');
+const mobileMenu = document.querySelector('.mobile-menu');
+
+if (mobileMenuButton && mobileMenu) {
+    mobileMenuButton.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+    });
+}

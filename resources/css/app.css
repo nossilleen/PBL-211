@@ -12,3 +12,119 @@
         'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
         'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 }
+
+/* Utility classes untuk background */
+.bg-image-default {
+    background-image: url('/images/bg1.jpeg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.bg-image-fixed {
+    background-image: url('/images/bg1.jpeg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+/* Custom animations dan transisi */
+.animate-fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+.animate-slide-up {
+    animation: slideUp 0.5s ease-in-out;
+}
+
+.animate-slide-in-right {
+    animation: slideInRight 0.5s ease-in-out;
+}
+
+.hover-scale {
+    transition: transform 0.3s ease-in-out;
+}
+
+.hover-scale:hover {
+    transform: scale(1.05);
+}
+
+.card-hover-effect {
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.card-hover-effect:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+}
+
+.button-hover-effect {
+    transition: all 0.3s ease-in-out;
+}
+
+.button-hover-effect:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Keyframes untuk animasi */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Animasi untuk navbar saat scroll */
+.navbar-fixed {
+    transition: all 0.3s ease-in-out;
+}
+
+.navbar-scrolled {
+    background-color: rgba(22, 101, 52, 0.95) !important;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Utilitas responsive */
+@media (max-width: 768px) {
+    .hide-on-mobile {
+        display: none;
+    }
+}
+
+/* Mobile menu animation */
+.mobile-menu {
+    transition: all 0.3s ease-in-out;
+    max-height: 0;
+    overflow: hidden;
+}
+
+.mobile-menu.open {
+    max-height: 500px;
+}

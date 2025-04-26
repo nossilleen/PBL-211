@@ -65,5 +65,8 @@
     "bugs": {
         "url": "https://github.com/nossilleen/PBL-211/issues"
     },
-    "homepage": "https://github.com/nossilleen/PBL-211#readme"
+    "homepage": "https://github.com/nossilleen/PBL-211#readme",
+    "dependencies": {
+        "aos": "^2.3.4"
+    }
 }
