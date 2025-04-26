@@ -142,6 +142,8 @@ CREATE TABLE `transaksi` (
   `transaksi_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `lokasi_id` int(11) NOT NULL,
+  `produk_id` int(11) NOT NULL,
+  `jumlah_produk` int(11) NOT NULL DEFAULT 1 CHECK (jumlah_produk > 0),
   `harga_total` int(11) NOT NULL CHECK (harga_total >= 0),
   `poin_used` int(11) DEFAULT NULL CHECK (
     (pay_method = 'poin' AND poin_used > 0) OR 
@@ -163,8 +165,8 @@ CREATE TABLE `transaksi` (
 
 CREATE TABLE `poin` (
   `poin_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL COMMENT 'ID Nasabah',
-  `lokasi_id` int(11) NOT NULL COMMENT 'ID Bank Sampah',
+  `user_id` int(11) NOT NULL,
+  `lokasi_id` int(11) NOT NULL,
   `jumlah_poin` int(11) NOT NULL DEFAULT 0 CHECK (jumlah_poin >= 0),
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
@@ -236,6 +238,7 @@ ALTER TABLE `transaksi`
   ADD PRIMARY KEY (`transaksi_id`),
   ADD KEY `FK_nasabah_transaksi` (`user_id`),
   ADD KEY `FK_transaksi_lokasi` (`lokasi_id`),
+  ADD KEY `FK_transaksi_produk` (`produk_id`),
   ADD KEY `idx_transaksi_tanggal` (`tanggal`),
   ADD KEY `idx_transaksi_status` (`status`);
 
@@ -346,7 +349,8 @@ ALTER TABLE `produk_gambar`
 --
 ALTER TABLE `transaksi`
   ADD CONSTRAINT `FK_nasabah_transaksi` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`),
-  ADD CONSTRAINT `FK_transaksi_lokasi` FOREIGN KEY (`lokasi_id`) REFERENCES `lokasi` (`lokasi_id`);
+  ADD CONSTRAINT `FK_transaksi_lokasi` FOREIGN KEY (`lokasi_id`) REFERENCES `lokasi` (`lokasi_id`),
+  ADD CONSTRAINT `FK_transaksi_produk` FOREIGN KEY (`produk_id`) REFERENCES `produk` (`produk_id`);
 
 --
 -- Constraints for table `poin`

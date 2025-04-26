@@ -19,26 +19,58 @@
 - **Waktu**: 1 Semester (14 Minggu)
 
 ## 1. Ruang Lingkup
-Eco Enzim adalah cairan alami serbaguna yang dihasilkan dari fermentasi limbah dapur organik (seperti kulit buah dan sayuran), gula merah, dan air selama sekitar tiga bulan. Eco Enzim dipopulerkan oleh Dr. Rosukon Poompanvong, seorang ilmuwan Thailand, sebagai cara untuk mempromosikan hidup tanpa limbah dan mengurangi polusi.
+EcoZense adalah sebuah sistem informasi berbasis web yang dikembangkan oleh tim PBL-211 sebagai pusat edukasi dan marketplace produk Eco Enzim. Pengembangan aplikasi ini didorong oleh rendahnya kesadaran dan pemahaman masyarakat mengenai pentingnya pemanfaatan Eco Enzim untuk menjaga kelestarian lingkungan. Permasalahan lingkungan rumah tangga seringkali disebabkan oleh tumpukan sampah organik, yang dapat menimbulkan pencemaran udara, air, dan menjadi sumber penyakit.
 
-Banyak orang yang belum memahami apa itu Eco Enzim dan bagaimana cara membuatnya, sehingga edukasi yang terbatas ini menghambat adopsi teknologi yang bermanfaat ini. Selain itu, pengelolaan sampah organik sering kali tidak dilakukan dengan baik, yang dapat menyebabkan pencemaran lingkungan. Eco Enzim dapat menjadi solusi untuk mengubah limbah menjadi produk yang bermanfaat. Masyarakat juga kesulitan menemukan informasi dan dukungan dari komunitas yang berfokus pada pengelolaan sampah dan penggunaan Eco Enzim.
+Sampah organik yang menumpuk dan kurangnya pengelolaan limbah rumah tangga menjadi faktor utama yang mendorong perlunya sebuah platform yang dapat mengedukasi dan memfasilitasi tindakan nyata dari masyarakat. Meskipun Eco Enzim memiliki banyak manfaat bagi lingkungan, akses terhadap informasi dan produk terkait masih terbatas dan belum terorganisasi secara efektif. Berdasarkan data dari Direktorat Jenderal Cipta Karya pada tahun 2017, sekitar 60% dari total sampah di Indonesia terdiri dari sampah organik.
 
-Dengan adanya aplikasi ini, tujuan utamanya adalah untuk memberikan informasi yang jelas dan mudah diakses mengenai Eco Enzim, mendorong masyarakat agar lebih aktif dalam mengelola sampah organik, serta membangun komunitas di mana pengguna dapat berbagi pengalaman dan pengetahuan. Dengan demikian, diharapkan masyarakat dapat lebih memahami dan memanfaatkan Eco Enzim, serta berkontribusi pada pengelolaan lingkungan yang lebih baik.
+EcoZense hadir untuk menjawab permasalahan tersebut dengan menyediakan konten informatif berupa artikel, tutorial, dan panduan praktis mengenai pembuatan serta pemanfaatan Eco Enzim. Aplikasi ini juga terintegrasi dengan program bank sampah, yang memungkinkan masyarakat untuk berpartisipasi dalam penyetoran sampah sekaligus mendapatkan produk Eco Enzim yang dikelola oleh bank sampah.
+
+Selain sebagai pusat informasi, aplikasi ini juga berfungsi sebagai marketplace yang mempertemukan bank sampah dan masyarakat dalam kegiatan jual beli produk Eco Enzim. Dengan demikian, EcoZense tidak hanya meningkatkan kesadaran, tetapi juga mendorong praktik ramah lingkungan secara langsung.
+
+Aplikasi EcoZense dirancang untuk diakses oleh tiga kategori pengguna, yaitu admin, nasabah, dan bank sampah, dengan fungsi dan hak akses yang disesuaikan dengan perannya masing-masing. Diharapkan, dengan adanya aplikasi ini, masyarakat dapat lebih mudah memahami dan menerapkan konsep Eco Enzim dalam kehidupan sehari-hari untuk menciptakan lingkungan yang lebih bersih, sehat, dan berkelanjutan.
 
 ## 2. Desain Umum
 [Gambar/tampilan rancangan umum sistem yang akan dikembangkan/dikerjakan]
 
 Aplikasi yang akan dibangun adalah aplikasi berbasis website. Adapun fitur yang akan dibangun, yaitu:
-1. Register
-2. Login
-3. Akun profil
-4. Halaman artikel
-5. Landing page informatif
-6. Bergabung sebagai nasabah atau anggota program bank sampah
-7. Feedback
-8. Sistem jual/beli produk eco enzim atau sembako menggunakan poin dari penyetoran sampah (poin hanya dapat ditukarkan pada bank sampah tempat nasabah melakukan penyetoran)
-9. Promosi kegiatan dan event
-10. Publikasi produk eco enzim
+
+F01: Nasabah, Pengelola Bank Sampah, dan Admin dapat login.  
+F02: Sistem dapat menampilkan peta lokasi bank sampah di Batam.  
+F03: Pengguna umum melihat dan menelusuri artikel.  
+F04: Pengguna umum mendaftar event.  
+F05: Pengguna umum membuat akun sebagai nasabah.  
+F06: Nasabah dapat menerima poin.  
+F07: Nasabah, Pengelola Bank Sampah, dan Admin dapat melakukan reset password.  
+F08: Nasabah dapat melihat berapa banyak poin yang dimilikinya.  
+F09: Nasabah dapat membeli produk Eco Enzim/sembako menggunakan poin ataupun transfer.  
+F10: Nasabah dapat memasukkan produk Eco Enzim ke dalam keranjang.  
+F11: Nasabah dapat memasukkan kuantitas produk yang ingin dibeli.  
+F12: Nasabah dapat memberikan rating, share, dan favorite produk.  
+F13: Nasabah dapat menerima notifikasi pada website.  
+F14: Nasabah dapat melihat riwayat pembelian.  
+F15: Nasabah dapat memberikan nilai pada artikel.  
+F16: Nasabah dapat memberikan feedback pada artikel.  
+F17: Nasabah dapat mengajukan diri untuk menjadi Bank Sampah.  
+F18: Bank Sampah dapat memasukkan alamat serta menginput lokasi pada peta.  
+F19: Bank Sampah dapat menambahkan produk Eco Enzim pada tokonya masing-masing.  
+F20: Bank Sampah dapat meng-update produk Eco Enzim.  
+F21: Bank Sampah dapat memasukkan berat sampah yang diberikan oleh nasabah kemudian menghitungnya menjadi poin.  
+F22: Bank Sampah dapat memberikan poin kepada nasabah.  
+F23: Bank Sampah dapat melihat riwayat transaksi pada toko.  
+F24: Admin dapat melihat lokasi-lokasi bank sampah pada peta di dalam dashboard.  
+F25: Admin dapat mengelola artikel dan post.  
+F26: Admin dapat melihat list tabel dari seluruh artikel yang telah dibuat kemudian admin dapat mereview artikel (edit/delete).  
+F27: Admin dapat mengelola event.  
+F28: Admin dapat melihat list tabel dari seluruh event yang telah dibuat kemudian admin dapat mereview event (edit/delete).  
+F29: Admin dapat mem-verifikasi pengajuan nasabah yang ingin menjadi bank sampah.  
+F30: Admin dapat mengelola data pengguna.  
+F31: Admin, Nasabah dan bank sampah dapat logout.  
+F32: Nasabah dapat memilih opsi pembelian pada produk (Poin atau Transfer).  
+F33: Nasabah dapat mengatur kuantitas produk yang ingin dibeli.  
+F34: No. Rekening Pengelola Bank Sampah akan diberikan ketika nasabah ingin melakukan transfer.  
+F35: Produk yang dibeli akan muncul pada halaman pesanan.  
+F36: Setiap Produk memiliki inputan upload bukti pembayaran.  
+F37: Setiap Produk yang pada halaman pesanan memiliki status ('Belum Dibayar', 'Sedang Diverifikasi', 'Sedang Dikirim', 'Selesai', 'Dibatalkan').  
 
 ## 3. Konstruksi Produk
 [Rancangan rinci (gambar/desain/per-subsistem) sistem yang akan dikembangkan/dikerjakan]
@@ -65,7 +97,7 @@ Produk akan dikembangkan dengan pendekatan metode waterfall. Urutan dalam metode
   - Merancang antarmuka pengguna dengan Figma
   - Membuat class diagram dan activity diagram
   - Merancang alur proses bisnis sistem (pendaftaran, penyetoran sampah, penukaran poin)
-  - Mendesain sistem poin untuk penukaran produk eco enzim dan sembako
+  - Mendesain sistem poin untuk penukaran produk eco enzim dan sembako (dengan batasan poin hanya dapat ditukarkan di bank sampah tempat nasabah menyetor sampah)
 
 ### 3. Implementation
 - **Estimasi**: 5 minggu
@@ -74,8 +106,8 @@ Produk akan dikembangkan dengan pendekatan metode waterfall. Urutan dalam metode
   - Membangun sistem registrasi dan login
   - Mengimplementasikan fitur profil pengguna
   - Membuat sistem pengelolaan artikel dan konten edukasi
-  - Mengembangkan sistem bank sampah
-  - Membangun marketplace untuk produk eco enzim dan sembako
+  - Mengembangkan sistem bank sampah (penyetoran dan pemberian poin spesifik untuk setiap bank sampah)
+  - Membangun marketplace untuk produk eco enzim dan sembako dengan validasi penukaran poin khusus per bank sampah
   - Mengimplementasikan sistem feedback
   - Membuat dashboard untuk pengelola dan admin
 
@@ -109,6 +141,7 @@ Produk akan dikembangkan dengan pendekatan metode waterfall. Urutan dalam metode
   - Melakukan pemeliharaan server dan database
 
 ### Armonisasi Matakuliah PBL
+
 1. **Statistika**
    - Dosen Pengajar: Yeni Rokhayati, S.Si., M.Sc
    - Capaian Pembelajaran: Mahasiswa mampu mengolah dan menganalisis data penggunaan aplikasi serta mengukur efektivitas fitur berdasarkan metode statistik deskriptif.
@@ -116,32 +149,32 @@ Produk akan dikembangkan dengan pendekatan metode waterfall. Urutan dalam metode
 
 2. **Struktur Data**
    - Dosen Pengajar: Sartikha, S.ST., M.Eng
-   - Capaian Pembelajaran: Mahasiswa mampu menerapkan struktur data yang efisien dalam pengolahan dan penyimpanan data pengguna, artikel, dan transaksi.
+   - Capaian Pembelajaran: Mahasiswa mampu menerapkan struktur data yang efisien (array, linked list, tree, graph) dalam pengolahan dan penyimpanan data pengguna, artikel, dan transak
    - Minimum Requirement: Aplikasi harus memiliki sistem pengolahan data yang optimal untuk pencarian artikel dan transaksi pengguna.
 
 3. **Pengantar Manajemen Proyek**
    - Dosen Pengajar: Noper Ardi, S.Pd., M.Eng
-   - Capaian Pembelajaran: Mahasiswa mampu merancang, mengelola, dan mengevaluasi proyek perangkat lunak dengan metode waterfall.
+   - Capaian Pembelajaran: Mahasiswa mampu merancang, mengelola, dan mengevaluasi proyek perangkat lunak dengan metode waterfall, termasuk mitigasi risiko dan komunikasi dengan stakeholder.
    - Minimum Requirement: Proyek harus memiliki dokumen perencanaan yang mencakup milestone, timeline, dan evaluasi risiko.
 
 4. **Perancangan Perangkat Lunak**
    - Dosen Pengajar: Metta Santiputri, S.T., M.Sc, Ph.D
-   - Capaian Pembelajaran: Mahasiswa mampu membuat model sistem menggunakan UML serta menyusun arsitektur sistem berbasis MVC.
+   - Capaian Pembelajaran: Mahasiswa mampu membuat model sistem menggunakan UML (Use Case Diagram, ERD, Class Diagram) serta menyusun arsitektur sistem berbasis MVC.
    - Minimum Requirement: Aplikasi harus memiliki perancangan sistem yang terdokumentasi (UML, ERD, Wireframe).
 
 5. **Pemrograman Berorientasi Objek**
    - Dosen Pengajar: Swono Sibagariang, S.Kom., M.Kom
-   - Capaian Pembelajaran: Mahasiswa mampu mengembangkan aplikasi berbasis PHP dan JavaScript menggunakan konsep OOP.
+   - Capaian Pembelajaran: Mahasiswa mampu mengembangkan aplikasi berbasis PHP dan JavaScript menggunakan konsep OOP (Class, Inheritance, Polymorphism).
    - Minimum Requirement: Kode aplikasi harus menggunakan prinsip OOP untuk modularitas dan efisiensi.
 
 6. **Pemrograman Basis Data**
    - Dosen Pengajar: Ahmadi Irmansyah Lubis, S.Kom., M.Kom
-   - Capaian Pembelajaran: Mahasiswa mampu mendesain dan mengimplementasikan database menggunakan SQL Server.
+   - Capaian Pembelajaran: Mahasiswa mampu mendesain dan mengimplementasikan database menggunakan SQL Server, termasuk normalisasi, query optimasi, dan integrasi dengan aplikasi.
    - Minimum Requirement: Database harus terstruktur dengan relasi antar tabel yang sesuai dengan normalisasi minimal 3NF.
 
 7. **Pendidikan Bahasa Indonesia**
    - Dosen Pengajar: Luki Aswar, M.Pd
-   - Capaian Pembelajaran: Mahasiswa mampu menyusun dokumentasi teknis proyek dan konten edukatif dalam aplikasi.
+   - Capaian Pembelajaran: Mahasiswa mampu menyusun dokumentasi teknis proyek, laporan akademik, dan konten edukatif dalam aplikasi sesuai dengan kaidah kebahasaan yang benar.
    - Minimum Requirement: Aplikasi harus memiliki dokumentasi teknis dan konten edukasi yang mudah dipahami oleh pengguna.
 
 ## 4. Kebutuhan Peralatan/Perangkat dan Bahan/Komponen
@@ -224,29 +257,38 @@ Total: Rp 0.00
 | Fase/Proses | Pertanyaan/Komentar | Jawaban |
 |-------------|---------------------|---------|
 | Requirement Analysis | • Apakah website bersifat blog atau pusat informasi?<br>• Apakah user bisa mendaftar menjadi nasabah bank sampah?<br>• Apa kriteria produk yang bisa ditukarkan dengan poin? Apakah hanya produk tertentu? | • Website ini bersifat pusat informasi dan marketplace. Selain menyediakan informasi mengenai bank sampah dan sistem pengelolaannya, website juga memungkinkan pengguna untuk membeli produk eco enzim dan produk lainnya. Dengan adanya sistem poin, nasabah bank sampah bisa menukar poin hasil penyetoran sampah dengan barang seperti produk eco enzim atau sembako. Hal ini menjadikan website bukan hanya sebagai sumber informasi, tetapi juga sebagai platform yang mendukung praktik keberlanjutan melalui insentif berbasis sampah.<br>• Ya, user dapat mendaftar menjadi nasabah melalui fitur registrasi yang tersedia di website. Setelah mendaftar, mereka dapat mengelola informasi terkait layanan yang mereka sediakan.<br>• Produknya bakal bisa ditukarkan, dan harus sesuai dengan regulasi bank sampah dan pengelola eco enzim. Biasanya bakal mencakup sembako tertentu seperti beras, minyak, gula, dan produk eco enzyme. |
+| System Design | | |
+| Implementation | | |
+| Testing | | |
+| Deployment | | |
+| Maintenance | | |
 
 ## 12. Monitoring dan Evaluasi
 
 Monitoring dan evaluasi proyek dilakukan secara sistematis untuk memastikan kelancaran dan ketercapaian setiap tahapan pengembangan aplikasi sesuai dengan objektif yang telah ditetapkan.
 
 ### 1. Monitoring Progress
-- Proses monitoring dilakukan oleh Manajer Proyek (Manpro) sebanyak satu kali setiap minggu
-- Monitoring dapat dilakukan secara langsung maupun daring melalui aplikasi Zoom
-- Setiap perkembangan proyek terdokumentasi dalam logbook SIAPPBL
-- Komunikasi asinkron dilakukan melalui WhatsApp
+- Proses monitoring dilakukan oleh Manajer Proyek (Manpro) sebanyak satu kali setiap minggu.
+- Monitoring dapat dilakukan secara langsung maupun daring melalui aplikasi Zoom.
+- Setiap perkembangan proyek terdokumentasi dalam logbook SIAPPBL, yang digunakan sebagai acuan dalam memantau kemajuan pengerjaan.
+- Komunikasi asinkron dilakukan melalui WhatsApp, memungkinkan koordinasi yang fleksibel di luar jadwal pertemuan resmi.
 
 ### 2. Evaluasi Proyek
-- Evaluasi dilakukan dalam setiap pertemuan untuk meninjau progres dan mengidentifikasi kendala
+- Evaluasi dilakukan dalam setiap pertemuan untuk meninjau progres dan mengidentifikasi kendala yang dihadapi.
 - Evaluasi terjadwal dilaksanakan pada dua tahap utama:
-  - ATS (Assessment Tengah Semester)
-  - AAS (Assessment Akhir Semester)
+  - ATS (Assessment Tengah Semester) untuk meninjau capaian sementara dan melakukan perbaikan jika diperlukan.
+  - AAS (Assessment Akhir Semester) sebagai evaluasi menyeluruh terhadap keberhasilan proyek berdasarkan indikator ketercapaian yang telah ditetapkan.
+
+Melalui mekanisme monitoring dan evaluasi ini, diharapkan proyek dapat berjalan sesuai rencana, kendala dapat diatasi lebih awal, dan hasil akhir sesuai dengan ekspektasi klien serta standar kualitas yang telah disepakati.
+
+![Gambar Pelaksanaan Monitoring](Gambar2.png)
+
+![Gambar Pelaksanaan Evaluasi](Gambar3.png)
 
 ## 13. Riwayat Perubahan Proyek yang akan ditangani
 
 | No. Revisi/tanggal | Deskripsi Perubahan | Originator |
 |-------------------|---------------------|------------|
-| | | |
-| | | |
 | | | |
 
 ---

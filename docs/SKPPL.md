@@ -2,7 +2,7 @@
 
 ## (EcoZense) Aplikasi Web Eco Enzim
 
-### Disusun oleh:
+### Dipersiapkan oleh:
 - 4342401075 - Arshafin Alfisyahrin
 - 4342401070 - Muhamad Ariffadhlullah
 - 4342401068 - Steven Kumala
@@ -86,17 +86,37 @@
    &nbsp;&nbsp;&nbsp;&nbsp;3.25.3 [Struktur Tabel](#3253-struktur-tabel)  
    &nbsp;&nbsp;&nbsp;&nbsp;3.25.4 [Skema Relasi Antar Tabel](#3254-skema-relasi-antar-tabel)  
 
-4. [Perancangan Antarmuka](#4-perancangan-antarmuka)
+4. [Deskripsi Kelas-Kelas](#4-deskripsi-kelas-kelas)
 
-   4.1 [Antarmuka Landing Page](#41-antarmuka-landing-page)  
-   4.2 [Antarmuka Dashboard Admin](#42-antarmuka-dashboard-admin)  
-   4.3 [Antarmuka Dashboard Bank Sampah](#43-antarmuka-dashboard-bank-sampah)  
-   4.4 [Antarmuka Dashboard Nasabah](#44-antarmuka-dashboard-nasabah)  
+   4.1 [Class Diagram](#41-class-diagram)  
+   4.2 [Class User](#42-class-user)  
+   4.3 [Class Lokasi](#43-class-lokasi)  
+   4.4 [Class Artikel](#44-class-artikel)  
+   4.5 [Class Produk](#45-class-produk)  
+   4.6 [Class ProdukGambar](#46-class-produkgambar)  
+   4.7 [Class Transaksi](#47-class-transaksi)  
+   4.8 [Class Poin](#48-class-poin)  
+   4.9 [Class Feedback](#49-class-feedback)  
+   4.10 [Class ArtikelGambar](#410-class-artikelgambar)  
+   4.11 [State Machine Diagram](#411-state-machine-diagram)  
 
-5. [Matriks Keterunutan](#5-matriks-keterunutan)
+5. [Deskripsi Data](#5-deskripsi-data)
+
+   5.1 [Entity-Relationship Diagram](#51-entity-relationship-diagram)  
+   5.2 [Daftar Tabel](#52-daftar-tabel)  
+   5.3 [Struktur Tabel](#53-struktur-tabel)  
+   5.4 [Struktur Tabel](#54-struktur-tabel)  
+   5.5 [Skema Relasi Antar Tabel](#55-skema-relasi-antar-tabel)  
+
+6. [Perancangan Antarmuka](#6-perancangan-antarmuka)
+
+   6.1 [Antarmuka](#61-antarmuka)  
+   6.2 [Antarmuka](#62-antarmuka)  
+
+7. [Matriks Keterunutan](#7-matriks-keterunutan)
     
-   5.1 [Kebutuhan Fungsional vs Use Case](#51-kebutuhan-fungsional-vs-use-case)  
-   5.2 [Kebutuhan Non-Fungsional vs Use Case](#52-kebutuhan-non-fungsional-vs-use-case)  
+   7.1 [Kebutuhan Fungsional vs Use Case](#71-kebutuhan-fungsional-vs-use-case)  
+   7.2 [Kebutuhan Non-Fungsional vs Use Case](#72-kebutuhan-non-fungsional-vs-use-case)  
 
 ---
 
@@ -306,105 +326,112 @@ Berikut merupakan alur utama dalam sistem EcoZense:
 ## 3. Deskripsi Rinci Kebutuhan
 
 ### 3.1 Deskripsi Fungsional
-- SKPL-F01 Dapat menampilkan peta lokasi bank sampah di batam.
-- SKPL-F02 Pengguna Umum dapat melihat dan menelusuri artikel.
-- SKPL-F03 Pengguna Umum dapat mendaftar pada event.
-- SKPL-F04 Pengguna Umum dapat membuat akun sebagai nasabah.
-- SKPL-F05 Nasabah dapat meng-edit profil.
-- SKPL-F07 Nasabah dapat menerima poin.
+- SKPL-F01 Nasabah, Pengelola Bank Sampah, dan Admin dapat login.
+- SKPL-F02 Sistem dapat menampilkan peta lokasi bank sampah di Batam.
+- SKPL-F03 Pengguna umum melihat dan menelusuri artikel.
+- SKPL-F04 Pengguna umum mendaftar event.
+- SKPL-F05 Pengguna umum membuat akun sebagai nasabah.
+- SKPL-F06 Nasabah dapat menerima poin.
+- SKPL-F07 Nasabah, Pengelola Bank Sampah, dan Admin dapat melakukan reset password.
 - SKPL-F08 Nasabah dapat melihat berapa banyak poin yang dimilikinya.
-- SKPL-F09 Nasabah dapat membeli produk ecoenzim/sembako menggunakan poin ataupun transfer.
-- SKPL-F010 Nasabah dapat memasukkan produk ecoenzim kedalam keranjang.
+- SKPL-F09 Nasabah dapat membeli produk Eco Enzim/sembako menggunakan poin ataupun transfer.
+- SKPL-F010 Nasabah dapat memasukkan produk Eco Enzim kedalam keranjang.
 - SKPL-F011 Nasabah dapat memasukkan kuantitas produk yang ingin dibeli.
 - SKPL-F012 Nasabah dapat memberikan rating, share dan favorite produk.
 - SKPL-F013 Nasabah dapat menerima notifikasi pada website.
-- SKPL-F014 Nasabah dapat menerima bukti pembayaran setelah membeli produk.
-- SKPL-F015 Nasabah dapat melihat riwayat pembelian.
-- SKPL-F016 Nasabah dapat memberikan nilai pada artikel.
-- SKPL-F017 Nasabah dapat memberikan feedback pada artikel.
-- SKPL-F018 Nasabah dapat mengajukan diri untuk menjadi Bank Sampah.
-- SKPL-F019 Bank Sampah dapat memasukkan alamat serta menginput lokasi pada peta.
-- SKPL-F020 Bank Sampah dapat menambahkan produk ecoenzim pada tokonya masing-masing.
-- SKPL-F021 Bank Sampah dapat mengatur kuantitas produk ecoenzim.
-- SKPL-F022 Bank Sampah dapat meng-update produk ecoenzim.
-- SKPL-F023 Bank Sampah dapat memasukkan berat sampah yang diberikan oleh nasabah kemudian menghitungnya menjadi poin.
-- SKPL-F024 Bank Sampah dapat memberikan poin kepada nasabah.
-- SKPL-F025 Bank Sampah dapat melihat riwayat transaksi yang dilakukan oleh nasabah.
-- SKPL-F026 Admin dapat melihat lokasi-lokasi bank sampah pada peta di dalam dashboard.
-- SKPL-F027 Admin dapat mengelola artikel dan post.
-- SKPL-F028 Admin dapat melihat list tabel dari seluruh artikel yang telah dibuat kemudian admin dapat mereview artikel (edit/delete).
-- SKPL-F029 Admin dapat mengelola event.
-- SKPL-F030 Admin dapat melihat list tabel dari seluruh event yang telah dibuat kemudian admin dapat mereview event (edit/delete).
-- SKPL-F031 Admin dapat mem-verifikasi pengajuan nasabah yang ingin menjadi bank sampah.
-- SKPL-F032 Admin dapat mengelola data pengguna.
+- SKPL-F014 Nasabah dapat melihat riwayat pembelian.
+- SKPL-F015 Nasabah dapat memberikan nilai pada artikel.
+- SKPL-F016 Nasabah dapat memberikan feedback pada artikel.
+- SKPL-F017 Nasabah dapat mengajukan diri untuk menjadi Bank Sampah.
+- SKPL-F018 Bank Sampah dapat memasukkan alamat serta menginput lokasi pada peta.
+- SKPL-F019 Bank Sampah dapat menambahkan produk Eco Enzim pada tokonya masing-masing.
+- SKPL-F020 Bank Sampah dapat meng-update produk Eco Enzim.
+- SKPL-F021 Bank Sampah dapat memasukkan berat sampah yang diberikan oleh nasabah kemudian menghitungnya menjadi poin.
+- SKPL-F022 Bank Sampah dapat memberikan poin kepada nasabah.
+- SKPL-F023 Bank Sampah dapat melihat riwayat transaksi pada toko
+- SKPL-F024 Admin dapat melihat lokasi-lokasi bank sampah pada peta di dalam dashboard.
+- SKPL-F025 Admin dapat mengelola artikel dan post.
+- SKPL-F026 Admin dapat melihat list tabel dari seluruh artikel yang telah dibuat kemudian admin dapat mereview artikel (edit/delete).
+- SKPL-F027 Admin dapat mengelola event.
+- SKPL-F028 Admin dapat melihat list tabel dari seluruh event yang telah dibuat kemudian admin dapat mereview event (edit/delete).
+- SKPL-F029 Admin dapat mem-verifikasi pengajuan nasabah yang ingin menjadi bank sampah.
+- SKPL-F030 Admin dapat mengelola data pengguna.
+- SKPL-F031 Admin, Nasabah dan bank sampah dapat logout.
+- SKPL-F032 Nasabah dapat memilih opsi pembelian pada produk (Poin atau Transfer).
+- SKPL-F033 Nasabah dapat mengatur kuantitas produk yang ingin dibeli.
+- SKPL-F034 No. Rekening Pengelola Bank Sampah akan diberikan ketika nasabah ingin melakukan transfer.
+- SKPL-F035 Produk yang dibeli akan muncul pada halaman pesanan.
+- SKPL-F036 Setiap Produk memiliki inputan upload bukti pembayaran.
+- SKPL-F037 Setiap Produk yang pada halaman pesanan memiliki status ('Belum Dibayar', 'Sedang Diverifikasi', 'Sedang Dikirim', 'Selesai', 'Dibatalkan').
 
-### 3.2 Use Case Diagram
- 
-Gambar 2. Use Case Diagram Aplikasi Web Eco Enzim 
+#### 3.1.1 Use Case Diagram
+![Gambar 2. Use Case Diagram Aplikasi Web Eco Enzim]()
 
+#### 3.1.2 Use Case Memasukkan Alamat Dan Lokasi Bank Sampah
 
-### 3.20 Use Case Memasukan Lokasi Bank Sampah
+##### 3.1.2.1 Skenario
 
-| Identifikasi ||
-|---|---|
+| Identifikasi | |
+|-------------|-------------|
 | Nomor | UC-01 |
-| Nama | Memasukkan alamat dan lokasi |
-| Deskripsi | Pengelola bank sampah dapat memasukkan alamat dan lokasi bank sampah untuk memastikan informasi yang disampaikan tepat dan akurat. |
+| Nama | Memasukkan alamat dan lokasi bank sampah |
+| Deskripsi | Pengelola bank sampah dapat memasukkan alamat dan lokasi bank sampah untuk memastikan informasi yang disampaikan tetap dan akurat. |
 | Aktor | Pengelola Bank Sampah |
 | Kondisi awal | Pengelola bank sampah telah login ke dalam sistem dan membuka halaman edit lokasi bank sampah. |
 | Kondisi akhir | Alamat dan lokasi bank sampah berhasil disimpan di dalam sistem. |
 
-#### Skenario Utama
+**Skenario Utama**
 1. Pengelola bank sampah membuka form input lokasi
 2. Sistem menampilkan form input lokasi dan peta
 3. Pengelola bank sampah mengisi alamat lengkap
 4. Pengelola bank sampah menandai lokasi pada peta
-5. Pengelola bank sampah menekan tombol "Simpan"
+5. Pengelola bank sampah menekan tombol "simpan"
 6. Sistem menyimpan perubahan dan menampilkan lokasi yang telah diperbarui
 
-#### Skenario Alternatif
-3a. Jika form tidak diisi lengkap:
-   - Sistem menampilkan pesan error dan tidak menyimpan perubahan
+**Skenario Alternatif**  
+3a. Jika form tidak lengkap, maka sistem menampilkan pesan error dan tidak menyimpan perubahan  
+4a. Jika lokasi pada peta tidak ditandai, maka sistem menampilkan pesan error untuk menandai lokasi pada peta
 
-4a. Jika lokasi pada peta tidak ditandai:
-   - Sistem menampilkan pesan error untuk menandai lokasi pada peta
+#### 3.1.3 Use Case Meng-edit Profil
 
-### 3.21 Use Case Meng-edit Profil
+##### 3.1.3.1 Skenario
 
-| Identifikasi ||
-|---|---|
+| Identifikasi | |
+|-------------|-------------|
 | Nomor | UC-02 |
-| Nama | Meng-edit profil |
+| Nama | Meng-edit Profil |
 | Deskripsi | Nasabah dapat memperbarui informasi profil untuk memastikan data yang tersimpan tetap akurat. |
 | Aktor | Nasabah |
 | Kondisi awal | Nasabah telah login ke dalam sistem dan membuka halaman edit profil. |
 | Kondisi akhir | Informasi profil nasabah berhasil diperbarui dalam sistem. |
 
-#### Skenario Utama
+**Skenario Utama**
 1. Nasabah membuka halaman edit profil
 2. Sistem menampilkan form edit profil dengan data yang sudah ada
 3. Nasabah mengubah informasi yang diinginkan
 4. Nasabah menekan tombol "Simpan"
 5. Sistem memvalidasi input
-6. Sistem menyimpan perubahan dan menampilkan profil yang telah diperbarui
+6. Sistem mengimpan perubahan dan menampilkan profil yang telah diperbarui
 
-#### Skenario Alternatif
+**Skenario Alternatif**  
 5a. Jika validasi gagal:
-   - Sistem menampilkan pesan error dan tidak menyimpan perubahan
-   - Sistem menampilkan form dengan data yang sudah diisi sebelumnya
-   - Nasabah memperbaiki input yang tidak valid
-### 3.22 Use Case Penukaran Poin
+- Sistem menampilkan pesan error dan tidak menyimpan perubahan
+- Nasabah memperbaiki input yang tidak valid
 
-| Identifikasi ||
-|---|---|
+#### 3.1.4 Use Case Penukaran Poin
+
+##### 3.1.4.1 Skenario
+
+| Identifikasi | |
+|-------------|-------------|
 | Nomor | UC-03 |
 | Nama | Penukaran Poin |
 | Deskripsi | Nasabah yang telah menyetor sampah akan mendapatkan poin pada EcoZense. |
 | Aktor | Nasabah, Pengelola Bank Sampah |
-| Kondisi awal | Nasabah dan Pengelola Bank Sampah telah login kedalam EcoZense, dan Nasasbah belum menerima poin. |
+| Kondisi awal | Nasabah dan Pengelola Bank Sampah telah login kedalam EcoZense, dan Nasabah belum menerima poin. |
 | Kondisi akhir | Pemberian poin oleh Pengelola Bank Sampah telah berhasil dan Nasabah mendapatkan poin. |
 
-#### Skenario Utama
+**Skenario Utama**
 1. Nasabah login kedalam EcoZense.
 2. Pengelola Bank Sampah membuka halaman poin pada dashboard.
 3. Pengelola Bank Sampah mencari email Nasabah yang telah menyetor sampah.
@@ -412,118 +439,100 @@ Gambar 2. Use Case Diagram Aplikasi Web Eco Enzim
 5. Pengelola Bank Sampah kemudian dapat mengirim poin kepada nasabah.
 6. Nasabah telah berhasil menerima poin dan dapat dilihat melalui notifikasi.
 
-#### Skenario Alternatif
-3a. Jika email tidak ditemukan:
-   - Sistem konversi dan pengiriman poin tidak bisa dilakukan.
+**Skenario Alternatif**  
+3a. Jika email tidak ditemukan maka sistem konversi dan pengiriman poin tidak bisa dilakukan.
 
-### 3.23 Use Case Mengupdate Produk EcoEnzyme
+#### 3.1.5 Use Case Mengupdate Produk Eco Enzim
 
-| Identifikasi ||
-|---|---|
-| Nomor | UC-04 |
-| Nama | Mengupdate produk EcoEnzyme |
-| Deskripsi | Pengelolah bank sampah dapat mengupdate produk EcoEnzyme |
-| Aktor | Pengelolah bank sampah |
-| Kondisi awal | Pengelolah bank sampah telah login ke halaman produk. |
-| Kondisi akhir | Pengelolah bank sampah berhasil memperbarui produk EcoEnzyme. |
+##### 3.1.5.1 Skenario
 
-#### Skenario Utama
-1. Pengelolah bank sampah memasuki halaman produk
-2. Pengelolah bank sampah menekan tombol "menambah produk"
-3. Sistem membawa ke halaman tambah produk
-4. Pengelolah bank sampah mengisi data produk yang ingin di tambahi lalu tekan menyimpan, sistem otomatis menyimpannya
-5. Pengelolah bank sampah menekan tombol "edit jumlah stok"
-6. Pengelolah bank sampah mengedit jumlah stok sesuai yang tersedia lalu tekan "menyimpan" dan sistem otomatis menyimpannya
-7. Pengelolah bank sampah melihat ada jumlah stok yg sudah habis
-8. Pengelolah bank sampah menekan produknya lalu merubah status produk menjadi stok habis
-9. Begitu pulak jika ingin merubah status menjadi status tersedia
+| Identifikasi | |
+|-------------|-------------|
+| Nomor | UC-4 |
+| Nama | Mengupdate produk Eco Enzim |
+| Deskripsi | Pengelola bank sampah dapat mengupdate produk Eco Enzim |
+| Aktor | Pengelola bank sampah |
+| Kondisi awal | Pengelola bank sampah telah login ke halaman produk. |
+| Kondisi akhir | Pengelola bank sampah berhasil memperbarui produk Eco Enzim. |
 
-#### Skenario Alternatif
-4a. Jika ada data yang kosong:
-   - Sistem akan mengirim pesan error
+**Skenario Utama**
+1. Pengelola bank sampah memasuki halaman produk.
+2. Pengelola bank sampah menekan tombol "menambah produk".
+3. Sistem membawa ke halaman tambah produk.
+4. Pengelola bank sampah mengisi data produk yang ingin ditambah lalu tekan menyimpan, sistem otomatis menyimpan data.
+5. Pengelola bank sampah dapat menekan produknya lalu merubah status produk menjadi stok habis.
+6. Begitu pula jika ingin merubah status menjadi status tersedia.
 
-5a. Jika stok tersisa sedikit:
-   - Akan ada peringatan stok menipis
+**Skenario Alternatif**  
+4a. Jika ada data yang kosong, sistem akan mengirim pesan error
 
-6a. Jika ada data yang kosong:
-   - Sistem akan mengirim pesan error
+#### 3.1.6 Use Case Proses Pembelian Produk Eco Enzim atau Sembako
 
-### 3.24 Use Case Proses Pembelian Produk Eco Enzim atau Sembako
+##### 3.1.6.1 Skenario
 
-| Identifikasi ||
-|---|---|
-| Nomor | UC-05 |
+| Identifikasi | |
+|-------------|-------------|
+| Nomor | UC-5 |
 | Nama | Proses Pembelian Produk Eco Enzim atau Sembako |
-| Deskripsi | Nasabah dapat melakukan proses pembelian produk eco enzim atau sembako melalui aplikasi EcoZense, yang mencakup menambahkan produk ke dalam keranjang, memilih kuantitas, menyelesaikan pembayaran, memberikan rating, membagikan, atau menandai produk favorit, serta melihat riwayat pembelian. |
+| Deskripsi | Nasabah dapat melakukan proses pembelian produk eco enzim atau sembako melalui aplikasi EcoZense, memilih kuantitas, menyelesaikan pembayaran, memberikan like, membagikan, atau menandai produk favorit, serta melihat riwayat pembelian. |
 | Aktor | Nasabah dan pengelola bank sampah |
 | Kondisi awal | Nasabah telah masuk ke aplikasi dan berada di halaman toko. |
-| Kondisi akhir | Pembelian produk berhasil dilakukan, aksi lanjutan seperti memberi rating, share, atau favorit telah disimpan, dan riwayat pembelian dapat diakses. |
+| Kondisi akhir | Pembelian produk berhasil dilakukan, aksi lanjutan seperti memberi like, share, atau favorit telah disimpan, dan riwayat pembelian dapat diakses. |
 
-#### Skenario Utama
+**Skenario Utama**
 1. Nasabah membuka aplikasi EcoZense dan masuk ke halaman toko.
 2. Nasabah menelusuri produk eco enzim atau sembako yang tersedia.
-3. Nasabah memilih produk dan menentukan kuantitas.
-4. Nasabah menekan tombol "Tambahkan ke Keranjang".
-5. Sistem menyimpan produk dan kuantitas ke dalam keranjang dan menampilkan notifikasi keberhasilan.
-6. Nasabah membuka keranjang untuk memeriksa produk dan kuantitas, serta dapat mengubah jumlah kuantitas jika diperlukan.
-7. Nasabah menekan tombol "Beli Sekarang".
-8. Aplikasi menampilkan pilihan metode pembayaran (poin atau transfer).
-9. Nasabah memilih metode pembayaran dan menyelesaikan proses pembayaran sesuai instruksi.
-10. Sistem memverifikasi pembayaran.
-11. Aplikasi menampilkan notifikasi bahwa pembelian berhasil dan menyimpan bukti pembelian.
-12. Nasabah mengakses halaman "Riwayat Pembelian" untuk melihat transaksi yang telah dilakukan.
-13. Nasabah memilih salah satu transaksi untuk melihat detailnya.
-14. Dari halaman riwayat atau produk, nasabah dapat:
-    - Memberikan rating dan ulasan
+3. Nasabah menekan tombol "Beli Sekarang".
+4. Nasabah memilih produk dan menentukan kuantitas.
+5. Aplikasi menampilkan pilihan metode pembayaran (poin atau transfer).
+6. Nasabah memilih metode pembayaran dan menyelesaikan proses pembayaran sesuai instruksi.
+7. Sistem menyimpan produk dan kuantitas ke dalam halaman pesanan dan menampilkan status pesanan.
+8. Nasabah membuka halaman pesanan untuk meng-upload bukti transfer, serta dapat melihat status pesanan terkini.
+9. Sistem memverifikasi pembayaran.
+10. Aplikasi menampilkan notifikasi bahwa pembelian terverifikasi dan memperbarui status pesanan ke "Sedang Dikirim".
+11. Nasabah mengakses halaman "Riwayat Pembelian" untuk melihat transaksi yang telah dilakukan.
+12. Nasabah memilih salah satu transaksi untuk melihat detailnya.
+13. Dari halaman riwayat atau produk, nasabah dapat:
+    - Memberikan like dan ulasan
     - Membagikan produk ke platform lain
     - Menandai produk sebagai favorit
-15. Sistem menyimpan seluruh aksi yang dilakukan oleh nasabah.
+14. Sistem menyimpan seluruh aksi yang dilakukan oleh nasabah.
 
-#### Skenario Alternatif
-4a. Sistem gagal menambahkan produk ke keranjang karena gangguan (misalnya koneksi internet):
-   - Aplikasi menampilkan pesan: "Gagal menambahkan produk ke keranjang. Silakan coba lagi."
-   - Nasabah dapat mencoba kembali setelah kendala teratasi.
+**Skenario Alternatif**  
+5a. Nasabah tidak memilih metode pembayaran:
+- Aplikasi menampilkan pesan: "Silakan pilih metode pembayaran."
+- Nasabah memilih metode dan melanjutkan.
 
-6a. Nasabah memasukkan kuantitas yang tidak valid (nol, negatif, atau melebihi stok):
-   - Aplikasi menampilkan pesan: "Kuantitas tidak valid. Silakan masukkan jumlah yang sesuai."
-   - Nasabah memperbaiki kuantitas dan melanjutkan proses.
+9a. Pembayaran gagal diproses verifikasi:
+- Aplikasi menampilkan pesan: "Pembayaran gagal. Silakan hubungi pengelola."
+- Nasabah dapat meminta bantuan.
 
-9a. Nasabah tidak memilih metode pembayaran:
-   - Aplikasi menampilkan pesan: "Silakan pilih metode pembayaran."
-   - Nasabah memilih metode dan melanjutkan.
+12a. Data transaksi gagal dimuat:
+- Sistem menampilkan pesan: "Gagal memuat data. Silakan coba beberapa saat lagi."
+- Nasabah dapat memuat ulang halaman.
 
-10a. Pembayaran gagal diproses:
-   - Aplikasi menampilkan pesan: "Pembayaran gagal. Silakan coba lagi atau hubungi pengelola."
-   - Nasabah dapat mencoba ulang atau meminta bantuan.
+13a. Detail transaksi tidak tersedia:
+- Sistem menampilkan pesan: "Detail transaksi tidak dapat ditampilkan."
+- Nasabah dapat kembali ke daftar transaksi atau mencoba ulang.
 
-13a. Data transaksi gagal dimuat:
-   - Sistem menampilkan pesan: "Gagal memuat data. Silakan coba beberapa saat lagi."
-   - Nasabah dapat memuat ulang halaman.
+14b. Nasabah tidak dapat menandai produk sebagai favorit:
+- Aplikasi menampilkan pesan: "Gagal menandai produk sebagai favorit. Silakan coba lagi."
+- Nasabah dapat mencoba menekan ikon favorit kembali.
 
-14a. Detail transaksi tidak tersedia:
-   - Sistem menampilkan pesan: "Detail transaksi tidak dapat ditampilkan."
-   - Nasabah dapat kembali ke daftar transaksi atau mencoba ulang.
+#### 3.1.7 Use Case Mengelola dan Memperbarui Artikel
 
-14b. Nasabah tidak menekan bintang saat memberi rating:
-   - Aplikasi menampilkan pesan: "Silakan tekan bintang sesuai dengan tingkat kepuasan Anda."
-   - Nasabah menekan bintang sesuai kepuasan dan melanjutkan proses.
+##### 3.1.7.1 Skenario
 
-14c. Nasabah tidak dapat menandai produk sebagai favorit:
-   - Aplikasi menampilkan pesan: "Gagal menandai produk sebagai favorit. Silakan coba lagi."
-   - Nasabah dapat mencoba menekan ikon favorit kembali.
-
-### 3.25 Use Case Mengelola dan Mempebarui Artikel
-
-| Identifikasi ||
-|---|---|
-| Nomor | UC-06 |
-| Nama | Mengelola dan memperbarui artikel |
+| Identifikasi | |
+|-------------|-------------|
+| Nomor | UC-6 |
+| Nama | Mengelola dan Memperbarui Artikel |
 | Deskripsi | Admin dapat melihat daftar artikel, menambah artikel baru, mengedit artikel yang sudah ada, atau menghapus artikel yang tidak diperuntukan. |
 | Aktor | Admin |
 | Kondisi awal | Admin login ke sistem dan berada pada halaman manajemen artikel. |
 | Kondisi akhir | Artikel berhasil ditambahkan, diperbarui, atau dihapus dari sistem. |
 
-#### Skenario Utama
+**Skenario Utama**
 1. Admin membuka menu "Artikel" pada dashboard
 2. Sistem menampilkan daftar artikel yang tersedia
 3. Admin dapat memilih untuk:
@@ -539,368 +548,383 @@ Gambar 2. Use Case Diagram Aplikasi Web Eco Enzim
      - Menekan tombol "Hapus"
      - Sistem menghapus artikel dari daftar
 
-#### Skenario Alternatif
-3a. Jika artikel tidak diisi lengkap saat menambah atau memperbarui:
-   - Sistem menampilkan pesan kesalahan dan tidak menyimpan data.
+**Skenario Alternatif**  
+3a. Jika artikel tidak diisi lengkap saat menambah atau memperbarui, sistem menampilkan pesan kesalahan dan tidak menyimpan data.
 
-3b. Jika artikel yang ingin diedit atau dihapus tidak ditemukan:
-   - Sistem menampilkan pesan "Artikel tidak ditemukan"
+3b. Jika artikel yang ingin diedit atau dihapus tidak ditemukan, sistem menampilkan pesan "Artikel tidak ditemukan"
 
-### 3.26 Use Case Melihat, Memberi Nilai, dan Memberi Feedback pada Artikel
+#### 3.1.8 Use Case Melihat, memberi like, dan memberi feedback pada artikel
 
-| Identifikasi ||
-|---|---|
-| Nomor | UC-07 |
-| Nama | Melihat, memberi nilai, dan memberi feedback pada artikel |
-| Deskripsi | Nasabah dapat Melihat, memberi nilai, dan memberi feedback pada artikel |
+##### 3.1.8.1 Skenario
+
+| Identifikasi | |
+|-------------|-------------|
+| Nomor | UC-7 |
+| Nama | Melihat, memberi like, dan memberi feedback pada artikel. |
+| Deskripsi | Nasabah dapat Melihat, memberi like, dan memberi feedback pada artikel. |
 | Aktor | Nasabah |
-| Kondisi awal | Nasabah ingin melihat, memberi nilai, dan memberi feedback pada artikel |
-| Kondisi akhir | Nasabah berhasil melihat, memberi nilai, dan memberi feedback pada artikel |
+| Kondisi awal | Nasabah ingin melihat, memberi like, dan memberi feedback pada artikel. |
+| Kondisi akhir | Nasabah berhasil melihat, memberi like, dan memberi feedback pada artikel. |
 
-#### Skenario Utama
-1. Nasabah mengakses halaman utama pada website
-2. Nasabah menekan tombol "artikel"
-3. Nasabah akan diarahkan ke halaman artikel
-4. Nasabah bisa memilih dan menekan artikel yang tertera di halaman tersebut
-5. Nasabah bisa menilai dan memberi feedback pada artikel yang dipilih
+**Skenario Utama**
+1. Nasabah mengakses halaman utama pada website.
+2. Nasabah menekan tombol "artikel".
+3. Nasabah akan diarahkan ke halaman artikel.
+4. Nasabah bisa memilih dan menekan artikel yang tertera di halaman tersebut.
+5. Nasabah bisa like dan memberi feedback pada artikel yang dipilih.
 
-#### Skenario Alternatif
-1a. Nasabah mengakses halaman utama, namun koneksi internet terputus:
-   - Sistem menampilkan pesan kesalahan koneksi dan halaman tidak dapat dimuat
+**Skenario Alternatif**  
+1a. Nasabah mengakses halaman utama, namun koneksi internet terputus, sistem menampilkan pesan kesalahan koneksi dan halaman tidak dapat dimuat.
 
-2a. Nasabah menekan tombol "Artikel", namun halaman tidak dapat dimuat karena kesalahan server:
-   - Sistem menampilkan pesan bahwa terjadi kesalahan pada server dan meminta nasabah mencoba kembali nanti
+2a. Nasabah menekan tombol "Artikel", namun halaman tidak dapat dimuat karena kesalahan server, sistem menampilkan pesan bahwa terjadi kesalahan pada server dan meminta nasabah mencoba kembali nanti.
 
-3a. Nasabah dialihkan ke halaman artikel, tetapi konten artikel tidak berhasil dimuat:
-   - Sistem menampilkan notifikasi bahwa terjadi gangguan dalam memuat konten
+3a. Nasabah dialihkan ke halaman artikel, tetapi konten artikel tidak berhasil dimuat, sistem menampilkan notifikasi bahwa terjadi gangguan dalam memuat konten.
 
-4a. Nasabah tidak menemukan artikel yang diinginkan karena daftar artikel kosong atau belum tersedia:
-   - Sistem menampilkan pesan bahwa belum ada artikel yang tersedia
+4a. Nasabah tidak menemukan artikel yang diinginkan karena daftar artikel kosong atau belum tersedia, sistem menampilkan pesan bahwa belum ada artikel yang tersedia.
 
-4b. Nasabah menekan artikel, namun artikel tersebut sudah tidak tersedia (misalnya, telah dihapus oleh admin):
-   - Sistem menampilkan pesan bahwa artikel tidak dapat ditemukan
+4b. Nasabah menekan artikel, namun artikel tersebut sudah tidak tersedia (misalnya, telah dihapus oleh admin), sistem menampilkan pesan bahwa artikel tidak dapat ditemukan.
 
-5a. Nasabah mencoba memberi nilai atau feedback, tetapi data yang dimasukkan tidak sesuai format:
-   - Sistem menampilkan pesan kesalahan dan meminta nasabah memperbaiki input
+5a. Nasabah mencoba memberi like atau feedback, tetapi data yang dimasukkan tidak sesuai format (misalnya, feedback kosong atau melebihi batas karakter), sistem menampilkan pesan kesalahan dan meminta nasabah memperbaiki input.
 
-5b. Nasabah memberi nilai atau feedback, namun terjadi kegagalan saat menyimpan data karena gangguan sistem:
-   - Sistem menampilkan pesan bahwa feedback atau nilai gagal dikirim dan menyarankan untuk mencoba kembali
+5b. Nasabah memberi like atau feedback, namun terjadi kegagalan saat menyimpan data karena gangguan sistem, sistem menampilkan pesan bahwa feedback atau nilai gagal dikirim dan menyarankan untuk mencoba kembali.
 
-### 3.27 Use Case Membuat dan Mengelolah Event
+#### 3.1.9 Use Case Membuat dan Mengelola Event
 
-| Identifikasi ||
-|---|---|
-| Nomor | UC-08 |
-| Nama | Membuat dan Mengelolah event |
-| Deskripsi | Admin dapat membuat dan mengelolah event EcoEnzyme |
+##### 3.1.9.1 Skenario
+
+| Identifikasi | |
+|-------------|-------------|
+| Nomor | UC-8 |
+| Nama | Membuat dan Mengelola event |
+| Deskripsi | Admin dapat membuat dan mengelola event Eco Enzim |
 | Aktor | Admin |
 | Kondisi awal | Admin masuk kedalam sistem |
-| Kondisi akhir | Admin berhasil membuat dan mengelolah event EcoEnzyme |
+| Kondisi akhir | Admin berhasil membuat dan mengelola event Eco Enzim |
 
-#### Skenario Utama
-1. Admin masuk ke halaman manajmen event
-2. Sistem menampilkan daftar event yang sudah ada
-3. Admin menekan tombol "membuat event"
-4. Admin mengisi data formulir untuk membua event
-5. Admin menekan tombol "simpan" untuk menyimpan
-6. Sistem otomatis menyimpan event yang sudah dibuat
-7. Admin dapat mengedit dan menghapus event yang di inginkan
+**Skenario Utama**
+1. Admin masuk ke halaman manajemen event.
+2. Sistem menampilkan daftar event yang sudah ada.
+3. Admin menekan tombol "membuat event".
+4. Admin mengisi data formulir untuk membua event.
+5. Admin menekan tombol "simpan" untuk menyimpan.
+6. Sistem otomatis menyimpan event yang sudah dibuat.
+7. Admin dapat mengedit dan menghapus event yang di inginkan.
 
-#### Skenario Alternatif
-2a. Admin memilih untuk menghapus event yang sudah ada:
-   - Sistem meminta konfirmasi sebelum menghapusnya
+**Skenario Alternatif**  
+2a. Admin memilih untuk menghapus event yang sudah ada, dan sistem meminta konfirmasi sebelum menghapusnya.
 
-4a. Jika ada data yang kosong:
-   - Sistem akan mengirim pesan error
+4a. Jika ada data yang kosong, sistem akan mengirim pesan error
 
-6a. Jika tidak ada jaringan:
-   - Sistem tidak akan menyimpan event
+6a. Jika tidak ada jaringan, sistem tidak akan menyimpan event
 
-### 3.28 Use Case Melakukan Pendaftaran untuk Sebuah Event
+#### 3.1.10 Use Case Melakukan Pendaftaran untuk sebuah event
 
-| Identifikasi ||
-|---|---|
-| Nomor | UC-09 |
+##### 3.1.10.1 Skenario
+
+| Identifikasi | |
+|-------------|-------------|
+| Nomor | UC-9 |
 | Nama | Melakukan Pendaftaran untuk sebuah event |
-| Deskripsi | Nasabah melakukan pendaftaran untuk sebuah event yang tertera di website |
+| Deskripsi | Nasabah melakukan pendaftaran untuk sebuah event yang tertera di website. |
 | Aktor | Nasabah |
-| Kondisi awal | Nasabah ingin mendaftar untuk sebuah event |
-| Kondisi akhir | Nasabah berhasil mendaftar untuk sebuah event |
+| Kondisi awal | Nasabah ingin mendaftar untuk sebuah event. |
+| Kondisi akhir | Nasabah berhasil mendaftar untuk sebuah event. |
 
-#### Skenario Utama
+**Skenario Utama**
 1. Nasabah mengakses halaman utama
-2. Nasabah mengakses halaman pendaftaran event yang tertera di halaman utama
-3. Nasabah mengisi formulir dan data yang diperlukan
-4. Sistem memvalidasi data yang dimasukkan
-5. Sistem menyimpan data pendaftaran dan menampilkan notifikasi bahwa pendaftaran berhasil
+2. Nasabah mengakses halaman pendaftaran event yang tertera di halaman utama.
+3. Nasabah mengisi formulir dan data yang diperlukan.
+4. Sistem memvalidasi data yang dimasukkan.
+5. Sistem menyimpan data pendaftaran dan menampilkan notifikasi bahwa pendaftaran berhasil.
 
-#### Skenario Alternatif
-1a. Nasabah mengakses halaman utama, namun koneksi internet terputus:
-   - Sistem menampilkan pesan kesalahan koneksi dan pengguna tidak dapat melanjutkan proses
+**Skenario Alternatif**  
+1a. Nasabah mengakses halaman utama, namun koneksi internet terputus, sistem menampilkan pesan kesalahan koneksi dan pengguna tidak dapat melanjutkan proses.
 
-2a. Nasabah mengakses halaman pendaftaran event, namun halaman tidak dapat dimuat karena kesalahan server:
-   - Sistem menampilkan pesan bahwa terjadi kesalahan pada server dan meminta nasabah mencoba kembali nanti
+2a. Nasabah mengakses halaman pendaftaran event, namun halaman tidak dapat dimuat karena kesalahan server, sistem menampilkan pesan bahwa terjadi kesalahan pada server dan meminta nasabah mencoba kembali nanti.
 
-3a. Pengguna mengisi formulir pendaftaran, namun data yang dimasukkan tidak lengkap atau tidak sesuai format:
-   - Sistem menampilkan pesan kesalahan dan meminta pengguna untuk mengisi data dengan lengkap atau memperbaikinya
+3a. Pengguna mengisi formulir pendaftaran, namun data yang dimasukkan tidak lengkap atau tidak sesuai format (misalnya, alamat email tidak valid), sistem menampilkan pesan kesalahan dan meminta pengguna untuk mengisi data dengan lengkap atau memperbaikinya.
 
-4a. Sistem gagal memvalidasi data karena terjadi gangguan teknis atau kesalahan internal sistem:
-   - Sistem menampilkan pesan bahwa terjadi kesalahan teknis dan meminta pengguna mencoba kembali nanti
+4a. Sistem gagal memvalidasi data karena terjadi gangguan teknis atau kesalahan internal sistem, sistem menampilkan pesan bahwa terjadi kesalahan teknis dan meminta pengguna mencoba kembali nanti.
 
-### 3.29 Use Case Pengajuan Nasabah menjadi Pengelola Bank Sampah
+#### 3.1.11 Use Case Pengajuan Nasabah menjadi Pengelola Bank Sampah
 
-| Identifikasi ||
-|---|---|
+##### 3.1.11.1 Skenario
+
+| Identifikasi | |
+|-------------|-------------|
 | Nomor | UC-10 |
 | Nama | Pengajuan Nasabah menjadi Pengelola Bank Sampah |
-| Deskripsi | Nasabah yang ingin menjadi Pengelola Bank Sampah dapat mengajukannya pada EcoZense |
+| Deskripsi | Nasabah yang ingin menjadi Pengelola Bank Sampah dapat mengajukannya pada EcoZense. |
 | Aktor | Nasabah dan Admin |
 | Kondisi awal | Nasabah melakukan pengajuan menjadi Pengelola Bank Sampah |
 | Kondisi akhir | Nasabah telah berhasil menjadi Pengelola Bank Sampah |
 
-#### Skenario Utama
-1. Nasabah memasuki EcoZense
-2. Nasabah memasuki halaman profil kemudian menekan tombol "Appeal"
-3. Nasabah mengisi formulir pengajuan menjadi Pengajuan Bank Sampah kemudian menekan "Submit"
-4. Admin memasuki Dashboard kemudian memilih "Pengajuan" pada Sidebar
-5. Admin mereview pengajuan yang dilakukan nasabah kemudian memverifikasinya
-6. Setelah diverifikasi Nasabah telah berhasil menjadi Pengelola Bank Sampah
+**Skenario Utama**
+1. Nasabah memasuki EcoZense.
+2. Nasabah memasuki halaman profil kemudian menekan tombol "Appeal".
+3. Nasabah mengisi formulir pengajuan menjadi Pengajuan Bank Sampah kemudian menekan "Submit".
+4. Admin memasuki Dashboard kemudian memilih "Pengajuan" pada Sidebar.
+5. Admin mereview pengajuan yang dilakukan nasabah kemudian memverifikasinya.
+6. Setelah diverifikasi Nasabah telah berhasil menjadi Pengelola Bank Sampah.
 
-#### Skenario Alternatif
-3a. Nasabah tidak memasukkan salah satu data yang diperlukan:
-   - Akan memunculkan error dan perintah untuk mengisi data tersebut
+**Skenario Alternatif**  
+3a. Nasabah tidak memasukkan salah satu data yang diperlukan maka akan memunculkan error dan perintah untuk mengisi data tersebut.
 
-3b. Nasabah yang menekan tombol "Cancel":
-   - Akan memunculkan popup untuk memastikan apakah Nasabah ingin cancel atau tidak
+3b. Nasabah yang menekan tombol "Cancel" akan memunculkan popup untuk memastikan apakah Nasabah ingin cancel atau tidak.
 
-5a. Admin yang menemukan masalah pada data:
-   - Akan menolak verifikasi
+5a. Admin yang menemukan masalah pada data akan menolah verifikasi.
 
-### 3.22 Deskripsi Kebutuhan Non Fungsional
+### 3.2 Deskripsi Kebutuhan Non-Fungsional
+
+**Tabel Kebutuhan Non-Fungsional**
 
 | SKPL-Id | Parameter | Kebutuhan |
 |---------|-----------|-----------|
-| SKPL-NF01 | Security | - Sistem harus memiliki fitur otentikasi dan otorisasi pengguna<br>- Data pengguna harus dienkripsi |
-| SKPL-NF02 | Performance | - Waktu respon sistem harus kurang dari 3 detik pada setiap permintaan pengguna<br>- Sistem harus mampu menangani minimal 1000 pengguna secara bersamaan |
-| SKPL-NF03 | Availability | Sistem harus memiliki uptime minimal 90% dalam setahun |
-| SKPL-NF04 | Portability | Sistem harus dapat berjalan di browser desktop |
-| SKPL-NF05 | User friendly | Antarmuka pengguna harus intuitif dan mudah digunakan oleh masyarakat umum |
-
-### 3.23 Deskripsi Kelas-Kelas
-
-#### Class Diagram
-[Diagram akan ditambahkan di sini]
-
-#### Class User
-| Nama Atribut | Visibility | Tipe | Keterangan |
-|-------------|------------|------|------------|
-| User_id | Public | Int | ID unik pengguna |
-| Nama | Public | String | Nama lengkap pengguna |
-| Email | Public | String | Alamat email pengguna |
-| Password | Public | String | Kata sandi terenkripsi |
-| No_hp | Public | String | Nomor telepon pengguna |
-| Role | Public | String | Peran pengguna (admin/nasabah/bank sampah) |
-| Lokasi_id | Public | Int | ID lokasi terkait |
-
-| Nama Operasi | Visibility | Keterangan |
-|-------------|------------|------------|
-| register | Public | Mendaftarkan user baru ke dalam sistem |
-| login | Public | Mengautentikasi user berdasarkan email dan password |
-| updateProfile | Public | Memperbarui informasi profile user |
-| changePassword | Public | Mengubah password user |
-| getRole | Public | Mengembalikan role/peran user |
-
-#### Class Lokasi
-| Nama Atribut | Visibility | Tipe | Keterangan |
-|-------------|------------|------|------------|
-| lokasi_id | Public | int | ID unik lokasi |
-| nama_lokasi | Public | string | Nama lokasi bank sampah |
-| alamat | Public | string | Alamat lengkap |
-| kota | Public | string | Kota lokasi |
-| kode_pos | Public | Int | Kode pos lokasi |
-
-| Nama Operasi | Visibility | Keterangan |
-|-------------|------------|------------|
-| addLocation | Public | Menambahkan lokasi bank sampah baru |
-| updateLocation | Public | Memperbarui informasi lokasi |
-| deleteLocation | Public | Menghapus informasi lokasi |
-| getLocationDetails | Public | Mengambil detail lokasi |
-
-#### Class Artikel
-| Nama Atribut | Visibility | Tipe | Keterangan |
-|-------------|------------|------|------------|
-| artikel_id | Public | int | ID unik artikel |
-| judul | Public | string | Judul artikel |
-| konten | Public | text | Isi artikel |
-| tanggal_publikasi | Public | datetime | Waktu publikasi |
-| user_id | Public | int | ID penulis artikel |
-
-| Nama Operasi | Visibility | Keterangan |
-|-------------|------------|------------|
-| createArticle | Public | Membuat artikel baru |
-| updateArticle | Public | Memperbarui artikel |
-| deleteArticle | Public | Menghapus artikel |
-| publishArticle | Public | Mempublikasikan artikel |
-| getArticleDetails | Public | Mengambil detail artikel |
-
-#### Class Produk
-| Nama Atribut | Visibility | Tipe | Keterangan |
-|-------------|------------|------|------------|
-| produk_id | Public | int | ID unik produk |
-| nama | Public | string | Nama produk |
-| kategori | Public | string | Kategori produk |
-| status_ketersediaan | Public | string | Status stok |
-| harga | Public | decimal | Harga produk |
-| user_id | Public | int | ID penjual |
-
-| Nama Operasi | Visibility | Keterangan |
-|-------------|------------|------------|
-| addProduct | Public | Menambahkan produk baru |
-| updateProduct | Public | Memperbarui produk |
-| deleteProduct | Public | Menghapus produk |
-| updateStock | Public | Memperbarui stok |
-| getProductDetails | Public | Mengambil detail produk |
-
-#### Class ProdukGambar
-| Nama Atribut | Visibility | Tipe | Keterangan |
-|-------------|------------|------|------------|
-| gambar_id | Public | int | ID unik gambar |
-| produk_id | Public | int | ID produk terkait |
-| file_path | Public | varchar | Path file gambar |
-| created_at | Public | timestamp | Waktu upload |
-| updated_at | Public | timestamp | Waktu update |
-
-| Nama Operasi | Visibility | Keterangan |
-|-------------|------------|------------|
-| uploadImage | Public | Mengunggah gambar produk |
-| deleteImage | Public | Menghapus gambar |
-| updateImage | Public | Memperbarui gambar |
-| getImageDetails | Public | Mengambil detail gambar |
-| getImageList | Public | Mengambil daftar gambar |
-
-#### Class Transaksi
-| Nama Atribut | Visibility | Tipe | Keterangan |
-|-------------|------------|------|------------|
-| transaksi_id | Public | int | ID unik transaksi |
-| user_id | Public | int | ID pembeli |
-| lokasi_id | Public | int | ID lokasi |
-| harga_total | Public | decimal | Total harga |
-| jumlah_poin_digunakan | Public | int | Jumlah poin digunakan |
-| tanggal | Public | datetime | Waktu transaksi |
-| status | Public | string | Status transaksi |
-| metode_pembayaran | Public | string | Metode pembayaran |
-
-| Nama Operasi | Visibility | Keterangan |
-|-------------|------------|------------|
-| createTransaction | Public | Membuat transaksi baru |
-| updateStatus | Public | Memperbarui status |
-| calculateTotal | Public | Menghitung total |
-| processPayment | Public | Memproses pembayaran |
-| getTransactionDetails | Public | Mengambil detail transaksi |
-
-#### Class TransaksiItem
-| Nama Atribut | Visibility | Tipe | Keterangan |
-|-------------|------------|------|------------|
-| item_id | Public | int | ID unik item |
-| transaksi_id | Public | int | ID transaksi |
-| produk_id | Public | int | ID produk |
-| jumlah | Public | int | Jumlah produk |
-| harga_satuan | Public | int | Harga per item |
-| subtotal | Public | int | Total harga item |
-| created_at | Public | timestamp | Waktu pembuatan |
-
-| Nama Operasi | Visibility | Keterangan |
-|-------------|------------|------------|
-| addItem | Public | Menambahkan item |
-| calculateSubtotal | Public | Menghitung subtotal |
-| getItemDetails | Public | Mengambil detail item |
-| deleteItem | Public | Menghapus item |
-
-#### Class Poin
-| Nama Atribut | Visibility | Tipe | Keterangan |
-|-------------|------------|------|------------|
-| poin_id | Public | int | ID unik poin |
-| user_id | Public | int | ID pengguna |
-| lokasi_id | Public | int | ID lokasi |
-| jumlah_poin | Public | int | Jumlah poin |
-
-| Nama Operasi | Visibility | Keterangan |
-|-------------|------------|------------|
-| addPoints | Public | Menambahkan poin |
-| usePoints | Public | Menggunakan poin |
-| getPointBalance | Public | Mengambil saldo poin |
-| transferPoints | Public | Memindahkan poin |
-| getPointHistory | Public | Mengambil riwayat poin |
-
-#### Class Feedback
-| Nama Atribut | Visibility | Tipe | Keterangan |
-|-------------|------------|------|------------|
-| feedback_id | Public | int | ID unik feedback |
-| komentar | Public | text | Isi komentar |
-| user_id | Public | int | ID pengguna |
-| artikel_id | Public | int | ID artikel |
-
-| Nama Operasi | Visibility | Keterangan |
-|-------------|------------|------------|
-| addFeedback | Public | Menambahkan feedback |
-| updateFeedback | Public | Memperbarui feedback |
-| deleteFeedback | Public | Menghapus feedback |
-| getFeedbackList | Public | Mengambil daftar feedback |
-| getFeedbackDetails | Public | Mengambil detail feedback |
-
-#### Class ArtikelGambar
-| Nama Atribut | Visibility | Tipe | Keterangan |
-|-------------|------------|------|------------|
-| gambar_id | Public | int | ID unik gambar |
-| artikel_id | Public | int | ID artikel |
-| file_path | Public | string | Path file gambar |
-| judul | Public | string | Judul gambar |
-
-| Nama Operasi | Visibility | Keterangan |
-|-------------|------------|------------|
-| uploadImage | Public | Mengunggah gambar |
-| deleteImage | Public | Menghapus gambar |
-| updateImage | Public | Memperbarui gambar |
-| getImageDetails | Public | Mengambil detail gambar |
-| getImageList | Public | Mengambil daftar gambar |
-
-### 3.24 State Machine Diagram
-[Diagram akan ditambahkan di sini]
-
-### 3.25 Deskripsi Data
-
-#### Entity-Relationship Diagram
-[Diagram akan ditambahkan di sini]
-
-#### Daftar Tabel
-1. user
-2. locations
-3. articles
-4. products
-5. product_images
-6. transactions
-7. transaction_items
-8. points
-9. feedbacks
-10. article_images
-
-#### Struktur Tabel
-[Struktur tabel akan ditambahkan di sini]
-
-#### Skema Relasi Antar Tabel
-[Skema relasi akan ditambahkan di sini]
+| SKPL-NF01 | Security | - Sistem harus memiliki fitur otentikasi dan otorisasi pengguna.<br>- Data pengguna harus dienkripsi. |
+| SKPL-NF02 | Performance | - Waktu respon sistem harus kurang dari 3 detik pada setiap permintaan pengguna.<br>- Sistem harus mampu menangani minimal 1000 pengguna secara bersamaan. |
+| SKPL-NF03 | Availability | Sistem harus memiliki uptime minimal 90% dalam setahun. |
+| SKPL-NF04 | Portability | Sistem harus dapat berjalan di browser desktop. |
+| SKPL-NF05 | User friendly | Antarmuka pengguna harus intuitif dan mudah digunakan oleh masyarakat umum. |
 
 ---
 
-## 4. Perancangan Antarmuka
+## 4. Deskripsi Kelas-Kelas
 
-### Antarmuka <nama antarmuka> dan seterusnya 
+### 4.1 Class Diagram
+[Diagram akan ditambahkan di sini]
 
- 
+### 4.2 Class User
 
-## 5. Matriks Keterunutan
+**Nama Kelas: User**
 
-### 5.1 Kebutuhan Fungsional vs Use Case
+| Nama Atribut | Visibility (private, public) | Tipe |
+|--------------|------------------------------|------|
+| user_id | Public | Int |
+| nama | Public | String |
+| email | Public | String |
+| password | Public | String |
+| no_hp | Public | String |
+| role | Public | Enum |
+| lokasi_id | Public | Int |
+| created_at | public | timestamp |
+| updated_at | public | timestamp |
+
+| Nama Operasi | Visibility (private, public) | Keterangan |
+|--------------|------------------------------|------------|
+| register | public | Mendaftarkan user baru ke dalam sistem dengan data yang telah diinput oleh pengguna (nama, email, password, dll). Sistem akan memvalidasi data dan menyimpan ke database jika valid. |
+| login | public | Mengautentikasi user berdasarkan email dan password yang dimasukkan. Mengembalikan nilai boolean true jika berhasil, false jika gagal. |
+| updateProfile | public | Memperbarui informasi profile user seperti nama, no_hp, atau data lainnya berdasarkan input pengguna. |
+| changePassword | public | Mengubah password user dengan memverifikasi password lama terlebih dahulu, kemudian menyimpan password baru ke database. |
+| getRole | public | Mengembalikan role/peran user (Nasabah, Admin, atau Pengelola Bank Sampah) yang digunakan untuk otorisasi akses sistem. |
+
+### 4.3 Class Lokasi
+
+**Nama kelas: Lokasi**
+
+| Nama Atribut | Visibility (private, public) | Tipe |
+|--------------|------------------------------|------|
+| lokasi_id | public | int |
+| nama_lokasi | public | string |
+| alamat | public | string |
+| kota | public | string |
+| kode_pos | public | Int |
+| created_at | public | timestamp |
+| updated_at | public | timestamp |
+
+| Nama Operasi | Visibility (private, public) | Keterangan |
+|--------------|------------------------------|------------|
+| addLocation | public | Menambahkan lokasi bank sampah baru ke dalam sistem dengan data yang diinput oleh pengelola bank sampah. Menyimpan informasi lengkap lokasi ke database. |
+| updateLocation | public | Memperbarui informasi lokasi yang sudah ada seperti nama lokasi, alamat, kota, dll. berdasarkan input pengguna. |
+| deleteLocation | public | Menghapus informasi lokasi dari sistem jika lokasi tersebut tidak lagi beroperasi atau diperlukan. |
+| getLocationDetails | public | Mengambil dan menampilkan detail lengkap dari lokasi bank sampah, termasuk alamat, kota, dll. Mengembalikan objek Lokasi. |
+
+### 4.4 Class Artikel
+
+**Nama kelas: Artikel**
+
+| Nama Atribut | Visibility (private, public) | Tipe |
+|--------------|------------------------------|------|
+| artikel_id | public | int |
+| judul | public | string |
+| konten | public | text |
+| tanggal_publikasi | public | datetime |
+| user_id | public | int |
+| kategori | public | enum |
+| created_at | public | timestamp |
+| updated_at | public | timestamp |
+
+| Nama Operasi | Visibility (private, public) | Keterangan |
+|--------------|------------------------------|------------|
+| createArticle | public | Membuat artikel baru dengan judul, konten, dan informasi lain yang dimasukkan oleh admin. Menyimpan artikel ke database dengan status draft atau publikasi. |
+| updateArticle | public | Memperbarui informasi artikel yang sudah ada seperti judul, konten, dll. berdasarkan input admin. |
+| deleteArticle | public | Menghapus artikel dari sistem jika sudah tidak relevan atau diperlukan. |
+| publishArticle | public | Mempublikasikan artikel yang masih dalam status draft dengan mengatur tanggal_publikasi dan membuatnya tersedia untuk dibaca pengguna. |
+| getArticleDetails | public | Mengambil dan menampilkan detail lengkap artikel termasuk judul, konten, dll. Mengembalikan objek Artikel. |
+
+### 4.5 Class Produk
+
+**Nama kelas: Produk**
+
+| Nama Atribut | Visibility (private, public) | Tipe |
+|--------------|------------------------------|------|
+| produk_id | public | int |
+| Nama_produk | public | string |
+| kategori | public | enum |
+| status_ketersediaan | public | enum |
+| harga | public | decimal |
+| user_id | public | int |
+| suka | public | int |
+| deskripsi | public | text |
+| created_at | public | timestamp |
+| updated_at | public | timestamp |
+
+| Nama Operasi | Visibility (private, public) | Keterangan |
+|--------------|------------------------------|------------|
+| addProduct | public | Menambahkan produk eco enzim baru ke dalam sistem dengan data yang diinput oleh pengelola bank sampah. Menyimpan informasi produk ke database. |
+| updateProduct | public | Memperbarui informasi produk yang sudah ada seperti nama, kategori, harga, dll. berdasarkan input pengelola bank sampah. |
+| deleteProduct | public | Menghapus produk dari sistem jika sudah tidak tersedia atau diperlukan. |
+| updateStock | public | Memperbarui status ketersediaan produk setelah terjadi transaksi atau penambahan stok baru. |
+| getProductDetails | public | Mengambil dan menampilkan detail lengkap produk termasuk nama, harga, kategori, dll. Mengembalikan objek Produk. |
+
+### 4.6 Class ProdukGambar
+
+**Nama kelas: ProdukGambar**
+
+| Nama Atribut | Visibility (private, public) | Tipe |
+|--------------|------------------------------|------|
+| gambar_id | public | int |
+| produk_id | public | int |
+| file_path | public | varchar |
+| created_at | public | timestamp |
+| updated_at | public | timestamp |
+
+| Nama Operasi | Visibility (private, public) | Keterangan |
+|--------------|------------------------------|------------|
+| uploadImage | public | Mengunggah gambar baru untuk produk tertentu. Menyimpan file gambar ke server dan mencatat informasi gambar di database. |
+| deleteImage | public | Menghapus gambar dari produk dan sistem jika sudah tidak diperlukan. |
+| updateImage | public | Memperbarui informasi gambar seperti judul atau file gambar itu sendiri. |
+| getImageDetails | public | Mengambil dan menampilkan detail lengkap gambar tertentu. Mengembalikan objek ProdukGambar. |
+| getImageList | public | Mengambil dan menampilkan daftar semua gambar untuk produk tertentu. Mengembalikan daftar objek ProdukGambar. |
+
+### 4.7 Class Transaksi
+
+**Nama kelas: Transaksi**
+
+| Nama Atribut | Visibility (private, public) | Tipe |
+|--------------|------------------------------|------|
+| transaksi_id | public | int |
+| user_id | public | int |
+| lokasi_id | public | int |
+| harga_total | public | decimal |
+| poin_used | public | int |
+| tanggal | public | datetime |
+| status | public | string |
+| metode_pembayaran | public | string |
+| bukti_transfer | public | string |
+| created_at | public | timestamp |
+| updated_at | public | timstamp |
+
+| Nama Operasi | Visibility (private, public) | Keterangan |
+|--------------|------------------------------|------------|
+| createTransaction | public | Membuat transaksi baru ketika nasabah menukar poin dengan produk. Mencatat detail transaksi seperti poin yang digunakan, produk yang ditukar, dll. |
+| updateStatus | public | Memperbarui status transaksi (misalnya "Pending", "Selesai", "Dibatalkan") berdasarkan perkembangan proses transaksi. |
+| calculateTotal | public | Menghitung total harga transaksi berdasarkan produk yang dipilih dan jumlah poin yang digunakan. Mengembalikan nilai decimal. |
+| processPayment | public | Memproses pembayaran dengan mengurangi poin nasabah sesuai jumlah yang digunakan. Mengembalikan boolean yang menunjukkan keberhasilan proses. |
+| getTransactionDetails | public | Mengambil dan menampilkan detail lengkap transaksi termasuk produk yang ditukar, poin yang digunakan, dll. Mengembalikan objek Transaksi. |
+
+### 4.8 Class Poin
+
+**Nama kelas: Poin**
+
+| Nama Atribut | Visibility (private, public) | Tipe |
+|--------------|------------------------------|------|
+| poin_id | public | int |
+| user_id | public | int |
+| lokasi_id | public | int |
+| jumlah_poin | public | int |
+| created_at | public | timestamp |
+| updated_at | public | timestamp |
+
+| Nama Operasi | Visibility (private, public) | Keterangan |
+|--------------|------------------------------|------------|
+| addPoints | public | Menambahkan poin ke akun nasabah setelah penyetoran sampah. Poin ditambahkan berdasarkan jenis dan jumlah sampah yang disetor. |
+| usePoints | public | Mengurangi poin nasabah ketika digunakan untuk menukar dengan produk. Memastikan nasabah memiliki poin yang cukup sebelum transaksi. |
+| getPointBalance | public | Mengambil dan menampilkan saldo poin saat ini untuk nasabah di lokasi bank sampah tertentu. Mengembalikan nilai integer. |
+| transferPoints | public | Memindahkan poin dari satu lokasi ke lokasi lain jika fitur tersebut diizinkan oleh sistem. |
+| getPointHistory | public | Mengambil dan menampilkan riwayat perubahan poin nasabah, termasuk penambahan dan penggunaan. Mengembalikan daftar objek Poin. |
+
+### 4.9 Class Feedback
+
+**Nama kelas: Feedback**
+
+| Nama Atribut | Visibility (private, public) | Tipe |
+|--------------|------------------------------|------|
+| feedback_id | public | int |
+| komentar | public | text |
+| user_id | public | int |
+| artikel_id | public | int |
+| created_at | public | timestamp |
+
+| Nama Operasi | Visibility (private, public) | Keterangan |
+|--------------|------------------------------|------------|
+| addFeedback | public | Menambahkan feedback atau komentar baru pada artikel tertentu. Menyimpan komentar beserta informasi pengguna yang memberikan feedback. |
+| updateFeedback | public | Memperbarui isi feedback yang sudah diberikan oleh pengguna jika diperlukan atau diizinkan. |
+| deleteFeedback | public | Menghapus feedback dari sistem jika tidak sesuai dengan ketentuan atau atas permintaan pengguna. |
+| getFeedbackList | public | Mengambil dan menampilkan daftar semua feedback untuk artikel tertentu. Mengembalikan daftar objek Feedback. |
+| getFeedbackDetails | public | Mengambil dan menampilkan detail lengkap feedback tertentu. Mengembalikan objek Feedback. |
+
+### 4.10 Class ArtikelGambar
+
+**Nama kelas: ArtikelGambar**
+
+| Nama Atribut | Visibility (private, public) | Tipe |
+|--------------|------------------------------|------|
+| gambar_id | public | int |
+| artikel_id | public | int |
+| file_path | public | string |
+| judul | public | string |
+| created_at | public | timestamp |
+| updated_at | public | timestamp |
+
+| Nama Operasi | Visibility (private, public) | Keterangan |
+|--------------|------------------------------|------------|
+| uploadImage | public | Mengunggah gambar baru untuk artikel tertentu. Menyimpan file gambar ke server dan mencatat informasi gambar di database. |
+| deleteImage | public | Menghapus gambar dari artikel dan sistem jika sudah tidak diperlukan. |
+| updateImage | public | Memperbarui informasi gambar seperti judul atau file gambar itu sendiri. |
+| getImageDetails | public | Mengambil dan menampilkan detail lengkap gambar tertentu. Mengembalikan objek ArtikelGambar. |
+| getImageList | public | Mengambil dan menampilkan daftar semua gambar untuk artikel tertentu. Mengembalikan daftar objek ArtikelGambar. |
+
+### 4.11 State Machine Diagram
+[Diagram akan ditambahkan di sini]
+
+## 5. Deskripsi Data
+
+### 5.1 Entity-Relationship Diagram
+[Diagram akan ditambahkan di sini]
+
+### 5.2 Daftar Tabel
+[Daftar tabel akan ditambahkan di sini]
+
+### 5.3 Struktur Tabel
+[Struktur tabel akan ditambahkan di sini]
+
+### 5.4 Struktur Tabel
+[Struktur tabel lainnya akan ditambahkan di sini]
+
+### 5.5 Skema Relasi Antar Tabel
+[Skema relasi antar tabel akan ditambahkan di sini]
+
+## 6. Perancangan Antarmuka
+
+### 6.1 Antarmuka
+[Antarmuka akan ditambahkan di sini]
+
+### 6.2 Antarmuka
+[Antarmuka lainnya akan ditambahkan di sini]
+
+## 7. Matriks Keterunutan
+
+### 7.1 Kebutuhan Fungsional vs Use Case
 | Kebutuhan | Deskripsi | UC-01 | UC-02 | UC-03 | UC-04 | UC-05 | UC-06 | UC-07 | UC-08 | Prioritas |
 |-----------|-----------|-------|-------|-------|-------|-------|-------|-------|-------|-----------|
 | SKPL-F01 | Menampilkan peta lokasi bank sampah | - | - | - | - | - | - | - | - | Tinggi |
@@ -936,7 +960,7 @@ Gambar 2. Use Case Diagram Aplikasi Web Eco Enzim
 | SKPL-F032 | Mengelola data pengguna | X | - | - | - | - | - | - | - | Tinggi |
 | SKPL-F010 | Menukarkan poin | - | - | - | - | - | - | - | X | Tinggi |
 
-### 5.2 Kebutuhan Non-Fungsional vs Use Case
+### 7.2 Kebutuhan Non-Fungsional vs Use Case
 | Kebutuhan | Deskripsi | UC-01 | UC-02 | UC-03 | UC-04 | UC-05 | UC-06 | UC-07 | UC-08 | Prioritas |
 |-----------|-----------|-------|-------|-------|-------|-------|-------|-------|-------|-----------|
 | SKPL-NF01 | Keamanan | X | X | X | X | X | X | X | X | Tinggi |
