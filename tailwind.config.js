@@ -7,7 +7,11 @@ module.exports = {
     "./vendor/laravel/pulse/**/*.blade.php",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        sans: ['Lexend Deca', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+      },
+    },
   },
   plugins: [],
 }

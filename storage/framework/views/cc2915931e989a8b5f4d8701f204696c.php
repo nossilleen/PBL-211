@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="<?php echo e(str_replace('_', '-', app()->getLocale())); ?>">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <?php echo app('Illuminate\Foundation\Vite')(['resources/css/app.css', 'resources/js/app.js']); ?>
 </head>
 <body class="font-sans antialiased">
     <div class="min-h-screen flex">
@@ -15,14 +15,14 @@
         <div class="w-full md:w-1/2 bg-green-800 p-6">
             <!-- Logo -->
             <div class="mb-8 ml-4">
-                <img src="{{ asset('images/logo.png') }}" alt="EcoZense Logo" class="h-12">
+                <img src="<?php echo e(asset('images/logo.png')); ?>" alt="EcoZense Logo" class="h-12">
             </div>
 
             <!-- Login Form -->
             <div class="max-w-md ml-4">
                 <h1 class="text-3xl font-bold text-yellow-300 mb-8">LOGIN</h1>
-                <form method="POST" action="{{ route('login') }}" class="space-y-6">
-                    @csrf
+                <form method="POST" action="<?php echo e(route('login')); ?>" class="space-y-6">
+                    <?php echo csrf_field(); ?>
                     
                     <!-- Email -->
                     <div class="space-y-2">
@@ -57,7 +57,7 @@
 
                     <!-- Forgot Password -->
                     <div class="text-center">
-                        <a href="{{ route('password.request') }}" class="text-gray-400 hover:text-gray-200 text-sm">
+                        <a href="<?php echo e(route('password.request')); ?>" class="text-gray-400 hover:text-gray-200 text-sm">
                             Forgot Password?
                         </a>
                     </div>
@@ -66,7 +66,7 @@
         </div>
 
         <!-- Right Section - Background Image -->
-        <div class="hidden md:block md:w-1/2" style="background-image: url('{{ asset('images/bg8.jpeg') }}'); background-size: cover; background-position: center;"></div>
+        <div class="hidden md:block md:w-1/2" style="background-image: url('<?php echo e(asset('images/bg8.jpeg')); ?>'); background-size: cover; background-position: center;"></div>
     </div>
 
     <script>
@@ -85,3 +85,4 @@
     </script>
 </body>
 </html>
+<?php /**PATH D:\xampp\htdocs\laravel\PBL-211\resources\views/auth/login.blade.php ENDPATH**/ ?>
