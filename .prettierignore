@@ -1,0 +1,24 @@
+# Ignore blade files (they contain Laravel template tags that confuse Prettier)
+*.blade.php
+
+# Build files
+/public/
+/dist/
+/build/
+/node_modules/
+/vendor/
+
+# Laravel-specific
+/storage/
+/bootstrap/cache/
+
+# IDE and editor files
+.idea/
+.vscode/
+*.sublime-*
+*.swp
+*.swo
+
+# Misc
+.DS_Store
+Thumbs.db 

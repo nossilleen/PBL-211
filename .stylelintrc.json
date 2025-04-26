@@ -18,6 +18,10 @@
       }
     ],
     "no-descending-specificity": null,
-    "import-notation": null
+    "import-notation": null,
+    "rule-empty-line-before": null,
+    "string-quotes": null,
+    "value-list-comma-newline-after": null,
+    "no-eol-whitespace": null
   }
 } 
