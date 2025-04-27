@@ -10,7 +10,7 @@ alwaysApply: true
 ### Komponen & Struktur
 - Gunakan pendekatan komponen yang modular dan reusable
 - Pisahkan komponen berdasarkan fungsionalitas (presentational vs container)
-- Implementasikan atomic design pattern (atoms, molecules, organisms)
+- Implementasikan modular design
 - Gunakan folder structure yang konsisten:
   ```
   src/
