@@ -14,7 +14,8 @@
 @source '../**/*.js';
 
 @theme {
-  --font-sans: 'Lexend Deca', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+  --font-sans:
+    'Lexend Deca', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
     'Segoe UI Symbol', 'Noto Color Emoji';
 }
 
@@ -36,11 +37,11 @@
 
 /* Custom animations dan transisi */
 .animate-fade-in {
-  animation: fadeIn 0.3s ease-out;
+  animation: fade-in 0.3s ease-out;
 }
 
 .animate-slide-up {
-  animation: slideUp 0.5s ease-out;
+  animation: slide-up 0.5s ease-out;
 }
 
 .animate-slide-in-right {
@@ -75,14 +76,24 @@
 }
 
 /* Keyframes untuk animasi */
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
-@keyframes slideUp {
-  from { transform: translateY(20px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
+@keyframes slide-up {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 @keyframes slide-in-right {
@@ -103,18 +114,18 @@
 }
 
 .navbar-scrolled {
-  background-color: rgba(141, 211, 99, 0.95) !important;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  background-color: rgb(141 211 99 / 95%) !important;
+  box-shadow: 0 4px 10px rgb(0 0 0 / 10%);
 }
 
 /* Add styles for navbar links when scrolled */
 .navbar-scrolled a {
-  color: rgb(22, 101, 52) !important;
+  color: rgb(22 101 52) !important;
 }
 
 .navbar-scrolled a:hover {
-  color: rgb(20, 83, 45) !important;
-  border-color: rgb(20, 83, 45) !important;
+  color: rgb(20 83 45) !important;
+  border-color: rgb(20 83 45) !important;
 }
 
 /* Utilitas responsive */
@@ -136,17 +147,18 @@
 }
 
 /* Custom styles for login page */
-input[type="email"],
-input[type="password"] {
+input[type='email'],
+input[type='password'] {
   @apply rounded-2xl border-0 focus:ring-0;
 }
 
-input[type="checkbox"] {
+input[type='checkbox'] {
   @apply rounded border-gray-300 text-yellow-300 focus:ring-yellow-300;
 }
 
 .login-button {
-  @apply w-full py-3 px-4 bg-yellow-300 hover:bg-yellow-400 text-green-900 font-semibold rounded-2xl transition duration-200;
+  @apply w-full py-3 px-4 bg-yellow-300 hover:bg-yellow-400 text-green-900 
+    font-semibold rounded-2xl transition duration-200;
 }
 
 .login-left {
@@ -175,6 +187,7 @@ input[type="checkbox"] {
 
 .login-right {
   @apply hidden md:block md:w-1/2;
+
   background: linear-gradient(to bottom right, #c1e99c, #95d576);
 }
 

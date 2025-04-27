@@ -1,6 +1,6 @@
 <!-- resources/views/components/home/information-center.blade.php -->
 <section
-    class="py-16"
+    class="min-h-screen flex items-center"
     style="background-image: url('<?php echo e(asset('images/bg2.jpeg')); ?>'); background-size: cover; background-position: center;"
 >
     <div class="container mx-auto px-4">

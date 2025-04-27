@@ -1,6 +1,6 @@
 <!-- resources/views/components/home/about-us.blade.php -->
 <section
-    class="py-16"
+    class="min-h-screen flex items-center"
     style="background-image: url('<?php echo e(asset('images/bg3.jpeg')); ?>'); background-size: cover; background-position: center;"
 >
     <div class="container mx-auto px-4 bg-transparent py-10 rounded-lg">

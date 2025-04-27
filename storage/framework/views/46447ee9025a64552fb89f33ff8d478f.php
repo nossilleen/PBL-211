@@ -1,7 +1,7 @@
 <!-- resources/views/components/home/hero.blade.php -->
 <section
-    class="py-20 md:py-32"
-    style="background-image: url('<?php echo e(asset('images/bg1.jpeg')); ?>'); background-size: cover; background-position: center;"
+    class="min-h-screen flex items-center"
+    style="background-image: url('<?php echo e(asset('images/Frame 2305.png')); ?>'); background-size: cover; background-position: center;"
 >
     <div class="container mx-auto px-6 md:px-8 grid md:grid-cols-2 gap-6">
         <div
@@ -9,7 +9,7 @@
             data-aos="fade-up"
             data-aos-delay="200"
         >
-            <h1 class="text-4xl md:text-6xl font-bold text-green-800 mb-6 animate-fade-in">
+            <h1 class="text-10xl md:text-8xl font-bold text-green-800 mb-6 animate-fade-in">
                 Welcome to <br />EcoZense
             </h1>
             <p class="text-green-900 mb-8 animate-slide-up">
