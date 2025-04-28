@@ -1,11 +1,27 @@
+<!DOCTYPE html>
+<html lang="<?php echo e(str_replace('_', '-', app()->getLocale())); ?>">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+        <meta name="description" content="Artikel EcoZense - Informasi dan Edukasi tentang Bank Sampah dan Eco Enzim di Batam" />
+        <meta name="theme-color" content="#8DD363" />
+        <title>Artikel - EcoZense</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+        <?php echo app('Illuminate\Foundation\Vite')(['resources/css/app.css', 'resources/js/app.js']); ?>
+    </head>
+    <body class="font-sans antialiased bg-gray-100 overflow-x-hidden">
+        <!-- Preloader -->
+        <div id="preloader" class="fixed inset-0 bg-green-50 z-[9999] flex items-center justify-center">
+            <div class="animate-spin rounded-full h-16 w-16 border-b-4 border-green-600"></div>
+        </div>
 
-
-<?php $__env->startSection('content'); ?>
-<!-- Tambahkan navbar artikel di awal konten -->
-<?php if (isset($component)) { $__componentOriginaldab9ccf700cc8e9f61a9fb45ecf5eeb3 = $component; } ?>
-<?php if (isset($attributes)) { $__attributesOriginaldab9ccf700cc8e9f61a9fb45ecf5eeb3 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.navbar.artikel','data' => []] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
-<?php $component->withName('navbar.artikel'); ?>
+        <!-- Navbar -->
+        <?php if (isset($component)) { $__componentOriginal81eae4d4474677c5f580c9bfd07bf8bc = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginal81eae4d4474677c5f580c9bfd07bf8bc = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.home.navbar','data' => []] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('home.navbar'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
@@ -14,183 +30,182 @@
 <?php $component->withAttributes([]); ?>
 <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
-<?php if (isset($__attributesOriginaldab9ccf700cc8e9f61a9fb45ecf5eeb3)): ?>
-<?php $attributes = $__attributesOriginaldab9ccf700cc8e9f61a9fb45ecf5eeb3; ?>
-<?php unset($__attributesOriginaldab9ccf700cc8e9f61a9fb45ecf5eeb3); ?>
+<?php if (isset($__attributesOriginal81eae4d4474677c5f580c9bfd07bf8bc)): ?>
+<?php $attributes = $__attributesOriginal81eae4d4474677c5f580c9bfd07bf8bc; ?>
+<?php unset($__attributesOriginal81eae4d4474677c5f580c9bfd07bf8bc); ?>
 <?php endif; ?>
-<?php if (isset($__componentOriginaldab9ccf700cc8e9f61a9fb45ecf5eeb3)): ?>
-<?php $component = $__componentOriginaldab9ccf700cc8e9f61a9fb45ecf5eeb3; ?>
-<?php unset($__componentOriginaldab9ccf700cc8e9f61a9fb45ecf5eeb3); ?>
+<?php if (isset($__componentOriginal81eae4d4474677c5f580c9bfd07bf8bc)): ?>
+<?php $component = $__componentOriginal81eae4d4474677c5f580c9bfd07bf8bc; ?>
+<?php unset($__componentOriginal81eae4d4474677c5f580c9bfd07bf8bc); ?>
 <?php endif; ?>
 
-<div class="container mx-auto px-4 py-8 mt-20">
-    <!-- Hero Section -->
-    <div class="bg-gradient-to-r from-green-900 to-green-700 text-white rounded-lg p-8 mb-10 relative overflow-hidden">
-        <div class="relative z-10 max-w-2xl">
-            <h1 class="text-4xl font-bold mb-4">Artikel EcoZense</h1>
-            <p class="text-xl mb-4">Berbagai artikel dan informasi seputar eco-enzyme dan lingkungan</p>
-        </div>
-        <div class="absolute right-0 top-0 h-full w-1/2 flex items-center justify-center">
-            <img src="<?php echo e(asset('images/Logo.png')); ?>" alt="EcoZense Logo" class="h-32 object-contain opacity-80">
-        </div>
-    </div>
-
-    <!-- Featured Article -->
-    <div class="mb-12">
-        <h2 class="text-3xl font-bold text-gray-800 mb-6">Artikel Pilihan</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div class="bg-white rounded-lg overflow-hidden shadow-md">
-                <img src="https://via.placeholder.com/600x300" alt="Featured Article" class="w-full h-64 object-cover">
-                <div class="p-6">
-                    <span class="text-green-600 font-medium">Lingkungan</span>
-                    <h3 class="text-2xl font-bold mt-2 mb-3">Manfaat Eco-Enzyme untuk Lingkungan Rumah</h3>
-                    <p class="text-gray-600 mb-4">Pelajari bagaimana eco-enzyme dapat membantu mengurangi penggunaan bahan kimia berbahaya di rumah Anda sekaligus mengurangi sampah organik.</p>
-                    <div class="flex items-center justify-between">
-                        <span class="text-sm text-gray-500">5 Mei 2023 • 8 menit membaca</span>
-                        <a href="#" class="text-green-600 hover:text-green-800 font-medium">Baca Selengkapnya</a>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="grid grid-cols-1 gap-6">
-                <div class="bg-white rounded-lg overflow-hidden shadow-md flex">
-                    <img src="https://via.placeholder.com/300x200" alt="Article" class="w-1/3 object-cover">
-                    <div class="p-4 w-2/3">
-                        <span class="text-green-600 font-medium text-sm">Tutorial</span>
-                        <h3 class="text-lg font-bold mt-1 mb-2">Cara Membuat Eco-Enzyme dari Limbah Dapur</h3>
-                        <p class="text-gray-600 text-sm mb-2 line-clamp-2">Panduan langkah demi langkah untuk membuat eco-enzyme dari sisa buah dan sayur.</p>
-                        <span class="text-xs text-gray-500">3 Juni 2023</span>
-                    </div>
+        <!-- Main Content Wrapper -->
+        <main class="overflow-x-hidden">
+            <!-- Hero Section for Articles -->
+            <section class="h-[40vh] flex items-center relative">
+                <!-- Background image layer -->
+                <div class="absolute inset-0 z-0">
+                    <img src="<?php echo e(asset('images/bg1.jpeg')); ?>" class="w-full h-full object-cover" alt="Background">
                 </div>
                 
-                <div class="bg-white rounded-lg overflow-hidden shadow-md flex">
-                    <img src="https://via.placeholder.com/300x200" alt="Article" class="w-1/3 object-cover">
-                    <div class="p-4 w-2/3">
-                        <span class="text-green-600 font-medium text-sm">Kesehatan</span>
-                        <h3 class="text-lg font-bold mt-1 mb-2">Manfaat Eco-Enzyme untuk Kesehatan Tubuh</h3>
-                        <p class="text-gray-600 text-sm mb-2 line-clamp-2">Temukan bagaimana eco-enzyme dapat digunakan sebagai bahan alami untuk perawatan tubuh.</p>
-                        <span class="text-xs text-gray-500">15 Mei 2023</span>
-                    </div>
-                </div>
+                <!-- Overlay -->
+                <div class="absolute inset-0 bg-green-900/50 z-10"></div>
                 
-                <div class="bg-white rounded-lg overflow-hidden shadow-md flex">
-                    <img src="https://via.placeholder.com/300x200" alt="Article" class="w-1/3 object-cover">
-                    <div class="p-4 w-2/3">
-                        <span class="text-green-600 font-medium text-sm">Pertanian</span>
-                        <h3 class="text-lg font-bold mt-1 mb-2">Eco-Enzyme sebagai Pupuk Organik</h3>
-                        <p class="text-gray-600 text-sm mb-2 line-clamp-2">Aplikasi eco-enzyme pada tanaman dan manfaatnya untuk pertumbuhan tanaman.</p>
-                        <span class="text-xs text-gray-500">22 April 2023</span>
+                <!-- Content -->
+                <div class="container mx-auto px-6 md:px-8 relative z-20 py-16 md:py-20">
+                    <div class="max-w-4xl mx-auto text-center">
+                        <h1 class="text-4xl md:text-5xl font-bold text-white mb-4 animate-fade-in">
+                            Artikel & Berita
+                        </h1>
+                        <p class="text-xl text-green-100 animate-slide-up mb-8">
+                            Dapatkan informasi terbaru dan edukasi tentang pengelolaan sampah, eco enzim, dan gaya hidup ramah lingkungan
+                        </p>
+                        
+                        <!-- Search Bar -->
+                        <div class="max-w-xl mx-auto mt-8 relative">
+                            <div class="flex items-center bg-white rounded-full shadow-lg overflow-hidden border-2 border-green-100 hover:border-green-200 transition-all duration-300">
+                                <input type="text" placeholder="Cari artikel..." class="w-full px-6 py-3 text-gray-700 focus:outline-none text-lg">
+                                <button class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 transition-all duration-300 flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
+            </section>
 
-    <!-- Latest Articles -->
-    <div class="mb-10">
-        <div class="flex justify-between items-center mb-6">
-            <h2 class="text-3xl font-bold text-gray-800">Artikel Terbaru</h2>
-            <div class="flex space-x-2">
-                <button class="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700">Semua</button>
-                <button class="bg-gray-200 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-300">Lingkungan</button>
-                <button class="bg-gray-200 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-300">Tutorial</button>
-                <button class="bg-gray-200 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-300">Kesehatan</button>
-            </div>
-        </div>
-        
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <?php for($i = 1; $i <= 6; $i++): ?>
-            <div class="bg-white rounded-lg overflow-hidden shadow-md">
-                <img src="https://via.placeholder.com/400x250" alt="Article Image" class="w-full h-48 object-cover">
-                <div class="p-5">
-                    <span class="text-green-600 font-medium text-sm">Lingkungan</span>
-                    <h3 class="text-xl font-bold mt-2 mb-3">Artikel Terbaru <?php echo e($i); ?></h3>
-                    <p class="text-gray-600 mb-4 line-clamp-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                    <div class="flex items-center justify-between">
-                        <span class="text-sm text-gray-500"><?php echo e($i); ?> Juni 2023</span>
-                        <a href="#" class="text-green-600 hover:text-green-800 font-medium">Baca</a>
+            <!-- Category and Tabs Section -->
+            <section class="bg-white border-b border-gray-200">
+                <div class="container mx-auto px-4">
+                    <div class="flex flex-wrap justify-between items-center py-4">
+                        <!-- Category Dropdown -->
+                        <div class="w-full md:w-auto mb-4 md:mb-0">
+                            <div class="relative">
+                                <button id="categoryDropdown" class="flex items-center justify-between w-full md:w-48 px-4 py-2 bg-white border border-gray-300 rounded-md focus:outline-none">
+                                    <span class="text-gray-700">Pilih Kategori</span>
+                                    <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                    </svg>
+                                </button>
+                                <div id="categoryMenu" class="hidden absolute left-0 mt-2 w-full md:w-48 bg-white shadow-lg rounded-md z-50">
+                                    <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-green-50">Semua Kategori</a>
+                                    <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-green-50">Eco Enzim</a>
+                                    <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-green-50">Bank Sampah</a>
+                                    <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-green-50">Tips & Trik</a>
+                                    <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-green-50">Berita</a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Tabs -->
+                        <div class="w-full md:w-auto flex space-x-6">
+                            <a href="#" class="text-gray-700 hover:text-green-600 border-b-2 border-transparent hover:border-green-600 px-1 py-2 font-medium">Terpopuler</a>
+                            <a href="#" class="text-gray-700 hover:text-green-600 border-b-2 border-green-600 px-1 py-2 font-medium">Terbaru</a>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <?php endfor; ?>
-        </div>
-        
-        <div class="flex justify-center mt-8">
-            <button class="bg-green-600 text-white px-6 py-3 rounded-md hover:bg-green-700 font-medium">Lihat Lebih Banyak</button>
-        </div>
-    </div>
+            </section>
 
-    <!-- Newsletter Section -->
-    <div class="bg-green-100 rounded-lg p-8 mb-10">
-        <div class="max-w-xl mx-auto text-center">
-            <h2 class="text-2xl font-bold text-gray-800 mb-3">Dapatkan Artikel Terbaru</h2>
-            <p class="text-gray-600 mb-6">Berlangganan newsletter kami untuk mendapatkan update artikel terbaru tentang eco-enzyme dan lingkungan.</p>
-            <div class="flex">
-                <input type="email" placeholder="Alamat Email Anda" class="px-4 py-3 rounded-l-md w-full focus:outline-none">
-                <button class="bg-green-600 text-white px-6 py-3 rounded-r-md hover:bg-green-700 font-medium">Berlangganan</button>
-            </div>
-        </div>
-    </div>
+            <!-- Articles Section -->
+            <section class="py-12 bg-gray-100">
+                <div class="container mx-auto px-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <!-- Article Card 1 -->
+                        <div class="bg-white rounded-md shadow-sm overflow-hidden hover:shadow-md transition-shadow duration-300">
+                            <img src="<?php echo e(asset('images/Frame 2305.png')); ?>" alt="Eco Enzyme" class="w-full h-56 object-cover">
+                            <div class="p-6">
+                                <h3 class="text-xl font-bold text-gray-800 mb-2">All About Bio-Enzymes: How You Can Make Chemical-Free Floor Cleaners from Kitchen Waste!</h3>
+                                <p class="text-gray-600 mb-4">How You Can Make Chemical-Free Bio-Enzyme Cleaners From Fruit Peels</p>
+                                <div class="flex justify-between items-center text-sm text-gray-500 mb-4">
+                                    <span>25 April 2023</span>
+                                    <button class="text-gray-400 hover:text-gray-700">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                                        </svg>
+                                    </button>
+                                </div>
+                                <a href="#" class="block w-full text-center py-2 bg-green-100 text-green-800 rounded-md hover:bg-green-200 transition-colors">Selengkapnya</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
 
-    <!-- Footer Section -->
-    <div class="border-t pt-8 pb-4">
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
-            <div>
-                <h4 class="font-bold text-lg mb-4">ECOZENSE</h4>
-                <div class="mb-4">
-                    <h5 class="font-medium mb-2">Latest Blog Post</h5>
-                    <h6 class="font-semibold mb-2">Ready to get started?</h6>
-                    <p class="text-sm text-gray-600">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                </div>
-            </div>
+        <!-- Footer -->
+        <?php if (isset($component)) { $__componentOriginal072e9a89eb33ca4c48f7e8f7970944d7 = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginal072e9a89eb33ca4c48f7e8f7970944d7 = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.home.footer','data' => []] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('home.footer'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes([]); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginal072e9a89eb33ca4c48f7e8f7970944d7)): ?>
+<?php $attributes = $__attributesOriginal072e9a89eb33ca4c48f7e8f7970944d7; ?>
+<?php unset($__attributesOriginal072e9a89eb33ca4c48f7e8f7970944d7); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginal072e9a89eb33ca4c48f7e8f7970944d7)): ?>
+<?php $component = $__componentOriginal072e9a89eb33ca4c48f7e8f7970944d7; ?>
+<?php unset($__componentOriginal072e9a89eb33ca4c48f7e8f7970944d7); ?>
+<?php endif; ?>
+
+        <!-- Back to top button -->
+        <button id="back-to-top" class="fixed bottom-6 right-6 bg-green-600 text-white w-12 h-12 rounded-full shadow-lg flex items-center justify-center opacity-0 invisible transition-all duration-300 z-50 hover:bg-green-700">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
+            </svg>
+        </button>
+
+        <script>
+            // Preloader
+            window.addEventListener('load', () => {
+                const preloader = document.getElementById('preloader');
+                setTimeout(() => {
+                    preloader.classList.add('opacity-0');
+                    setTimeout(() => {
+                        preloader.style.display = 'none';
+                    }, 300);
+                }, 500);
+            });
+
+            // Back to top button
+            const backToTopBtn = document.getElementById('back-to-top');
             
-            <div>
-                <h4 class="font-bold text-lg mb-4">Artikel</h4>
-                <ul class="space-y-2">
-                    <li><a href="#" class="text-gray-600 hover:text-gray-900">Lingkungan</a></li>
-                    <li><a href="#" class="text-gray-600 hover:text-gray-900">Tutorial</a></li>
-                    <li><a href="#" class="text-gray-600 hover:text-gray-900">Kesehatan</a></li>
-                    <li><a href="#" class="text-gray-600 hover:text-gray-900">Pertanian</a></li>
-                    <li><a href="#" class="text-gray-600 hover:text-gray-900">Bisnis</a></li>
-                </ul>
-            </div>
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 300) {
+                    backToTopBtn.classList.remove('opacity-0', 'invisible');
+                    backToTopBtn.classList.add('opacity-100', 'visible');
+                } else {
+                    backToTopBtn.classList.add('opacity-0', 'invisible');
+                    backToTopBtn.classList.remove('opacity-100', 'visible');
+                }
+            });
             
-            <div>
-                <h4 class="font-bold text-lg mb-4">Company</h4>
-                <ul class="space-y-2">
-                    <li><a href="#" class="text-gray-600 hover:text-gray-900">Tentang Kami</a></li>
-                    <li><a href="#" class="text-gray-600 hover:text-gray-900">Kontak</a></li>
-                    <li><a href="#" class="text-gray-600 hover:text-gray-900">Karir</a></li>
-                    <li><a href="#" class="text-gray-600 hover:text-gray-900">FAQ</a></li>
-                </ul>
-            </div>
-            
-            <div>
-                <h4 class="font-bold text-lg mb-4">Ikuti Kami</h4>
-                <div class="flex space-x-4">
-                    <a href="#" class="text-gray-600 hover:text-gray-900">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
-                        </svg>
-                    </a>
-                    <a href="#" class="text-gray-600 hover:text-gray-900">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-                        </svg>
-                    </a>
-                    <a href="#" class="text-gray-600 hover:text-gray-900">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"/>
-                        </svg>
-                    </a>
-                </div>
-            </div>
-        </div>
-        
-        <div class="text-center text-sm text-gray-600 border-t pt-4">
-            <p>© 2023 EcoZense — Privacy — Terms</p>
-        </div>
-    </div>
-</div>
-<?php $__env->stopSection(); ?> 
-<?php echo $__env->make('layouts.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\PBL-211\resources\views/artikel.blade.php ENDPATH**/ ?>
+            backToTopBtn.addEventListener('click', () => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+
+            // Category dropdown toggle
+            document.getElementById('categoryDropdown').addEventListener('click', function() {
+                document.getElementById('categoryMenu').classList.toggle('hidden');
+            });
+
+            // Close the dropdown when clicking outside
+            window.addEventListener('click', function(event) {
+                if (!event.target.closest('#categoryDropdown')) {
+                    document.getElementById('categoryMenu').classList.add('hidden');
+                }
+            });
+        </script>
+    </body>
+</html> <?php /**PATH C:\xampp\htdocs\PBL-211\resources\views/artikel.blade.php ENDPATH**/ ?>

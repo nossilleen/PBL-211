@@ -232,5 +232,25 @@ return [
                 '#^/telescope#', // Telescope dashboard...
             ],
         ],
+        
+        // EcoZense Custom Recorders
+        App\Pulse\Recorders\UserActivityRecorder::class => [
+            'enabled' => true,
+        ],
+        
+        App\Pulse\Recorders\TransactionRecorder::class => [
+            'enabled' => true,
+        ],
+        
+        App\Pulse\Recorders\ContentActivityRecorder::class => [
+            'enabled' => true,
+        ],
+    ],
+
+    // Custom cards
+    'dashboard' => [
+        App\Livewire\Pulse\UserActivity::class,
+        App\Livewire\Pulse\TransactionMetrics::class,
+        App\Livewire\Pulse\ContentMetrics::class,
     ],
 ];
