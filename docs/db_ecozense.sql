@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 28, 2025 at 04:33 AM
+-- Generation Time: Apr 28, 2025 at 08:10 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -239,6 +239,68 @@ CREATE TABLE `produk_gambar` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `pulse_aggregates`
+--
+
+CREATE TABLE `pulse_aggregates` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `bucket` int(10) unsigned NOT NULL,
+  `period` mediumint(8) unsigned NOT NULL,
+  `type` varchar(255) NOT NULL,
+  `key` mediumtext NOT NULL,
+  `key_hash` binary(16) GENERATED ALWAYS AS (unhex(md5(`key`))) VIRTUAL,
+  `aggregate` varchar(255) NOT NULL,
+  `value` decimal(20,2) NOT NULL,
+  `count` int(10) unsigned DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `pulse_aggregates_bucket_period_type_aggregate_key_hash_unique` (`bucket`,`period`,`type`,`aggregate`,`key_hash`),
+  KEY `pulse_aggregates_period_bucket_index` (`period`,`bucket`),
+  KEY `pulse_aggregates_type_index` (`type`),
+  KEY `pulse_aggregates_period_type_aggregate_bucket_index` (`period`,`type`,`aggregate`,`bucket`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pulse_entries`
+--
+
+CREATE TABLE `pulse_entries` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `timestamp` int(10) unsigned NOT NULL,
+  `type` varchar(255) NOT NULL,
+  `key` mediumtext NOT NULL,
+  `key_hash` binary(16) GENERATED ALWAYS AS (unhex(md5(`key`))) VIRTUAL,
+  `value` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `pulse_entries_timestamp_index` (`timestamp`),
+  KEY `pulse_entries_type_index` (`type`),
+  KEY `pulse_entries_key_hash_index` (`key_hash`),
+  KEY `pulse_entries_timestamp_type_key_hash_value_index` (`timestamp`,`type`,`key_hash`,`value`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pulse_values`
+--
+
+CREATE TABLE `pulse_values` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `timestamp` int(10) unsigned NOT NULL,
+  `type` varchar(255) NOT NULL,
+  `key` mediumtext NOT NULL,
+  `key_hash` binary(16) GENERATED ALWAYS AS (unhex(md5(`key`))) VIRTUAL,
+  `value` mediumtext NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `pulse_values_type_key_hash_unique` (`type`,`key_hash`),
+  KEY `pulse_values_timestamp_index` (`timestamp`),
+  KEY `pulse_values_type_index` (`type`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `sessions`
 --
 
@@ -252,6 +314,54 @@ CREATE TABLE `sessions` (
   PRIMARY KEY (`id`),
   KEY `sessions_user_id_index` (`user_id`),
   KEY `sessions_last_activity_index` (`last_activity`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `telescope_entries`
+--
+
+CREATE TABLE `telescope_entries` (
+  `sequence` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `uuid` char(36) NOT NULL,
+  `batch_id` char(36) NOT NULL,
+  `family_hash` varchar(255) DEFAULT NULL,
+  `should_display_on_index` tinyint(1) NOT NULL DEFAULT 1,
+  `type` varchar(20) NOT NULL,
+  `content` longtext NOT NULL,
+  `created_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`sequence`),
+  UNIQUE KEY `telescope_entries_uuid_unique` (`uuid`),
+  KEY `telescope_entries_batch_id_index` (`batch_id`),
+  KEY `telescope_entries_family_hash_index` (`family_hash`),
+  KEY `telescope_entries_created_at_index` (`created_at`),
+  KEY `telescope_entries_type_should_display_on_index_index` (`type`,`should_display_on_index`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `telescope_entries_tags`
+--
+
+CREATE TABLE `telescope_entries_tags` (
+  `entry_uuid` char(36) NOT NULL,
+  `tag` varchar(255) NOT NULL,
+  PRIMARY KEY (`entry_uuid`,`tag`),
+  KEY `telescope_entries_tags_tag_index` (`tag`),
+  CONSTRAINT `telescope_entries_tags_entry_uuid_foreign` FOREIGN KEY (`entry_uuid`) REFERENCES `telescope_entries` (`uuid`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `telescope_monitoring`
+--
+
+CREATE TABLE `telescope_monitoring` (
+  `tag` varchar(255) NOT NULL,
+  PRIMARY KEY (`tag`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -401,12 +511,65 @@ ALTER TABLE `produk_gambar`
   ADD KEY `produk_gambar_produk_id_foreign` (`produk_id`);
 
 --
+-- Indexes for table `pulse_aggregates`
+--
+ALTER TABLE `pulse_aggregates`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `pulse_aggregates_bucket_period_type_aggregate_key_hash_unique` (`bucket`,`period`,`type`,`aggregate`,`key_hash`),
+  ADD KEY `pulse_aggregates_period_bucket_index` (`period`,`bucket`),
+  ADD KEY `pulse_aggregates_type_index` (`type`),
+  ADD KEY `pulse_aggregates_period_type_aggregate_bucket_index` (`period`,`type`,`aggregate`,`bucket`);
+
+--
+-- Indexes for table `pulse_entries`
+--
+ALTER TABLE `pulse_entries`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `pulse_entries_timestamp_index` (`timestamp`),
+  ADD KEY `pulse_entries_type_index` (`type`),
+  ADD KEY `pulse_entries_key_hash_index` (`key_hash`),
+  ADD KEY `pulse_entries_timestamp_type_key_hash_value_index` (`timestamp`,`type`,`key_hash`,`value`);
+
+--
+-- Indexes for table `pulse_values`
+--
+ALTER TABLE `pulse_values`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `pulse_values_type_key_hash_unique` (`type`,`key_hash`),
+  ADD KEY `pulse_values_timestamp_index` (`timestamp`),
+  ADD KEY `pulse_values_type_index` (`type`);
+
+--
 -- Indexes for table `sessions`
 --
 ALTER TABLE `sessions`
   ADD PRIMARY KEY (`id`),
   ADD KEY `sessions_user_id_index` (`user_id`),
   ADD KEY `sessions_last_activity_index` (`last_activity`);
+
+--
+-- Indexes for table `telescope_entries`
+--
+ALTER TABLE `telescope_entries`
+  ADD PRIMARY KEY (`sequence`),
+  ADD UNIQUE KEY `telescope_entries_uuid_unique` (`uuid`),
+  ADD KEY `telescope_entries_batch_id_index` (`batch_id`),
+  ADD KEY `telescope_entries_family_hash_index` (`family_hash`),
+  ADD KEY `telescope_entries_created_at_index` (`created_at`),
+  ADD KEY `telescope_entries_type_should_display_on_index_index` (`type`,`should_display_on_index`);
+
+--
+-- Indexes for table `telescope_entries_tags`
+--
+ALTER TABLE `telescope_entries_tags`
+  ADD PRIMARY KEY (`entry_uuid`,`tag`),
+  ADD KEY `telescope_entries_tags_tag_index` (`tag`);
+
+--
+-- Indexes for table `telescope_monitoring`
+--
+ALTER TABLE `telescope_monitoring`
+  ADD PRIMARY KEY (`tag`);
 
 --
 -- Indexes for table `transaksi`
@@ -481,6 +644,30 @@ ALTER TABLE `produk_gambar`
   MODIFY `gambar_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `pulse_aggregates`
+--
+ALTER TABLE `pulse_aggregates`
+  MODIFY `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `pulse_entries`
+--
+ALTER TABLE `pulse_entries`
+  MODIFY `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `pulse_values`
+--
+ALTER TABLE `pulse_values`
+  MODIFY `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `telescope_entries`
+--
+ALTER TABLE `telescope_entries`
+  MODIFY `sequence` bigint(20) unsigned NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `transaksi`
 --
 ALTER TABLE `transaksi`
@@ -533,6 +720,12 @@ ALTER TABLE `produk`
 --
 ALTER TABLE `produk_gambar`
   ADD CONSTRAINT `produk_gambar_produk_id_foreign` FOREIGN KEY (`produk_id`) REFERENCES `produk` (`produk_id`);
+
+--
+-- Constraints for table `telescope_entries_tags`
+--
+ALTER TABLE `telescope_entries_tags`
+  ADD CONSTRAINT `telescope_entries_tags_entry_uuid_foreign` FOREIGN KEY (`entry_uuid`) REFERENCES `telescope_entries` (`uuid`);
 
 --
 -- Constraints for table `transaksi`
