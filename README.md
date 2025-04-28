@@ -115,11 +115,8 @@ npm run setup
 
 ### 🛠️ Setup Database
 ```bash
-# Buat database MySQL baru
-mysql -u root -p -e "CREATE DATABASE db_ecozense CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
-
 # Setup database dengan migrasi + seed
-npm run db:reset
+npm run db
 ```
 
 ### 🚀 Menjalankan Aplikasi
@@ -131,20 +128,25 @@ npm run all
 ## 📋 Command Penting
 | Command | Deskripsi |
 |---------|-----------|
-| `npm run setup` | Setup awal project (install dependencies, generate key, link storage, migrate database) |
+| `npm run setup` | Setup awal project (install dependencies, generate key, link storage, optimize:clear) |
+| `npm run setup:fresh` | Setup lengkap dengan database baru dan seed data |
+| `npm run setup:fix` | Membersihkan cache dan kompilasi untuk memperbaiki error |
+| `npm run setup:db` | Menjalankan migrasi database saja |
 | `npm run all` | Jalankan frontend dan backend secara bersamaan |
-| `npm run dev` | Jalankan frontend development server dengan Vite |
-| `npm run serve` | Jalankan backend API server Laravel |
+| `npm run dev` | Jalankan Vite development server |
+| `npm run serve` | Jalankan PHP Artisan server |
+| `npm run hot` | Jalankan Vite dengan hot module replacement dan akses host |
 | `npm run build` | Build frontend untuk production |
-| `npm run db:fresh` | Reset database dengan migrasi baru |
-| `npm run db:seed` | Isi database dengan data seed |
-| `npm run db:reset` | Reset dan setup ulang database dengan data seed |
-| `npm run clear` | Bersihkan cache Laravel (optimize:clear) |
-| `npm run cache:clear` | Bersihkan semua cache (config, route, view) |
-| `npm run test` | Jalankan semua test |
-| `npm run lint` | Periksa kode JavaScript dan Vue |
-| `npm run format` | Format kode dengan Prettier |
-| `npm run deploy` | Siapkan aplikasi untuk deployment (build + optimize) |
+| `npm run db` | Reset database dan seed data |
+| `npm run clear` | Bersihkan cache aplikasi |
+| `npm run test` | Jalankan test suite |
+| `npm run pulse` | Jalankan Laravel Pulse monitoring |
+| `npm run format:all` | Jalankan semua formatter dan linter |
+| `npm run format` | Format file JavaScript, Vue, CSS, dan SCSS |
+| `npm run format:blade` | Format file Blade template |
+| `npm run lint:fix` | Memperbaiki masalah ESLint di file JavaScript dan Vue |
+| `npm run lint:css` | Memperbaiki masalah Stylelint di file CSS |
+| `npm run help` | Tampilkan daftar semua perintah yang tersedia |
 
 
 ## 📝 Metode Pengembangan
