@@ -19,7 +19,7 @@
                 >Beranda</a
             >
             <a
-                href="/toko"
+                href="/browse"
                 class="text-green-800 hover:text-green-600 transition-all duration-300 border-b-2 border-transparent hover:border-green-600 font-medium text-sm xl:text-base py-1"
                 >Toko</a
             >

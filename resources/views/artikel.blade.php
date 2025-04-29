@@ -23,7 +23,7 @@
         <!-- Main Content Wrapper -->
         <main class="overflow-x-hidden">
             <!-- Hero Section for Articles -->
-            <section class="h-[40vh] flex items-center relative">
+            <section class="h-[60vh] flex items-center relative">
                 <!-- Background image layer -->
                 <div class="absolute inset-0 z-0">
                     <img src="{{ asset('images/bg1.jpeg') }}" class="w-full h-full object-cover" alt="Background">
@@ -94,21 +94,92 @@
                 <div class="container mx-auto px-4">
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                         <!-- Article Card 1 -->
-                        <div class="bg-white rounded-md shadow-sm overflow-hidden hover:shadow-md transition-shadow duration-300">
-                            <img src="{{ asset('images/Frame 2305.png') }}" alt="Eco Enzyme" class="w-full h-56 object-cover">
-                            <div class="p-6">
-                                <h3 class="text-xl font-bold text-gray-800 mb-2">All About Bio-Enzymes: How You Can Make Chemical-Free Floor Cleaners from Kitchen Waste!</h3>
-                                <p class="text-gray-600 mb-4">How You Can Make Chemical-Free Bio-Enzyme Cleaners From Fruit Peels</p>
-                                <div class="flex justify-between items-center text-sm text-gray-500 mb-4">
-                                    <span>25 April 2023</span>
-                                    <button class="text-gray-400 hover:text-gray-700">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                                        </svg>
-                                    </button>
-                                </div>
-                                <a href="#" class="block w-full text-center py-2 bg-green-100 text-green-800 rounded-md hover:bg-green-200 transition-colors">Selengkapnya</a>
-                            </div>
+                        <x-artikel.card 
+                            image="images/bg1.jpeg"
+                            title="All About Bio-Enzymes: How You Can Make Chemical-Free Floor Cleaners from Kitchen Waste!"
+                            desc="How You Can Make Chemical-Free Bio-Enzyme Cleaners From Fruit Peels"
+                            date="25 April 2023"
+                            author="Anindita A'isyahira"
+                        />
+                        
+                        <!-- Article Card 2 -->
+                        <x-artikel.card 
+                            image="images/bg2.jpeg"
+                            title="All About Bio-Enzymes: How You Can Make Chemical-Free Floor Cleaners from Kitchen Waste!"
+                            desc="How You Can Make Chemical-Free Bio-Enzyme Cleaners From Fruit Peels"
+                            date="25 April 2023"
+                            author="Anindita A'isyahira"
+                        />
+                        
+                        <!-- Article Card 3 -->
+                        <x-artikel.card 
+                            image="images/bg3.jpeg"
+                            title="All About Bio-Enzymes: How You Can Make Chemical-Free Floor Cleaners from Kitchen Waste!"
+                            desc="How You Can Make Chemical-Free Bio-Enzyme Cleaners From Fruit Peels"
+                            date="25 April 2023"
+                            author="Anindita A'isyahira"
+                        />
+                        
+                        <!-- DIY Enzyme Cleaner Cards -->
+                        <x-artikel.card-small 
+                            image="images/bg4.jpeg"
+                            title="You Can Make this DIY Enzyme Cleaner from Kitchen Scraps"
+                            desc="This enzyme cleaner is surprisingly easy to make using ingredients found in your kitchen. Use it to remove pet, blood, and other stains."
+                            date="20 April 2023"
+                            author="Steven Kosasih"
+                        />
+                        
+                        <x-artikel.card-small 
+                            image="images/bg5.jpeg"
+                            title="You Can Make this DIY Enzyme Cleaner from Kitchen Scraps"
+                            desc="This enzyme cleaner is surprisingly easy to make using ingredients found in your kitchen. Use it to remove pet, blood, and other stains."
+                            date="20 April 2023"
+                            author="Steven Kosasih"
+                        />
+                        
+                        <x-artikel.card-small 
+                            image="images/bg6.jpeg"
+                            title="You Can Make this DIY Enzyme Cleaner from Kitchen Scraps"
+                            desc="This enzyme cleaner is surprisingly easy to make using ingredients found in your kitchen. Use it to remove pet, blood, and other stains."
+                            date="20 April 2023"
+                            author="Steven Kosasih"
+                        />
+                    </div>
+                    
+                    <!-- Pagination -->
+                    <div class="mt-12 flex justify-center">
+                        <nav class="inline-flex rounded-md shadow-sm">
+                            <a href="#" class="py-2 px-4 bg-white border border-gray-300 text-sm leading-5 font-medium text-gray-500 hover:bg-gray-50">
+                                Previous
+                            </a>
+                            <a href="#" class="py-2 px-4 bg-green-600 border border-green-600 text-sm leading-5 font-medium text-white hover:bg-green-700">
+                                1
+                            </a>
+                            <a href="#" class="py-2 px-4 bg-white border border-gray-300 text-sm leading-5 font-medium text-gray-700 hover:bg-gray-50">
+                                2
+                            </a>
+                            <a href="#" class="py-2 px-4 bg-white border border-gray-300 text-sm leading-5 font-medium text-gray-700 hover:bg-gray-50">
+                                3
+                            </a>
+                            <a href="#" class="py-2 px-4 bg-white border border-gray-300 text-sm leading-5 font-medium text-gray-500 hover:bg-gray-50">
+                                Next
+                            </a>
+                        </nav>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Newsletter Section -->
+            <section class="py-16 bg-green-600">
+                <div class="container mx-auto px-4">
+                    <div class="max-w-3xl mx-auto text-center">
+                        <h2 class="text-3xl font-bold text-white mb-4">ECOZENSE</h2>
+                        <h3 class="text-2xl font-semibold text-white mb-6">Ready to get started?</h3>
+                        <p class="text-green-100 mb-8">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                        
+                        <div class="flex flex-col md:flex-row justify-center space-y-4 md:space-y-0 md:space-x-4">
+                            <input type="email" placeholder="Email address" class="px-6 py-3 rounded-md focus:outline-none focus:ring-2 focus:ring-green-400">
+                            <button class="px-6 py-3 bg-white text-green-700 font-medium rounded-md hover:bg-green-100 transition-colors">Subscribe</button>
                         </div>
                     </div>
                 </div>
