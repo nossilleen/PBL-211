@@ -241,8 +241,7 @@
             </div>
         </main>
 
-        <!-- Footer -->
-        <x-home.footer />
+
 
         <!-- Back to top button -->
         <button id="back-to-top" class="fixed bottom-6 right-6 bg-green-600 text-white w-12 h-12 rounded-full shadow-lg flex items-center justify-center opacity-0 invisible transition-all duration-300 z-50 hover:bg-green-700">

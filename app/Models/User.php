@@ -29,23 +29,20 @@ class User extends Authenticatable
     /**
      * The attributes that are mass assignable.
      *
-     * @var list<string>
+     * @var array<int, string>
      */
     protected $fillable = [
         'nama',
         'email',
         'password',
         'no_hp',
-        'tanggal_lahir',
-        'jenis_kelamin',
-        'alamat',
-        'role'
+        'role',
     ];
 
     /**
      * The attributes that should be hidden for serialization.
      *
-     * @var list<string>
+     * @var array<int, string>
      */
     protected $hidden = [
         'password',
@@ -53,17 +50,37 @@ class User extends Authenticatable
     ];
 
     /**
-     * Get the attributes that should be cast.
+     * The attributes that should be cast.
      *
-     * @return array<string, string>
+     * @var array<string, string>
      */
-    protected function casts(): array
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+        'password' => 'hashed',
+    ];
+
+    public function artikel()
     {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-            'created_at' => 'datetime',
-            'updated_at' => 'datetime',
-        ];
+        return $this->hasMany(Artikel::class, 'user_id');
+    }
+    
+    public function produk()
+    {
+        return $this->hasMany(Produk::class, 'user_id');
+    }
+    
+    public function poin()
+    {
+        return $this->hasMany(Poin::class, 'user_id');
+    }
+    
+    public function transaksi()
+    {
+        return $this->hasMany(Transaksi::class, 'user_id');
+    }
+    
+    public function feedback()
+    {
+        return $this->hasMany(Feedback::class, 'user_id');
     }
 }

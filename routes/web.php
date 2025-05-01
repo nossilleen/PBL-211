@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\DataController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -35,3 +36,5 @@ Route::prefix('admin')->middleware('auth')->group(function () {
     Route::get('/pengajuan', [AdminController::class, 'pengajuan'])->name('admin.pengajuan');
     Route::get('/user', [AdminController::class, 'user'])->name('admin.user');
 });
+
+Route::get('/check-data', [DataController::class, 'index']);
