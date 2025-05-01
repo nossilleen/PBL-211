@@ -24,6 +24,17 @@
                 <form method="POST" action="{{ route('login') }}" class="space-y-6">
                     @csrf
                     
+                    <!-- Error Messages -->
+                    @if($errors->any())
+                    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4">
+                        <ul>
+                            @foreach($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                    @endif
+                    
                     <!-- Email -->
                     <div class="space-y-2">
                         <label class="block text-gray-200">Email</label>
@@ -52,7 +63,7 @@
 
                     <!-- Login Button -->
                     <button type="submit" class="w-full py-3 px-4 bg-yellow-300 hover:bg-yellow-400 text-green-900 font-semibold rounded-2xl transition duration-200">
-                        SIGN UP
+                        LOGIN
                     </button>
 
                     <!-- Forgot Password -->

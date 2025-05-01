@@ -43,7 +43,7 @@ return [
     |
     */
 
-    'enabled' => env('PULSE_ENABLED', true),
+    'enabled' => env('PULSE_ENABLED', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -235,15 +235,15 @@ return [
         
         // EcoZense Custom Recorders
         App\Pulse\Recorders\UserActivityRecorder::class => [
-            'enabled' => true,
+            'enabled' => false,
         ],
         
         App\Pulse\Recorders\TransactionRecorder::class => [
-            'enabled' => true,
+            'enabled' => false,
         ],
         
         App\Pulse\Recorders\ContentActivityRecorder::class => [
-            'enabled' => true,
+            'enabled' => false,
         ],
     ],
 

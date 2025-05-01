@@ -14,13 +14,13 @@
             <p class="mb-8" data-aos="fade-up" data-aos-delay="200">
                 Bergabung menjadi nasabah bank sampah melalui program ini!
             </p>
-            <button
-                class="bg-black text-white px-12 py-3 rounded hover:bg-gray-900 transition button-hover-effect"
+            <a href="{{ route('register') }}"
+                class="bg-black text-white px-12 py-3 rounded hover:bg-gray-900 transition button-hover-effect inline-block"
                 data-aos="fade-up"
                 data-aos-delay="300"
             >
                 Join
-            </button>
+            </a>
         </div>
     </div>
 </section>

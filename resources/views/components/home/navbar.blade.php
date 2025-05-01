@@ -1,4 +1,7 @@
 <!-- resources/views/components/home/navbar.blade.php -->
+<!-- Alpine.js -->
+<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
 <nav
     id="main-navbar"
     class="py-1 sm:py-2 fixed top-0 left-0 right-0 z-50 navbar-fixed bg-transparent transition-all duration-300"
@@ -38,13 +41,17 @@
                 class="text-green-800 hover:text-green-600 transition-all duration-300 border-b-2 border-transparent hover:border-green-600 font-medium text-sm xl:text-base py-1"
                 >About Us</a
             >
+            @guest
             <a
-                href="/daftar-nasabah"
+                href="{{ route('register') }}"
                 class="text-green-800 hover:text-green-600 transition-all duration-300 border-b-2 border-transparent hover:border-green-600 font-medium text-sm xl:text-base py-1"
                 >Daftar Nasabah</a
             >
+            @endguest
         </div>
         <div class="flex items-center space-x-4">
+            @guest
+            <!-- Show login button for guests -->
             <a
                 href="/login"
                 class="text-green-800 hover:text-green-600 flex items-center flex-shrink-0 text-sm md:text-base"
@@ -57,6 +64,30 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
                 </svg>
             </a>
+            @else
+            <!-- Show user profile dropdown for authenticated users -->
+            <div class="relative" x-data="{ open: false }">
+                <button @click="open = !open" class="flex items-center space-x-2 focus:outline-none">
+                    <div class="w-8 h-8 rounded-full bg-green-600 flex items-center justify-center text-white">
+                        <span class="text-sm font-semibold">{{ substr(Auth::user()->nama, 0, 1) }}</span>
+                    </div>
+                    <span class="hidden md:inline text-green-800 font-medium">{{ Auth::user()->nama }}</span>
+                </button>
+                
+                <div x-show="open" @click.away="open = false" class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50" style="display: none;">
+                    <a href="/profile" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Profile</a>
+                    <div class="border-t border-gray-100"></div>
+                    <a href="{{ route('logout') }}" 
+                       onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
+                       class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                        Logout
+                    </a>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hidden">
+                        @csrf
+                    </form>
+                </div>
+            </div>
+            @endguest
             <button class="lg:hidden text-green-800 mobile-menu-button focus:outline-none" aria-label="Menu">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -104,8 +135,9 @@
                 class="block text-green-800 hover:text-green-600 py-3 px-2 transition-all duration-300 border-l-4 border-transparent hover:border-green-600 hover:bg-green-50 rounded"
                 >About Us</a
             >
+            @guest
             <a
-                href="/daftar-nasabah"
+                href="{{ route('register') }}"
                 class="block text-green-800 hover:text-green-600 py-3 px-2 transition-all duration-300 border-l-4 border-transparent hover:border-green-600 hover:bg-green-50 rounded"
                 >Daftar Nasabah</a
             >
@@ -117,6 +149,24 @@
                     </svg>
                 </a>
             </div>
+            @else
+            <!-- User profile links for mobile -->
+            <a
+                href="/profile"
+                class="block text-green-800 hover:text-green-600 py-3 px-2 transition-all duration-300 border-l-4 border-transparent hover:border-green-600 hover:bg-green-50 rounded"
+                >Profile</a
+            >
+            <div class="mt-4 pt-4 border-t border-green-200">
+                <a href="{{ route('logout') }}" 
+                   onclick="event.preventDefault(); document.getElementById('mobile-logout-form').submit();" 
+                   class="flex items-center justify-center w-full bg-red-600 text-white py-3 px-4 rounded-md hover:bg-red-700 transition-all duration-300">
+                    <span>Logout</span>
+                </a>
+                <form id="mobile-logout-form" action="{{ route('logout') }}" method="POST" class="hidden">
+                    @csrf
+                </form>
+            </div>
+            @endguest
         </div>
     </div>
 </nav>
