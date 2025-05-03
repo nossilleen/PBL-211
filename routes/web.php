@@ -14,6 +14,10 @@ Route::get('/artikel', function () {
     return view('artikel');
 });
 
+Route::get('/about', function () {
+    return view('about');
+})->name('about');
+
 Route::get('/browse', function () {
     return view('browse');
 });
