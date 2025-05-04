@@ -3,16 +3,31 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+        // Check if user is admin
+        $this->middleware(function ($request, $next) {
+            if (Auth::user()->role !== 'admin') {
+                return redirect('/')->with('error', 'Unauthorized access');
+            }
+            return $next($request);
+        });
+    }
+
     public function index()
     {
-        return redirect()->route('admin.artikel');
+        // This is the main dashboard/beranda page
+        return view('admin.beranda.index');
     }
 
     public function artikel()
     {
+        // This is also the main dashboard page for now
         return view('admin.artikel.index');
     }
 

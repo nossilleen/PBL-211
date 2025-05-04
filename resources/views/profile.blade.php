@@ -51,13 +51,13 @@
 
         <!-- Main Content (Kanan) -->
         <div id="main-content" class="w-full lg:w-3/4">
-            <!-- Profile Section (Default Visible) -->
-            <div id="profile-section">
+            <!-- Profile Section (Default Visible only for nasabah) -->
+            <div id="profile-section" class="{{ isset($showDashboard) && $showDashboard ? 'hidden' : '' }}">
                 <x-profile.information />
             </div>
             
-            <!-- Dashboard Section (Hidden by Default) -->
-            <div id="dashboard-section" class="hidden">
+            <!-- Dashboard Section (Hidden by Default for nasabah, visible for admin and pengelola) -->
+            <div id="dashboard-section" class="{{ isset($showDashboard) && $showDashboard ? '' : 'hidden' }}">
                 <x-dashboard.container />
             </div>
 

@@ -42,10 +42,10 @@
                     and see your contribution to environmental sustainability.
                 </p>
 
-                <!-- Upgrade Role Section -->
+                <!-- Upgrade Section -->
                 <div class="mb-8">
-                    <button id="openUpgradeModal" class="bg-green-600 hover:bg-green-700 text-white font-semibold px-4 py-2 rounded shadow transition">Ajukan Jadi Pengelola Bank Sampah</button>
-                    <p class="text-sm text-gray-500 mt-2">Ingin berkontribusi lebih? Ajukan diri Anda menjadi pengelola bank sampah!</p>
+                    <h2 class="text-xl font-bold text-green-700 mb-4">Upgrade</h2>
+                    <button id="openUpgradeModal" class="bg-green-600 hover:bg-green-700 text-white font-semibold px-4 py-2 rounded shadow transition">Ajukan</button>
                 </div>
 
                 <!-- Modal Upgrade Role -->

@@ -6,6 +6,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\DataController;
 use App\Http\Controllers\TransaksiController;
+use App\Http\Controllers\PengelolaController;
 
 Route::get('/', function () {
     // Jika user sudah login, arahkan ke welcome page
@@ -69,7 +70,11 @@ Route::get('/nasabah/dashboard', function () {
     return view('nasabah.dashboard');
 })->middleware('auth')->name('nasabah.dashboard');
 
-// Dashboard untuk pengelola
-Route::get('/pengelola/dashboard', function () {
-    return view('pengelola.dashboard');
-})->middleware('auth')->name('pengelola.dashboard');
+// Pengelola routes - protected with auth middleware
+Route::prefix('pengelola')->middleware('auth')->group(function () {
+    Route::get('/', [PengelolaController::class, 'index'])->name('pengelola.index');
+    Route::get('/alamat', [PengelolaController::class, 'alamat'])->name('pengelola.alamat');
+    Route::get('/transaksi', [PengelolaController::class, 'transaksi'])->name('pengelola.transaksi');
+    Route::get('/nasabah', [PengelolaController::class, 'nasabah'])->name('pengelola.nasabah');
+    Route::get('/laporan', [PengelolaController::class, 'laporan'])->name('pengelola.laporan');
+});

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'Dashboard Admin - EcoZense')</title>
+    <title>@yield('title', 'Dashboard Pengelola - EcoZense')</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -29,12 +29,12 @@
         }
         
         @media (min-width: 768px) {
-            .admin-content {
+            .pengelola-content {
                 margin-left: 256px; /* 64px * 4 (w-64) */
                 transition: margin-left 0.3s ease;
             }
             
-            .admin-content.sidebar-collapsed {
+            .pengelola-content.sidebar-collapsed {
                 margin-left: 0;
             }
             
@@ -44,7 +44,7 @@
         }
         
         @media (max-width: 767px) {
-            .admin-content {
+            .pengelola-content {
                 margin-left: 0;
             }
         }
@@ -56,8 +56,8 @@
         <div class="animate-spin rounded-full h-16 w-16 border-b-4 border-green-600"></div>
     </div>
     
-        <!-- Top Navbar -->
-        <div class="bg-green-500 text-white shadow-md">
+    <!-- Top Navbar -->
+    <div class="bg-green-600 text-white shadow-md">
         <div class="container mx-auto px-9">
             <div class="flex justify-between items-center py-6">
                 <div class="flex items-center space-x-4">
@@ -84,7 +84,7 @@
                 <nav class="flex-grow">
                     <ul class="space-y-4">
                         <li>
-                            <a href="/admin" id="menu-beranda" class="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-50 rounded-lg transition-colors menu-item">
+                            <a href="{{ route('pengelola.index') }}" id="menu-beranda" data-route="pengelola.index" class="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-50 rounded-lg transition-colors menu-item">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
                                 </svg>
@@ -92,27 +92,28 @@
                             </a>
                         </li>
                         <li>
-                            <a href="/admin/artikel" id="menu-artikel" class="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-50 rounded-lg transition-colors menu-item">
+                            <a href="{{ route('pengelola.alamat') }}" id="menu-alamat" data-route="pengelola.alamat" class="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-50 rounded-lg transition-colors menu-item">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                                 </svg>
-                                Artikel & Event
+                                Alamat
                             </a>
                         </li>
                         <li>
-                            <a href="/admin/pengajuan" id="menu-pengajuan" class="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-50 rounded-lg transition-colors menu-item">
+                            <a href="#" id="menu-toko" data-route="pengelola.toko" class="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-50 rounded-lg transition-colors menu-item">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
                                 </svg>
-                                Pengajuan
+                                Toko
                             </a>
                         </li>
                         <li>
-                            <a href="/admin/user" id="menu-user" class="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-50 rounded-lg transition-colors menu-item">
+                            <a href="#" id="menu-poin" data-route="pengelola.poin" class="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-50 rounded-lg transition-colors menu-item">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                                 </svg>
-                                Data User
+                                Poin
                             </a>
                         </li>
                         <li>
@@ -144,7 +145,7 @@
         <div id="sidebar-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-30 hidden md:hidden"></div>
 
         <!-- Main Content -->
-        <div class="admin-content flex-1 p-4 md:p-8 w-full transition-all duration-300">
+        <div class="pengelola-content flex-1 p-4 md:p-8 w-full transition-all duration-300">
             @yield('content')
         </div>
     </div>
@@ -165,7 +166,7 @@
         document.addEventListener('DOMContentLoaded', () => {
             const sidebarToggle = document.getElementById('sidebar-toggle');
             const sidebar = document.getElementById('sidebar');
-            const adminContent = document.querySelector('.admin-content');
+            const pengelolaContent = document.querySelector('.pengelola-content');
             const sidebarOverlay = document.getElementById('sidebar-overlay');
             const closeSidebarButton = document.getElementById('close-sidebar');
             
@@ -174,7 +175,7 @@
                 if (window.innerWidth < 768) {
                     // Mobile view
                     sidebar.classList.add('-translate-x-full');
-                    adminContent.classList.remove('sidebar-collapsed');
+                    pengelolaContent.classList.remove('sidebar-collapsed');
                 } else {
                     // Desktop view - initialize with sidebar shown
                     sidebar.classList.remove('-translate-x-full');
@@ -189,7 +190,7 @@
                 if (window.innerWidth >= 768) {
                     // Desktop behavior
                     sidebar.classList.toggle('collapsed');
-                    adminContent.classList.toggle('sidebar-collapsed');
+                    pengelolaContent.classList.toggle('sidebar-collapsed');
                 } else {
                     // Mobile behavior
                     sidebar.classList.toggle('-translate-x-full');
@@ -228,14 +229,57 @@
                 });
             });
 
-            // Active menu highlight
+            // Active menu highlight with improved route matching
             const currentPath = window.location.pathname;
+            
+            // Determine current route based on path
+            let currentRoute = '';
+            if (currentPath === '/pengelola') {
+                currentRoute = 'pengelola.index';
+            } else if (currentPath === '/pengelola/alamat') {
+                currentRoute = 'pengelola.alamat';
+            } else if (currentPath.startsWith('/pengelola/toko')) {
+                currentRoute = 'pengelola.toko';
+            } else if (currentPath.startsWith('/pengelola/poin')) {
+                currentRoute = 'pengelola.poin';
+            }
+            
+            // Highlight the appropriate menu item
             menuItems.forEach(item => {
-                const href = item.getAttribute('href');
-                if ((currentPath === '/admin' && href === '/admin') || 
-                    (currentPath !== '/admin' && currentPath.includes(href) && href !== '/admin')) {
+                const itemRoute = item.getAttribute('data-route');
+                
+                // If this menu item has a route that matches the current route
+                if (itemRoute && itemRoute === currentRoute) {
                     item.classList.remove('text-gray-700', 'hover:bg-gray-50');
-                    item.classList.add('bg-green-50', 'text-green-700');
+                    item.classList.add('bg-green-50', 'text-green-700', 'font-medium');
+                }
+                
+                // For items without data-route, fall back to path-based matching
+                if (!itemRoute) {
+                    const href = item.getAttribute('href');
+                    if (href === '#' || href.startsWith('javascript')) return;
+                    
+                    let itemPath;
+                    // Extract path from href for comparison
+                    if (href.includes('http')) {
+                        try {
+                            const url = new URL(href);
+                            itemPath = url.pathname;
+                        } catch (e) {
+                            itemPath = href;
+                        }
+                    } else {
+                        itemPath = href.split('?')[0];
+                    }
+                    
+                    const isActive = 
+                        currentPath === itemPath || 
+                        (itemPath !== '/' && currentPath.startsWith(itemPath));
+                        
+                    if (isActive) {
+                        item.classList.remove('text-gray-700', 'hover:bg-gray-50');
+                        item.classList.add('bg-green-50', 'text-green-700', 'font-medium');
+                    }
                 }
             });
             

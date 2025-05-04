@@ -27,6 +27,9 @@ class HomeController extends Controller
     {
         $user = Auth::user();
         
+        // For admin and pengelola, set a flag to show dashboard by default
+        $showDashboard = in_array($user->role, ['admin', 'pengelola']);
+        
         // Load pesanan aktif dan riwayat transaksi jika user adalah nasabah
         $pesananAktif = collect();
         $riwayatTransaksi = collect();
@@ -48,6 +51,6 @@ class HomeController extends Controller
         
         // Sekarang kita redirect semua user ke halaman profile 
         // yang sudah ter-integrated dengan dashboard masing-masing role
-        return view('profile', compact('pesananAktif', 'riwayatTransaksi'));
+        return view('profile', compact('pesananAktif', 'riwayatTransaksi', 'showDashboard'));
     }
 }

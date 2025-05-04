@@ -1,6 +1,6 @@
 <div class="bg-white rounded-lg shadow-sm overflow-hidden mb-8">
     <div class="bg-gradient-to-r from-green-600 to-green-700 px-6 py-4">
-        <h2 class="text-xl font-bold text-white">Dashboard Nasabah</h2>
+        <h2 class="text-xl font-bold text-white">Upgrade</h2>
     </div>
     
     <div class="p-6">
@@ -57,93 +57,5 @@
             });
         </script>
         <!-- End Upgrade Role Section -->
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
-            <!-- Points Card -->
-            <div class="bg-green-50 rounded-lg p-6 shadow-sm">
-                <h3 class="text-lg font-semibold text-green-800 mb-2">Your Points</h3>
-                <p class="text-3xl font-bold text-green-600">0</p>
-                <p class="text-sm text-gray-500 mt-2">Total points earned</p>
-            </div>
-
-            <!-- Transactions Card -->
-            <div class="bg-blue-50 rounded-lg p-6 shadow-sm">
-                <h3 class="text-lg font-semibold text-blue-800 mb-2">Transactions</h3>
-                <p class="text-3xl font-bold text-blue-600">0</p>
-                <p class="text-sm text-gray-500 mt-2">Total transactions</p>
-            </div>
-
-            <!-- Waste Collected Card -->
-            <div class="bg-yellow-50 rounded-lg p-6 shadow-sm">
-                <h3 class="text-lg font-semibold text-yellow-800 mb-2">Waste Collected</h3>
-                <p class="text-3xl font-bold text-yellow-600">0 kg</p>
-                <p class="text-sm text-gray-500 mt-2">Total waste collected</p>
-            </div>
-        </div>
-
-        <!-- Pemesanan Belum Upload Bukti Bayar -->
-        <div class="mt-10 mb-8">
-            <h2 class="text-xl font-bold text-blue-700 mb-4">Pemesanan Belum Upload Bukti Bayar</h2>
-            <!-- Tabel Daftar Pesanan -->
-            <div class="overflow-x-auto">
-                <table class="min-w-full bg-white rounded shadow text-sm">
-                    <thead class="bg-blue-100">
-                        <tr>
-                            <th class="py-2 px-3 text-left">No</th>
-                            <th class="py-2 px-3 text-left">Produk</th>
-                            <th class="py-2 px-3 text-left">Tanggal</th>
-                            <th class="py-2 px-3 text-left">Jumlah</th>
-                            <th class="py-2 px-3 text-left">Harga</th>
-                            <th class="py-2 px-3 text-left">Metode</th>
-                            <th class="py-2 px-3 text-left">Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- Contoh data dummy, ganti dengan loop data pesanan dari backend -->
-                        <tr>
-                            <td class="py-2 px-3">1</td>
-                            <td class="py-2 px-3">Eco Enzim 1L</td>
-                            <td class="py-2 px-3">2025-05-01</td>
-                            <td class="py-2 px-3">2</td>
-                            <td class="py-2 px-3">Rp 50.000</td>
-                            <td class="py-2 px-3">Transfer</td>
-                            <td class="py-2 px-3">
-                                <button class="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded text-xs font-semibold" onclick="openUploadModal()">Upload Bukti</button>
-                            </td>
-                        </tr>
-                        <!-- Jika tidak ada data, tampilkan pesan -->
-                        <tr class="hidden" id="noOrderRow">
-                            <td colspan="7" class="py-4 text-center text-gray-400">Tidak ada pesanan yang menunggu upload bukti bayar.</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <!-- Modal Upload Bukti Pembayaran -->
-        <div id="uploadModal" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
-            <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-6 relative">
-                <button onclick="closeUploadModal()" class="absolute top-2 right-2 text-gray-400 hover:text-red-500 text-2xl">&times;</button>
-                <h2 class="text-xl font-bold mb-4 text-yellow-700">Upload Bukti Pembayaran</h2>
-                <form enctype="multipart/form-data">
-                    <div class="mb-4">
-                        <label class="block text-gray-700 text-sm font-semibold mb-2">Pilih File Bukti (jpg, png, pdf)</label>
-                        <input type="file" accept="image/*,application/pdf" class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-400" required>
-                    </div>
-                    <div class="flex justify-end">
-                        <button type="button" onclick="closeUploadModal()" class="bg-gray-300 hover:bg-gray-400 text-gray-700 px-4 py-2 rounded mr-2">Batal</button>
-                        <button type="submit" class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded font-semibold">Upload</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-        <script>
-            // Modal upload bukti pembayaran
-            function openUploadModal() {
-                document.getElementById('uploadModal').classList.remove('hidden');
-            }
-            function closeUploadModal() {
-                document.getElementById('uploadModal').classList.add('hidden');
-            }
-        </script>
     </div>
 </div> 
