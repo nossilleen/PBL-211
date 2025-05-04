@@ -5,10 +5,15 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\DataController;
+use App\Http\Controllers\TransaksiController;
 
 Route::get('/', function () {
+    // Jika user sudah login, arahkan ke welcome page
+    if (Auth::check()) {
+        return view('welcome');
+    }
     return view('welcome');
-});
+})->name('welcome');
 
 Route::get('/artikel', function () {
     return view('artikel');
@@ -22,16 +27,22 @@ Route::get('/browse', function () {
     return view('browse');
 });
 
+// Rute untuk halaman detail produk
+Route::get('/product/{id}', function ($id) {
+    // Di sini nantinya bisa mengambil data produk dari database berdasarkan ID
+    return view('product-detail');
+})->name('product.detail');
+
 // Authentication routes
 Auth::routes();
 
-// Home route - redirects to appropriate dashboard based on role
-Route::get('/home', [HomeController::class, 'index'])->name('home');
+// Home route - setelah login akan diarahkan ke welcome page
+Route::get('/home', function () {
+    return redirect('/');
+})->name('home');
 
-// Profile route for authenticated users
-Route::get('/profile', function() {
-    return view('profile');
-})->middleware('auth')->name('profile');
+// Profile route for authenticated users - integrated with dashboard based on role
+Route::get('/profile', [HomeController::class, 'index'])->name('profile');
 
 // Admin routes - protected with auth middleware
 Route::prefix('admin')->middleware('auth')->group(function () {
@@ -41,4 +52,24 @@ Route::prefix('admin')->middleware('auth')->group(function () {
     Route::get('/user', [AdminController::class, 'user'])->name('admin.user');
 });
 
+// Transaksi routes - protected with auth middleware
+Route::prefix('transaksi')->middleware('auth')->group(function () {
+    Route::get('/pesanan', [TransaksiController::class, 'pesananAktif'])->name('transaksi.pesanan');
+    Route::get('/riwayat', [TransaksiController::class, 'riwayatTransaksi'])->name('transaksi.riwayat');
+    Route::post('/upload-bukti', [TransaksiController::class, 'uploadBukti'])->name('transaksi.upload-bukti');
+    Route::get('/detail/{id}', [TransaksiController::class, 'detail'])->name('transaksi.detail');
+    Route::post('/cancel/{id}', [TransaksiController::class, 'cancel'])->name('transaksi.cancel');
+    Route::post('/complete/{id}', [TransaksiController::class, 'complete'])->name('transaksi.complete');
+});
+
 Route::get('/check-data', [DataController::class, 'index']);
+
+// Dashboard untuk nasabah
+Route::get('/nasabah/dashboard', function () {
+    return view('nasabah.dashboard');
+})->middleware('auth')->name('nasabah.dashboard');
+
+// Dashboard untuk pengelola
+Route::get('/pengelola/dashboard', function () {
+    return view('pengelola.dashboard');
+})->middleware('auth')->name('pengelola.dashboard');

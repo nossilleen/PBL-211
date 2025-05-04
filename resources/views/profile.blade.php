@@ -42,245 +42,347 @@
                 <!-- Profile Section -->
                 <div class="flex flex-col lg:flex-row mt-8 gap-8">
                     <!-- Left Sidebar -->
-                    <div class="w-full lg:w-1/4">
-                        <div class="bg-green-50 rounded-lg shadow overflow-hidden border border-green-100">
-                            <div class="p-6 flex flex-col items-center bg-white border-b border-green-100">
-                                <div class="relative group">
-                                    <div class="w-24 h-24 rounded-full bg-green-600 flex items-center justify-center text-white text-3xl font-bold shadow-md overflow-hidden">
-                                        {{ substr(Auth::user()->nama, 0, 1) }}
-                                    </div>
-                                    <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-40 rounded-full flex items-center justify-center transition-all duration-300 cursor-pointer opacity-0 group-hover:opacity-100">
-                                        <div class="text-white text-xs font-medium">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mx-auto mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
-                                            </svg>
-                                            <span>Ubah Foto</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <h2 class="text-xl font-bold mt-4">{{ Auth::user()->nama }}</h2>
-                                <p class="text-gray-500 text-sm">Nasabah</p>
-                                <div class="mt-1 text-green-600 hover:text-green-700 transition-colors">
-                                    <a href="#" class="flex items-center">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
-                                        </svg>
-                                        <span>Edit Profil</span>
-                                    </a>
-                                </div>
+                    <div class="container mx-auto py-8 px-4">
+                        <div class="flex flex-col lg:flex-row gap-8">
+                            <!-- Sidebar (Kiri) -->
+                            <div class="w-full lg:w-1/4">
+                                <x-sidebar.container />
                             </div>
-                            <div>
-                                <a href="#" class="block px-6 py-3 bg-white flex items-center transition-colors border-l-4 border-green-600">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                                    </svg>
-                                    <span class="font-medium text-green-600">Profil</span>
-                                </a>
-                                <a href="#" class="block px-6 py-3 hover:bg-white flex items-center transition-colors border-l-4 border-transparent hover:border-green-600 group">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3 text-gray-500 group-hover:text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
-                                    </svg>
-                                    <span class="font-medium group-hover:text-green-600">Notifikasi</span>
-                                </a>
-                                <a href="#" class="block px-6 py-3 hover:bg-white flex items-center transition-colors border-l-4 border-transparent hover:border-green-600 group">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3 text-gray-500 group-hover:text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                    </svg>
-                                    <span class="font-medium group-hover:text-green-600">Poin Saya</span>
-                                </a>
-                                <a href="#" class="block px-6 py-3 hover:bg-white flex items-center transition-colors border-l-4 border-transparent hover:border-green-600 group">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3 text-gray-500 group-hover:text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
-                                    </svg>
-                                    <span class="font-medium group-hover:text-green-600">Pesanan</span>
-                                </a>
-                                <a href="#" class="block px-6 py-3 hover:bg-white flex items-center transition-colors border-l-4 border-transparent hover:border-green-600 group">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3 text-gray-500 group-hover:text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-                                    </svg>
-                                    <span class="font-medium group-hover:text-green-600">Riwayat Transaksi</span>
-                                </a>
-                                <a href="{{ route('logout') }}" 
-                                   onclick="event.preventDefault(); document.getElementById('logout-form').submit();" 
-                                   class="block px-6 py-3 hover:bg-white flex items-center transition-colors text-red-500 border-l-4 border-transparent hover:border-red-500 group">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-                                    </svg>
-                                    <span class="font-medium group-hover:text-red-600">Log Out</span>
-                                </a>
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hidden">
-                                    @csrf
-                                </form>
-                            </div>
+
+        <!-- Main Content (Kanan) -->
+        <div id="main-content" class="w-full lg:w-3/4">
+            <!-- Profile Section (Default Visible) -->
+            <div id="profile-section">
+                <x-profile.information />
+            </div>
+            
+            <!-- Dashboard Section (Hidden by Default) -->
+            <div id="dashboard-section" class="hidden">
+                <x-dashboard.container />
+            </div>
+
+            <!-- Pesanan Section (Hidden by Default) -->
+            <div id="pesanan-section" class="hidden">
+                <x-profile.pesanan />
+            </div>
+
+            <!-- Riwayat Transaksi Section (Hidden by Default) -->
+            <div id="riwayat-section" class="hidden">
+                <x-profile.riwayat-transaksi />
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Get navigation links
+        const profileLink = document.getElementById('nav-profile');
+        const dashboardLink = document.getElementById('nav-dashboard');
+        const pesananLink = document.getElementById('nav-pesanan');
+        const riwayatLink = document.getElementById('nav-riwayat');
+        
+        // Get content sections
+        const profileSection = document.getElementById('profile-section');
+        const dashboardSection = document.getElementById('dashboard-section');
+        const pesananSection = document.getElementById('pesanan-section');
+        const riwayatSection = document.getElementById('riwayat-section');
+        
+        // Function to hide all sections
+        function hideAllSections() {
+            profileSection.classList.add('hidden');
+            dashboardSection.classList.add('hidden');
+            if (pesananSection) pesananSection.classList.add('hidden');
+            if (riwayatSection) riwayatSection.classList.add('hidden');
+        }
+        
+        // Function to reset all nav links
+        function resetAllNavLinks() {
+            profileLink.classList.remove('bg-white', 'border-green-600');
+            profileLink.classList.add('border-transparent', 'hover:border-green-600');
+            dashboardLink.classList.remove('bg-white', 'border-green-600');
+            dashboardLink.classList.add('border-transparent', 'hover:border-green-600');
+            
+            if (pesananLink) {
+                pesananLink.classList.remove('bg-white', 'border-green-600');
+                pesananLink.classList.add('border-transparent', 'hover:border-green-600');
+            }
+            
+            if (riwayatLink) {
+                riwayatLink.classList.remove('bg-white', 'border-green-600');
+                riwayatLink.classList.add('border-transparent', 'hover:border-green-600');
+            }
+        }
+        
+        // Add click events to navigation links
+        if (profileLink && dashboardLink) {
+            profileLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                hideAllSections();
+                profileSection.classList.remove('hidden');
+                
+                resetAllNavLinks();
+                profileLink.classList.add('bg-white', 'border-green-600');
+                profileLink.classList.remove('border-transparent', 'hover:border-green-600');
+            });
+            
+            dashboardLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                hideAllSections();
+                dashboardSection.classList.remove('hidden');
+                
+                resetAllNavLinks();
+                dashboardLink.classList.add('bg-white', 'border-green-600');
+                dashboardLink.classList.remove('border-transparent', 'hover:border-green-600');
+            });
+        }
+        
+        // Add click events for new navigation links
+        if (pesananLink) {
+            pesananLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                hideAllSections();
+                pesananSection.classList.remove('hidden');
+                
+                resetAllNavLinks();
+                pesananLink.classList.add('bg-white', 'border-green-600');
+                pesananLink.classList.remove('border-transparent', 'hover:border-green-600');
+            });
+        }
+        
+        if (riwayatLink) {
+            riwayatLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                hideAllSections();
+                riwayatSection.classList.remove('hidden');
+                
+                resetAllNavLinks();
+                riwayatLink.classList.add('bg-white', 'border-green-600');
+                riwayatLink.classList.remove('border-transparent', 'hover:border-green-600');
+            });
+        }
+    });
+    
+    // Fungsi untuk toggle section berdasarkan hash
+    function toggleSectionByHash() {
+        const profileSection = document.getElementById('profile-section');
+        const dashboardSection = document.getElementById('dashboard-section');
+        const pesananSection = document.getElementById('pesanan-section');
+        const riwayatSection = document.getElementById('riwayat-section');
+        
+        // Hide all sections first
+        if (profileSection) profileSection.classList.add('hidden');
+        if (dashboardSection) dashboardSection.classList.add('hidden');
+        if (pesananSection) pesananSection.classList.add('hidden');
+        if (riwayatSection) riwayatSection.classList.add('hidden');
+        
+        // Show section based on hash
+        if (window.location.hash === '#dashboard') {
+            if (dashboardSection) dashboardSection.classList.remove('hidden');
+        } else if (window.location.hash === '#pesanan') {
+            if (pesananSection) pesananSection.classList.remove('hidden');
+        } else if (window.location.hash === '#riwayat') {
+            if (riwayatSection) riwayatSection.classList.remove('hidden');
+        } else {
+            if (profileSection) profileSection.classList.remove('hidden');
+        }
+    }
+    // Script untuk mengakhiri preloader
+    window.addEventListener('load', function() {
+        // Cek apakah elemen preloader ada di halaman
+        const preloader = document.getElementById('preloader');
+        if (preloader) {
+            // Tambahkan class untuk animasi fade out
+            preloader.classList.add('preloader-hide');
+            // Hapus preloader setelah animasi selesai
+            setTimeout(function() {
+                preloader.style.display = 'none';
+            }, 500); // Waktu sesuai dengan durasi animasi fade out
+        }
+        // Toggle section sesuai hash saat load
+        toggleSectionByHash();
+    });
+    // Toggle section saat hash berubah
+    window.addEventListener('hashchange', toggleSectionByHash);
+</script>
+
+<!-- Portal modal yang benar-benar baru -->
+<div id="uploadModalPortal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center" style="z-index: 9999;">
+    <div class="bg-white rounded-lg w-full max-w-md mx-4 shadow-xl">
+        <div class="flex justify-between items-center p-4 border-b">
+            <h3 class="text-lg font-medium text-gray-900">Upload Bukti Transfer</h3>
+            <button type="button" id="closeUploadModalBtn" class="text-gray-400 hover:text-gray-500">
+                <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+        </div>
+        <form id="uploadForm" action="{{ url('/transaksi/upload-bukti') }}" method="POST" enctype="multipart/form-data" class="p-4">
+            @csrf
+            <input type="hidden" id="transaksi_id_new" name="transaksi_id" value="">
+            
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="bukti_transfer_new">
+                    File Bukti Transfer
+                </label>
+                <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
+                    <div class="space-y-1 text-center">
+                        <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
+                            <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                        <div class="flex text-sm text-gray-600">
+                            <label for="file-upload-new" class="relative cursor-pointer bg-white rounded-md font-medium text-green-600 hover:text-green-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-green-500">
+                                <span>Upload file</span>
+                                <input id="file-upload-new" name="bukti_transfer" type="file" class="sr-only" accept="image/*" required>
+                            </label>
+                            <p class="pl-1">atau drag and drop</p>
                         </div>
+                        <p class="text-xs text-gray-500">
+                            PNG, JPG, GIF hingga 2MB
+                        </p>
                     </div>
-
-                    <!-- Main Content Area -->
-                    <div class="w-full lg:w-3/4">
-                        <div class="bg-white rounded-lg shadow-sm overflow-hidden mb-8">
-                            <div class="bg-green-600 px-6 py-4 flex justify-between items-center">
-                                <h1 class="text-xl font-bold text-white">Informasi Profil</h1>
-                                <a href="#" class="text-white hover:text-green-100 transition-colors flex items-center">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
-                                    </svg>
-                                    Edit
-                                </a>
-                            </div>
-
-                            <div class="p-6">
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                    <div>
-                                        <h3 class="text-sm font-medium text-gray-500">Nama Lengkap</h3>
-                                        <p class="text-lg font-medium">{{ Auth::user()->nama }}</p>
-                                    </div>
-                                    
-                                    <div>
-                                        <h3 class="text-sm font-medium text-gray-500">Nomor Telepon</h3>
-                                        <p class="text-lg">{{ Auth::user()->no_hp }}</p>
-                                    </div>
-                                    
-                                    <div>
-                                        <h3 class="text-sm font-medium text-gray-500">Email</h3>
-                                        <p class="text-lg">{{ Auth::user()->email }}</p>
-                                    </div>
-                                    
-                                    <div>
-                                        <h3 class="text-sm font-medium text-gray-500">Tanggal Lahir</h3>
-                                        <p class="text-lg">{{ Auth::user()->tanggal_lahir ? date('d F Y', strtotime(Auth::user()->tanggal_lahir)) : 'Belum disetel' }}</p>
-                                    </div>
-                                    
-                                    <div>
-                                        <h3 class="text-sm font-medium text-gray-500">Jenis Kelamin</h3>
-                                        <p class="text-lg">{{ Auth::user()->jenis_kelamin == 'L' ? 'Laki-laki' : (Auth::user()->jenis_kelamin == 'P' ? 'Perempuan' : 'Belum disetel') }}</p>
-                                    </div>
-                                    
-                                    <div>
-                                        <h3 class="text-sm font-medium text-gray-500">Alamat</h3>
-                                        <p class="text-lg">{{ Auth::user()->alamat ?: 'Belum disetel' }}</p>
-                                    </div>
-                                </div>
-                            </div>
+                </div>
+                <div id="file-preview-new" class="mt-2 hidden">
+                    <div class="flex items-center justify-between p-2 bg-green-50 rounded">
+                        <div class="flex items-center">
+                            <svg class="h-5 w-5 text-green-500 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <span id="file-name-new" class="text-sm text-gray-700"></span>
                         </div>
-
-                        <!-- Activity Stats -->
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                            <!-- Points Card -->
-                            <div class="bg-white rounded-lg shadow-sm overflow-hidden">
-                                <div class="bg-green-50 p-4 border-b border-green-100">
-                                    <h3 class="font-semibold text-green-800">Poin Saya</h3>
-                                </div>
-                                <div class="p-6 flex items-center justify-between">
-                                    <div>
-                                        <p class="text-3xl font-bold text-green-600">0</p>
-                                        <p class="text-sm text-gray-500 mt-1">Total poin</p>
-                                    </div>
-                                    <div class="bg-green-100 rounded-full p-3">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                        </svg>
-                                    </div>
-                                </div>
-                                <div class="border-t border-gray-100 p-4">
-                                    <a href="#" class="text-green-600 hover:text-green-800 text-sm font-medium flex items-center">
-                                        Lihat riwayat poin
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                                        </svg>
-                                    </a>
-                                </div>
-                            </div>
-                            
-                            <!-- Transactions Card -->
-                            <div class="bg-white rounded-lg shadow-sm overflow-hidden">
-                                <div class="bg-blue-50 p-4 border-b border-blue-100">
-                                    <h3 class="font-semibold text-blue-800">Transaksi</h3>
-                                </div>
-                                <div class="p-6 flex items-center justify-between">
-                                    <div>
-                                        <p class="text-3xl font-bold text-blue-600">0</p>
-                                        <p class="text-sm text-gray-500 mt-1">Total transaksi</p>
-                                    </div>
-                                    <div class="bg-blue-100 rounded-full p-3">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-                                        </svg>
-                                    </div>
-                                </div>
-                                <div class="border-t border-gray-100 p-4">
-                                    <a href="#" class="text-blue-600 hover:text-blue-800 text-sm font-medium flex items-center">
-                                        Lihat riwayat transaksi
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                                        </svg>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Recent Activities -->
-                        <div class="bg-white rounded-lg shadow-sm overflow-hidden">
-                            <div class="bg-purple-600 px-6 py-4">
-                                <h2 class="text-xl font-bold text-white">Aktivitas Terbaru</h2>
-                            </div>
-                            <div class="p-6">
-                                <div class="flex items-center justify-center py-8">
-                                    <div class="text-center">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
-                                        </svg>
-                                        <h3 class="mt-4 text-lg font-medium text-gray-900">Belum ada aktivitas</h3>
-                                        <p class="mt-1 text-gray-500">Aktivitas Anda akan muncul di sini</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <button type="button" id="removeFileBtn" class="text-gray-400 hover:text-gray-500">
+                            <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
                     </div>
                 </div>
             </div>
-        </main>
-
-
-
-        <!-- Back to top button -->
-        <button id="back-to-top" class="fixed bottom-6 right-6 bg-green-600 text-white w-12 h-12 rounded-full shadow-lg flex items-center justify-center opacity-0 invisible transition-all duration-300 z-50 hover:bg-green-700">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
-            </svg>
-        </button>
-
-        <script>
-            // Preloader
-            window.addEventListener('load', () => {
-                const preloader = document.getElementById('preloader');
-                setTimeout(() => {
-                    preloader.classList.add('opacity-0');
-                    setTimeout(() => {
-                        preloader.style.display = 'none';
-                    }, 300);
-                }, 500);
-            });
-
-            // Back to top button
-            const backToTopBtn = document.getElementById('back-to-top');
             
-            window.addEventListener('scroll', () => {
-                if (window.scrollY > 300) {
-                    backToTopBtn.classList.remove('opacity-0', 'invisible');
-                    backToTopBtn.classList.add('opacity-100', 'visible');
-                } else {
-                    backToTopBtn.classList.add('opacity-0', 'invisible');
-                    backToTopBtn.classList.remove('opacity-100', 'visible');
-                }
-            });
-            
-            backToTopBtn.addEventListener('click', () => {
-                window.scrollTo({
-                    top: 0,
-                    behavior: 'smooth'
-                });
-            });
-        </script>
+            <div class="flex justify-end mt-4">
+                <button type="button" id="cancelUploadBtn" class="mr-2 py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                    Batal
+                </button>
+                <button type="submit" class="py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                    Upload
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
     </body>
-</html> 
+    
+    <!-- Script untuk modal upload bukti transfer -->
+    <script>
+        // Inisialisasi script modal
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Modal script loaded');
+            
+            // Fungsi untuk menangani tombol close
+            var closeBtn = document.getElementById('closeUploadModalBtn');
+            if (closeBtn) {
+                closeBtn.addEventListener('click', function() {
+                    console.log('Close button clicked');
+                    hideModal();
+                });
+            } else {
+                console.error('Close button not found');
+            }
+            
+            // Fungsi untuk menangani tombol cancel
+            var cancelBtn = document.getElementById('cancelUploadBtn');
+            if (cancelBtn) {
+                cancelBtn.addEventListener('click', function() {
+                    console.log('Cancel button clicked');
+                    hideModal();
+                });
+            } else {
+                console.error('Cancel button not found');
+            }
+            
+            // Fungsi untuk menangani preview file
+            var fileUpload = document.getElementById('file-upload-new');
+            if (fileUpload) {
+                fileUpload.addEventListener('change', function(e) {
+                    console.log('File selected');
+                    var fileName = e.target.files[0]?.name;
+                    if (fileName) {
+                        document.getElementById('file-name-new').textContent = fileName;
+                        document.getElementById('file-preview-new').classList.remove('hidden');
+                    }
+                });
+            } else {
+                console.error('File upload input not found');
+            }
+            
+            // Fungsi untuk menangani tombol remove file
+            var removeBtn = document.getElementById('removeFileBtn');
+            if (removeBtn) {
+                removeBtn.addEventListener('click', function() {
+                    console.log('Remove file button clicked');
+                    var fileUpload = document.getElementById('file-upload-new');
+                    if (fileUpload) fileUpload.value = '';
+                    var filePreview = document.getElementById('file-preview-new');
+                    if (filePreview) filePreview.classList.add('hidden');
+                });
+            } else {
+                console.error('Remove file button not found');
+            }
+            
+            // Override fungsi global openUploadModal
+            window.openUploadModal = function(transaksiId) {
+                console.log('Open upload modal with ID:', transaksiId);
+                
+                // Aktifkan tab Pesanan
+                var pesananLink = document.getElementById('nav-pesanan');
+                var pesananSection = document.getElementById('pesanan-section');
+                
+                if (pesananLink && pesananSection) {
+                    // Hide all sections
+                    var allSections = document.querySelectorAll('#profile-section, #dashboard-section, #pesanan-section, #riwayat-section');
+                    allSections.forEach(function(section) {
+                        section.classList.add('hidden');
+                    });
+                    
+                    // Show pesanan section
+                    pesananSection.classList.remove('hidden');
+                    
+                    // Reset all nav links
+                    var allLinks = document.querySelectorAll('[id^="nav-"]');
+                    allLinks.forEach(function(link) {
+                        link.classList.remove('bg-white', 'border-green-600');
+                        link.classList.add('border-transparent', 'hover:border-green-600');
+                    });
+                    
+                    // Activate pesanan link
+                    pesananLink.classList.add('bg-white', 'border-green-600');
+                    pesananLink.classList.remove('border-transparent', 'hover:border-green-600');
+                }
+                
+                // Set transaksi ID
+                document.getElementById('transaksi_id_new').value = transaksiId;
+                
+                // Show modal
+                var modal = document.getElementById('uploadModalPortal');
+                if (modal) {
+                    modal.classList.remove('hidden');
+                    console.log('Modal should be visible now');
+                } else {
+                    console.error('Modal element not found');
+                }
+            };
+            
+            // Fungsi untuk menyembunyikan modal
+            function hideModal() {
+                var modal = document.getElementById('uploadModalPortal');
+                if (modal) {
+                    modal.classList.add('hidden');
+                    console.log('Modal hidden');
+                } else {
+                    console.error('Modal element not found when hiding');
+                }
+            }
+        });
+    </script>
+</html>

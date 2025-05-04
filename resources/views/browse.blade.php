@@ -189,7 +189,7 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
                         <!-- Produk 1 -->
                         <x-browse.product-card 
-                            image="images/bg1.jpeg"
+                            image="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtCjhyUngEZ79Rdnw6T1ewkSyNsU_4GBTObQ&s"
                             title="Pupuk Cair Organik"
                             desc="Pupuk cair sangat bagus."
                             price="25.000"
@@ -200,7 +200,7 @@
                         
                         <!-- Produk 2 -->
                         <x-browse.product-card 
-                            image="images/bg2.jpeg"
+                            image="https://down-id.img.susercontent.com/file/id-11134207-7r98p-lr4bmvhw6e3ddf"
                             title="Sabun Cuci Piring"
                             desc="Sabun cuci piring hasil eco enzim"
                             price="15.000"
@@ -211,7 +211,7 @@
                         
                         <!-- Produk 3 -->
                         <x-browse.product-card 
-                            image="images/bg3.jpeg"
+                            image="https://id-live-01.slatic.net/p/eef84c8d6511d6da83ff7d9b70def2e3.jpg"
                             title="Deodoran Ruangan"
                             desc="Deodoran ruangan harum mmmmm.."
                             price="28.000"
@@ -222,7 +222,7 @@
                         
                         <!-- Produk 4 -->
                         <x-browse.product-card 
-                            image="images/bg4.jpeg"
+                            image="https://down-id.img.susercontent.com/file/id-11134207-7r98y-lvmrfvo22cy9e4"
                             title="Disinfektan"
                             desc="Disinfektan"
                             price="24.000"
@@ -233,7 +233,7 @@
                         
                         <!-- Produk 5 -->
                         <x-browse.product-card 
-                            image="images/bg5.jpeg"
+                            image="https://down-id.img.susercontent.com/file/id-11134207-7r991-lswhx161pldlca"
                             title="Pestisida"
                             desc="Pestisida pembasmi hama"
                             price="30.000"
@@ -244,7 +244,7 @@
                         
                         <!-- Produk 6 -->
                         <x-browse.product-card 
-                            image="images/bg6.jpeg"
+                            image="https://images.tokopedia.net/img/cache/500-square/VqbcmM/2021/2/18/42ce5ef7-d502-489d-ba8c-794ae21b11aa.jpg"
                             title="Pembersih Serbaguna"
                             desc="Pembersih Serbaguna yang sangat bermanfaat."
                             price="18.000"
@@ -255,7 +255,7 @@
                         
                         <!-- Produk 7 -->
                         <x-browse.product-card 
-                            image="images/bg1.jpeg"
+                            image="https://www.unesa.ac.id/images/foto-04-08-2023-08-08-24-5583.png"
                             title="Produk 7"
                             desc="Produk"
                             price="5.000"
@@ -266,7 +266,7 @@
                         
                         <!-- Produk 8 -->
                         <x-browse.product-card 
-                            image="images/bg2.jpeg"
+                            image="https://filebroker-cdn.lazada.co.id/kf/Sa88de6e565304317b183c5fe9d53fe571.jpg"
                             title="Produk 8"
                             desc="Produk"
                             price="5.000"
@@ -277,7 +277,7 @@
 
                         <!-- Produk 9 -->
                         <x-browse.product-card 
-                            image="images/bg3.jpeg"
+                            image="https://umsida.ac.id/wp-content/uploads/2021/03/WhatsApp-Image-2021-03-30-at-07.06.06.jpeg"
                             title="Produk 9"
                             desc="Produk"
                             price="5.000"
@@ -288,7 +288,7 @@
 
                         <!-- Produk 10 -->
                         <x-browse.product-card 
-                            image="images/bg4.jpeg"
+                            image="https://images.tokopedia.net/img/cache/700/VqbcmM/2023/5/26/a22d75c1-301a-465a-8ad3-7aa3e335563a.jpg"
                             title="Produk 10"
                             desc="Produk"
                             price="5.000"

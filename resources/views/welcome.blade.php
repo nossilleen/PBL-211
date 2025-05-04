@@ -12,6 +12,61 @@
             @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="font-sans antialiased bg-image-fixed overflow-x-hidden">
+        <!-- Notifikasi Selamat Datang -->
+        @if(Auth::check() && session('welcome'))
+            <div id="welcome-alert" class="fixed top-6 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-green-400 to-green-600 text-white px-8 py-4 rounded-xl shadow-lg flex items-center gap-4 z-[9998] animate-fade-in opacity-100 transition-all duration-500">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white animate-ping-slow" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M12 20a8 8 0 100-16 8 8 0 000 16z" />
+                </svg>
+                <span class="font-semibold text-lg">{{ session('welcome') }}</span>
+                <button onclick="dismissWelcomeAlert()" class="ml-4 text-white hover:text-green-200 focus:outline-none">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            <style>
+                @keyframes fade-in {
+                    0% { opacity: 0; transform: translate(-50%, -30px) scale(0.95); }
+                    100% { opacity: 1; transform: translate(-50%, 0) scale(1); }
+                }
+                @keyframes fade-out {
+                    0% { opacity: 1; transform: translate(-50%, 0) scale(1); }
+                    100% { opacity: 0; transform: translate(-50%, -20px) scale(0.95); }
+                }
+                @keyframes ping-slow {
+                    0%, 100% { transform: scale(1); opacity: 1; }
+                    50% { transform: scale(1.1); opacity: 0.8; }
+                }
+                .animate-fade-in {
+                    animation: fade-in 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+                }
+                .animate-fade-out {
+                    animation: fade-out 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+                }
+                .animate-ping-slow {
+                    animation: ping-slow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+                }
+            </style>
+            <script>
+                // Auto-dismiss setelah 5 detik
+                let dismissTimeout = setTimeout(() => {
+                    dismissWelcomeAlert();
+                }, 5000);
+                
+                // Function untuk dismiss notifikasi
+                function dismissWelcomeAlert() {
+                    clearTimeout(dismissTimeout);
+                    const alert = document.getElementById('welcome-alert');
+                    alert.classList.remove('animate-fade-in');
+                    alert.classList.add('animate-fade-out');
+                    setTimeout(() => {
+                        alert.style.display = 'none';
+                    }, 500);
+                }
+            </script>
+        @endif
+
         <!-- Preloader -->
         <div id="preloader" class="fixed inset-0 bg-green-50 z-[9999] flex items-center justify-center">
             <div class="animate-spin rounded-full h-16 w-16 border-b-4 border-green-600"></div>
