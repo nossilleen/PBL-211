@@ -49,34 +49,15 @@
             </div>
 
             <!-- Card 2 - Video -->
-            <div data-aos="fade-up" data-aos-delay="300" class="h-full">
-                <div
-                    class="bg-black rounded-lg overflow-hidden shadow-lg flex items-center justify-center card-hover-effect mb-4 h-48 sm:h-60 md:h-64 lg:h-72"
-                >
-                    <div
-                        class="rounded-full w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 flex items-center justify-center bg-gray-800 bg-opacity-50 border-2 border-white hover-scale"
-                    >
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            class="h-6 w-6 md:h-8 md:w-8 lg:h-10 lg:w-10 text-white"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                        >
-                            <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"
-                            />
-                            <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                            />
-                        </svg>
-                    </div>
+            <div data-aos="fade-up" data-aos-delay="300" class="h-full flex flex-col items-center justify-center">
+                <div class="flex items-center justify-center w-full mb-4">
+                    <iframe 
+                        src="https://drive.google.com/file/d/1cSYkE_qRdEnRY_PwwJFJJxKba309gKD6/preview" 
+                        allow="autoplay"
+                        allowfullscreen
+                        class="rounded-lg shadow-lg border-2 border-green-200 w-full h-48 sm:h-60 md:h-64 lg:h-72 max-w-full mx-auto"
+                        style="background: #000;"
+                    ></iframe>
                 </div>
                 <div class="text-center">
                     <h4 class="font-semibold mb-2">Video Animasi Mengenai Eco Enzim</h4>

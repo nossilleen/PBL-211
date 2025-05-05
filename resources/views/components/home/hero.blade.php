@@ -26,12 +26,15 @@
                 </div>
             </div>
             <div class="flex items-center justify-center order-1 md:order-2 mb-8 md:mb-0" data-aos="fade-left" data-aos-delay="300">
-                <img
-                    src="{{ asset('images/bg1.jpeg') }}"
-                    alt="Dashboard Preview"
-                    class="rounded-lg shadow-xl w-full max-w-md mx-auto md:max-w-full lg:max-w-xl xl:max-w-2xl opacity-80 hover-scale transition-all duration-300"
-                    loading="lazy"
-                />
+                <iframe 
+                    src="https://drive.google.com/file/d/13sbilt1hfNieUS5Vbfy9uZbCEDe7OD8y/preview" 
+                    width="640" 
+                    height="360" 
+                    allow="autoplay"
+                    allowfullscreen
+                    class="rounded-lg border-4 shadow-[0_0_0_16px_rgba(34,197,94,0.35),0_0_64px_16px_rgba(34,197,94,0.45)] w-full max-w-md mx-auto md:max-w-full lg:max-w-xl xl:max-w-2xl opacity-95 hover:opacity-100 hover:scale-105 transition-all duration-300 transform hover:-translate-y-1"
+                    style="border-color: rgb(22,101,52);"
+                ></iframe>
             </div>
         </div>
     </div>
