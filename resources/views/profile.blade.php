@@ -61,6 +61,16 @@
                 <x-dashboard.container />
             </div>
 
+            <!-- Notifikasi Section (Hidden by Default) -->
+            <div id="notifikasi-section" class="hidden">
+                <x-profile.notifikasi />
+            </div>
+
+            <!-- Poin saya Section (Hidden by Default) -->
+            <div id="poin-saya-section" class="hidden">
+                <x-profile.poin-saya />
+            </div>
+
             <!-- Pesanan Section (Hidden by Default) -->
             <div id="pesanan-section" class="hidden">
                 <x-profile.pesanan />
@@ -76,109 +86,65 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Get navigation links
-        const profileLink = document.getElementById('nav-profile');
-        const dashboardLink = document.getElementById('nav-dashboard');
-        const pesananLink = document.getElementById('nav-pesanan');
-        const riwayatLink = document.getElementById('nav-riwayat');
-        
-        // Get content sections
-        const profileSection = document.getElementById('profile-section');
-        const dashboardSection = document.getElementById('dashboard-section');
-        const pesananSection = document.getElementById('pesanan-section');
-        const riwayatSection = document.getElementById('riwayat-section');
-        
-        // Function to hide all sections
-        function hideAllSections() {
-            profileSection.classList.add('hidden');
-            dashboardSection.classList.add('hidden');
-            if (pesananSection) pesananSection.classList.add('hidden');
-            if (riwayatSection) riwayatSection.classList.add('hidden');
-        }
-        
-        // Function to reset all nav links
+        const navLinks = document.querySelectorAll('[id^="nav-"]');
+        const sections = document.querySelectorAll('[id$="-section"]');
+
         function resetAllNavLinks() {
-            profileLink.classList.remove('bg-white', 'border-green-600');
-            profileLink.classList.add('border-transparent', 'hover:border-green-600');
-            dashboardLink.classList.remove('bg-white', 'border-green-600');
-            dashboardLink.classList.add('border-transparent', 'hover:border-green-600');
-            
-            if (pesananLink) {
-                pesananLink.classList.remove('bg-white', 'border-green-600');
-                pesananLink.classList.add('border-transparent', 'hover:border-green-600');
-            }
-            
-            if (riwayatLink) {
-                riwayatLink.classList.remove('bg-white', 'border-green-600');
-                riwayatLink.classList.add('border-transparent', 'hover:border-green-600');
-            }
-        }
-        
-        // Add click events to navigation links
-        if (profileLink && dashboardLink) {
-            profileLink.addEventListener('click', function(e) {
-                e.preventDefault();
-                hideAllSections();
-                profileSection.classList.remove('hidden');
-                
-                resetAllNavLinks();
-                profileLink.classList.add('bg-white', 'border-green-600');
-                profileLink.classList.remove('border-transparent', 'hover:border-green-600');
-            });
-            
-            dashboardLink.addEventListener('click', function(e) {
-                e.preventDefault();
-                hideAllSections();
-                dashboardSection.classList.remove('hidden');
-                
-                resetAllNavLinks();
-                dashboardLink.classList.add('bg-white', 'border-green-600');
-                dashboardLink.classList.remove('border-transparent', 'hover:border-green-600');
+            navLinks.forEach(link => {
+                link.classList.remove('bg-white', 'border-green-600');
+                link.classList.add('border-transparent', 'hover:border-green-600');
             });
         }
-        
-        // Add click events for new navigation links
-        if (pesananLink) {
-            pesananLink.addEventListener('click', function(e) {
-                e.preventDefault();
-                hideAllSections();
-                pesananSection.classList.remove('hidden');
-                
-                resetAllNavLinks();
-                pesananLink.classList.add('bg-white', 'border-green-600');
-                pesananLink.classList.remove('border-transparent', 'hover:border-green-600');
+
+        function hideAllSections() {
+            sections.forEach(section => {
+                section.classList.add('hidden');
             });
         }
-        
-        if (riwayatLink) {
-            riwayatLink.addEventListener('click', function(e) {
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
                 e.preventDefault();
-                hideAllSections();
-                riwayatSection.classList.remove('hidden');
-                
-                resetAllNavLinks();
-                riwayatLink.classList.add('bg-white', 'border-green-600');
-                riwayatLink.classList.remove('border-transparent', 'hover:border-green-600');
+                const targetSectionId = this.id.replace('nav-', '') + '-section';
+                const targetSection = document.getElementById(targetSectionId);
+
+                if (targetSection) {
+                    resetAllNavLinks();
+                    hideAllSections();
+
+                    this.classList.add('bg-white', 'border-green-600');
+                    this.classList.remove('border-transparent', 'hover:border-green-600');
+
+                    targetSection.classList.remove('hidden');
+                }
             });
-        }
+        });
     });
     
     // Fungsi untuk toggle section berdasarkan hash
     function toggleSectionByHash() {
         const profileSection = document.getElementById('profile-section');
         const dashboardSection = document.getElementById('dashboard-section');
+        const notifikasiSection = document.getElementById('notifikasi-section');
+        const poinSayaSection = document.getElementById('poin-saya-section');
         const pesananSection = document.getElementById('pesanan-section');
         const riwayatSection = document.getElementById('riwayat-section');
         
         // Hide all sections first
         if (profileSection) profileSection.classList.add('hidden');
         if (dashboardSection) dashboardSection.classList.add('hidden');
+        if (notifikasiSection) notifikasiSection.classList.add('hidden');
+        if (poin_sayaSection) poin_sayaSection.classList.add('hidden');
         if (pesananSection) pesananSection.classList.add('hidden');
         if (riwayatSection) riwayatSection.classList.add('hidden');
         
         // Show section based on hash
         if (window.location.hash === '#dashboard') {
             if (dashboardSection) dashboardSection.classList.remove('hidden');
+        } else if (window.location.hash === '#notifikasi') {
+            if (notifikasiSection) notifikasiSection.classList.remove('hidden');    
+        } else if (window.location.hash === '#poin-saya') {
+            if (poin-sayaSection) poin-sayaSection.classList.remove('hidden');
         } else if (window.location.hash === '#pesanan') {
             if (pesananSection) pesananSection.classList.remove('hidden');
         } else if (window.location.hash === '#riwayat') {

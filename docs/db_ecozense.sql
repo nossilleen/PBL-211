@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 04, 2025 at 06:45 PM
+-- Generation Time: May 05, 2025 at 01:32 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -27,12 +27,12 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `artikel` (
-  `artikel_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `kategori` enum('event','artikel') NOT NULL,
-  `judul` varchar(255) NOT NULL,
-  `konten` longtext NOT NULL,
+  `artikel_id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `kategori` enum('event','artikel') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `judul` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `konten` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `tanggal_publikasi` date NOT NULL,
-  `user_id` bigint(20) unsigned NOT NULL COMMENT 'Admin yang membuat artikel',
+  `user_id` bigint unsigned NOT NULL COMMENT 'Admin yang membuat artikel',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`artikel_id`),
@@ -48,10 +48,10 @@ CREATE TABLE `artikel` (
 --
 
 CREATE TABLE `artikel_gambar` (
-  `gambar_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `artikel_id` bigint(20) unsigned NOT NULL,
-  `file_path` varchar(255) NOT NULL,
-  `judul` varchar(100) DEFAULT NULL,
+  `gambar_id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `artikel_id` bigint unsigned NOT NULL,
+  `file_path` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `judul` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`gambar_id`),
@@ -66,9 +66,9 @@ CREATE TABLE `artikel_gambar` (
 --
 
 CREATE TABLE `cache` (
-  `key` varchar(255) NOT NULL,
-  `value` mediumtext NOT NULL,
-  `expiration` int(11) NOT NULL,
+  `key` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `value` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `expiration` int NOT NULL,
   PRIMARY KEY (`key`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -79,9 +79,9 @@ CREATE TABLE `cache` (
 --
 
 CREATE TABLE `cache_locks` (
-  `key` varchar(255) NOT NULL,
-  `owner` varchar(255) NOT NULL,
-  `expiration` int(11) NOT NULL,
+  `key` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `owner` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `expiration` int NOT NULL,
   PRIMARY KEY (`key`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -92,11 +92,11 @@ CREATE TABLE `cache_locks` (
 --
 
 CREATE TABLE `feedback` (
-  `feedback_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `komentar` varchar(255) NOT NULL,
-  `user_id` bigint(20) unsigned NOT NULL,
-  `artikel_id` bigint(20) unsigned NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `feedback_id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `komentar` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_id` bigint unsigned NOT NULL,
+  `artikel_id` bigint unsigned NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`feedback_id`),
   KEY `feedback_user_id_foreign` (`user_id`),
   KEY `feedback_artikel_id_foreign` (`artikel_id`),
@@ -111,16 +111,16 @@ CREATE TABLE `feedback` (
 --
 
 CREATE TABLE `job_batches` (
-  `id` varchar(255) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `total_jobs` int(11) NOT NULL,
-  `pending_jobs` int(11) NOT NULL,
-  `failed_jobs` int(11) NOT NULL,
-  `failed_job_ids` longtext NOT NULL,
-  `options` mediumtext DEFAULT NULL,
-  `cancelled_at` int(11) DEFAULT NULL,
-  `created_at` int(11) NOT NULL,
-  `finished_at` int(11) DEFAULT NULL,
+  `id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `total_jobs` int NOT NULL,
+  `pending_jobs` int NOT NULL,
+  `failed_jobs` int NOT NULL,
+  `failed_job_ids` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `options` mediumtext COLLATE utf8mb4_unicode_ci,
+  `cancelled_at` int DEFAULT NULL,
+  `created_at` int NOT NULL,
+  `finished_at` int DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -131,13 +131,13 @@ CREATE TABLE `job_batches` (
 --
 
 CREATE TABLE `jobs` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `queue` varchar(255) NOT NULL,
-  `payload` longtext NOT NULL,
-  `attempts` tinyint(3) unsigned NOT NULL,
-  `reserved_at` int(10) unsigned DEFAULT NULL,
-  `available_at` int(10) unsigned NOT NULL,
-  `created_at` int(10) unsigned NOT NULL,
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `queue` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `attempts` tinyint unsigned NOT NULL,
+  `reserved_at` int unsigned DEFAULT NULL,
+  `available_at` int unsigned NOT NULL,
+  `created_at` int unsigned NOT NULL,
   PRIMARY KEY (`id`),
   KEY `jobs_queue_index` (`queue`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -149,10 +149,10 @@ CREATE TABLE `jobs` (
 --
 
 CREATE TABLE `lokasi` (
-  `lokasi_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `nama_lokasi` varchar(100) NOT NULL,
-  `alamat` varchar(255) NOT NULL,
-  `kota` varchar(50) NOT NULL,
+  `lokasi_id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `nama_lokasi` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `alamat` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `kota` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`lokasi_id`)
@@ -165,8 +165,8 @@ CREATE TABLE `lokasi` (
 --
 
 CREATE TABLE `password_reset_tokens` (
-  `email` varchar(255) NOT NULL,
-  `token` varchar(255) NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -178,10 +178,10 @@ CREATE TABLE `password_reset_tokens` (
 --
 
 CREATE TABLE `poin` (
-  `poin_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `user_id` bigint(20) unsigned NOT NULL,
-  `lokasi_id` bigint(20) unsigned NOT NULL,
-  `jumlah_poin` int(10) unsigned NOT NULL DEFAULT 0,
+  `poin_id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` bigint unsigned NOT NULL,
+  `lokasi_id` bigint unsigned NOT NULL,
+  `jumlah_poin` int unsigned NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`poin_id`),
@@ -189,8 +189,8 @@ CREATE TABLE `poin` (
   KEY `poin_lokasi_id_foreign` (`lokasi_id`),
   CONSTRAINT `poin_lokasi_id_foreign` FOREIGN KEY (`lokasi_id`) REFERENCES `lokasi` (`lokasi_id`) ON DELETE CASCADE,
   CONSTRAINT `poin_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE,
-  CONSTRAINT `check_jumlah_poin` CHECK (`jumlah_poin` >= 0)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  CONSTRAINT `check_jumlah_poin` CHECK ((`jumlah_poin` >= 0))
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -199,14 +199,14 @@ CREATE TABLE `poin` (
 --
 
 CREATE TABLE `produk` (
-  `produk_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `nama_produk` varchar(50) NOT NULL,
-  `kategori` enum('eco_enzim','sembako') NOT NULL DEFAULT 'eco_enzim',
-  `status_ketersediaan` enum('Available','Unavailable') NOT NULL DEFAULT 'Available',
-  `harga` int(10) unsigned NOT NULL,
-  `suka` int(10) unsigned NOT NULL DEFAULT 0,
-  `deskripsi` text DEFAULT NULL,
-  `user_id` bigint(20) unsigned DEFAULT NULL COMMENT 'Pengelola yang menyediakan produk',
+  `produk_id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `nama_produk` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `kategori` enum('eco_enzim','sembako') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'eco_enzim',
+  `status_ketersediaan` enum('Available','Unavailable') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Available',
+  `harga` int unsigned NOT NULL,
+  `suka` int unsigned NOT NULL DEFAULT '0',
+  `deskripsi` text COLLATE utf8mb4_unicode_ci,
+  `user_id` bigint unsigned DEFAULT NULL COMMENT 'Pengelola yang menyediakan produk',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`produk_id`),
@@ -215,8 +215,8 @@ CREATE TABLE `produk` (
   KEY `idx_produk_status` (`status_ketersediaan`),
   KEY `idx_produk_kategori` (`kategori`),
   CONSTRAINT `produk_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE SET NULL,
-  CONSTRAINT `check_harga` CHECK (`harga` >= 0),
-  CONSTRAINT `check_suka` CHECK (`suka` >= 0)
+  CONSTRAINT `check_harga` CHECK ((`harga` >= 0)),
+  CONSTRAINT `check_suka` CHECK ((`suka` >= 0))
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -226,9 +226,9 @@ CREATE TABLE `produk` (
 --
 
 CREATE TABLE `produk_gambar` (
-  `gambar_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `produk_id` bigint(20) unsigned NOT NULL,
-  `file_path` varchar(255) NOT NULL,
+  `gambar_id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `produk_id` bigint unsigned NOT NULL,
+  `file_path` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`gambar_id`),
@@ -243,21 +243,21 @@ CREATE TABLE `produk_gambar` (
 --
 
 CREATE TABLE `pulse_aggregates` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `bucket` int(10) unsigned NOT NULL,
-  `period` mediumint(8) unsigned NOT NULL,
-  `type` varchar(255) NOT NULL,
-  `key` mediumtext NOT NULL,
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `bucket` int unsigned NOT NULL,
+  `period` mediumint unsigned NOT NULL,
+  `type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `key` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `key_hash` binary(16) GENERATED ALWAYS AS (unhex(md5(`key`))) VIRTUAL,
-  `aggregate` varchar(255) NOT NULL,
+  `aggregate` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `value` decimal(20,2) NOT NULL,
-  `count` int(10) unsigned DEFAULT NULL,
+  `count` int unsigned DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `pulse_aggregates_bucket_period_type_aggregate_key_hash_unique` (`bucket`,`period`,`type`,`aggregate`,`key_hash`),
   KEY `pulse_aggregates_period_bucket_index` (`period`,`bucket`),
   KEY `pulse_aggregates_type_index` (`type`),
   KEY `pulse_aggregates_period_type_aggregate_bucket_index` (`period`,`type`,`aggregate`,`bucket`)
-) ENGINE=InnoDB AUTO_INCREMENT=3076 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -266,18 +266,18 @@ CREATE TABLE `pulse_aggregates` (
 --
 
 CREATE TABLE `pulse_entries` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `timestamp` int(10) unsigned NOT NULL,
-  `type` varchar(255) NOT NULL,
-  `key` mediumtext NOT NULL,
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `timestamp` int unsigned NOT NULL,
+  `type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `key` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `key_hash` binary(16) GENERATED ALWAYS AS (unhex(md5(`key`))) VIRTUAL,
-  `value` bigint(20) DEFAULT NULL,
+  `value` bigint DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `pulse_entries_timestamp_index` (`timestamp`),
   KEY `pulse_entries_type_index` (`type`),
   KEY `pulse_entries_key_hash_index` (`key_hash`),
   KEY `pulse_entries_timestamp_type_key_hash_value_index` (`timestamp`,`type`,`key_hash`,`value`)
-) ENGINE=InnoDB AUTO_INCREMENT=753 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -286,17 +286,17 @@ CREATE TABLE `pulse_entries` (
 --
 
 CREATE TABLE `pulse_values` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `timestamp` int(10) unsigned NOT NULL,
-  `type` varchar(255) NOT NULL,
-  `key` mediumtext NOT NULL,
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `timestamp` int unsigned NOT NULL,
+  `type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `key` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `key_hash` binary(16) GENERATED ALWAYS AS (unhex(md5(`key`))) VIRTUAL,
-  `value` mediumtext NOT NULL,
+  `value` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `pulse_values_type_key_hash_unique` (`type`,`key_hash`),
   KEY `pulse_values_timestamp_index` (`timestamp`),
   KEY `pulse_values_type_index` (`type`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -305,12 +305,12 @@ CREATE TABLE `pulse_values` (
 --
 
 CREATE TABLE `sessions` (
-  `id` varchar(255) NOT NULL,
-  `user_id` bigint(20) unsigned DEFAULT NULL,
-  `ip_address` varchar(45) DEFAULT NULL,
-  `user_agent` text DEFAULT NULL,
-  `payload` longtext NOT NULL,
-  `last_activity` int(11) NOT NULL,
+  `id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_id` bigint unsigned DEFAULT NULL,
+  `ip_address` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `user_agent` text COLLATE utf8mb4_unicode_ci,
+  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `last_activity` int NOT NULL,
   PRIMARY KEY (`id`),
   KEY `sessions_user_id_index` (`user_id`),
   KEY `sessions_last_activity_index` (`last_activity`)
@@ -323,13 +323,13 @@ CREATE TABLE `sessions` (
 --
 
 CREATE TABLE `telescope_entries` (
-  `sequence` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `uuid` char(36) NOT NULL,
-  `batch_id` char(36) NOT NULL,
-  `family_hash` varchar(255) DEFAULT NULL,
-  `should_display_on_index` tinyint(1) NOT NULL DEFAULT 1,
-  `type` varchar(20) NOT NULL,
-  `content` longtext NOT NULL,
+  `sequence` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `uuid` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `batch_id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `family_hash` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `should_display_on_index` tinyint(1) NOT NULL DEFAULT '1',
+  `type` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `content` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` datetime DEFAULT NULL,
   PRIMARY KEY (`sequence`),
   UNIQUE KEY `telescope_entries_uuid_unique` (`uuid`),
@@ -337,7 +337,7 @@ CREATE TABLE `telescope_entries` (
   KEY `telescope_entries_family_hash_index` (`family_hash`),
   KEY `telescope_entries_created_at_index` (`created_at`),
   KEY `telescope_entries_type_should_display_on_index_index` (`type`,`should_display_on_index`)
-) ENGINE=InnoDB AUTO_INCREMENT=1391 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=222 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -346,8 +346,8 @@ CREATE TABLE `telescope_entries` (
 --
 
 CREATE TABLE `telescope_entries_tags` (
-  `entry_uuid` char(36) NOT NULL,
-  `tag` varchar(255) NOT NULL,
+  `entry_uuid` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tag` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`entry_uuid`,`tag`),
   KEY `telescope_entries_tags_tag_index` (`tag`),
   CONSTRAINT `telescope_entries_tags_entry_uuid_foreign` FOREIGN KEY (`entry_uuid`) REFERENCES `telescope_entries` (`uuid`) ON DELETE CASCADE
@@ -360,7 +360,7 @@ CREATE TABLE `telescope_entries_tags` (
 --
 
 CREATE TABLE `telescope_monitoring` (
-  `tag` varchar(255) NOT NULL,
+  `tag` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`tag`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -371,17 +371,17 @@ CREATE TABLE `telescope_monitoring` (
 --
 
 CREATE TABLE `transaksi` (
-  `transaksi_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `user_id` bigint(20) unsigned NOT NULL,
-  `lokasi_id` bigint(20) unsigned NOT NULL,
-  `produk_id` bigint(20) unsigned NOT NULL,
-  `jumlah_produk` int(10) unsigned NOT NULL DEFAULT 1,
-  `harga_total` int(10) unsigned NOT NULL,
-  `poin_used` int(10) unsigned DEFAULT NULL,
+  `transaksi_id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` bigint unsigned NOT NULL,
+  `lokasi_id` bigint unsigned NOT NULL,
+  `produk_id` bigint unsigned NOT NULL,
+  `jumlah_produk` int unsigned NOT NULL DEFAULT '1',
+  `harga_total` int unsigned NOT NULL,
+  `poin_used` int unsigned DEFAULT NULL,
   `tanggal` datetime NOT NULL,
-  `status` enum('belum dibayar','menunggu konfirmasi','sedang dikirim','selesai','dibatalkan') NOT NULL DEFAULT 'belum dibayar',
-  `pay_method` enum('transfer','poin') NOT NULL DEFAULT 'transfer',
-  `bukti_transfer` varchar(255) DEFAULT NULL COMMENT 'Path file bukti transfer',
+  `status` enum('belum dibayar','menunggu konfirmasi','sedang dikirim','selesai','dibatalkan') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'belum dibayar',
+  `pay_method` enum('transfer','poin') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'transfer',
+  `bukti_transfer` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Path file bukti transfer',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`transaksi_id`),
@@ -393,9 +393,9 @@ CREATE TABLE `transaksi` (
   CONSTRAINT `transaksi_lokasi_id_foreign` FOREIGN KEY (`lokasi_id`) REFERENCES `lokasi` (`lokasi_id`),
   CONSTRAINT `transaksi_produk_id_foreign` FOREIGN KEY (`produk_id`) REFERENCES `produk` (`produk_id`),
   CONSTRAINT `transaksi_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`),
-  CONSTRAINT `check_jumlah_produk` CHECK (`jumlah_produk` > 0),
-  CONSTRAINT `check_harga_total` CHECK (`harga_total` >= 0),
-  CONSTRAINT `check_poin_used_pay_method` CHECK (`pay_method` = 'poin' and `poin_used` > 0 or `pay_method` = 'transfer' and (`poin_used` is null or `poin_used` = 0))
+  CONSTRAINT `check_harga_total` CHECK ((`harga_total` >= 0)),
+  CONSTRAINT `check_jumlah_produk` CHECK ((`jumlah_produk` > 0)),
+  CONSTRAINT `check_poin_used_pay_method` CHECK ((((`pay_method` = _utf8mb4'poin') and (`poin_used` > 0)) or ((`pay_method` = _utf8mb4'transfer') and ((`poin_used` is null) or (`poin_used` = 0)))))
 ) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -405,24 +405,21 @@ CREATE TABLE `transaksi` (
 --
 
 CREATE TABLE `user` (
-  `user_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `nama` varchar(50) NOT NULL,
-  `email` varchar(100) NOT NULL,
-  `password` varchar(255) NOT NULL,
-  `no_hp` varchar(15) NOT NULL,
-  `tanggal_lahir` date DEFAULT NULL,
-  `jenis_kelamin` enum('L','P') DEFAULT NULL,
-  `alamat` text DEFAULT NULL,
-  `role` enum('admin','nasabah','pengelola') NOT NULL DEFAULT 'nasabah',
+  `user_id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `nama` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `no_hp` varchar(15) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `role` enum('admin','nasabah','pengelola') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'nasabah',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `user_email_unique` (`email`),
   KEY `idx_user_nama` (`nama`),
   KEY `idx_user_role` (`role`),
-  CONSTRAINT `check_email` CHECK (`email` like '%@%.%'),
-  CONSTRAINT `check_no_hp` CHECK (octet_length(`no_hp`) >= 10)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  CONSTRAINT `check_email` CHECK ((`email` like _utf8mb4'%@%.%')),
+  CONSTRAINT `check_no_hp` CHECK ((length(`no_hp`) >= 10))
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Indexes for dumped tables
@@ -602,85 +599,85 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `artikel`
 --
 ALTER TABLE `artikel`
-  MODIFY `artikel_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT;
+  MODIFY `artikel_id` bigint unsigned NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `artikel_gambar`
 --
 ALTER TABLE `artikel_gambar`
-  MODIFY `gambar_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT;
+  MODIFY `gambar_id` bigint unsigned NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `feedback`
 --
 ALTER TABLE `feedback`
-  MODIFY `feedback_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT;
+  MODIFY `feedback_id` bigint unsigned NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `jobs`
 --
 ALTER TABLE `jobs`
-  MODIFY `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint unsigned NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `lokasi`
 --
 ALTER TABLE `lokasi`
-  MODIFY `lokasi_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT;
+  MODIFY `lokasi_id` bigint unsigned NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `poin`
 --
 ALTER TABLE `poin`
-  MODIFY `poin_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT;
+  MODIFY `poin_id` bigint unsigned NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `produk`
 --
 ALTER TABLE `produk`
-  MODIFY `produk_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT;
+  MODIFY `produk_id` bigint unsigned NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `produk_gambar`
 --
 ALTER TABLE `produk_gambar`
-  MODIFY `gambar_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT;
+  MODIFY `gambar_id` bigint unsigned NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `pulse_aggregates`
 --
 ALTER TABLE `pulse_aggregates`
-  MODIFY `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint unsigned NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `pulse_entries`
 --
 ALTER TABLE `pulse_entries`
-  MODIFY `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint unsigned NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `pulse_values`
 --
 ALTER TABLE `pulse_values`
-  MODIFY `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint unsigned NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `telescope_entries`
 --
 ALTER TABLE `telescope_entries`
-  MODIFY `sequence` bigint(20) unsigned NOT NULL AUTO_INCREMENT;
+  MODIFY `sequence` bigint unsigned NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `transaksi`
 --
 ALTER TABLE `transaksi`
-  MODIFY `transaksi_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT;
+  MODIFY `transaksi_id` bigint unsigned NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT;
+  MODIFY `user_id` bigint unsigned NOT NULL AUTO_INCREMENT;
 
 --
 -- Constraints for dumped tables
