@@ -65,16 +65,16 @@
                         <div class="w-full md:w-auto mb-4 md:mb-0">
                             <div class="relative">
                                 <button id="categoryDropdown" class="flex items-center justify-between w-full md:w-48 px-4 py-2 bg-white border border-gray-300 rounded-md focus:outline-none">
-                                    <span class="text-gray-700">Pilih Kategori</span>
+                                    <span id="currentCategory" class="text-gray-700">Pilih Kategori</span>
                                     <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                                     </svg>
                                 </button>
                                 <div id="categoryMenu" class="hidden absolute left-0 mt-2 w-full md:w-48 bg-white shadow-lg rounded-md z-50">
-                                    <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-green-50">Semua Kategori</a>
-                                    <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-green-50">Terbaru</a>
-                                    <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-green-50">Populer</a>
-                                    <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-green-50">Event Mendatang</a>
+                                    <a href="#" data-category="all" class="block px-4 py-2 text-gray-700 hover:bg-green-50">Semua Kategori</a>
+                                    <a href="#" data-category="latest" class="block px-4 py-2 text-gray-700 hover:bg-green-50">Terbaru</a>
+                                    <a href="#" data-category="popular" class="block px-4 py-2 text-gray-700 hover:bg-green-50">Populer</a>
+                                    <a href="#" data-category="upcoming" class="block px-4 py-2 text-gray-700 hover:bg-green-50">Event Mendatang</a>
                                 </div>
                             </div>
                         </div>
@@ -87,21 +87,16 @@
                 <div class="container mx-auto px-4">
                     <h2 class="text-3xl font-bold text-gray-800 mb-8">Ragam Event</h2>
                     <div class="flex flex-wrap justify-center gap-4 mb-8">
-  <button class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-full text-sm font-medium transition duration-300">Workshop Eco Enzim</button>
-  <button class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-full text-sm font-medium transition duration-300">Pengumpulan Sampah</button>
-  <button class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-full text-sm font-medium transition duration-300">Pelatihan Olah Sampah</button>
-  <button class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-full text-sm font-medium transition duration-300">Bazar Produk Eco Enzim</button>
-  <button class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-full text-sm font-medium transition duration-300">Seminar Lingkungan</button>
-</div>
+                      <button class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-full text-sm font-medium transition duration-300">Workshop Eco Enzim</button>
+                      <button class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-full text-sm font-medium transition duration-300">Pengumpulan Sampah</button>
+                      <button class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-full text-sm font-medium transition duration-300">Pelatihan Olah Sampah</button>
+                      <button class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-full text-sm font-medium transition duration-300">Bazar Produk Eco Enzim</button>
+                      <button class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-full text-sm font-medium transition duration-300">Seminar Lingkungan</button>
+                    </div>
 
-
-
-
-<div class="mt-8">
-    <p class="text-2xl font-bold text-gray-500">Semua Event</p>
-</div>
-
-
+                    <div class="mt-8">
+                        <p class="text-2xl font-bold text-gray-500">Semua Event</p>
+                    </div>
 
                     <!-- More Button -->
                     <div class="flex justify-end mb-6">
@@ -111,227 +106,253 @@
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                        <!-- Bank Sampah Arshafin -->
-                        <x-events.card 
-                            image="images/bg1.jpeg"
-                            title="Seminar Edukasi Eco Enzim"
-                            desc="Pelajari manfaat Eco Enzim dan cara penggunannya untuk menjaga lingkungan di sekitar masyarakat."
-                        />
+                        <!-- Event Card 1 -->
+                        <div class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-all duration-300">
+                            <div class="relative">
+                                <img src="{{ asset('images/bg1.jpeg') }}" alt="Seminar Edukasi Eco Enzim" class="w-full h-48 object-cover">
+                                <div class="absolute top-0 right-0 bg-green-600 text-white text-xs font-bold px-2 py-1 m-2 rounded">
+                                    Featured
+                                </div>
+                            </div>
+                            <div class="p-4">
+                                <h3 class="text-xl font-semibold text-gray-800 mb-2">Seminar Edukasi Eco Enzim</h3>
+                                <p class="text-gray-600 text-sm mb-4">Pelajari manfaat Eco Enzim dan cara penggunannya untuk menjaga lingkungan di sekitar masyarakat.</p>
+                                <a href="#" class="inline-block bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition-all duration-300 text-sm">Selengkapnya</a>
+                            </div>
+                        </div>
 
-                        <!-- Bank Sampah Steven -->
-                        <x-events.card 
-                            image="images/bg2.jpeg"
-                            title="Penanaman Pohon Eco Enzim"
-                            desc="Tanam pohon dengan Eco Enzim untuk perbaiki kualitas tanah dan udara."
-                        />
+                        <!-- Event Card 2 -->
+                        <div class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-all duration-300">
+                            <div class="relative">
+                                <img src="{{ asset('images/bg2.jpeg') }}" alt="Penanaman Pohon Eco Enzim" class="w-full h-48 object-cover">
+                                <div class="absolute top-0 right-0 bg-green-600 text-white text-xs font-bold px-2 py-1 m-2 rounded">
+                                    Popular
+                                </div>
+                            </div>
+                            <div class="p-4">
+                                <h3 class="text-xl font-semibold text-gray-800 mb-2">Penanaman Pohon Eco Enzim</h3>
+                                <p class="text-gray-600 text-sm mb-4">Tanam pohon dengan Eco Enzim untuk perbaiki kualitas tanah dan udara.</p>
+                                <a href="#" class="inline-block bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition-all duration-300 text-sm">Selengkapnya</a>
+                            </div>
+                        </div>
 
-                        <!-- Bank Sampah Arif -->
-                        <x-events.card 
-                            image="images/bg3.jpeg"
-                            title="Hidup Hijau Dengan Eco Enzim"
-                            desc="Eco Enzim punya banyak manfaat, tidak hanya untuk limbah makanan! Temukan di Dialog Konservasi!"
-                        />
+                        <!-- Event Card 3 -->
+                        <div class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-all duration-300">
+                            <div class="relative">
+                                <img src="{{ asset('images/bg3.jpeg') }}" alt="Hidup Hijau Dengan Eco Enzim" class="w-full h-48 object-cover">
+                            </div>
+                            <div class="p-4">
+                                <h3 class="text-xl font-semibold text-gray-800 mb-2">Hidup Hijau Dengan Eco Enzim</h3>
+                                <p class="text-gray-600 text-sm mb-4">Eco Enzim punya banyak manfaat, tidak hanya untuk limbah makanan! Temukan di Dialog Konservasi!</p>
+                                <a href="#" class="inline-block bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition-all duration-300 text-sm">Selengkapnya</a>
+                            </div>
+                        </div>
 
-                        <!-- Bank Sampah Thalita -->
-                        <x-events.card 
-                            image="images/bg4.jpeg"
-                            title="Eco Enzim untuk Masa Depan yang Lebih Sehat"
-                            desc="Ikuti seminar dan praktik pembuatan eco enzim bersama Dr. Joean Oon &amp; Lyu Ming."
-                        />
+                        <!-- Event Card 4 -->
+                        <div class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-all duration-300">
+                            <div class="relative">
+                                <img src="{{ asset('images/bg4.jpeg') }}" alt="Eco Enzim untuk Masa Depan yang Lebih Sehat" class="w-full h-48 object-cover">
+                            </div>
+                            <div class="p-4">
+                                <h3 class="text-xl font-semibold text-gray-800 mb-2">Eco Enzim untuk Masa Depan yang Lebih Sehat</h3>
+                                <p class="text-gray-600 text-sm mb-4">Ikuti seminar dan praktik pembuatan eco enzim bersama Dr. Joean Oon &amp; Lyu Ming.</p>
+                                <a href="#" class="inline-block bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition-all duration-300 text-sm">Selengkapnya</a>
+                            </div>
+                        </div>
                     </div>
 
-                    
                     <div class="mt-8 mb-6">
-  <p class="text-2xl font-bold text-gray-800">Event mendatang</p>
-</div>
+                        <p class="text-2xl font-bold text-gray-800">Event mendatang</p>
+                    </div>
 
-<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-  <!-- Event Card -->
-  <div class="bg-green-100 rounded shadow p-4 flex flex-col justify-between">
-    <div class="flex items-center space-x-4">
-      <img src="images/bg1.jpeg"
-           alt="Pameran Produk Eco Enzim"
-           class="w-20 h-20 rounded object-cover border border-black bg-white" />
-      <div>
-        <p class="text-green-700 font-semibold text-sm">Pameran</p>
-        <h3 class="text-base font-bold text-gray-800 leading-tight">Pameran Produk Eco Enzim</h3>
-      </div>
-    </div>
-    <div class="grid grid-cols-3 text-center text-xs text-gray-700 mt-4">
-      <div>
-        <p class="font-semibold">25 Apr</p>
-        <p class="text-[10px] text-gray-500">Date</p>
-      </div>
-      <div>
-        <p class="font-semibold">17:00</p>
-        <p class="text-[10px] text-gray-500">Time</p>
-      </div>
-      <div>
-        <p class="font-semibold">Sekupang</p>
-        <p class="text-[10px] text-gray-500">Location</p>
-      </div>
-    </div>
-    <div class="mt-3 text-center">
-      <a href="#" class="text-green-700 text-sm font-medium hover:underline">See More ›</a>
-    </div>
-  </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                        <!-- Event Card 1 -->
+                        <div class="bg-green-100 rounded shadow p-4 flex flex-col justify-between">
+                            <div class="flex items-center space-x-4">
+                                <img src="{{ asset('images/bg1.jpeg') }}"
+                                    alt="Pameran Produk Eco Enzim"
+                                    class="w-20 h-20 rounded object-cover border border-black bg-white" />
+                                <div>
+                                    <p class="text-green-700 font-semibold text-sm">Pameran</p>
+                                    <h3 class="text-base font-bold text-gray-800 leading-tight">Pameran Produk Eco Enzim</h3>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-3 text-center text-xs text-gray-700 mt-4">
+                                <div>
+                                    <p class="font-semibold">25 Apr</p>
+                                    <p class="text-[10px] text-gray-500">Date</p>
+                                </div>
+                                <div>
+                                    <p class="font-semibold">17:00</p>
+                                    <p class="text-[10px] text-gray-500">Time</p>
+                                </div>
+                                <div>
+                                    <p class="font-semibold">Sekupang</p>
+                                    <p class="text-[10px] text-gray-500">Location</p>
+                                </div>
+                            </div>
+                            <div class="mt-3 text-center">
+                                <a href="#" class="text-green-700 text-sm font-medium hover:underline">See More ›</a>
+                            </div>
+                        </div>
 
-  <!-- Ulangi card untuk setiap event -->
-  <!-- Card 2 -->
-  <div class="bg-green-100 rounded shadow p-4 flex flex-col justify-between">
-    <div class="flex items-center space-x-4">
-      <img src="images/bg2.jpeg"
-           alt="Workshop Pembuatan Eco Enzim"
-           class="w-20 h-20 rounded object-cover border border-black bg-white" />
-      <div>
-        <p class="text-green-700 font-semibold text-sm">Workshop</p>
-        <h3 class="text-base font-bold text-gray-800 leading-tight">Workshop Pembuatan Eco Enzim</h3>
-      </div>
-    </div>
-    <div class="grid grid-cols-3 text-center text-xs text-gray-700 mt-4">
-      <div>
-        <p class="font-semibold">26 Apr</p>
-        <p class="text-[10px] text-gray-500">Date</p>
-      </div>
-      <div>
-        <p class="font-semibold">14:00</p>
-        <p class="text-[10px] text-gray-500">Time</p>
-      </div>
-      <div>
-        <p class="font-semibold">Batu Aji</p>
-        <p class="text-[10px] text-gray-500">Location</p>
-      </div>
-    </div>
-    <div class="mt-3 text-center">
-      <a href="#" class="text-green-700 text-sm font-medium hover:underline">See More ›</a>
-    </div>
-  </div>
+                        <!-- Event Card 2 -->
+                        <div class="bg-green-100 rounded shadow p-4 flex flex-col justify-between">
+                            <div class="flex items-center space-x-4">
+                                <img src="{{ asset('images/bg2.jpeg') }}"
+                                    alt="Workshop Pembuatan Eco Enzim"
+                                    class="w-20 h-20 rounded object-cover border border-black bg-white" />
+                                <div>
+                                    <p class="text-green-700 font-semibold text-sm">Workshop</p>
+                                    <h3 class="text-base font-bold text-gray-800 leading-tight">Workshop Pembuatan Eco Enzim</h3>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-3 text-center text-xs text-gray-700 mt-4">
+                                <div>
+                                    <p class="font-semibold">26 Apr</p>
+                                    <p class="text-[10px] text-gray-500">Date</p>
+                                </div>
+                                <div>
+                                    <p class="font-semibold">14:00</p>
+                                    <p class="text-[10px] text-gray-500">Time</p>
+                                </div>
+                                <div>
+                                    <p class="font-semibold">Batu Aji</p>
+                                    <p class="text-[10px] text-gray-500">Location</p>
+                                </div>
+                            </div>
+                            <div class="mt-3 text-center">
+                                <a href="#" class="text-green-700 text-sm font-medium hover:underline">See More ›</a>
+                            </div>
+                        </div>
 
-  <div class="bg-green-100 rounded shadow p-4 flex flex-col justify-between">
-    <div class="flex items-center space-x-4">
-      <img src="images/bg3.jpeg"
-           alt="Seminar Manfaat Eco Enzim"
-           class="w-20 h-20 rounded object-cover border border-black bg-white" />
-      <div>
-        <p class="text-green-700 font-semibold text-sm">Seminar</p>
-        <h3 class="text-base font-bold text-gray-800 leading-tight">Seminar Manfaat Eco Enzim</h3>
-      </div>
-    </div>
-    <div class="grid grid-cols-3 text-center text-xs text-gray-700 mt-4">
-      <div>
-        <p class="font-semibold">27 Apr</p>
-        <p class="text-[10px] text-gray-500">Date</p>
-      </div>
-      <div>
-        <p class="font-semibold">15:00</p>
-        <p class="text-[10px] text-gray-500">Time</p>
-      </div>
-      <div>
-        <p class="font-semibold">Batam Center</p>
-        <p class="text-[10px] text-gray-500">Location</p>
-      </div>
-    </div>
-    <div class="mt-3 text-center">
-      <a href="#" class="text-green-700 text-sm font-medium hover:underline">See More ›</a>
-    </div>
-  </div>
+                        <!-- Event Card 3 -->
+                        <div class="bg-green-100 rounded shadow p-4 flex flex-col justify-between">
+                            <div class="flex items-center space-x-4">
+                                <img src="{{ asset('images/bg3.jpeg') }}"
+                                    alt="Seminar Manfaat Eco Enzim"
+                                    class="w-20 h-20 rounded object-cover border border-black bg-white" />
+                                <div>
+                                    <p class="text-green-700 font-semibold text-sm">Seminar</p>
+                                    <h3 class="text-base font-bold text-gray-800 leading-tight">Seminar Manfaat Eco Enzim</h3>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-3 text-center text-xs text-gray-700 mt-4">
+                                <div>
+                                    <p class="font-semibold">27 Apr</p>
+                                    <p class="text-[10px] text-gray-500">Date</p>
+                                </div>
+                                <div>
+                                    <p class="font-semibold">15:00</p>
+                                    <p class="text-[10px] text-gray-500">Time</p>
+                                </div>
+                                <div>
+                                    <p class="font-semibold">Batam Center</p>
+                                    <p class="text-[10px] text-gray-500">Location</p>
+                                </div>
+                            </div>
+                            <div class="mt-3 text-center">
+                                <a href="#" class="text-green-700 text-sm font-medium hover:underline">See More ›</a>
+                            </div>
+                        </div>
 
-  <div class="bg-green-100 rounded shadow p-4 flex flex-col justify-between">
-    <div class="flex items-center space-x-4">
-      <img src="images/bg4.jpeg"
-           alt="Webinar Eco Enzim dan Konservasi Lingkungan"
-           class="w-20 h-20 rounded object-cover border border-black bg-white" />
-      <div>
-        <p class="text-green-700 font-semibold text-sm">Webinar</p>
-        <h3 class="text-base font-bold text-gray-800 leading-tight">Webinar Eco Enzim dan Konservasi Lingkungan</h3>
-      </div>
-    </div>
-    <div class="grid grid-cols-3 text-center text-xs text-gray-700 mt-4">
-      <div>
-        <p class="font-semibold">27 Apr</p>
-        <p class="text-[10px] text-gray-500">Date</p>
-      </div>
-      <div>
-        <p class="font-semibold">17:00</p>
-        <p class="text-[10px] text-gray-500">Time</p>
-      </div>
-      <div>
-        <p class="font-semibold">Batam Center</p>
-        <p class="text-[10px] text-gray-500">Location</p>
-      </div>
-    </div>
-    <div class="mt-3 text-center">
-      <a href="#" class="text-green-700 text-sm font-medium hover:underline">See More ›</a>
-    </div>
-  </div>
+                        <!-- Event Card 4 -->
+                        <div class="bg-green-100 rounded shadow p-4 flex flex-col justify-between">
+                            <div class="flex items-center space-x-4">
+                                <img src="{{ asset('images/bg4.jpeg') }}"
+                                    alt="Webinar Eco Enzim dan Konservasi Lingkungan"
+                                    class="w-20 h-20 rounded object-cover border border-black bg-white" />
+                                <div>
+                                    <p class="text-green-700 font-semibold text-sm">Webinar</p>
+                                    <h3 class="text-base font-bold text-gray-800 leading-tight">Webinar Eco Enzim dan Konservasi Lingkungan</h3>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-3 text-center text-xs text-gray-700 mt-4">
+                                <div>
+                                    <p class="font-semibold">27 Apr</p>
+                                    <p class="text-[10px] text-gray-500">Date</p>
+                                </div>
+                                <div>
+                                    <p class="font-semibold">17:00</p>
+                                    <p class="text-[10px] text-gray-500">Time</p>
+                                </div>
+                                <div>
+                                    <p class="font-semibold">Batam Center</p>
+                                    <p class="text-[10px] text-gray-500">Location</p>
+                                </div>
+                            </div>
+                            <div class="mt-3 text-center">
+                                <a href="#" class="text-green-700 text-sm font-medium hover:underline">See More ›</a>
+                            </div>
+                        </div>
 
-  <div class="bg-green-100 rounded shadow p-4 flex flex-col justify-between">
-    <div class="flex items-center space-x-4">
-      <img src="images/bg1.jpeg"
-           alt="Pelatihan Pembuatan Sabun Eco Enzim Untuk Rumah Tangga"
-           class="w-20 h-20 rounded object-cover border border-black bg-white" />
-      <div>
-        <p class="text-green-700 font-semibold text-sm">Pelatihan</p>
-        <h3 class="text-base font-bold text-gray-800 leading-tight">Pelatihan Pembuatan Sabun Eco Enzim Untuk Rumah Tangga</h3>
-      </div>
-    </div>
-    <div class="grid grid-cols-3 text-center text-xs text-gray-700 mt-4">
-      <div>
-        <p class="font-semibold">28 Apr</p>
-        <p class="text-[10px] text-gray-500">Date</p>
-      </div>
-      <div>
-        <p class="font-semibold">09:00</p>
-        <p class="text-[10px] text-gray-500">Time</p>
-      </div>
-      <div>
-        <p class="font-semibold">Tiban Center</p>
-        <p class="text-[10px] text-gray-500">Location</p>
-      </div>
-    </div>
-    <div class="mt-3 text-center">
-      <a href="#" class="text-green-700 text-sm font-medium hover:underline">See More ›</a>
-    </div>
-  </div>
+                        <!-- Event Card 5 -->
+                        <div class="bg-green-100 rounded shadow p-4 flex flex-col justify-between">
+                            <div class="flex items-center space-x-4">
+                                <img src="{{ asset('images/bg1.jpeg') }}"
+                                    alt="Pelatihan Pembuatan Sabun Eco Enzim Untuk Rumah Tangga"
+                                    class="w-20 h-20 rounded object-cover border border-black bg-white" />
+                                <div>
+                                    <p class="text-green-700 font-semibold text-sm">Pelatihan</p>
+                                    <h3 class="text-base font-bold text-gray-800 leading-tight">Pelatihan Pembuatan Sabun Eco Enzim Untuk Rumah Tangga</h3>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-3 text-center text-xs text-gray-700 mt-4">
+                                <div>
+                                    <p class="font-semibold">28 Apr</p>
+                                    <p class="text-[10px] text-gray-500">Date</p>
+                                </div>
+                                <div>
+                                    <p class="font-semibold">09:00</p>
+                                    <p class="text-[10px] text-gray-500">Time</p>
+                                </div>
+                                <div>
+                                    <p class="font-semibold">Tiban Center</p>
+                                    <p class="text-[10px] text-gray-500">Location</p>
+                                </div>
+                            </div>
+                            <div class="mt-3 text-center">
+                                <a href="#" class="text-green-700 text-sm font-medium hover:underline">See More ›</a>
+                            </div>
+                        </div>
 
-  <div class="bg-green-100 rounded shadow p-4 flex flex-col justify-between">
-    <div class="flex items-center space-x-4">
-      <img src="images/bg2.jpeg"
-           alt="Workshop Eco Enzim Untuk Perawatan Tanaman Hias"
-           class="w-20 h-20 rounded object-cover border border-black bg-white" />
-      <div>
-        <p class="text-green-700 font-semibold text-sm">Workshop</p>
-        <h3 class="text-base font-bold text-gray-800 leading-tight">Workshop Eco Enzim Untuk Perawatan Tanaman Hias</h3>
-      </div>
-    </div>
-    <div class="grid grid-cols-3 text-center text-xs text-gray-700 mt-4">
-      <div>
-        <p class="font-semibold">28 Apr</p>
-        <p class="text-[10px] text-gray-500">Date</p>
-      </div>
-      <div>
-        <p class="font-semibold">09:00</p>
-        <p class="text-[10px] text-gray-500">Time</p>
-      </div>
-      <div>
-        <p class="font-semibold">Tiban Center</p>
-        <p class="text-[10px] text-gray-500">Location</p>
-      </div>
-    </div>
-    <div class="mt-3 text-center">
-      <a href="#" class="text-green-700 text-sm font-medium hover:underline">See More ›</a>
-    </div>
-  </div>
+                        <!-- Event Card 6 -->
+                        <div class="bg-green-100 rounded shadow p-4 flex flex-col justify-between">
+                            <div class="flex items-center space-x-4">
+                                <img src="{{ asset('images/bg2.jpeg') }}"
+                                    alt="Workshop Eco Enzim Untuk Perawatan Tanaman Hias"
+                                    class="w-20 h-20 rounded object-cover border border-black bg-white" />
+                                <div>
+                                    <p class="text-green-700 font-semibold text-sm">Workshop</p>
+                                    <h3 class="text-base font-bold text-gray-800 leading-tight">Workshop Eco Enzim Untuk Perawatan Tanaman Hias</h3>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-3 text-center text-xs text-gray-700 mt-4">
+                                <div>
+                                    <p class="font-semibold">28 Apr</p>
+                                    <p class="text-[10px] text-gray-500">Date</p>
+                                </div>
+                                <div>
+                                    <p class="font-semibold">09:00</p>
+                                    <p class="text-[10px] text-gray-500">Time</p>
+                                </div>
+                                <div>
+                                    <p class="font-semibold">Tiban Center</p>
+                                    <p class="text-[10px] text-gray-500">Location</p>
+                                </div>
+                            </div>
+                            <div class="mt-3 text-center">
+                                <a href="#" class="text-green-700 text-sm font-medium hover:underline">See More ›</a>
+                            </div>
+                        </div>
+                    </div>
 
-</div>
-
-<!-- Tombol More -->
-<div class="text-center mt-6">
-  <a href="#" class="text-blue-600 font-medium text-sm hover:underline">More ›</a>
-</div>
-
-
-
+                    <!-- Tombol More -->
+                    <div class="text-center mt-6">
+                        <a href="#" class="text-blue-600 font-medium text-sm hover:underline">More ›</a>
+                    </div>
+                </div>
+            </section>
 
             <!-- Newsletter Section -->
             <section class="py-16 bg-green-600">
@@ -388,7 +409,9 @@
                         e.preventDefault();
                         
                         // Update dropdown text
-                        currentCategory.textContent = this.textContent;
+                        if (currentCategory) {
+                            currentCategory.textContent = this.textContent;
+                        }
                         
                         // Hide category menu
                         categoryMenu.classList.add('hidden');
@@ -397,23 +420,25 @@
                         const category = this.getAttribute('data-category');
                         
                         // Show/hide sections based on selection
-                        if (category === 'products') {
-                            storesSection.classList.add('hidden');
-                            productsSection.classList.remove('hidden');
-                        } else if (category === 'stores') {
-                            storesSection.classList.remove('hidden');
-                            productsSection.classList.add('hidden');
-                        } else {
-                            // 'all' or default
-                            storesSection.classList.remove('hidden');
-                            productsSection.classList.add('hidden');
+                        if (storesSection && productsSection) {
+                            if (category === 'products') {
+                                storesSection.classList.add('hidden');
+                                productsSection.classList.remove('hidden');
+                            } else if (category === 'stores') {
+                                storesSection.classList.remove('hidden');
+                                productsSection.classList.add('hidden');
+                            } else {
+                                // 'all' or default
+                                storesSection.classList.remove('hidden');
+                                if (productsSection) productsSection.classList.add('hidden');
+                            }
                         }
                     });
                 });
                 
                 // Close the dropdown when clicking outside
                 document.addEventListener('click', function(event) {
-                    if (!categoryDropdown.contains(event.target)) {
+                    if (categoryDropdown && !categoryDropdown.contains(event.target)) {
                         categoryMenu.classList.add('hidden');
                     }
                 });
@@ -441,5 +466,5 @@
                 });
             }
         </script>
-    </body>
+    </body>
 </html>

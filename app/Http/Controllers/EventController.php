@@ -3,15 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Event; // pastikan model Event sudah ada
+// Removing the model import since we're not using the database
+// use App\Models\Event;
 
 class EventController extends Controller
 {
     public function index()
     {
-        $events = Event::latest()->get(); // ambil semua event, urut dari terbaru
-        return view('events.index', compact('events')); // kirim data ke view
-
-        
+        // Return the view directly without attempting to fetch from the database
+        return view('events.index');
     }
 }
