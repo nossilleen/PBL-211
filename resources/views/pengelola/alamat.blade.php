@@ -8,96 +8,67 @@
         <p class="text-gray-600 mt-1">Kelola data alamat dan lokasi bank sampah</p>
     </div>
     
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-        <!-- Nama Jalan Form -->
-        <div class="bg-white rounded-lg p-6 shadow-sm">
-            <h3 class="text-lg font-semibold text-gray-800 mb-4">Nama Jalan</h3>
-            <div class="relative">
-                <input type="text" class="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-400" placeholder="Entered text">
-            </div>
-        </div>
+    <!-- Add Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    
+    <style>
+        .form-group {
+            margin-bottom: 20px;
+        }
 
-        <!-- Alamat Form -->
-        <div class="bg-white rounded-lg p-6 shadow-sm">
-            <h3 class="text-lg font-semibold text-gray-800 mb-4">Alamat</h3>
-            <div class="relative">
-                <input type="text" class="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-400" placeholder="Entered text">
-            </div>
-        </div>
-    </div>
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-        <!-- Kelurahan Form -->
-        <div class="bg-white rounded-lg p-6 shadow-sm">
-            <h3 class="text-lg font-semibold text-gray-800 mb-4">Kelurahan</h3>
-            <div class="relative">
-                <input type="text" class="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-400" placeholder="Entered text">
-            </div>
-        </div>
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #d1d5db;
+            border-radius: 4px;
+            font-size: 14px;
+        }
 
-        <!-- Kecamatan Form -->
-        <div class="bg-white rounded-lg p-6 shadow-sm">
-            <h3 class="text-lg font-semibold text-gray-800 mb-4">Kecamatan</h3>
-            <div class="relative">
-                <input type="text" class="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-400" placeholder="Entered text">
-            </div>
+        .form-group input:focus {
+            outline: none;
+            border-color: #3cb371;
+            box-shadow: 0 0 0 2px rgba(60, 179, 113, 0.2);
+        }
+    </style>
+    
+    <div class="bg-white rounded-lg shadow p-6">
+        <div class="form-group">
+            <label>Nama Jalan</label>
+            <input type="text" placeholder="Entered text" />
         </div>
-    </div>
-
-    <!-- Map Section -->
-    <div class="bg-white rounded-lg shadow-md p-6 mb-8">
-        <h2 class="text-xl font-bold text-gray-800 mb-4">Pin Lokasi Di Peta:</h2>
-        <div class="rounded-lg overflow-hidden h-96 bg-gray-100">
-            <!-- Map container -->
-            <div class="h-full w-full bg-gray-200 relative">
-                <div class="absolute inset-0" style="background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGcgZmlsbD0iI2RkZGRkZCIgZmlsbC1ydWxlPSJldmVub2RkIj48Y2lyY2xlIGN4PSIxIiBjeT0iMSIgcj0iMSIvPjxjaXJjbGUgY3g9IjUiIGN5PSIxIiByPSIxIi8+PGNpcmNsZSBjeD0iOSIgY3k9IjEiIHI9IjEiLz48Y2lyY2xlIGN4PSIxMyIgY3k9IjEiIHI9IjEiLz48Y2lyY2xlIGN4PSIxNyIgY3k9IjEiIHI9IjEiLz48Y2lyY2xlIGN4PSIxIiBjeT0iNSIgcj0iMSIvPjxjaXJjbGUgY3g9IjUiIGN5PSI1IiByPSIxIi8+PGNpcmNsZSBjeD0iOSIgY3k9IjUiIHI9IjEiLz48Y2lyY2xlIGN4PSIxMyIgY3k9IjUiIHI9IjEiLz48Y2lyY2xlIGN4PSIxNyIgY3k9IjUiIHI9IjEiLz48Y2lyY2xlIGN4PSIxIiBjeT0iOSIgcj0iMSIvPjxjaXJjbGUgY3g9IjUiIGN5PSI5IiByPSIxIi8+PGNpcmNsZSBjeD0iOSIgY3k9IjkiIHI9IjEiLz48Y2lyY2xlIGN4PSIxMyIgY3k9IjkiIHI9IjEiLz48Y2lyY2xlIGN4PSIxNyIgY3k9IjkiIHI9IjEiLz48Y2lyY2xlIGN4PSIxIiBjeT0iMTMiIHI9IjEiLz48Y2lyY2xlIGN4PSI1IiBjeT0iMTMiIHI9IjEiLz48Y2lyY2xlIGN4PSI5IiBjeT0iMTMiIHI9IjEiLz48Y2lyY2xlIGN4PSIxMyIgY3k9IjEzIiByPSIxIi8+PGNpcmNsZSBjeD0iMTciIGN5PSIxMyIgcj0iMSIvPjxjaXJjbGUgY3g9IjEiIGN5PSIxNyIgcj0iMSIvPjxjaXJjbGUgY3g9IjUiIGN5PSIxNyIgcj0iMSIvPjxjaXJjbGUgY3g9IjkiIGN5PSIxNyIgcj0iMSIvPjxjaXJjbGUgY3g9IjEzIiBjeT0iMTciIHI9IjEiLz48Y2lyY2xlIGN4PSIxNyIgY3k9IjE3IiByPSIxIi8+PC9nPjwvc3ZnPg=='); background-size: 20px 20px;"></div>
-                
-                <!-- Sample map pins -->
-                <div class="absolute" style="top: 25%; left: 30%;">
-                    <div class="relative">
-                        <div class="h-10 w-10 rounded-full overflow-hidden border-2 border-white">
-                            <div class="bg-blue-500 h-full w-full flex items-center justify-center text-white font-bold">1</div>
-                        </div>
-                        <div class="absolute bottom-0 left-1/2 transform translate-x-[-50%] translate-y-[80%] w-4 h-4 bg-white rotate-45"></div>
-                    </div>
-                </div>
-                
-                <div class="absolute" style="top: 40%; left: 50%;">
-                    <div class="relative">
-                        <div class="h-10 w-10 rounded-full overflow-hidden border-2 border-white">
-                            <div class="bg-green-500 h-full w-full flex items-center justify-center text-white font-bold">2</div>
-                        </div>
-                        <div class="absolute bottom-0 left-1/2 transform translate-x-[-50%] translate-y-[80%] w-4 h-4 bg-white rotate-45"></div>
-                    </div>
-                </div>
-                
-                <div class="absolute" style="top: 65%; left: 70%;">
-                    <div class="relative">
-                        <div class="h-10 w-10 rounded-full overflow-hidden border-2 border-white">
-                            <div class="bg-red-500 h-full w-full flex items-center justify-center text-white font-bold">3</div>
-                        </div>
-                        <div class="absolute bottom-0 left-1/2 transform translate-x-[-50%] translate-y-[80%] w-4 h-4 bg-white rotate-45"></div>
-                    </div>
-                </div>
-                
-                <div class="absolute" style="top: 55%; left: 20%;">
-                    <div class="relative">
-                        <div class="h-10 w-10 rounded-full overflow-hidden border-2 border-white">
-                            <div class="bg-yellow-500 h-full w-full flex items-center justify-center text-white font-bold">4</div>
-                        </div>
-                        <div class="absolute bottom-0 left-1/2 transform translate-x-[-50%] translate-y-[80%] w-4 h-4 bg-white rotate-45"></div>
-                    </div>
-                </div>
-                
-                <div class="absolute" style="top: 35%; left: 80%;">
-                    <div class="relative">
-                        <div class="h-10 w-10 rounded-full overflow-hidden border-2 border-white">
-                            <div class="bg-purple-500 h-full w-full flex items-center justify-center text-white font-bold">5</div>
-                        </div>
-                        <div class="absolute bottom-0 left-1/2 transform translate-x-[-50%] translate-y-[80%] w-4 h-4 bg-white rotate-45"></div>
-                    </div>
-                </div>
-            </div>
+        
+        <div class="form-group">
+            <label>Alamat</label>
+            <input type="text" placeholder="Entered text" />
+        </div>
+        
+        <div class="form-group">
+            <label>Kelurahan</label>
+            <input type="text" placeholder="Entered text" />
+        </div>
+        
+        <div class="form-group">
+            <label>Kecamatan</label>
+            <input type="text" placeholder="Entered text" />
+        </div>
+        
+        <div class="form-group">
+            <label>Pin Lokasi Di Peta :</label>
+            <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.0584375839!2d104.04588166492947!3d1.1187259992115102!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31d98921856ddfab%3A0xf9d9fc65ca00c9d!2sPoliteknik%20Negeri%20Batam!5e0!3m2!1sen!2sid!4v1646209525342!5s!5m2!1sen!2sid"
+                width="100%"
+                height="400"
+                style="border: 0; border-radius: 8px;"
+                allowfullscreen=""
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
         </div>
     </div>
 @endsection 
