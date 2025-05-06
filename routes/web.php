@@ -8,6 +8,11 @@ use App\Http\Controllers\DataController;
 use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\PengelolaController;
 
+use App\Http\Controllers\EventController;
+
+Route::get('/events', [EventController::class, 'index'])->name('events.index');
+
+
 Route::get('/', function () {
     // Jika user sudah login, arahkan ke welcome page
     if (Auth::check()) {
