@@ -9,8 +9,8 @@
         </h2>
 
         <p class="text-center max-w-2xl mx-auto mb-12" data-aos="fade-up" data-aos-delay="100">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-            incididunt ut labore et dolore magna aliqua.
+        Dengan pendekatan berbasis edukasi, produk ramah lingkungan, dan kegiatan komunitas, EcoZense menawarkan pengalaman berkelanjutan yang nyata. 
+        Kami hadir untuk mendukung langkah sadar lingkunganmu secara menyeluruh.
         </p>
 
         <div class="grid md:grid-cols-3 gap-8">

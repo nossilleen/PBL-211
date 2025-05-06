@@ -70,11 +70,23 @@ Route::get('/nasabah/dashboard', function () {
     return view('nasabah.dashboard');
 })->middleware('auth')->name('nasabah.dashboard');
 
+// Route for Notifikasi page
+Route::get('/nasabah/notifikasi', function () {
+    return view('components.profile.notifikasi');
+})->middleware('auth')->name('notifikasi');
+
+// Route for Poin Saya page
+Route::get('/nasabah/poin-saya', function () {
+    return view('components.profile.poin-saya');
+})->middleware('auth')->name('poin-saya');
+
 // Pengelola routes - protected with auth middleware
 Route::prefix('pengelola')->middleware('auth')->group(function () {
     Route::get('/', [PengelolaController::class, 'index'])->name('pengelola.index');
     Route::get('/alamat', [PengelolaController::class, 'alamat'])->name('pengelola.alamat');
+    Route::get('/toko', [PengelolaController::class, 'toko'])->name('pengelola.toko');
     Route::get('/transaksi', [PengelolaController::class, 'transaksi'])->name('pengelola.transaksi');
+    Route::get('/poin', [PengelolaController::class, 'poin'])->name('pengelola.poin');
     Route::get('/nasabah', [PengelolaController::class, 'nasabah'])->name('pengelola.nasabah');
     Route::get('/laporan', [PengelolaController::class, 'laporan'])->name('pengelola.laporan');
 });

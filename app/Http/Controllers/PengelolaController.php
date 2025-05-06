@@ -31,6 +31,18 @@ class PengelolaController extends Controller
         return view('pengelola.alamat');
     }
 
+    public function toko()
+    {
+        // Toko page for pengelola
+        return view('pengelola.toko');
+    }
+
+    public function poin()
+    {
+        // Poin page for pengelola
+        return view('pengelola.poin');
+    }
+
     public function transaksi()
     {
         // Transaction management for pengelola

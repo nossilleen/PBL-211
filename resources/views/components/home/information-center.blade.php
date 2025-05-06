@@ -7,8 +7,8 @@
     <div class="container mx-auto px-4 md:px-6">
         <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-4 md:mb-8" data-aos="fade-up">Pusat Informasi</h2>
         <p class="text-center max-w-xl sm:max-w-2xl mx-auto mb-8 md:mb-12 text-sm sm:text-base" data-aos="fade-up" data-aos-delay="100">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+        Di Pusat Informasi EcoZense, kami menghadirkan artikel, video, 
+        dan kegiatan yang membuka wawasan tentang pentingnya menjaga keseimbangan alam.
         </p>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">

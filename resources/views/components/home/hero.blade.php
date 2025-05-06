@@ -14,8 +14,7 @@
                     Welcome to <br class="hidden md:block" />EcoZense
                 </h1>
                 <p class="text-green-900 text-base md:text-lg mb-6 md:mb-8 animate-slide-up max-w-xl mx-auto md:mx-0">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                    incididunt ut labore et dolore magna aliqua.
+                EcoZense adalah platform edukatif dan kolaboratif yang dirancang untuk menginspirasi gaya hidup ramah lingkungan. Dengan fitur toko, artikel informatif, dan event komunitas. EcoZense mendorong masyarakat untuk lebih peduli terhadap lingkungan melalui aksi nyata dan inovatif.
                 </p>
                 <div>
                     <button
