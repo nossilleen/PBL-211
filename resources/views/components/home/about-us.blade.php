@@ -4,26 +4,23 @@
         <div class="text-center mb-12">
             <h2 class="text-3xl md:text-4xl font-bold text-green-500 mb-4" data-aos="fade-up">Tentang EcoZense</h2>
             <div class="w-24 h-1 bg-green-500 mx-auto mb-6" data-aos="fade-up" data-aos-delay="100"></div>
-            <p class="text-center max-w-2xl mx-auto mb-12 text-green-400" data-aos="fade-up" data-aos-delay="100">
+            <p class="max-w-2xl mx-auto text-green-400" data-aos="fade-up" data-aos-delay="100">
                 Solusi terpadu untuk edukasi Eco Enzim dan marketplace yang menghubungkan masyarakat dengan bank sampah untuk menciptakan lingkungan yang lebih bersih dan berkelanjutan.
             </p>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-16">
-            <div class="order-2 md:order-1" data-aos="fade-right">
+        <div class="grid grid-cols-1 gap-12 items-center mb-16">
+            <div class="mx-auto max-w-2xl text-center" data-aos="fade-up">
                 <h3 class="text-2xl font-semibold text-green-600 mb-4">Mengapa EcoZense Ada?</h3>
-                <p class="text-center max-w-2xl mx-auto mb-12 text-green-400" data-aos="fade-up" data-aos-delay="100">
+                <p class="text-green-400 mb-4" data-aos="fade-up" data-aos-delay="100">
                     EcoZense hadir sebagai respons terhadap rendahnya kesadaran dan pemahaman masyarakat mengenai pentingnya pemanfaatan Eco Enzim untuk menjaga kelestarian lingkungan. 
                 </p>
-                <p class="text-center max-w-2xl mx-auto mb-12 text-green-400" data-aos="fade-up" data-aos-delay="100">
+                <p class="text-green-400 mb-4" data-aos="fade-up" data-aos-delay="100">
                     Berdasarkan data dari Direktorat Jenderal Cipta Karya tahun 2017, sekitar 60% dari total sampah di Indonesia terdiri dari sampah organik yang dapat menimbulkan pencemaran udara, air, dan menjadi sumber penyakit.
                 </p>
-                <p class="text-center max-w-2xl mx-auto mb-12 text-green-400" data-aos="fade-up" data-aos-delay="100">
+                <p class="text-green-400" data-aos="fade-up" data-aos-delay="100">
                     Kami percaya bahwa dengan edukasi yang tepat dan akses mudah ke produk Eco Enzim, masyarakat dapat berkontribusi dalam mengurangi dampak negatif sampah organik terhadap lingkungan.
                 </p>
-            </div>
-            <div class="order-1 md:order-2" data-aos="fade-left">
-                <img src="{{ asset('images/bg1.jpeg') }}" alt="Eco Enzim Process" class="rounded-lg shadow-xl w-full h-auto object-cover" onerror="this.src='https://via.placeholder.com/600x400?text=Eco+Enzim+Process'">
             </div>
         </div>
 

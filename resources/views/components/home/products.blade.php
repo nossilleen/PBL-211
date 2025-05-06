@@ -17,24 +17,20 @@
                 data-aos-delay="200"
             >
                 <div class="bg-black h-48 flex items-center justify-center">
-                    <div class="w-10 h-10 bg-white rounded hover-scale"></div>
+                    <img src="https://images.tokopedia.net/img/cache/500-square/VqbcmM/2021/2/18/42ce5ef7-d502-489d-ba8c-794ae21b11aa.jpg" alt="Produk Eco Enzim" class="object-cover h-full w-full">
                 </div>
                 <div class="p-6">
                     <h4 class="font-semibold mb-4">Produk Eco enzim 1</h4>
                     <div class="flex justify-between items-center">
-                        <a
-                            href="#"
-                            class="text-blue-600 transition-all duration-300 hover:text-blue-800"
-                            >See More ›</a
-                        >
+
                     </div>
                 </div>
                 <div class="px-6 pb-6">
-                    <button
-                        class="w-full border border-green-600 text-green-600 rounded py-2 hover:bg-green-600 hover:text-white transition button-hover-effect"
+                    <a href="{{ url('/product/1') }}"
+                        class="block w-full border border-green-600 text-green-600 rounded py-2 hover:bg-green-600 hover:text-white transition button-hover-effect text-center"
                     >
                         Beli
-                    </button>
+                    </a>
                 </div>
             </div>
 
@@ -45,24 +41,20 @@
                 data-aos-delay="300"
             >
                 <div class="bg-black h-48 flex items-center justify-center">
-                    <div class="w-10 h-10 bg-white rounded hover-scale"></div>
+                    <img src="https://www.unesa.ac.id/images/foto-04-08-2023-08-08-24-5583.png" alt="Produk Eco Enzim" class="object-cover h-full w-full">
                 </div>
                 <div class="p-6">
                     <h4 class="font-semibold mb-4">Produk Eco enzim 2</h4>
                     <div class="flex justify-between items-center">
-                        <a
-                            href="#"
-                            class="text-blue-600 transition-all duration-300 hover:text-blue-800"
-                            >See More ›</a
-                        >
+
                     </div>
                 </div>
                 <div class="px-6 pb-6">
-                    <button
-                        class="w-full border border-green-600 text-green-600 rounded py-2 hover:bg-green-600 hover:text-white transition button-hover-effect"
+                    <a href="{{ url('/product/1') }}"
+                        class="block w-full border border-green-600 text-green-600 rounded py-2 hover:bg-green-600 hover:text-white transition button-hover-effect text-center"
                     >
                         Beli
-                    </button>
+                    </a>
                 </div>
             </div>
 
@@ -73,24 +65,20 @@
                 data-aos-delay="400"
             >
                 <div class="bg-black h-48 flex items-center justify-center">
-                    <div class="w-10 h-10 bg-white rounded hover-scale"></div>
+                    <img src="https://images.tokopedia.net/img/cache/700/VqbcmM/2023/5/26/a22d75c1-301a-465a-8ad3-7aa3e335563a.jpg" alt="Produk Eco Enzim" class="object-cover h-full w-full">
                 </div>
                 <div class="p-6">
                     <h4 class="font-semibold mb-4">Produk Eco enzim 3</h4>
                     <div class="flex justify-between items-center">
-                        <a
-                            href="#"
-                            class="text-blue-600 transition-all duration-300 hover:text-blue-800"
-                            >See More ›</a
-                        >
+
                     </div>
                 </div>
                 <div class="px-6 pb-6">
-                    <button
-                        class="w-full border border-green-600 text-green-600 rounded py-2 hover:bg-green-600 hover:text-white transition button-hover-effect"
+                    <a href="{{ url('/browse') }}"
+                        class="block w-full border border-green-600 text-green-600 rounded py-2 hover:bg-green-600 hover:text-white transition button-hover-effect text-center"
                     >
                         Beli
-                    </button>
+                    </a>
                 </div>
             </div>
 
@@ -101,24 +89,20 @@
                 data-aos-delay="500"
             >
                 <div class="bg-black h-48 flex items-center justify-center">
-                    <div class="w-10 h-10 bg-white rounded hover-scale"></div>
+                    <img src="https://filebroker-cdn.lazada.co.id/kf/Sa88de6e565304317b183c5fe9d53fe571.jpg" alt="Produk Eco Enzim" class="object-cover h-full w-full">
                 </div>
                 <div class="p-6">
                     <h4 class="font-semibold mb-4">Produk Eco enzim 4</h4>
                     <div class="flex justify-between items-center">
-                        <a
-                            href="#"
-                            class="text-blue-600 transition-all duration-300 hover:text-blue-800"
-                            >See More ›</a
-                        >
+
                     </div>
                 </div>
                 <div class="px-6 pb-6">
-                    <button
-                        class="w-full border border-green-600 text-green-600 rounded py-2 hover:bg-green-600 hover:text-white transition button-hover-effect"
+                    <a href="{{ url('/product/1') }}"
+                        class="block w-full border border-green-600 text-green-600 rounded py-2 hover:bg-green-600 hover:text-white transition button-hover-effect text-center"
                     >
                         Beli
-                    </button>
+                    </a>
                 </div>
             </div>
         </div>
@@ -127,7 +111,7 @@
             <button
                 class="bg-black text-white px-8 py-3 rounded hover:bg-gray-900 transition button-hover-effect"
             >
-                See more
+                <a href="{{ url('/browse') }}">See more</a>
             </button>
         </div>
     </div>
