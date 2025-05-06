@@ -11,7 +11,7 @@
                 data-aos-delay="200"
             >
                 <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-green-800 mb-4 md:mb-6 animate-fade-in">
-                    Welcome to <br class="hidden md:block" />EcoZense
+                    Selamat datang <br class="hidden md:block" /> di EcoZense
                 </h1>
                 <p class="text-green-900 text-base md:text-lg mb-6 md:mb-8 animate-slide-up max-w-xl mx-auto md:mx-0">
                 EcoZense adalah platform edukatif dan kolaboratif yang dirancang untuk menginspirasi gaya hidup ramah lingkungan. Dengan fitur toko, artikel informatif, dan event komunitas. EcoZense mendorong masyarakat untuk lebih peduli terhadap lingkungan melalui aksi nyata dan inovatif.

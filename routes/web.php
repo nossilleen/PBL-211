@@ -95,3 +95,12 @@ Route::prefix('pengelola')->middleware('auth')->group(function () {
     Route::get('/nasabah', [PengelolaController::class, 'nasabah'])->name('pengelola.nasabah');
     Route::get('/laporan', [PengelolaController::class, 'laporan'])->name('pengelola.laporan');
 });
+
+Route::get('/artikel/{slug}', function ($slug) {
+    // Ambil data artikel dari database berdasarkan $slug
+    // return view('article-detail', compact('artikel'));
+});
+
+Route::get('/article-detail', function () {
+    return view('article-detail');
+});

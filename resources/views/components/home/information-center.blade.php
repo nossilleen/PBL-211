@@ -61,9 +61,6 @@
                 </div>
                 <div class="text-center">
                     <h4 class="font-semibold mb-2">Video Animasi Mengenai Eco Enzim</h4>
-                    <a href="#" class="text-blue-700 hover:underline transition-all duration-300"
-                        >Lihat Selengkapnya</a
-                    >
                 </div>
             </div>
 
@@ -76,7 +73,9 @@
                     <div class="p-4 sm:p-6 md:p-8 flex flex-col justify-between h-full">
                         <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2 md:mb-4">ARTIKEL</h3>
                         <div
-                            class="rounded-full w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 flex items-center justify-center bg-white bg-opacity-20 border-2 border-white hover-scale"
+                            class="rounded-full w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 flex items-center justify-center bg-white bg-opacity-20 border-2 border-white hover-scale cursor-pointer"
+                            onclick="window.location.href='/artikel'"
+                            title="Lihat Artikel"
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -97,9 +96,6 @@
                 </div>
                 <div class="text-center">
                     <h4 class="font-semibold mb-2">Artikel</h4>
-                    <a href="#" class="text-blue-700 hover:underline transition-all duration-300"
-                        >Lihat Selengkapnya</a
-                    >
                 </div>
             </div>
         </div>
