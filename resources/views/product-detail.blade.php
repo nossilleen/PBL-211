@@ -94,7 +94,7 @@
                                 
                                 <!-- Action Buttons -->
                                 <div class="mt-8">
-                                    <button class="w-full md:w-auto px-8 py-3 bg-green-600 text-white font-medium rounded-md hover:bg-green-700 transition-colors">
+                                    <button class="w-full md:w-auto px-8 py-3 bg-green-600 text-white font-medium rounded-md hover:bg-green-700 transition-colors font-['Lexend_Deca',_sans-serif]" onclick="document.getElementById('popup-beli').classList.remove('hidden')">
                                         Beli Sekarang
                                     </button>
                                 </div>
@@ -321,6 +321,51 @@
                 document.getElementById('content-' + tabName).classList.remove('hidden');
                 document.getElementById('tab-' + tabName).classList.remove('text-gray-500');
                 document.getElementById('tab-' + tabName).classList.add('text-green-600', 'border-b-2', 'border-green-600');
+            }
+        </script>
+
+        <!-- Modal Pop Up -->
+        <div id="popup-beli" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40 hidden font-['Lexend_Deca',_sans-serif]">
+            <div class="bg-white rounded-xl shadow-2xl max-w-md w-full p-8 relative animate-fade-in">
+                <!-- Tombol Close -->
+                <button
+                    class="absolute top-3 right-3 text-gray-400 hover:text-green-700 text-2xl font-bold"
+                    onclick="document.getElementById('popup-beli').classList.add('hidden')"
+                    aria-label="Tutup"
+                >&times;</button>
+                <h2 class="text-2xl font-bold text-green-700 mb-4 text-center">Konfirmasi Pembelian</h2>
+                <div class="mb-4">
+                    <div class="text-gray-700 font-semibold mb-1">Rekening Penjual</div>
+                    <div class="bg-gray-100 rounded px-4 py-2 text-gray-800 text-sm select-all">BCA 1234567890 a.n. EcoZense</div>
+                </div>
+                <div class="mb-4 flex items-center justify-between">
+                    <span class="font-semibold text-gray-700">Jumlah</span>
+                    <div class="flex items-center gap-2">
+                        <button type="button" onclick="changeQty(-1)" class="w-8 h-8 rounded bg-gray-200 hover:bg-gray-300 text-xl font-bold flex items-center justify-center">-</button>
+                        <span id="qty" class="w-8 text-center font-semibold">1</span>
+                        <button type="button" onclick="changeQty(1)" class="w-8 h-8 rounded bg-gray-200 hover:bg-gray-300 text-xl font-bold flex items-center justify-center">+</button>
+                    </div>
+                </div>
+                <div class="mb-6 flex items-center justify-between">
+                    <span class="font-semibold text-gray-700">Total Harga</span>
+                    <span id="total-harga" class="text-green-700 font-bold text-lg">Rp50.000</span>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <button class="bg-green-600 text-white py-2 rounded-md font-semibold hover:bg-green-700 transition">Bayar Sekarang</button>
+                    <button class="bg-gray-200 text-gray-700 py-2 rounded-md font-semibold hover:bg-gray-300 transition" onclick="document.getElementById('popup-beli').classList.add('hidden')">Batal</button>
+                </div>
+            </div>
+        </div>
+        <script>
+            // Harga satuan produk (ganti sesuai harga produk)
+            const hargaSatuan = 50000;
+            let qty = 1;
+
+            function changeQty(val) {
+                qty += val;
+                if (qty < 1) qty = 1;
+                document.getElementById('qty').innerText = qty;
+                document.getElementById('total-harga').innerText = 'Rp' + (qty * hargaSatuan).toLocaleString('id-ID');
             }
         </script>
     </body>
