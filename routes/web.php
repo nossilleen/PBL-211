@@ -12,6 +12,9 @@ use App\Http\Controllers\EventController;
 
 Route::get('/events', [EventController::class, 'index'])->name('events.index');
 
+Route::get('/events/{id}', function ($id) {
+    return view('events.detail');
+})->name('events.detail');
 
 Route::get('/', function () {
     // Jika user sudah login, arahkan ke welcome page
@@ -23,7 +26,7 @@ Route::get('/', function () {
 
 Route::get('/artikel', function () {
     return view('artikel');
-});
+})->name('artikel.index');
 
 Route::get('/about', function () {
     return view('about');
@@ -31,13 +34,19 @@ Route::get('/about', function () {
 
 Route::get('/browse', function () {
     return view('browse');
-});
+})->name('browse.index');
+
+Route::get('/toko/{id}', [TokoController::class, 'detail'])->name('toko.detail');
 
 // Rute untuk halaman detail produk
 Route::get('/product/{id}', function ($id) {
     // Di sini nantinya bisa mengambil data produk dari database berdasarkan ID
     return view('product-detail');
 })->name('product.detail');
+
+Route::get('/store/{id}', function ($id) {
+    return view('store-detail');
+})->name('store.detail');
 
 // Authentication routes
 Auth::routes();
@@ -85,22 +94,20 @@ Route::get('/nasabah/poin-saya', function () {
     return view('components.profile.poin-saya');
 })->middleware('auth')->name('poin-saya');
 
-// Pengelola routes - protected with auth middleware
-Route::prefix('pengelola')->middleware('auth')->group(function () {
-    Route::get('/', [PengelolaController::class, 'index'])->name('pengelola.index');
-    Route::get('/alamat', [PengelolaController::class, 'alamat'])->name('pengelola.alamat');
-    Route::get('/toko', [PengelolaController::class, 'toko'])->name('pengelola.toko');
-    Route::get('/transaksi', [PengelolaController::class, 'transaksi'])->name('pengelola.transaksi');
-    Route::get('/poin', [PengelolaController::class, 'poin'])->name('pengelola.poin');
-    Route::get('/nasabah', [PengelolaController::class, 'nasabah'])->name('pengelola.nasabah');
-    Route::get('/laporan', [PengelolaController::class, 'laporan'])->name('pengelola.laporan');
+// Pengelola routes - protected with auth and role middleware
+Route::middleware(['auth'])->group(function () {
+    Route::get('/pengelola', [PengelolaController::class, 'index'])->name('pengelola.index');
+    Route::get('/pengelola/alamat', [PengelolaController::class, 'alamat'])->name('pengelola.alamat');
+    Route::get('/pengelola/toko', [PengelolaController::class, 'toko'])->name('pengelola.toko');
+    Route::get('/pengelola/transaksi', [PengelolaController::class, 'transaksi'])->name('pengelola.transaksi');
+    Route::get('/pengelola/poin', [PengelolaController::class, 'poin'])->name('pengelola.poin');
+    Route::get('/pengelola/nasabah', [PengelolaController::class, 'nasabah'])->name('pengelola.nasabah');
+    Route::get('/pengelola/laporan', [PengelolaController::class, 'laporan'])->name('pengelola.laporan');
+    Route::get('/pengelola/pesanan', [PengelolaController::class, 'pesanan'])->name('pengelola.pesanan');
 });
 
+// Article detail route with slug
 Route::get('/artikel/{slug}', function ($slug) {
     // Ambil data artikel dari database berdasarkan $slug
-    // return view('article-detail', compact('artikel'));
-});
-
-Route::get('/article-detail', function () {
     return view('article-detail');
-});
+})->name('article.detail');

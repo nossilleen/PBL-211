@@ -11,6 +11,6 @@
             <p class="text-sm text-gray-700">{{ $alamat }}</p>
         </div>
         
-        <a href="#" class="block w-full text-center py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition-colors">Belanja</a>
+        <a href="{{ route('store.detail', ['id' => 1]) }}" class="block w-full text-center py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition-colors">Belanja</a>
     </div>
-</div> 
+</div>

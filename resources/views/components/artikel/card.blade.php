@@ -13,6 +13,6 @@
                 </svg>
             </button>
         </div>
-        <a href="/article-detail" class="block w-full text-center py-2 bg-green-100 text-green-800 rounded-md hover:bg-green-200 transition-colors">Selengkapnya</a>
+        <a href="{{ route('article.detail', ['slug' => Str::slug($title)]) }}" class="block w-full text-center py-2 bg-green-100 text-green-800 rounded-md hover:bg-green-200 transition-colors">Selengkapnya</a>
     </div>
-</div> 
+</div>

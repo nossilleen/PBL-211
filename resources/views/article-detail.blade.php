@@ -1,13 +1,18 @@
 @extends('layouts.app')
 
 @section('content')
-<x-home.navbar />
+@php
+    $currentRoute = Route::currentRouteName();
+    $isDetailPage = true;
+@endphp
+
+<x-home.navbar :isDetailPage="$isDetailPage" />
 
 <div class="bg-gray-100 min-h-screen pt-6 font-[\'Lexend Deca\',_sans-serif]">
     <div class="max-w-6xl mx-auto px-2 md:px-0">
         {{-- Gambar Utama Artikel --}}
         <div class="bg-white rounded-lg shadow mb-6 overflow-hidden">
-            <img src="/images/artikel-hero.jpg" alt="Hero Artikel" class="w-full h-64 object-cover">
+            <img src="/images/Frame 2305.png" alt="Hero Artikel" class="w-full h-64 object-cover">
             <div class="flex items-center justify-between px-4 py-2 border-b">
                 <div class="flex items-center space-x-2 text-xs text-gray-600">
                     <span>nama_penulis</span>
@@ -91,4 +96,4 @@
 
     <x-home.footer />
 </div>
-@endsection 
+@endsection

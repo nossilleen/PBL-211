@@ -67,33 +67,59 @@
         if (role !== 'nasabah') {
             // Dashboard is already active by default for admin/pengelola
         } else {
-            // For nasabah, we use the URL hash to determine what's active
+            // For nasabah, check hash to determine what's active
             const hash = window.location.hash;
+            
+            // If no specific hash, make profile active by default
+            if (!hash || hash === '') {
+                // Profile is active by default
+                document.getElementById('nav-profile').classList.add('bg-white', 'border-green-600');
+                document.getElementById('nav-profile').classList.remove('border-transparent', 'hover:border-green-600');
+                return;
+            }
+            
+            // Otherwise check for specific sections
             if (hash === '#dashboard') {
-                document.getElementById('nav-dashboard').classList.add('bg-white', 'border-green-600');
-                document.getElementById('nav-dashboard').classList.remove('border-transparent', 'hover:border-green-600');
-                document.getElementById('nav-profile').classList.remove('bg-white', 'border-green-600');
-                document.getElementById('nav-profile').classList.add('border-transparent', 'hover:border-green-600');
-            }else if (hash === '#notifikasi-section' && document.getElementById('nav-notifikasi')) {
-                document.getElementById('nav-notifikasi').classList.add('bg-white', 'border-green-600');
-                document.getElementById('nav-notifikasi').classList.remove('border-transparent', 'hover:border-green-600');
-                document.getElementById('nav-profile').classList.remove('bg-white', 'border-green-600');
-                document.getElementById('nav-profile').classList.add('border-transparent', 'hover:border-green-600');
-            }else if (hash === '#poin-saya' && document.getElementById('nav-poin-saya')) {
-                document.getElementById('nav-poin-saya').classList.add('bg-white', 'border-green-600');
-                document.getElementById('nav-poin-saya').classList.remove('border-transparent', 'hover:border-green-600');
-                document.getElementById('nav-profile').classList.remove('bg-white', 'border-green-600');
-                document.getElementById('nav-profile').classList.add('border-transparent', 'hover:border-green-600'); 
-            }else if (hash === '#pesanan' && document.getElementById('nav-pesanan')) {
-                document.getElementById('nav-pesanan').classList.add('bg-white', 'border-green-600');
-                document.getElementById('nav-pesanan').classList.remove('border-transparent', 'hover:border-green-600');
-                document.getElementById('nav-profile').classList.remove('bg-white', 'border-green-600');
-                document.getElementById('nav-profile').classList.add('border-transparent', 'hover:border-green-600');
-            } else if (hash === '#riwayat' && document.getElementById('nav-riwayat')) {
-                document.getElementById('nav-riwayat').classList.add('bg-white', 'border-green-600');
-                document.getElementById('nav-riwayat').classList.remove('border-transparent', 'hover:border-green-600');
-                document.getElementById('nav-profile').classList.remove('bg-white', 'border-green-600');
-                document.getElementById('nav-profile').classList.add('border-transparent', 'hover:border-green-600');
+                activateNav('dashboard');
+            } else if (hash === '#notifikasi') {
+                activateNav('notifikasi');
+            } else if (hash === '#poin-saya') {
+                activateNav('poin-saya');
+            } else if (hash === '#pesanan') {
+                activateNav('pesanan');
+            } else if (hash === '#riwayat') {
+                activateNav('riwayat');
+            }
+        }
+        
+        // Helper function to activate a specific nav item
+        function activateNav(navId) {
+            // Reset all nav links first
+            resetAllNavs();
+            
+            // Activate the specified nav
+            const navElement = document.getElementById('nav-' + navId);
+            if (navElement) {
+                navElement.classList.add('bg-white', 'border-green-600');
+                navElement.classList.remove('border-transparent', 'hover:border-green-600');
+            }
+        }
+        
+        // Function to reset all nav links
+        function resetAllNavs() {
+            const navItems = document.querySelectorAll('[id^="nav-"]');
+            navItems.forEach(nav => {
+                if (nav.id !== 'nav-profile') {
+                    nav.classList.remove('bg-white', 'border-green-600');
+                    nav.classList.add('border-transparent', 'hover:border-green-600');
+                }
+            });
+            
+            // Reset profile nav separately
+            const profileNav = document.getElementById('nav-profile');
+            if (profileNav) {
+                profileNav.classList.remove('bg-white', 'border-green-600');
+                profileNav.classList.add('border-transparent', 'hover:border-green-600');
             }
         }
     });

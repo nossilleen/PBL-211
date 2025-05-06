@@ -16,13 +16,6 @@
             <p class="text-sm text-gray-500 mt-2">Terkumpul bulan ini</p>
         </div>
 
-        <!-- Nasabah Card -->
-        <div class="bg-blue-50 rounded-lg p-6 shadow-sm">
-            <h3 class="text-lg font-semibold text-blue-800 mb-2">Total Nasabah</h3>
-            <p class="text-3xl font-bold text-blue-600">15</p>
-            <p class="text-sm text-gray-500 mt-2">Aktif bulan ini</p>
-        </div>
-
         <!-- Transaksi Card -->
         <div class="bg-yellow-50 rounded-lg p-6 shadow-sm">
             <h3 class="text-lg font-semibold text-yellow-800 mb-2">Transaksi</h3>
@@ -39,136 +32,127 @@
     </div>
 
     <!-- Aktivitas Terbaru -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-        <div class="md:col-span-2">
-            <div class="bg-white rounded-lg shadow-md p-6 h-full">
-                <h2 class="text-xl font-bold text-gray-800 mb-4">Aktivitas Terbaru</h2>
-                <div class="space-y-4">
-                    <div class="flex items-start pb-4 border-b border-gray-100">
-                        <div class="bg-green-100 p-2 rounded-full mr-4">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                            </svg>
-                        </div>
-                        <div>
-                            <p class="font-medium text-gray-800">Budi Santoso menyetorkan 5kg plastik</p>
-                            <p class="text-sm text-gray-500">Hari ini, 09:45</p>
-                        </div>
-                    </div>
-                    <div class="flex items-start pb-4 border-b border-gray-100">
-                        <div class="bg-blue-100 p-2 rounded-full mr-4">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                            </svg>
-                        </div>
-                        <div>
-                            <p class="font-medium text-gray-800">Ani Wijaya mendaftar sebagai nasabah baru</p>
-                            <p class="text-sm text-gray-500">Kemarin, 15:30</p>
-                        </div>
-                    </div>
-                    <div class="flex items-start pb-4 border-b border-gray-100">
-                        <div class="bg-yellow-100 p-2 rounded-full mr-4">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                        </div>
-                        <div>
-                            <p class="font-medium text-gray-800">Dedi Cahyono menukarkan 200 poin</p>
-                            <p class="text-sm text-gray-500">Kemarin, 14:15</p>
-                        </div>
-                    </div>
-                    <div class="flex items-start">
-                        <div class="bg-red-100 p-2 rounded-full mr-4">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                            </svg>
-                        </div>
-                        <div>
-                            <p class="font-medium text-gray-800">Stok produk daur ulang hampir habis</p>
-                            <p class="text-sm text-gray-500">2 hari yang lalu, 10:10</p>
-                        </div>
-                    </div>
+    <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+        <h2 class="text-xl font-bold text-gray-800 mb-4">Aktivitas Terbaru</h2>
+        <div class="space-y-4">
+            <div class="flex items-start pb-4 border-b border-gray-100">
+                <div class="bg-yellow-100 p-2 rounded-full mr-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
                 </div>
-                <div class="mt-4">
-                    <a href="#" class="text-green-600 hover:text-green-800 text-sm font-medium">Lihat semua aktivitas →</a>
+                <div>
+                    <p class="font-medium text-gray-800">Berhasil mengirim 200 poin kepada @nasabah1</p>
+                    <p class="text-sm text-gray-500">Kemarin, 14:15</p>
+                </div>
+            </div>
+            <!-- Tambahan aktivitas untuk contoh -->
+            <div class="flex items-start pb-4 border-b border-gray-100">
+                <div class="bg-green-100 p-2 rounded-full mr-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                    </svg>
+                </div>
+                <div>
+                    <p class="font-medium text-gray-800">Transaksi sampah plastik seberat 5kg dari @nasabah2</p>
+                    <p class="text-sm text-gray-500">Hari ini, 09:30</p>
                 </div>
             </div>
         </div>
-        
-        <!-- Jenis Sampah Chart -->
-        <div class="bg-white rounded-lg shadow-md p-6">
-            <h2 class="text-xl font-bold text-gray-800 mb-4">Jenis Sampah</h2>
-            <div class="space-y-4">
-                <div>
-                    <div class="flex justify-between mb-1">
-                        <span class="text-sm font-medium text-gray-700">Plastik</span>
-                        <span class="text-sm font-medium text-gray-700">48%</span>
-                    </div>
-                    <div class="w-full bg-gray-200 rounded-full h-2.5">
-                        <div class="bg-green-600 h-2.5 rounded-full" style="width: 48%"></div>
-                    </div>
-                </div>
-                <div>
-                    <div class="flex justify-between mb-1">
-                        <span class="text-sm font-medium text-gray-700">Kertas</span>
-                        <span class="text-sm font-medium text-gray-700">24%</span>
-                    </div>
-                    <div class="w-full bg-gray-200 rounded-full h-2.5">
-                        <div class="bg-blue-600 h-2.5 rounded-full" style="width: 24%"></div>
-                    </div>
-                </div>
-                <div>
-                    <div class="flex justify-between mb-1">
-                        <span class="text-sm font-medium text-gray-700">Logam</span>
-                        <span class="text-sm font-medium text-gray-700">16%</span>
-                    </div>
-                    <div class="w-full bg-gray-200 rounded-full h-2.5">
-                        <div class="bg-yellow-600 h-2.5 rounded-full" style="width: 16%"></div>
-                    </div>
-                </div>
-                <div>
-                    <div class="flex justify-between mb-1">
-                        <span class="text-sm font-medium text-gray-700">Kaca</span>
-                        <span class="text-sm font-medium text-gray-700">12%</span>
-                    </div>
-                    <div class="w-full bg-gray-200 rounded-full h-2.5">
-                        <div class="bg-purple-600 h-2.5 rounded-full" style="width: 12%"></div>
-                    </div>
-                </div>
-            </div>
+        <div class="mt-4">
+            <a href="#" class="text-green-600 hover:text-green-800 text-sm font-medium">Lihat semua aktivitas →</a>
         </div>
     </div>
 
     <!-- Statistik Bulanan -->
     <div class="bg-white rounded-lg shadow-md p-6">
-        <div class="flex justify-between items-center mb-4">
-            <h2 class="text-xl font-bold text-gray-800">Statistik Bulanan</h2>
-            <div>
+        <div class="flex justify-between items-center mb-6">
+            <h2 class="text-xl font-bold text-gray-800">Statistik Transaksi</h2>
+            <div class="flex items-center space-x-4">
                 <select class="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500">
-                    <option>Januari 2023</option>
-                    <option>Februari 2023</option>
-                    <option>Maret 2023</option>
-                    <option selected>April 2023</option>
+                    <option>7 Hari Terakhir</option>
+                    <option selected>30 Hari Terakhir</option>
+                    <option>3 Bulan Terakhir</option>
                 </select>
             </div>
         </div>
-        <div class="h-64 flex items-end justify-between px-2">
-            <div class="flex flex-col items-center">
-                <div class="bg-green-500 w-8 rounded-t-lg" style="height: 40%"></div>
-                <span class="text-xs mt-2">Minggu 1</span>
+
+        <!-- Chart Container -->
+        <div class="w-full h-80">
+            <canvas id="transactionChart"></canvas>
+        </div>
+
+        <!-- Legend -->
+        <div class="flex justify-center items-center space-x-6 mt-6">
+            <div class="flex items-center">
+                <div class="w-3 h-3 rounded-full bg-green-500 mr-2"></div>
+                <span class="text-sm text-gray-600">Transaksi Selesai</span>
             </div>
-            <div class="flex flex-col items-center">
-                <div class="bg-green-500 w-8 rounded-t-lg" style="height: 65%"></div>
-                <span class="text-xs mt-2">Minggu 2</span>
-            </div>
-            <div class="flex flex-col items-center">
-                <div class="bg-green-500 w-8 rounded-t-lg" style="height: 85%"></div>
-                <span class="text-xs mt-2">Minggu 3</span>
-            </div>
-            <div class="flex flex-col items-center">
-                <div class="bg-green-500 w-8 rounded-t-lg" style="height: 55%"></div>
-                <span class="text-xs mt-2">Minggu 4</span>
+            <div class="flex items-center">
+                <div class="w-3 h-3 rounded-full bg-yellow-500 mr-2"></div>
+                <span class="text-sm text-gray-600">Transaksi Pending</span>
             </div>
         </div>
     </div>
-@endsection 
+
+    <!-- Chart.js Script -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const ctx = document.getElementById('transactionChart').getContext('2d');
+            
+            // Sample data
+            const labels = ['1 Mei', '2 Mei', '3 Mei', '4 Mei', '5 Mei', '6 Mei', '7 Mei'];
+            const completedData = [8, 12, 15, 10, 20, 18, 22];
+            const pendingData = [4, 6, 8, 5, 10, 8, 12];
+
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: 'Transaksi Selesai',
+                            data: completedData,
+                            borderColor: '#22c55e',
+                            backgroundColor: 'rgba(34, 197, 94, 0.1)',
+                            tension: 0.4,
+                            fill: true
+                        },
+                        {
+                            label: 'Transaksi Pending',
+                            data: pendingData,
+                            borderColor: '#eab308',
+                            backgroundColor: 'rgba(234, 179, 8, 0.1)',
+                            tension: 0.4,
+                            fill: true
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                display: true,
+                                color: 'rgba(0, 0, 0, 0.05)'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+@endsection

@@ -88,7 +88,8 @@
     document.addEventListener('DOMContentLoaded', function() {
         const navLinks = document.querySelectorAll('[id^="nav-"]');
         const sections = document.querySelectorAll('[id$="-section"]');
-
+        const userRole = "{{ Auth::user()->role }}";
+        
         function resetAllNavLinks() {
             navLinks.forEach(link => {
                 link.classList.remove('bg-white', 'border-green-600');
@@ -102,57 +103,77 @@
             });
         }
 
+        // Fungsi untuk menampilkan section tertentu
+        function showSection(sectionId) {
+            hideAllSections();
+            resetAllNavLinks();
+            
+            const section = document.getElementById(sectionId);
+            if (section) {
+                section.classList.remove('hidden');
+            }
+            
+            const navId = sectionId.replace('-section', '');
+            const navLink = document.getElementById('nav-' + navId);
+            if (navLink) {
+                navLink.classList.add('bg-white', 'border-green-600');
+                navLink.classList.remove('border-transparent', 'hover:border-green-600');
+            }
+        }
+
         navLinks.forEach(link => {
             link.addEventListener('click', function(e) {
                 e.preventDefault();
                 const targetSectionId = this.id.replace('nav-', '') + '-section';
-                const targetSection = document.getElementById(targetSectionId);
-
-                if (targetSection) {
-                    resetAllNavLinks();
-                    hideAllSections();
-
-                    this.classList.add('bg-white', 'border-green-600');
-                    this.classList.remove('border-transparent', 'hover:border-green-600');
-
-                    targetSection.classList.remove('hidden');
+                
+                showSection(targetSectionId);
+                
+                // Update the URL hash (without triggering hashchange)
+                const hash = this.getAttribute('href');
+                if (hash && hash !== '#') {
+                    window.history.pushState(null, '', hash);
                 }
             });
         });
+        
+        // Fungsi untuk toggle section berdasarkan hash
+        function toggleSectionByHash() {
+            const hash = window.location.hash;
+            
+            if (hash === '#dashboard') {
+                showSection('dashboard-section');
+            } else if (hash === '#notifikasi') {
+                showSection('notifikasi-section');
+            } else if (hash === '#poin-saya') {
+                showSection('poin-saya-section');
+            } else if (hash === '#pesanan') {
+                showSection('pesanan-section');
+            } else if (hash === '#riwayat') {
+                showSection('riwayat-section');
+            } else {
+                // Default to profile for nasabah
+                if (userRole === 'nasabah') {
+                    showSection('profile-section');
+                    // Make sure the profile nav link is active
+                    const profileNav = document.getElementById('nav-profile');
+                    if (profileNav) {
+                        profileNav.classList.add('bg-white', 'border-green-600');
+                        profileNav.classList.remove('border-transparent', 'hover:border-green-600');
+                    }
+                } else {
+                    // For admin/pengelola, default to dashboard
+                    showSection('dashboard-section');
+                }
+            }
+        }
+        
+        // Initial section toggle based on hash or default to profile
+        toggleSectionByHash();
+        
+        // Toggle section when hash changes
+        window.addEventListener('hashchange', toggleSectionByHash);
     });
     
-    // Fungsi untuk toggle section berdasarkan hash
-    function toggleSectionByHash() {
-        const profileSection = document.getElementById('profile-section');
-        const dashboardSection = document.getElementById('dashboard-section');
-        const notifikasiSection = document.getElementById('notifikasi-section');
-        const poinSayaSection = document.getElementById('poin-saya-section');
-        const pesananSection = document.getElementById('pesanan-section');
-        const riwayatSection = document.getElementById('riwayat-section');
-        
-        // Hide all sections first
-        if (profileSection) profileSection.classList.add('hidden');
-        if (dashboardSection) dashboardSection.classList.add('hidden');
-        if (notifikasiSection) notifikasiSection.classList.add('hidden');
-        if (poin_sayaSection) poin_sayaSection.classList.add('hidden');
-        if (pesananSection) pesananSection.classList.add('hidden');
-        if (riwayatSection) riwayatSection.classList.add('hidden');
-        
-        // Show section based on hash
-        if (window.location.hash === '#dashboard') {
-            if (dashboardSection) dashboardSection.classList.remove('hidden');
-        } else if (window.location.hash === '#notifikasi') {
-            if (notifikasiSection) notifikasiSection.classList.remove('hidden');    
-        } else if (window.location.hash === '#poin-saya') {
-            if (poin-sayaSection) poin-sayaSection.classList.remove('hidden');
-        } else if (window.location.hash === '#pesanan') {
-            if (pesananSection) pesananSection.classList.remove('hidden');
-        } else if (window.location.hash === '#riwayat') {
-            if (riwayatSection) riwayatSection.classList.remove('hidden');
-        } else {
-            if (profileSection) profileSection.classList.remove('hidden');
-        }
-    }
     // Script untuk mengakhiri preloader
     window.addEventListener('load', function() {
         // Cek apakah elemen preloader ada di halaman
@@ -165,11 +186,7 @@
                 preloader.style.display = 'none';
             }, 500); // Waktu sesuai dengan durasi animasi fade out
         }
-        // Toggle section sesuai hash saat load
-        toggleSectionByHash();
     });
-    // Toggle section saat hash berubah
-    window.addEventListener('hashchange', toggleSectionByHash);
 </script>
 
 <!-- Portal modal yang benar-benar baru -->

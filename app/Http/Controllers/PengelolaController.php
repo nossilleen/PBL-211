@@ -10,7 +10,6 @@ class PengelolaController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        // Check if user is pengelola
         $this->middleware(function ($request, $next) {
             if (Auth::user()->role !== 'pengelola') {
                 return redirect('/')->with('error', 'Unauthorized access');
@@ -60,4 +59,9 @@ class PengelolaController extends Controller
         // Reports for pengelola
         return view('pengelola.laporan');
     }
-} 
+
+    public function pesanan()
+    {
+        return view('pengelola.pesanan');
+    }
+}

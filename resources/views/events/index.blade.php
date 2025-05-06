@@ -117,7 +117,7 @@
                             <div class="p-4">
                                 <h3 class="text-xl font-semibold text-gray-800 mb-2">Seminar Edukasi Eco Enzim</h3>
                                 <p class="text-gray-600 text-sm mb-4">Pelajari manfaat Eco Enzim dan cara penggunannya untuk menjaga lingkungan di sekitar masyarakat.</p>
-                                <a href="#" class="inline-block bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition-all duration-300 text-sm">Selengkapnya</a>
+                                <a href="{{ route('events.detail', ['id' => 1]) }}" class="inline-block bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition-all duration-300 text-sm">Selengkapnya</a>
                             </div>
                         </div>
 
@@ -132,7 +132,7 @@
                             <div class="p-4">
                                 <h3 class="text-xl font-semibold text-gray-800 mb-2">Penanaman Pohon Eco Enzim</h3>
                                 <p class="text-gray-600 text-sm mb-4">Tanam pohon dengan Eco Enzim untuk perbaiki kualitas tanah dan udara.</p>
-                                <a href="#" class="inline-block bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition-all duration-300 text-sm">Selengkapnya</a>
+                                <a href="{{ route('events.detail', ['id' => 2]) }}" class="inline-block bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition-all duration-300 text-sm">Selengkapnya</a>
                             </div>
                         </div>
 
@@ -144,7 +144,7 @@
                             <div class="p-4">
                                 <h3 class="text-xl font-semibold text-gray-800 mb-2">Hidup Hijau Dengan Eco Enzim</h3>
                                 <p class="text-gray-600 text-sm mb-4">Eco Enzim punya banyak manfaat, tidak hanya untuk limbah makanan! Temukan di Dialog Konservasi!</p>
-                                <a href="#" class="inline-block bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition-all duration-300 text-sm">Selengkapnya</a>
+                                <a href="{{ route('events.detail', ['id' => 3]) }}" class="inline-block bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition-all duration-300 text-sm">Selengkapnya</a>
                             </div>
                         </div>
 
@@ -156,7 +156,7 @@
                             <div class="p-4">
                                 <h3 class="text-xl font-semibold text-gray-800 mb-2">Eco Enzim untuk Masa Depan yang Lebih Sehat</h3>
                                 <p class="text-gray-600 text-sm mb-4">Ikuti seminar dan praktik pembuatan eco enzim bersama Dr. Joean Oon &amp; Lyu Ming.</p>
-                                <a href="#" class="inline-block bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition-all duration-300 text-sm">Selengkapnya</a>
+                                <a href="{{ route('events.detail', ['id' => 4]) }}" class="inline-block bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition-all duration-300 text-sm">Selengkapnya</a>
                             </div>
                         </div>
                     </div>
@@ -192,7 +192,7 @@
                                 </div>
                             </div>
                             <div class="mt-3 text-center">
-                                <a href="#" class="text-green-700 text-sm font-medium hover:underline">See More ›</a>
+                                <a href="{{ route('events.detail', ['id' => 1]) }}" class="text-green-700 text-sm font-medium hover:underline">See More ›</a>
                             </div>
                         </div>
 
@@ -222,7 +222,7 @@
                                 </div>
                             </div>
                             <div class="mt-3 text-center">
-                                <a href="#" class="text-green-700 text-sm font-medium hover:underline">See More ›</a>
+                                <a href="{{ route('events.detail', ['id' => 5]) }}" class="text-green-700 text-sm font-medium hover:underline">See More ›</a>
                             </div>
                         </div>
 
@@ -355,7 +355,7 @@
             </section>
 
             <!-- Newsletter Section -->
-            <section class="py-16 bg-green-600">
+            <!-- <section class="py-16 bg-green-600">
                 <div class="container mx-auto px-4">
                     <div class="max-w-3xl mx-auto text-center">
                         <h2 class="text-3xl font-bold text-white mb-4">ECOZENSE</h2>
@@ -368,7 +368,7 @@
                         </div>
                     </div>
                 </div>
-            </section>
+            </section> -->
         </main>
 
         <!-- Footer -->

@@ -6,32 +6,6 @@
     <div class="bg-white rounded-lg shadow-sm p-6">
         <div class="flex flex-col mb-6">
             <h2 class="text-2xl font-bold text-gray-800 mb-2">Verifikasi Pengajuan</h2>
-            <h3 class="text-xl text-gray-500">Kategori Pengajuan</h3>
-        </div>
-        
-        <!-- Dropdown Kategori -->
-        <div class="mb-8">
-            <div class="relative">
-                <button id="kategoriDropdown" class="flex items-center justify-between w-full py-3 px-4 bg-gray-200 rounded-md">
-                    <span id="selectedKategori">Nasabah</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                    </svg>
-                </button>
-                <div id="kategoriMenu" class="hidden absolute left-0 mt-1 w-full bg-white border border-gray-200 rounded-md shadow-lg z-10">
-                    <div class="py-1">
-                        <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-100" data-value="Nasabah">Nasabah</a>
-                        <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-100" data-value="Pengelola Bank Sampah">Pengelola Bank Sampah</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Tambah Pengajuan Button -->
-        <div class="mb-6">
-            <button class="bg-purple-100 text-purple-800 px-6 py-3 rounded-md hover:bg-purple-200 transition-colors">
-                Create
-            </button>
         </div>
         
         <!-- Tabel Pengajuan -->

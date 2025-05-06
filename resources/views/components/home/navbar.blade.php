@@ -2,9 +2,15 @@
 <!-- Alpine.js -->
 <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
+@php
+    $currentRoute = Route::currentRouteName();
+    $isDetailPage = in_array($currentRoute, ['product.detail', 'article.detail', 'store.detail']);
+    $isDashboard = Auth::check() && ((Auth::user()->role === 'admin' && Request::is('admin*')) || (Auth::user()->role === 'pengelola' && Request::is('pengelola*')));
+@endphp
+
 <nav
     id="main-navbar"
-    class="py-1 sm:py-2 fixed top-0 left-0 right-0 z-50 navbar-fixed bg-transparent transition-all duration-300"
+    class="py-1 sm:py-2 fixed top-0 left-0 right-0 z-50 navbar-fixed {{ $isDashboard || $isDetailPage ? 'navbar-solid' : 'bg-transparent' }} transition-all duration-300"
 >
     <div class="container mx-auto px-4 md:px-6 flex justify-between items-center">
         <!-- Logo - Far Left -->
@@ -15,6 +21,7 @@
         </a>
         
         <!-- Navigation Links - Center (Improved Centering) -->
+        @if(!(Auth::check() && ((Auth::user()->role === 'admin' && Request::is('admin*')) || (Auth::user()->role === 'pengelola' && Request::is('pengelola*')))))
         <div class="hidden lg:flex space-x-4 xl:space-x-8 mx-auto justify-center flex-grow" data-aos="fade-down" data-aos-delay="200">
             <a
                 href="/"
@@ -49,6 +56,7 @@
             >
             @endguest
         </div>
+        @endif
         <div class="flex items-center space-x-4">
             @guest
             <!-- Show login button for guests -->
@@ -76,13 +84,21 @@
                 
                 <div x-show="open" @click.away="open = false" class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50" style="display: none;">
                     @if(Auth::user()->role === 'nasabah')
-                    <a href="/profile" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Profile</a>
+                        <a href="/profile" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Profile</a>
                     @endif
                     
                     @if(Auth::user()->role === 'admin')
-                    <a href="/admin" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Dashboard</a>
+                        @if(Request::is('admin*'))
+                            <a href="/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Kembali ke Homepage</a>
+                        @else
+                            <a href="/admin" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Dashboard</a>
+                        @endif
                     @elseif(Auth::user()->role === 'pengelola')
-                    <a href="/pengelola" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Dashboard</a>
+                        @if(Request::is('pengelola*'))
+                            <a href="/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Kembali ke Homepage</a>
+                        @else
+                            <a href="/pengelola" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Dashboard</a>
+                        @endif
                     @endif
                     
                     <div class="border-t border-gray-100"></div>
@@ -119,6 +135,7 @@
     <!-- Mobile Menu -->
     <div class="lg:hidden mobile-menu hidden bg-green-100 bg-opacity-95 shadow-lg mt-2 transition-all duration-300 max-h-screen overflow-y-auto backdrop-blur-sm border-t border-green-200">
         <div class="px-4 py-3 space-y-1">
+            @if(!(Auth::check() && ((Auth::user()->role === 'admin' && Request::is('admin*')) || (Auth::user()->role === 'pengelola' && Request::is('pengelola*')))))
             <a
                 href="/"
                 class="block text-green-800 hover:text-green-600 py-3 px-2 transition-all duration-300 border-l-4 border-transparent hover:border-green-600 hover:bg-green-50 rounded"
@@ -192,25 +209,31 @@
                 </form>
             </div>
             @endguest
+            @endif
         </div>
     </div>
 </nav>
 
 <script>
-    // Navbar scroll effect
+    // Navbar scroll effect - hanya diterapkan jika bukan halaman dashboard atau detail
     window.addEventListener('scroll', function () {
         const navbar = document.getElementById('main-navbar');
-        if (window.scrollY > 50) {
-            navbar.classList.remove('bg-transparent');
-            navbar.classList.add('navbar-scrolled', 'shadow-md');
-            // Use the hero background image for navbar when scrolled
-            navbar.style.backgroundImage = "url('{{ asset('images/Frame 2305.png') }}')";
-            navbar.style.backgroundSize = "cover";
-            navbar.style.backgroundPosition = "center";
-        } else {
-            navbar.classList.add('bg-transparent');
-            navbar.classList.remove('navbar-scrolled', 'shadow-md');
-            navbar.style.backgroundImage = "none";
+        const isDetailPage = @json($isDetailPage);
+        const isDashboard = @json($isDashboard);
+        
+        if (!isDetailPage && !isDashboard) {
+            if (window.scrollY > 50) {
+                navbar.classList.remove('bg-transparent');
+                navbar.classList.add('navbar-scrolled');
+                // Explicitly set background image when scrolled
+                navbar.style.backgroundImage = "url('{{ asset('images/Frame 2305.png') }}')";
+                navbar.style.backgroundSize = "cover";
+                navbar.style.backgroundPosition = "center";
+            } else {
+                navbar.classList.add('bg-transparent');
+                navbar.classList.remove('navbar-scrolled');
+                navbar.style.backgroundImage = "none";
+            }
         }
     });
     
@@ -247,3 +270,19 @@
     // Jalankan scroll check saat halaman dimuat
     window.dispatchEvent(new Event('scroll'));
 </script>
+
+<style>
+    .navbar-solid {
+        background-image: url('{{ asset('images/Frame 2305.png') }}') !important;
+        background-size: cover;
+        background-position: center;
+        box-shadow: 0 4px 10px rgb(0 0 0 / 10%);
+    }
+
+    .navbar-scrolled {
+        background-image: url('{{ asset('images/Frame 2305.png') }}') !important;
+        background-size: cover;
+        background-position: center;
+        box-shadow: 0 4px 10px rgb(0 0 0 / 10%);
+    }
+</style>

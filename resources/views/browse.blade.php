@@ -322,7 +322,7 @@
             </section>
             
             <!-- Newsletter Section -->
-            <section class="py-16 bg-green-600">
+            <!-- <section class="py-16 bg-green-600">
                 <div class="container mx-auto px-4">
                     <div class="max-w-3xl mx-auto text-center">
                         <h2 class="text-3xl font-bold text-white mb-4">ECOZENSE</h2>
@@ -335,7 +335,7 @@
                         </div>
                     </div>
                 </div>
-            </section>
+            </section> -->
         </main>
 
         <!-- Footer -->
