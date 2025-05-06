@@ -9,7 +9,6 @@
         <p class="text-center max-w-xl sm:max-w-2xl mx-auto mb-8 md:mb-12 text-sm sm:text-base" data-aos="fade-up" data-aos-delay="100">
             Di Pusat Informasi EcoZense, kami menghadirkan artikel, video, dan kegiatan yang membuka wawasan tentang pentingnya menjaga keseimbangan alam.
         </p>
-
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
             <!-- Card 1 - Events -->
             <div data-aos="fade-up" data-aos-delay="200" class="bg-white bg-opacity-10 backdrop-blur-sm rounded-lg shadow-lg h-full">
@@ -57,48 +56,44 @@
                         loading="lazy"
                     ></iframe>
                 </div>
-                <div class="text-center">
-                    <h4 class="font-semibold mb-2">Video Animasi Mengenai Eco Enzim</h4>
-                    <a href="#" class="text-blue-700 hover:underline transition-all duration-300"
-                        >Lihat Selengkapnya</a
-                    >
+                <div class="text-center p-4">
+                    <h4 class="font-semibold">Video Animasi Mengenai Eco Enzim</h4>
                 </div>
             </div>
 
             <!-- Card 3 - Artikel -->
-            <div data-aos="fade-up" data-aos-delay="400" class="h-full sm:col-span-2 lg:col-span-1">
-                <div
-                    class="bg-cover bg-center rounded-lg overflow-hidden shadow-lg card-hover-effect mb-4 h-48 sm:h-60 md:h-64 lg:h-72"
-                    style="background-image: url('{{ asset('images/bg5.jpeg') }}');"
-                >
-                    <div class="p-4 sm:p-6 md:p-8 flex flex-col justify-between h-full">
-                        <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2 md:mb-4">ARTIKEL</h3>
-                        <div
-                            class="rounded-full w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 flex items-center justify-center bg-white bg-opacity-20 border-2 border-white hover-scale"
-                        >
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                class="h-6 w-6 md:h-8 md:w-8 lg:h-10 lg:w-10 text-white"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
+            <div data-aos="fade-up" data-aos-delay="400" class="bg-white bg-opacity-10 backdrop-blur-sm rounded-lg shadow-lg h-full">
+                <a href="#" class="block h-full">
+                    <div
+                        class="bg-cover bg-center rounded-t-lg overflow-hidden h-48 sm:h-60 md:h-64 transition-transform duration-300 hover:scale-105"
+                        style="background-image: url('{{ asset('images/bg5.jpeg') }}');"
+                    >
+                        <div class="p-4 sm:p-6 flex flex-col justify-between h-full bg-gradient-to-b from-transparent to-black/50">
+                            <h3 class="text-xl sm:text-2xl font-bold text-white mb-2">ARTIKEL</h3>
+                            <div
+                                class="rounded-full w-12 h-12 md:w-14 md:h-14 flex items-center justify-center bg-white/20 border border-white transition-transform duration-300 hover:scale-110"
                             >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M14 5l7 7m0 0l-7 7m7-7H3"
-                                />
-                            </svg>
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="h-6 w-6 text-white"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M14 5l7 7m0 0l-7 7m7-7H3"
+                                    />
+                                </svg>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="text-center">
-                    <h4 class="font-semibold mb-2">Artikel</h4>
-                    <a href="#" class="text-blue-700 hover:underline transition-all duration-300"
-                        >Lihat Selengkapnya</a
-                    >
-                </div>
+                    <div class="text-center p-4">
+                        <h4 class="font-semibold">Artikel</h4>
+                    </div>
+                </a>
             </div>
         </div>
     </div>
