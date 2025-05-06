@@ -24,15 +24,6 @@
                     <img src="{{ asset('images/bg1.jpeg') }}" alt="Event Background" class="w-full h-full object-cover">
                 </div>
 
-                <!-- Back Button -->
-                <div class="absolute top-4 left-4 z-10">
-                    <a href="{{ route('events.index') }}" class="flex items-center text-white hover:text-green-200 transition-colors">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-                        </svg>
-                        <span class="ml-2">Kembali</span>
-                    </a>
-                </div>
             </section>
 
             <!-- Event Info Section -->
