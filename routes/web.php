@@ -2,13 +2,16 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\DataController;
-use App\Http\Controllers\TransaksiController;
-use App\Http\Controllers\PengelolaController;
+use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Workspace\HomeController;
+use App\Http\Controllers\Workspace\DataController;
+use App\Http\Controllers\Workspace\TransaksiController;
+use App\Http\Controllers\PBS\PengelolaController;
+use App\Http\Controllers\PBS\ProductController;
+use App\Http\Controllers\PBS\BrowseController;
+use App\Http\Controllers\Workspace\TokoController; // Add this line
 
-use App\Http\Controllers\EventController;
+use App\Http\Controllers\Workspace\EventController;
 
 Route::get('/events', [EventController::class, 'index'])->name('events.index');
 
@@ -32,17 +35,12 @@ Route::get('/about', function () {
     return view('about');
 })->name('about');
 
-Route::get('/browse', function () {
-    return view('browse');
-})->name('browse.index');
+Route::get('/browse', [PengelolaController::class, 'browse'])->name('browse');
 
 Route::get('/toko/{id}', [TokoController::class, 'detail'])->name('toko.detail');
 
 // Rute untuk halaman detail produk
-Route::get('/product/{id}', function ($id) {
-    // Di sini nantinya bisa mengambil data produk dari database berdasarkan ID
-    return view('product-detail');
-})->name('product.detail');
+Route::get('/product/{id}', [ProductController::class, 'detail'])->name('product.detail');
 
 Route::get('/store/{id}', function ($id) {
     return view('store-detail');
@@ -98,12 +96,16 @@ Route::get('/nasabah/poin-saya', function () {
 Route::middleware(['auth'])->group(function () {
     Route::get('/pengelola', [PengelolaController::class, 'index'])->name('pengelola.index');
     Route::get('/pengelola/alamat', [PengelolaController::class, 'alamat'])->name('pengelola.alamat');
-    Route::get('/pengelola/toko', [PengelolaController::class, 'toko'])->name('pengelola.toko');
+    Route::get('/pengelola/toko', [ProductController::class, 'toko'])->name('pengelola.toko');
     Route::get('/pengelola/transaksi', [PengelolaController::class, 'transaksi'])->name('pengelola.transaksi');
     Route::get('/pengelola/poin', [PengelolaController::class, 'poin'])->name('pengelola.poin');
     Route::get('/pengelola/nasabah', [PengelolaController::class, 'nasabah'])->name('pengelola.nasabah');
     Route::get('/pengelola/laporan', [PengelolaController::class, 'laporan'])->name('pengelola.laporan');
     Route::get('/pengelola/pesanan', [PengelolaController::class, 'pesanan'])->name('pengelola.pesanan');
+    Route::get('/product/{id}', [ProductController::class, 'show'])->name('product.detail');
+  
+    // Add resource routes for products
+    Route::resource('/pengelola/products', \App\Http\Controllers\PBS\ProductController::class);
 });
 
 // Article detail route with slug
@@ -111,3 +113,11 @@ Route::get('/artikel/{slug}', function ($slug) {
     // Ambil data artikel dari database berdasarkan $slug
     return view('article-detail');
 })->name('article.detail');
+
+Route::middleware(['auth'])->group(function () {
+    // Update this route to match the URL we're using
+    Route::post('/produk/{id}/like', [ProductController::class, 'toggleLike'])->name('produk.like');
+});
+
+Route::get('/shop/{id}', [ShopController::class, 'show'])->name('shop.show');
+Route::get('/stores', [\App\Http\Controllers\PBS\PengelolaController::class, 'stores'])->name('stores.index');

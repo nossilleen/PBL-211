@@ -5,6 +5,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
         <meta name="description" content="Temukan Bank Sampah dan Toko Eco Enzim di sekitar Anda - EcoZense" />
         <meta name="theme-color" content="#8DD363" />
+        <meta name="csrf-token" content="{{ csrf_token() }}">
+        <meta name="base-url" content="{{ url('/') }}">
         <title>Browse Toko - EcoZense</title>
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -92,92 +94,37 @@
                 <div class="container mx-auto px-4">
                     <h2 class="text-3xl font-bold text-gray-800 mb-8">Hasil Pencarian</h2>
                     
+                    @php
+                        $shops = $shops ?? collect();
+                    @endphp
+
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                        <!-- Bank Sampah Arshafin -->
-                        <x-browse.card 
-                            image="images/bg1.jpeg"
-                            title="Bank Sampah Arshafin"
-                            desc="Bank Sampah nomor 1 disekitar batam."
-                            alamat="Perumahan Odessa, Blok C-15 No. 1"
-                        />
-                        
-                        <!-- Bank Sampah Steven -->
-                        <x-browse.card 
-                            image="images/bg2.jpeg"
-                            title="Bank Sampah Steven"
-                            desc="Egestas elit dui scelerisque et eu purus aliquam vitae habitasse."
-                            alamat="Lorem ipsum bla bla bla bla"
-                        />
-                        
-                        <!-- Bank Sampah Arif -->
-                        <x-browse.card 
-                            image="images/bg3.jpeg"
-                            title="Bank Sampah Arif"
-                            desc="Bank Sampah Arif adalah yang paling unggul, tak tertandingi, dan tiada duanya di jagat Raya, Di Seluruh Alam Semesta!."
-                            alamat="Terletak di pusat galaksi."
-                        />
-                        
-                        <!-- Bank Sampah Thalita -->
-                        <x-browse.card 
-                            image="images/bg4.jpeg"
-                            title="Bank Sampah Thalita"
-                            desc="Egestas elit dui scelerisque et eu purus aliquam vitae habitasse."
-                            alamat="Lorem ipsum bla bla bla bla"
-                        />
-                        
-                        <!-- Bank Sampah Agnes -->
-                        <x-browse.card 
-                            image="images/bg5.jpeg"
-                            title="Bank Sampah Agnes"
-                            desc="Egestas elit dui scelerisque et eu purus aliquam vitae habitasse."
-                            alamat="Lorem ipsum bla bla bla bla"
-                        />
-                        
-                        <!-- Bank Sampah Faldy -->
-                        <x-browse.card 
-                            image="images/bg6.jpeg"
-                            title="Bank Sampah Faldy"
-                            desc="Egestas elit dui scelerisque et eu purus aliquam vitae habitasse."
-                            alamat="Lorem ipsum bla bla bla bla"
-                        />
-                        
-                        <!-- Bank Sampah 7 -->
-                        <x-browse.card 
-                            image="images/bg1.jpeg"
-                            title="Bank Sampah 7"
-                            desc="Egestas elit dui scelerisque et eu purus aliquam vitae habitasse."
-                            alamat="Lorem ipsum bla bla bla bla"
-                        />
-                        
-                        <!-- Bank Sampah 8 -->
-                        <x-browse.card 
-                            image="images/bg2.jpeg"
-                            title="Bank Sampah 8"
-                            desc="Egestas elit dui scelerisque et eu purus aliquam vitae habitasse."
-                            alamat="Lorem ipsum bla bla bla bla"
-                        />
+                        @forelse ($shops as $shop)
+                            <x-browse.product-card
+                                :image="asset($shop->profile_picture ?? 'images/default-shop.jpg')"
+                                :title="$shop->nama ?? 'Nama Toko'"
+                                :desc="Str::limit($shop->deskripsi ?? 'Bank Sampah Eco Enzim', 50)"
+                                :status="'Toko Eco Enzim'"
+                                :bank="!empty($shop->alamat) ? $shop->alamat : ''"
+                                :suka="$shop->suka ?? 0"
+                                :productId="$shop->id"
+                            >
+                                <a href="{{ route('toko.detail', ['id' => $shop->user_id]) }}" 
+                                   class="w-full px-6 py-3 bg-green-600 text-white text-lg font-semibold rounded-md hover:bg-green-700 transition-colors text-center">
+                                    Lihat Toko
+                                </a>
+                            </x-browse.product-card>
+                        @empty
+                            <div class="col-span-4 text-center text-gray-500">Belum ada toko Bank Sampah.</div>
+                        @endforelse
                     </div>
                     
-                    <!-- Pagination -->
-                    <div class="mt-12 flex justify-center">
-                        <nav class="inline-flex rounded-md shadow-sm">
-                            <a href="#" class="py-2 px-4 bg-white border border-gray-300 text-sm leading-5 font-medium text-gray-500 hover:bg-gray-50">
-                                Previous
-                            </a>
-                            <a href="#" class="py-2 px-4 bg-green-600 border border-green-600 text-sm leading-5 font-medium text-white hover:bg-green-700">
-                                1
-                            </a>
-                            <a href="#" class="py-2 px-4 bg-white border border-gray-300 text-sm leading-5 font-medium text-gray-700 hover:bg-gray-50">
-                                2
-                            </a>
-                            <a href="#" class="py-2 px-4 bg-white border border-gray-300 text-sm leading-5 font-medium text-gray-700 hover:bg-gray-50">
-                                3
-                            </a>
-                            <a href="#" class="py-2 px-4 bg-white border border-gray-300 text-sm leading-5 font-medium text-gray-500 hover:bg-gray-50">
-                                Next
-                            </a>
-                        </nav>
-                    </div>
+                    <!-- Pagination if needed -->
+                    @if(method_exists($shops, 'links'))
+                        <div class="mt-12 flex justify-center">
+                            {{ $shops->links() }}
+                        </div>
+                    @endif
                 </div>
             </section>
 
@@ -187,136 +134,29 @@
                     <h2 class="text-3xl font-bold text-gray-800 mb-8">Hasil Pencarian</h2>
                     
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
-                        <!-- Produk 1 -->
-                        <x-browse.product-card 
-                            image="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtCjhyUngEZ79Rdnw6T1ewkSyNsU_4GBTObQ&s"
-                            title="Pupuk Cair Organik"
-                            desc="Pupuk cair sangat bagus."
-                            price="25.000"
-                            status="Available"
-                            bank="Arshafin"
-                            likes="38"
-                        />
-                        
-                        <!-- Produk 2 -->
-                        <x-browse.product-card 
-                            image="https://down-id.img.susercontent.com/file/id-11134207-7r98p-lr4bmvhw6e3ddf"
-                            title="Sabun Cuci Piring"
-                            desc="Sabun cuci piring hasil eco enzim"
-                            price="15.000"
-                            status="Available"
-                            bank="Steven"
-                            likes="24"
-                        />
-                        
-                        <!-- Produk 3 -->
-                        <x-browse.product-card 
-                            image="https://id-live-01.slatic.net/p/eef84c8d6511d6da83ff7d9b70def2e3.jpg"
-                            title="Deodoran Ruangan"
-                            desc="Deodoran ruangan harum mmmmm.."
-                            price="28.000"
-                            status="Available"
-                            bank="Arif"
-                            likes="29"
-                        />
-                        
-                        <!-- Produk 4 -->
-                        <x-browse.product-card 
-                            image="https://down-id.img.susercontent.com/file/id-11134207-7r98y-lvmrfvo22cy9e4"
-                            title="Disinfektan"
-                            desc="Disinfektan"
-                            price="24.000"
-                            status="Available"
-                            bank="Thalita"
-                            likes="32"
-                        />
-                        
-                        <!-- Produk 5 -->
-                        <x-browse.product-card 
-                            image="https://down-id.img.susercontent.com/file/id-11134207-7r991-lswhx161pldlca"
-                            title="Pestisida"
-                            desc="Pestisida pembasmi hama"
-                            price="30.000"
-                            status="Available"
-                            bank="Agnes"
-                            likes="14"
-                        />
-                        
-                        <!-- Produk 6 -->
-                        <x-browse.product-card 
-                            image="https://images.tokopedia.net/img/cache/500-square/VqbcmM/2021/2/18/42ce5ef7-d502-489d-ba8c-794ae21b11aa.jpg"
-                            title="Pembersih Serbaguna"
-                            desc="Pembersih Serbaguna yang sangat bermanfaat."
-                            price="18.000"
-                            status="Available"
-                            bank="Faldy"
-                            likes="23"
-                        />
-                        
-                        <!-- Produk 7 -->
-                        <x-browse.product-card 
-                            image="https://www.unesa.ac.id/images/foto-04-08-2023-08-08-24-5583.png"
-                            title="Produk 7"
-                            desc="Produk"
-                            price="5.000"
-                            status="Unavailable"
-                            bank="Arshafin"
-                            likes="10"
-                        />
-                        
-                        <!-- Produk 8 -->
-                        <x-browse.product-card 
-                            image="https://filebroker-cdn.lazada.co.id/kf/Sa88de6e565304317b183c5fe9d53fe571.jpg"
-                            title="Produk 8"
-                            desc="Produk"
-                            price="5.000"
-                            status="Unavailable"
-                            bank="Arshafin"
-                            likes="10"
-                        />
-
-                        <!-- Produk 9 -->
-                        <x-browse.product-card 
-                            image="https://umsida.ac.id/wp-content/uploads/2021/03/WhatsApp-Image-2021-03-30-at-07.06.06.jpeg"
-                            title="Produk 9"
-                            desc="Produk"
-                            price="5.000"
-                            status="Unavailable"
-                            bank="Arshafin"
-                            likes="10"
-                        />
-
-                        <!-- Produk 10 -->
-                        <x-browse.product-card 
-                            image="https://images.tokopedia.net/img/cache/700/VqbcmM/2023/5/26/a22d75c1-301a-465a-8ad3-7aa3e335563a.jpg"
-                            title="Produk 10"
-                            desc="Produk"
-                            price="5.000"
-                            status="Unavailable"
-                            bank="Arshafin"
-                            likes="10"
-                        />
+                        @foreach ($products as $product)
+                            <x-browse.product-card 
+                                :image="asset($product->image_url)"
+                                :title="$product->nama_produk"
+                                :desc="Str::limit($product->deskripsi, 50)"
+                                :price="number_format($product->harga, 0, ',', '.')"
+                                :status="$product->status_ketersediaan"
+                                :bank="$product->user->nama"
+                                :suka="$product->suka"
+                                :productId="$product->produk_id"
+                            >
+                                <!-- Remove the duplicate like button, keep only the Beli button -->
+                                <a href="{{ route('product.detail', $product->produk_id) }}"
+                                   class="w-full px-4 py-2 bg-green-600 text-white font-medium rounded-md hover:bg-green-700 transition-colors text-center">
+                                    Beli Sekarang
+                                </a>
+                            </x-browse.product-card>
+                        @endforeach
                     </div>
-                    
+
                     <!-- Pagination -->
                     <div class="mt-12 flex justify-center">
-                        <nav class="inline-flex rounded-md shadow-sm">
-                            <a href="#" class="py-2 px-4 bg-white border border-gray-300 text-sm leading-5 font-medium text-gray-500 hover:bg-gray-50">
-                                Previous
-                            </a>
-                            <a href="#" class="py-2 px-4 bg-green-600 border border-green-600 text-sm leading-5 font-medium text-white hover:bg-green-700">
-                                1
-                            </a>
-                            <a href="#" class="py-2 px-4 bg-white border border-gray-300 text-sm leading-5 font-medium text-gray-700 hover:bg-gray-50">
-                                2
-                            </a>
-                            <a href="#" class="py-2 px-4 bg-white border border-gray-300 text-sm leading-5 font-medium text-gray-700 hover:bg-gray-50">
-                                3
-                            </a>
-                            <a href="#" class="py-2 px-4 bg-white border border-gray-300 text-sm leading-5 font-medium text-gray-500 hover:bg-gray-50">
-                                Next
-                            </a>
-                        </nav>
+                        {{ $products->links() }}
                     </div>
                 </div>
             </section>
@@ -429,5 +269,93 @@
                 });
             }
         </script>
+        
+        <script>
+function toggleLike(productId) {
+    const heartIcon = document.getElementById(`heart-${productId}`);
+    const likeCount = document.getElementById(`like-count-${productId}`);
+    
+    // Get current state
+    const isCurrentlyLiked = heartIcon.getAttribute('fill') === 'currentColor';
+    
+    fetch(`/produk/${productId}/like`, {
+        method: 'POST',
+        headers: {
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ isLiked: !isCurrentlyLiked }), // Send current state
+        credentials: 'same-origin'
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            // Toggle heart icon
+            if (data.isLiked) {
+                heartIcon.classList.add('text-red-500');
+                heartIcon.setAttribute('fill', 'currentColor');
+            } else {
+                heartIcon.classList.remove('text-red-500');
+                heartIcon.setAttribute('fill', 'none');
+            }
+            // Update like count next to status
+            const currentCount = parseInt(data.suka);
+            likeCount.textContent = `❤ ${currentCount}`;
+            likeCount.classList.add('like-count-update');
+            setTimeout(() => likeCount.classList.remove('like-count-update'), 300);
+        }
+    })
+    .catch(error => console.error('Error:', error));
+}
+</script>
+        
+        <script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.like-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            const produkId = this.getAttribute('data-produk-id');
+            fetch(`/produk/${produkId}/like`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    'Accept': 'application/json'
+                }
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    this.querySelector('.like-count').textContent = data.suka;
+                    this.querySelector('.like-icon').textContent = data.isLiked ? '❤️' : '🤍';
+                }
+            });
+        });
+    });
+});
+</script>
+        
+        <style>
+            .like-button svg {
+                transition: all 0.2s ease-in-out;
+            }
+
+            .like-button:hover svg {
+                transform: scale(1.1);
+            }
+
+            .like-button svg.text-red-500 {
+                filter: drop-shadow(0 0 2px rgba(239, 68, 68, 0.5));
+            }
+
+            @keyframes likeScale {
+                0% { transform: scale(1); }
+                50% { transform: scale(1.2); }
+                100% { transform: scale(1); }
+            }
+
+            .like-count-update {
+                animation: likeScale 0.3s ease-in-out;
+            }
+        </style>
     </body>
-</html> 
+</html>

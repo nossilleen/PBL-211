@@ -1,10 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Workspace;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Transaksi;
+use App\Models\Produk; // Pastikan untuk meng-import model Produk
 
 class HomeController extends Controller
 {
@@ -49,8 +51,13 @@ class HomeController extends Controller
                 ->get();
         }
         
+        // Ambil 5 produk teratas berdasarkan likes untuk ditampilkan di halaman welcome
+        $featuredProducts = Produk::orderBy('likes', 'desc')
+                                 ->take(5)
+                                 ->get();
+        
         // Sekarang kita redirect semua user ke halaman profile 
         // yang sudah ter-integrated dengan dashboard masing-masing role
-        return view('profile', compact('pesananAktif', 'riwayatTransaksi', 'showDashboard'));
+        return view('profile', compact('pesananAktif', 'riwayatTransaksi', 'showDashboard', 'featuredProducts'));
     }
 }

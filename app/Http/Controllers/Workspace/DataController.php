@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Workspace;
 
+use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Lokasi;
 use App\Models\Produk;

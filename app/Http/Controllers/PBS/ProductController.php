@@ -1,0 +1,234 @@
+<?php
+
+namespace App\Http\Controllers\PBS;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use App\Models\Produk;
+use App\Models\ProdukGambar;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
+
+class ProductController extends Controller
+{
+    public function index()
+    {
+        // Use paginate instead of all()
+        $products = Produk::paginate(12);
+        return view('pengelola.toko', compact('products'));
+    }
+
+    public function create()
+    {
+        // Show the form to create a new product
+        return view('pengelola.products.create');
+    }
+
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'nama_produk' => 'required|string|max:255',
+            'harga' => 'required|numeric|min:0',
+            'deskripsi' => 'nullable|string',
+            'kategori' => 'required|string',
+            'image' => 'required|image|mimes:jpeg,png,jpg|max:2048'
+        ]);
+
+        try {
+            // Create product
+            $product = Produk::create([
+                'nama_produk' => $validated['nama_produk'],
+                'harga' => $validated['harga'],
+                'deskripsi' => $validated['deskripsi'],
+                'kategori' => $validated['kategori'],
+                'status_ketersediaan' => 'Available',
+                'user_id' => auth()->id(),
+                'likes' => 0
+            ]);
+
+            // Handle image upload
+            if ($request->hasFile('image')) {
+                $image = $request->file('image');
+                $imageName = time() . '.' . $image->extension();
+                // Update storage path
+                $path = $image->storeAs('products', $imageName, 'public');
+
+                // Update file path in database
+                ProdukGambar::create([
+                    'produk_id' => $product->produk_id,
+                    'file_path' => $path
+                ]);
+            }
+
+            return redirect()->route('pengelola.toko')
+                ->with('success', 'Product created successfully!');
+
+        } catch (\Exception $e) {
+            return redirect()->back()
+                ->withInput()
+                ->with('error', 'Failed to create product: ' . $e->getMessage());
+        }
+    }
+
+    public function edit($id)
+    {
+        // Show the form to edit an existing product
+        $product = Produk::findOrFail($id); // Use the correct model
+        return view('pengelola.products.edit', compact('product'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $validated = $request->validate([
+            'nama_produk' => 'required|string|max:255',
+            'harga' => 'required|numeric|min:0',
+            'deskripsi' => 'required|string',
+            'kategori' => 'required|in:eco_enzim,sembako',
+            'status_ketersediaan' => 'required|in:Available,Unavailable', // Updated to match enum
+            'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048'
+        ]);
+
+        try {
+            $product = Produk::findOrFail($id);
+            
+            if ($product->user_id !== auth()->id()) {
+                return redirect()->back()->with('error', 'Unauthorized action.');
+            }
+
+            $product->update([
+                'nama_produk' => $validated['nama_produk'],
+                'harga' => $validated['harga'],
+                'deskripsi' => $validated['deskripsi'],
+                'kategori' => $validated['kategori'],
+                'status_ketersediaan' => $validated['status_ketersediaan']
+            ]);
+
+            if ($request->hasFile('image')) {
+                $image = $request->file('image');
+                $imageName = time() . '.' . $image->extension();
+                $path = $image->storeAs('products', $imageName, 'public');
+
+                // Delete old image if exists
+                if ($product->gambar()->exists()) {
+                    Storage::disk('public')->delete($product->gambar->first()->file_path);
+                    $product->gambar()->delete();
+                }
+
+                // Create new image record
+                ProdukGambar::create([
+                    'produk_id' => $product->produk_id,
+                    'file_path' => $path
+                ]);
+            }
+
+            return redirect()->route('pengelola.toko')
+                ->with('success', 'Product updated successfully!');
+
+        } catch (\Exception $e) {
+            return redirect()->back()
+                ->withInput()
+                ->with('error', 'Failed to update product: ' . $e->getMessage());
+        }
+    }
+
+    public function destroy($id)
+    {
+        try {
+            $product = Produk::findOrFail($id);
+            
+            if ($product->user_id !== auth()->id()) {
+                return redirect()->back()->with('error', 'Unauthorized action.');
+            }
+
+            // Delete associated images from storage
+            foreach ($product->gambar as $image) {
+                Storage::disk('public')->delete($image->file_path);
+            }
+            
+            $product->gambar()->delete(); // Delete image records
+            $product->forceDelete(); // Permanently delete the product
+
+            return redirect()->route('pengelola.toko')
+                ->with('success', 'Product deleted successfully!');
+
+        } catch (\Exception $e) {
+            return redirect()->back()
+                ->with('error', 'Failed to delete product: ' . $e->getMessage());
+        }
+    }
+
+    public function show($id)
+    {
+        // Fetch the product by ID
+        $product = Produk::findOrFail($id);
+
+        // Pass the product to the product-detail view
+        return view('product-detail', compact('product'));
+    }
+
+    public function toko()
+    {
+        // Only show products belonging to the current user
+        $products = Produk::where('user_id', auth()->id())
+                         ->with('gambar')
+                         ->paginate(12);
+
+        return view('pengelola.toko', compact('products'));
+    }
+
+    public function toggleLike(Request $request, $id)
+    {
+        try {
+            $user = auth()->user(); // Get the currently logged-in user
+            if (!$user) {
+                return response()->json(['success' => false, 'message' => 'Not authenticated'], 401);
+            }
+
+            // Check if the product exists
+            $product = \App\Models\Produk::findOrFail($id);
+
+            // Check if the user already liked the product
+            $alreadyLiked = \DB::table('product_likes')
+                ->where('user_id', $user->user_id)
+                ->where('produk_id', $product->produk_id)
+                ->exists();
+
+            if ($alreadyLiked) {
+                // Unlike the product
+                \DB::table('product_likes')
+                    ->where('user_id', $user->user_id)
+                    ->where('produk_id', $product->produk_id)
+                    ->delete();
+
+                // Decrement the likes count
+                $product->decrement('suka');
+
+                return response()->json([
+                    'success' => true,
+                    'isLiked' => false,
+                    'suka' => $product->suka,
+                ]);
+            } else {
+                // Like the product
+                \DB::table('product_likes')->insert([
+                    'user_id' => $user->user_id,
+                    'produk_id' => $product->produk_id,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
+
+                // Increment the likes count
+                $product->increment('suka');
+
+                return response()->json([
+                    'success' => true,
+                    'isLiked' => true,
+                    'suka' => $product->suka,
+                ]);
+            }
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
+        }
+    }
+}

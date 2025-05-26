@@ -7,11 +7,20 @@
         <title>{{ config('app.name', 'Laravel') }}</title>
         <link href="https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@300;400;500;600;700&display=swap" rel="stylesheet">
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+        @stack('styles')
     </head>
     <body class="bg-gray-100">
         <div id="app">
-            <!-- Jika halaman home tidak pakai Vue, id="app" tetap aman karena tidak di-mount -->
-            <main class="py-11">@yield('content')</main>
+            <!-- Navbar with conditional classes and standard height -->
+            <div class="{{ !Request::is('toko/*') ? 'navbar-transparent' : 'navbar-solid' }} fixed top-0 left-0 right-0 z-50 h-12">
+                <x-home.navbar />
+            </div>
+            
+            <!-- Main content with adjusted margin to match navbar height -->
+            <main class="mt-12">
+                @yield('content')
+            </main>
         </div>
+        @stack('scripts')
     </body>
 </html>

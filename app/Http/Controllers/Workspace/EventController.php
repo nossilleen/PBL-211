@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Workspace;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 // Removing the model import since we're not using the database
 // use App\Models\Event;

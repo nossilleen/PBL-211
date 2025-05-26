@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Workspace;
 
+use App\Http\Controllers\Controller;
 use App\Models\Transaksi;
 use App\Models\Produk;
 use Illuminate\Http\Request;
