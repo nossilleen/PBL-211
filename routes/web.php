@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
-<<<<<<< Updated upstream
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Workspace\HomeController;
 use App\Http\Controllers\Workspace\DataController;
@@ -11,17 +10,8 @@ use App\Http\Controllers\PBS\PengelolaController;
 use App\Http\Controllers\PBS\ProductController;
 use App\Http\Controllers\PBS\BrowseController;
 use App\Http\Controllers\Workspace\TokoController; // Add this line
-
 use App\Http\Controllers\Workspace\EventController;
-=======
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\DataController;
-use App\Http\Controllers\TransaksiController;
-use App\Http\Controllers\PengelolaController;
-use App\Http\Controllers\EventController;
 use App\Http\Controllers\ArtikelController;
->>>>>>> Stashed changes
 
 Route::get('/events', [EventController::class, 'index'])->name('events.index');
 
