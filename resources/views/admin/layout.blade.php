@@ -185,9 +185,10 @@
                 <div class="relative" x-data="{ open: false }">
                     <button @click="open = !open" class="flex items-center space-x-2 focus:outline-none">
                         <div class="w-8 h-8 rounded-full bg-white flex items-center justify-center text-green-600">
-                            <span class="text-sm font-semibold">{{ substr(Auth::user()->nama, 0, 1) }}</span>
+                            <span class="text-sm font-semibold">
+                                {{ Auth::check() && Auth::user()->nama ? substr(Auth::user()->nama, 0, 1) : '-' }}
+                            </span>
                         </div>
-                        <span class="text-white font-medium">{{ Auth::user()->nama }}</span>
                     </button>
 
                     <div x-show="open" @click.away="open = false" class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50" style="display: none;">
@@ -289,14 +290,16 @@
             // Highlight active menu item
             const currentPath = window.location.pathname;
             const menuItems = document.querySelectorAll('.menu-item');
-            
+
             menuItems.forEach(item => {
                 const href = item.getAttribute('href');
                 if (href === currentPath || (currentPath.startsWith(href) && href !== '/')) {
+                    menuItems.forEach(i => i.classList.remove('bg-green-50', 'text-green-600', 'font-medium'));
                     item.classList.add('bg-green-50', 'text-green-600', 'font-medium');
                 }
             });
         });
     </script>
+    @stack('scripts')
 </body>
 </html>

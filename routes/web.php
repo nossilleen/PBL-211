@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+<<<<<<< Updated upstream
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Workspace\HomeController;
 use App\Http\Controllers\Workspace\DataController;
@@ -12,6 +13,15 @@ use App\Http\Controllers\PBS\BrowseController;
 use App\Http\Controllers\Workspace\TokoController; // Add this line
 
 use App\Http\Controllers\Workspace\EventController;
+=======
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\DataController;
+use App\Http\Controllers\TransaksiController;
+use App\Http\Controllers\PengelolaController;
+use App\Http\Controllers\EventController;
+use App\Http\Controllers\ArtikelController;
+>>>>>>> Stashed changes
 
 Route::get('/events', [EventController::class, 'index'])->name('events.index');
 
@@ -27,9 +37,7 @@ Route::get('/', function () {
     return view('welcome');
 })->name('welcome');
 
-Route::get('/artikel', function () {
-    return view('artikel');
-})->name('artikel.index');
+Route::get('/artikel', [\App\Http\Controllers\ArtikelController::class, 'landing'])->name('artikel.index');
 
 Route::get('/about', function () {
     return view('about');
@@ -60,9 +68,12 @@ Route::get('/profile', [HomeController::class, 'index'])->name('profile');
 // Admin routes - protected with auth middleware
 Route::prefix('admin')->middleware('auth')->group(function () {
     Route::get('/', [AdminController::class, 'index'])->name('admin.index');
-    Route::get('/artikel', [AdminController::class, 'artikel'])->name('admin.artikel');
     Route::get('/pengajuan', [AdminController::class, 'pengajuan'])->name('admin.pengajuan');
     Route::get('/user', [AdminController::class, 'user'])->name('admin.user');
+    Route::get('/artikel', [ArtikelController::class, 'index'])->name('admin.artikel.index');
+    Route::get('/artikel/{id}/edit', [ArtikelController::class, 'edit'])->name('admin.artikel.edit');
+    Route::put('/artikel/{id}', [ArtikelController::class, 'update'])->name('admin.artikel.update');
+    Route::delete('/artikel/{id}', [ArtikelController::class, 'destroy'])->name('admin.artikel.destroy');
 });
 
 // Transaksi routes - protected with auth middleware
@@ -121,3 +132,18 @@ Route::middleware(['auth'])->group(function () {
 
 Route::get('/shop/{id}', [ShopController::class, 'show'])->name('shop.show');
 Route::get('/stores', [\App\Http\Controllers\PBS\PengelolaController::class, 'stores'])->name('stores.index');
+// Route untuk create artikel HARUS di atas route dengan parameter slug
+Route::get('/artikel/create', [ArtikelController::class, 'create'])->name('artikel.create');
+Route::post('/artikel', [ArtikelController::class, 'store'])->name('artikel.store');
+Route::get('/admin/artikel', [ArtikelController::class, 'index'])->name('admin.artikel.index');
+// Route detail artikel
+Route::get('/artikel/{slug}', [ArtikelController::class, 'show'])->name('article.detail');
+// Route untuk edit artikel
+Route::get('/admin/artikel/{id}/edit', [ArtikelController::class, 'edit'])->name('artikel.edit');
+// Route untuk update artikel
+Route::put('/admin/artikel/{id}', [ArtikelController::class, 'update'])->name('artikel.update');
+// Route untuk hapus artikel
+Route::delete('/admin/artikel/{id}', [ArtikelController::class, 'destroy'])->name('artikel.destroy');
+Route::delete('admin/artikel/{artikel}', [ArtikelController::class, 'destroy'])->name('artikel.destroy');
+Route::post('/artikel/{artikelId}/feedback', [ArtikelController::class, 'storeFeedback'])->name('feedback.store');
+

@@ -37,4 +37,10 @@ class Artikel extends Model
     {
         return $this->hasMany(Feedback::class, 'artikel_id');
     }
-} 
+    
+    public function setJudulAttribute($value)
+    {
+        $this->attributes['judul'] = $value;
+        $this->attributes['slug'] = \Str::slug($value);
+    }
+}

@@ -44,14 +44,23 @@
                         
                         <!-- Search Bar -->
                         <div class="max-w-xl mx-auto mt-8 relative">
-                            <div class="flex items-center bg-white rounded-full shadow-lg overflow-hidden border-2 border-green-100 hover:border-green-200 transition-all duration-300">
-                                <input type="text" placeholder="Cari artikel..." class="w-full px-6 py-3 text-gray-700 focus:outline-none text-lg">
-                                <button class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 transition-all duration-300 flex items-center">
+                            <form method="GET" action="{{ route('artikel.index') }}" class="relative flex items-center max-w-lg mx-auto">
+                                <input 
+                                    type="text" 
+                                    name="search" 
+                                    value="{{ request('search') }}" 
+                                    placeholder="Cari artikel..." 
+                                    class="w-full pl-4 pr-12 py-3 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent shadow-sm"
+                                >
+                                <button 
+                                    type="submit" 
+                                    class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-green-500 hover:bg-green-600 text-white p-2 rounded-full transition-colors"
+                                >
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                                     </svg>
                                 </button>
-                            </div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -60,112 +69,81 @@
             <!-- Category and Tabs Section -->
             <section class="bg-white border-b border-gray-200">
                 <div class="container mx-auto px-4">
-                    <div class="flex flex-wrap justify-between items-center py-4">
+                    <form id="filterForm" method="GET" action="{{ route('artikel.index') }}" class="flex justify-between items-center">
                         <!-- Category Dropdown -->
-                        <div class="w-full md:w-auto mb-4 md:mb-0">
-                            <div class="relative">
-                                <button id="categoryDropdown" class="flex items-center justify-between w-full md:w-48 px-4 py-2 bg-white border border-gray-300 rounded-md focus:outline-none">
-                                    <span class="text-gray-700">Pilih Kategori</span>
-                                    <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                                    </svg>
-                                </button>
-                                <div id="categoryMenu" class="hidden absolute left-0 mt-2 w-full md:w-48 bg-white shadow-lg rounded-md z-50">
-                                    <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-green-50">Semua Kategori</a>
-                                    <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-green-50">Eco Enzim</a>
-                                    <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-green-50">Bank Sampah</a>
-                                    <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-green-50">Tips & Trik</a>
-                                    <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-green-50">Berita</a>
-                                </div>
-                            </div>
+                        <div>
+                            <select name="kategori" onchange="document.getElementById('filterForm').submit()" class="px-4 py-2 border rounded-md">
+                                <option value="">Semua Kategori</option>
+                                <option value="eco enzim" {{ request('kategori') == 'eco enzim' ? 'selected' : '' }}>Eco Enzim</option>
+                                <option value="bank sampah" {{ request('kategori') == 'bank sampah' ? 'selected' : '' }}>Bank Sampah</option>
+                                <option value="tips dan trik" {{ request('kategori') == 'tips dan trik' ? 'selected' : '' }}>Tips & Trik</option>
+                                <option value="berita" {{ request('kategori') == 'berita' ? 'selected' : '' }}>Berita</option>
+                            </select>
                         </div>
-                        
                         <!-- Tabs -->
-                        <div class="w-full md:w-auto flex space-x-6">
-                            <a href="#" class="text-gray-700 hover:text-green-600 border-b-2 border-transparent hover:border-green-600 px-1 py-2 font-medium">Terpopuler</a>
-                            <a href="#" class="text-gray-700 hover:text-green-600 border-b-2 border-green-600 px-1 py-2 font-medium">Terbaru</a>
+                        <div class="flex space-x-6">
+                            <button type="submit" name="sort" value="populer" class="text-gray-700 hover:text-green-600 border-b-2 {{ request('sort') == 'populer' ? 'border-green-600' : 'border-transparent' }} px-1 py-2 font-medium bg-transparent">Terpopuler</button>
+                            <button type="submit" name="sort" value="terbaru" class="text-gray-700 hover:text-green-600 border-b-2 {{ !request('sort') || request('sort') == 'terbaru' ? 'border-green-600' : 'border-transparent' }} px-1 py-2 font-medium bg-transparent">Terbaru</button>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </section>
-
             <!-- Articles Section -->
             <section class="py-12 bg-gray-100">
                 <div class="container mx-auto px-4">
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        <!-- Article Card 1 -->
-                        <x-artikel.card 
-                            image="images/bg1.jpeg"
-                            title="All About Bio-Enzymes: How You Can Make Chemical-Free Floor Cleaners from Kitchen Waste!"
-                            desc="How You Can Make Chemical-Free Bio-Enzyme Cleaners From Fruit Peels"
-                            date="25 April 2023"
-                            author="Anindita A'isyahira"
-                        />
-                        
-                        <!-- Article Card 2 -->
-                        <x-artikel.card 
-                            image="images/bg2.jpeg"
-                            title="All About Bio-Enzymes: How You Can Make Chemical-Free Floor Cleaners from Kitchen Waste!"
-                            desc="How You Can Make Chemical-Free Bio-Enzyme Cleaners From Fruit Peels"
-                            date="25 April 2023"
-                            author="Anindita A'isyahira"
-                        />
-                        
-                        <!-- Article Card 3 -->
-                        <x-artikel.card 
-                            image="images/bg3.jpeg"
-                            title="All About Bio-Enzymes: How You Can Make Chemical-Free Floor Cleaners from Kitchen Waste!"
-                            desc="How You Can Make Chemical-Free Bio-Enzyme Cleaners From Fruit Peels"
-                            date="25 April 2023"
-                            author="Anindita A'isyahira"
-                        />
-                        
-                        <!-- DIY Enzyme Cleaner Cards -->
-                        <x-artikel.card-small 
-                            image="images/bg4.jpeg"
-                            title="You Can Make this DIY Enzyme Cleaner from Kitchen Scraps"
-                            desc="This enzyme cleaner is surprisingly easy to make using ingredients found in your kitchen. Use it to remove pet, blood, and other stains."
-                            date="20 April 2023"
-                            author="Steven Kosasih"
-                        />
-                        
-                        <x-artikel.card-small 
-                            image="images/bg5.jpeg"
-                            title="You Can Make this DIY Enzyme Cleaner from Kitchen Scraps"
-                            desc="This enzyme cleaner is surprisingly easy to make using ingredients found in your kitchen. Use it to remove pet, blood, and other stains."
-                            date="20 April 2023"
-                            author="Steven Kosasih"
-                        />
-                        
-                        <x-artikel.card-small 
-                            image="images/bg6.jpeg"
-                            title="You Can Make this DIY Enzyme Cleaner from Kitchen Scraps"
-                            desc="This enzyme cleaner is surprisingly easy to make using ingredients found in your kitchen. Use it to remove pet, blood, and other stains."
-                            date="20 April 2023"
-                            author="Steven Kosasih"
-                        />
+                        @forelse($artikels as $artikel)
+                            <div class="bg-white rounded-lg shadow p-6 flex flex-col">
+                                <img src="{{ asset($artikel->gambar->first()->file_path ?? 'images/default.jpg') }}" class="w-full h-48 object-cover rounded mb-4" alt="Gambar Artikel">
+                                <h2 class="text-xl font-bold mb-2">{{ $artikel->judul }}</h2>
+                                <p class="text-gray-600 text-sm mb-4">{{ Str::limit(strip_tags($artikel->konten), 100) }}</p>
+                                <a href="{{ route('article.detail', $artikel->slug) }}" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition">Baca Selengkapnya</a>
+                            </div>
+                        @empty
+                            <p class="text-gray-500">Tidak ada artikel untuk kategori ini.</p>
+                        @endforelse
                     </div>
-                    
-                    <!-- Pagination -->
-                    <div class="mt-12 flex justify-center">
-                        <nav class="inline-flex rounded-md shadow-sm">
-                            <a href="#" class="py-2 px-4 bg-white border border-gray-300 text-sm leading-5 font-medium text-gray-500 hover:bg-gray-50">
-                                Previous
-                            </a>
-                            <a href="#" class="py-2 px-4 bg-green-600 border border-green-600 text-sm leading-5 font-medium text-white hover:bg-green-700">
-                                1
-                            </a>
-                            <a href="#" class="py-2 px-4 bg-white border border-gray-300 text-sm leading-5 font-medium text-gray-700 hover:bg-gray-50">
-                                2
-                            </a>
-                            <a href="#" class="py-2 px-4 bg-white border border-gray-300 text-sm leading-5 font-medium text-gray-700 hover:bg-gray-50">
-                                3
-                            </a>
-                            <a href="#" class="py-2 px-4 bg-white border border-gray-300 text-sm leading-5 font-medium text-gray-500 hover:bg-gray-50">
-                                Next
-                            </a>
-                        </nav>
-                    </div>
+
+                    <!-- Pagination Controls -->
+                    <div class="mt-8 flex justify-center">
+            <ul class="flex border border-gray-300 rounded-md overflow-hidden bg-white text-sm">
+                {{-- Previous Page Link --}}
+                @if ($artikels->onFirstPage())
+                    <li>
+                        <span class="px-4 py-1.5 h-9 flex items-center text-gray-500 bg-white border-r border-gray-300 cursor-not-allowed select-none">Sebelumnya</span>
+                    </li>
+                @else
+                    <li>
+                        <a href="{{ $artikels->previousPageUrl() }}" rel="prev" class="px-4 py-1.5 h-9 flex items-center text-gray-700 bg-white border-r border-gray-300 hover:bg-gray-100 transition">Sebelumnya</a>
+                    </li>
+                @endif
+
+                {{-- Pagination Elements --}}
+                @foreach ($artikels->getUrlRange(1, $artikels->lastPage()) as $page => $url)
+                    @if ($page == $artikels->currentPage())
+                        <li>
+                            <span class="px-4 py-1.5 h-9 flex items-center font-bold text-white bg-green-600 border-r border-gray-300">{{ $page }}</span>
+                        </li>
+                    @else
+                        <li>
+                            <a href="{{ $url }}" class="px-4 py-1.5 h-9 flex items-center text-gray-700 bg-white border-r border-gray-300 hover:bg-gray-100 transition">{{ $page }}</a>
+                        </li>
+                    @endif
+                @endforeach
+
+                {{-- Next Page Link --}}
+                @if ($artikels->hasMorePages())
+                    <li>
+                        <a href="{{ $artikels->nextPageUrl() }}" rel="next" class="px-4 py-1.5 h-9 flex items-center text-gray-700 bg-white hover:bg-gray-100 transition">Selanjutnya</a>
+                    </li>
+                @else
+                    <li>
+                        <span class="px-4 py-1.5 h-9 flex items-center text-gray-500 bg-white cursor-not-allowed select-none">Selanjutnya</span>
+                    </li>
+                @endif
+            </ul>
+        </div>
+    </div>
                 </div>
             </section>
             
@@ -241,4 +219,4 @@
             });
         </script>
     </body>
-</html> 
+</html>

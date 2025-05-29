@@ -1,99 +1,83 @@
 @extends('layouts.app')
 
 @section('content')
-@php
-    $currentRoute = Route::currentRouteName();
-    $isDetailPage = true;
-@endphp
-
-<x-home.navbar :isDetailPage="$isDetailPage" />
-
-<div class="bg-gray-100 min-h-screen pt-6 font-[\'Lexend Deca\',_sans-serif]">
+<x-home.navbar />
+<div class="bg-gray-100 min-h-screen pt-6 font-['Lexend Deca',_sans-serif]">
     <div class="max-w-6xl mx-auto px-2 md:px-0">
         {{-- Gambar Utama Artikel --}}
         <div class="bg-white rounded-lg shadow mb-6 overflow-hidden">
-            <img src="/images/Frame 2305.png" alt="Hero Artikel" class="w-full h-64 object-cover">
+            <img src="{{ asset($artikel->gambar->first()->file_path ?? 'images/default.jpg') }}" alt="Hero Artikel" class="w-full h-auto object-cover">
             <div class="flex items-center justify-between px-4 py-2 border-b">
                 <div class="flex items-center space-x-2 text-xs text-gray-600">
-                    <span>nama_penulis</span>
+                    <span>{{ $artikel->user->nama ?? 'Penulis Tidak Diketahui' }}</span>
                     <span>|</span>
-                    <span>tgl_publish</span>
+                    <span>{{ $artikel->tanggal_publikasi->format('d M Y') }}</span>
                 </div>
                 <div class="flex items-center space-x-2">
                     <span>❤️</span>
-                    <span>4</span>
+                    <span>{{ $artikel->likes_count ?? 0 }}</span>
                     <span>💬</span>
-                    <span>5</span>
-                    <span>🔗</span>
+                    <span>{{ $artikel->feedback->count() }}</span>
                 </div>
             </div>
         </div>
 
         {{-- Judul --}}
         <h1 class="text-3xl md:text-4xl font-bold text-center mb-4">
-            How You Can Make Chemical-Free Floor Cleaners from Kitchen Waste!
+            {{ $artikel->judul }}
         </h1>
 
         <div class="flex flex-col lg:flex-row gap-8">
             {{-- Konten Artikel --}}
             <div class="flex-1">
                 <p class="text-lg mb-4">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis...
-                </p>
-                <p class="text-lg mb-4">
-                    Iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae...
+                    {!! nl2br(e($artikel->konten)) !!}
                 </p>
             </div>
 
             {{-- You may also like --}}
             <aside class="w-full lg:w-80">
                 <div class="bg-white rounded-xl shadow p-4 mb-4">
-                    <h3 class="font-semibold mb-3">You may also like</h3>
+                    <h3 class="font-semibold mb-3">Anda mungkin juga menyukainya</h3>
                     <ul class="space-y-3">
+                        @foreach($relatedArticles as $related)
                         <li class="flex space-x-3">
-                            <img src="/images/related1.jpg" class="w-16 h-16 object-cover rounded" alt="">
+                            <img src="{{ $related->gambar->first()->file_path ?? '/images/default.jpg' }}" class="w-16 h-16 object-cover rounded" alt="">
                             <div>
-                                <div class="font-medium text-sm">How to use Eco Enzyme at home</div>
-                                <div class="text-xs text-gray-500">Practical tips for using Eco Enzyme to keep your home clean and healthy.</div>
+                                <div class="font-medium text-sm">{{ $related->judul }}</div>
+                                <div class="text-xs text-gray-500">{{ Str::limit(strip_tags($related->konten), 50) }}</div>
                             </div>
                         </li>
-                        <li class="flex space-x-3">
-                            <img src="/images/related2.jpg" class="w-16 h-16 object-cover rounded" alt="">
-                            <div>
-                                <div class="font-medium text-sm">Eco Enzyme as Organic Fertilizer</div>
-                                <div class="text-xs text-gray-500">How to use Eco Enzyme as organic fertilizer for sustainable agriculture.</div>
-                            </div>
-                        </li>
-                        <li class="flex space-x-3">
-                            <img src="/images/related3.jpg" class="w-16 h-16 object-cover rounded" alt="">
-                            <div>
-                                <div class="font-medium text-sm">Reducing Waste with Eco Enzymes</div>
-                                <div class="text-xs text-gray-500">Easy steps to process organic waste into useful Eco Enzymes.</div>
-                            </div>
-                        </li>
-                        <li class="flex space-x-3">
-                            <img src="/images/related4.jpg" class="w-16 h-16 object-cover rounded" alt="">
-                            <div>
-                                <div class="font-medium text-sm">Eco Enzymes for Skin Care</div>
-                                <div class="text-xs text-gray-500">The efficacy of Eco Enzyme as a natural ingredient for healthy skin care.</div>
-                            </div>
-                        </li>
+                        @endforeach
                     </ul>
                 </div>
             </aside>
         </div>
 
-        {{-- Likes --}}
-        <div class="mt-8 text-lg font-semibold">Likes</div>
-
         {{-- Feedback --}}
         <div class="mt-8">
-            <div class="font-semibold mb-2">Feedback</div>
-            <input type="text" class="w-full rounded-lg border px-4 py-3 mb-2" placeholder="Tuangkan komentar Anda...">
-            <div class="text-sm font-medium mb-2">Lihat 8 komentar <span class="ml-1">▼</span></div>
+            <h3 class="font-semibold mb-4">Umpan Balik</h3>
+
+            <!-- Feedback Form -->
+            <form method="POST" action="{{ route('feedback.store', $artikel->artikel_id) }}" class="mb-6 flex flex-col space-y-4">
+                @csrf
+                <textarea name="komentar" rows="3" class="w-full rounded-lg border px-4 py-3 focus:outline-none focus:ring-2 focus:ring-green-500" placeholder="Tuangkan komentar Anda..."></textarea>
+                <button type="button" class="self-end bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded-lg transition">Kirim</button>
+            </form>
+
+            <!-- Feedback List -->
+            <div class="space-y-4">
+                @forelse($artikel->feedback as $feedback)
+                    <div class="bg-gray-100 p-4 rounded-lg">
+                        <div class="text-sm text-gray-600 mb-2">{{ $feedback->user->name }} - {{ $feedback->created_at->diffForHumans() }}</div>
+                        <p class="text-gray-800">{{ $feedback->komentar }}</p>
+                    </div>
+                @empty
+                    <p class="text-gray-500">Belum ada komentar.</p>
+                @endforelse
+            </div>
         </div>
     </div>
-
-    <x-home.footer />
 </div>
+<x-home.footer />
 @endsection
