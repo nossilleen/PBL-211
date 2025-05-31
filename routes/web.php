@@ -61,9 +61,19 @@ Route::prefix('admin')->middleware('auth')->group(function () {
     Route::get('/pengajuan', [AdminController::class, 'pengajuan'])->name('admin.pengajuan');
     Route::get('/user', [AdminController::class, 'user'])->name('admin.user');
     Route::get('/artikel', [ArtikelController::class, 'index'])->name('admin.artikel.index');
-    Route::get('/artikel/{id}/edit', [ArtikelController::class, 'edit'])->name('admin.artikel.edit');
-    Route::put('/artikel/{id}', [ArtikelController::class, 'update'])->name('admin.artikel.update');
-    Route::delete('/artikel/{id}', [ArtikelController::class, 'destroy'])->name('admin.artikel.destroy');
+    // Route untuk create artikel HARUS di atas route dengan parameter slug
+    Route::get('/artikel/create', [ArtikelController::class, 'create'])->name('artikel.create');
+    Route::get('/artikel/{slug}', [ArtikelController::class, 'show'])->name('article.detail');
+    Route::post('/artikel', [ArtikelController::class, 'store'])->name('artikel.store');
+    Route::get('/admin/artikel', [ArtikelController::class, 'index'])->name('admin.artikel.index');
+    // Route untuk edit artikel
+    Route::get('/admin/artikel/{id}/edit', [ArtikelController::class, 'edit'])->name('artikel.edit');
+    // Route untuk update artikel
+    Route::put('/admin/artikel/{id}', [ArtikelController::class, 'update'])->name('artikel.update');
+    // Route untuk hapus artikel
+    Route::delete('/admin/artikel/{id}', [ArtikelController::class, 'destroy'])->name('artikel.destroy');
+    Route::delete('admin/artikel/{artikel}', [ArtikelController::class, 'destroy'])->name('artikel.destroy');
+    Route::post('/artikel/{artikelId}/feedback', [ArtikelController::class, 'storeFeedback'])->name('feedback.store');
 });
 
 // Transaksi routes - protected with auth middleware
@@ -109,12 +119,6 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('/pengelola/products', \App\Http\Controllers\PBS\ProductController::class);
 });
 
-// Article detail route with slug
-Route::get('/artikel/{slug}', function ($slug) {
-    // Ambil data artikel dari database berdasarkan $slug
-    return view('article-detail');
-})->name('article.detail');
-
 Route::middleware(['auth'])->group(function () {
     // Update this route to match the URL we're using
     Route::post('/produk/{id}/like', [ProductController::class, 'toggleLike'])->name('produk.like');
@@ -122,18 +126,3 @@ Route::middleware(['auth'])->group(function () {
 
 Route::get('/shop/{id}', [ShopController::class, 'show'])->name('shop.show');
 Route::get('/stores', [\App\Http\Controllers\PBS\PengelolaController::class, 'stores'])->name('stores.index');
-// Route untuk create artikel HARUS di atas route dengan parameter slug
-Route::get('/artikel/create', [ArtikelController::class, 'create'])->name('artikel.create');
-Route::post('/artikel', [ArtikelController::class, 'store'])->name('artikel.store');
-Route::get('/admin/artikel', [ArtikelController::class, 'index'])->name('admin.artikel.index');
-// Route detail artikel
-Route::get('/artikel/{slug}', [ArtikelController::class, 'show'])->name('article.detail');
-// Route untuk edit artikel
-Route::get('/admin/artikel/{id}/edit', [ArtikelController::class, 'edit'])->name('artikel.edit');
-// Route untuk update artikel
-Route::put('/admin/artikel/{id}', [ArtikelController::class, 'update'])->name('artikel.update');
-// Route untuk hapus artikel
-Route::delete('/admin/artikel/{id}', [ArtikelController::class, 'destroy'])->name('artikel.destroy');
-Route::delete('admin/artikel/{artikel}', [ArtikelController::class, 'destroy'])->name('artikel.destroy');
-Route::post('/artikel/{artikelId}/feedback', [ArtikelController::class, 'storeFeedback'])->name('feedback.store');
-
