@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::table('artikel', function (Blueprint $table) {
             $table->string('slug')->nullable()->after('judul');
+            $table->string('kategori')->change(); // Mengubah tipe data kolom kategori menjadi varchar
         });
     }
 
@@ -22,7 +23,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('artikel', function (Blueprint $table) {
-            $table->dropColumn('slug');
+            $table->string('kategori')->change(); // Memastikan tipe data kategori tetap varchar saat rollback
         });
     }
 };
