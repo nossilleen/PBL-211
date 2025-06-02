@@ -15,7 +15,7 @@ class PengelolaController extends Controller
     {
         $this->middleware('auth');
         $this->middleware(function ($request, $next) {
-            if (Auth::user()->role !== 'pengelola') {
+            if (!in_array(Auth::user()->role, ['pengelola', 'admin', 'nasabah'])) {
                 return redirect('/')->with('error', 'Unauthorized access');
             }
             return $next($request);

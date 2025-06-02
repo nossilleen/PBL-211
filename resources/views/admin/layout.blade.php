@@ -140,6 +140,14 @@
                         </a>
                     </li>
                     <li>
+                        <a href="{{ route('browse') }}" id="menu-browse" class="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-50 rounded-lg transition-colors menu-item">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                            </svg>
+                            Toko
+                        </a>
+                    </li>
+                    <li>
                         <a href="{{ route('logout') }}" 
                            onclick="event.preventDefault(); document.getElementById('sidebar-logout-form').submit();" 
                            class="flex items-center px-4 py-3 text-red-600 hover:text-red-800 hover:bg-gray-50 rounded-lg transition-colors menu-item">
@@ -189,6 +197,7 @@
                                 {{ Auth::check() && Auth::user()->nama ? substr(Auth::user()->nama, 0, 1) : '-' }}
                             </span>
                         </div>
+                        <span class="text-white font-medium">{{ Auth::user()->nama }}</span>
                     </button>
 
                     <div x-show="open" @click.away="open = false" class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50" style="display: none;">
