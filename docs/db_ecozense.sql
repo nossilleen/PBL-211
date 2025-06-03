@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 27, 2025 at 06:58 AM
+-- Generation Time: May 31, 2025 at 12:50 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -30,6 +30,7 @@ CREATE TABLE `artikel` (
   `artikel_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `kategori` enum('event','artikel') NOT NULL,
   `judul` varchar(255) NOT NULL,
+  `slug` varchar(255) DEFAULT NULL,
   `konten` longtext NOT NULL,
   `tanggal_publikasi` date NOT NULL,
   `user_id` bigint(20) unsigned NOT NULL COMMENT 'Admin yang membuat artikel',
@@ -370,7 +371,7 @@ CREATE TABLE `telescope_entries` (
   KEY `telescope_entries_family_hash_index` (`family_hash`),
   KEY `telescope_entries_created_at_index` (`created_at`),
   KEY `telescope_entries_type_should_display_on_index_index` (`type`,`should_display_on_index`)
-) ENGINE=InnoDB AUTO_INCREMENT=160 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
