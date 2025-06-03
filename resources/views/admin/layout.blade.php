@@ -139,6 +139,13 @@
                             Data User
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('admin.events.*') ? 'active' : '' }}" 
+                           href="{{ route('admin.events.index') }}">
+                            <i class="fas fa-calendar"></i>
+                            <span>Kelola Event</span>
+                        </a>
+                    </li>
                     <li>
                         <a href="{{ route('browse') }}" id="menu-browse" class="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-50 rounded-lg transition-colors menu-item">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">

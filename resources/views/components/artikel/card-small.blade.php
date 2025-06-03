@@ -1,4 +1,4 @@
-@props(['image', 'title', 'desc', 'date', 'author'])
+@props(['image', 'title', 'desc', 'date', 'author', 'id'])
 
 <div class="bg-white rounded-md shadow-sm overflow-hidden hover:shadow-md transition-shadow duration-300">
     <div class="relative">
@@ -18,6 +18,6 @@
             <span>{{ $author }}</span>
             <span>{{ $date }}</span>
         </div>
-        <a href="{{ route('article.detail', ['slug' => Str::slug($title)]) }}" class="block w-full text-center py-2 bg-green-100 text-green-800 rounded-md hover:bg-green-200 transition-colors text-sm">Selengkapnya</a>
+        <a href="{{ route('artikel.show', $id) }}" class="block w-full text-center py-2 bg-green-100 text-green-800 rounded-md hover:bg-green-200 transition-colors text-sm">Selengkapnya</a>
     </div>
 </div>
