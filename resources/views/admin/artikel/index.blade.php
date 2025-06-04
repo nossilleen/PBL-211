@@ -218,16 +218,16 @@
     {{-- Modal Konfirmasi Hapus Artikel --}}
     <div id="modalHapusArtikel" class="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-40 hidden">
         <div class="bg-white rounded-lg shadow-lg p-8 max-w-sm w-full text-center">
-            <h2 class="text-2xl font-bold mb-4 text-red-600">Konfirmasi Hapus</h2>
-            <p class="mb-6">Yakin ingin menghapus artikel ini?</p>
-            <div class="flex justify-center space-x-4">
-                <button onclick="hideDeleteModal()" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded transition-colors">Batal</button>
-                <form id="formHapus" method="POST" class="inline">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded transition-colors">Ya, Hapus</button>
-                </form>
-            </div>
+            <h3 class="text-xl font-bold text-gray-800 mb-4">Konfirmasi Hapus</h3>
+            <p class="text-gray-600 mb-6">Apakah Anda yakin ingin menghapus artikel ini?</p>
+            <form id="formHapus" method="POST">
+                @csrf
+                @method('DELETE')
+                <div class="flex justify-center space-x-4">
+                    <button type="button" onclick="hideDeleteModal()" class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-lg transition-colors">Batal</button>
+                    <button type="submit" class="px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg transition-colors">Hapus</button>
+                </div>
+            </form>
         </div>
     </div>
 

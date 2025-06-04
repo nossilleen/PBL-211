@@ -71,8 +71,7 @@ Route::prefix('admin')->middleware('auth')->group(function () {
     // Route untuk update artikel
     Route::put('/admin/artikel/{id}', [ArtikelController::class, 'update'])->name('artikel.update');
     // Route untuk hapus artikel
-    Route::delete('/admin/artikel/{id}', [ArtikelController::class, 'destroy'])->name('artikel.destroy');
-    Route::delete('admin/artikel/{artikel}', [ArtikelController::class, 'destroy'])->name('artikel.destroy');
+    Route::delete('/artikel/{id}', [ArtikelController::class, 'destroy'])->name('admin.artikel.destroy');
     Route::post('/artikel/{artikelId}/feedback', [ArtikelController::class, 'storeFeedback'])->name('feedback.store');
 });
 
@@ -124,5 +123,4 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/produk/{id}/like', [ProductController::class, 'toggleLike'])->name('produk.like');
 });
 
-Route::get('/shop/{id}', [ShopController::class, 'show'])->name('shop.show');
 Route::get('/stores', [\App\Http\Controllers\PBS\PengelolaController::class, 'stores'])->name('stores.index');
