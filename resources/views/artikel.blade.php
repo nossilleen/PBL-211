@@ -97,7 +97,7 @@
                                 <img src="{{ asset($artikel->gambar->first()->file_path ?? 'images/default.jpg') }}" class="w-full h-48 object-cover rounded mb-4" alt="Gambar Artikel">
                                 <h2 class="text-xl font-bold mb-2">{{ $artikel->judul }}</h2>
                                 <p class="text-gray-600 text-sm mb-4 flex-grow">{{ Str::limit(strip_tags($artikel->konten), 100) }}</p>
-                                <a href="{{ route('article.detail', $artikel->slug) }}" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition mt-auto">
+                                <a href="{{ route('artikel.show', $artikel->artikel_id) }}" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition mt-auto">
                                     Baca Selengkapnya
                                 </a>
                             </div>

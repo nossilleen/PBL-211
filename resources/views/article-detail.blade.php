@@ -42,7 +42,7 @@
                     <ul class="space-y-3">
                         @foreach($relatedArticles as $related)
                         <li class="flex space-x-3">
-                            <a href="{{ route('article.detail', $related->slug) }}" class="flex items-center space-x-3">
+                            <a href="{{ route('artikel.show', $related->artikel_id) }}" class="flex items-center space-x-3">
                                 <img src="{{ $related->gambar->first()->file_path ?? '/images/default.jpg' }}" class="w-16 h-16 object-cover rounded" alt="{{ $related->judul }}">
                                 <div>
                                     <div class="font-medium text-sm">{{ $related->judul }}</div>

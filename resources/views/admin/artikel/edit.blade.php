@@ -9,7 +9,7 @@
     </div>
 
     <div class="bg-white rounded-lg shadow-sm p-6">
-        <form action="{{ route('artikel.update', $artikel->artikel_id) }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('admin.artikel.update', $artikel->artikel_id) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <div class="mb-4">

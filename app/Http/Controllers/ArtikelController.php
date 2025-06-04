@@ -31,8 +31,9 @@ class ArtikelController extends Controller
         }
 
         $artikels = $query->orderByDesc('tanggal_publikasi')->paginate(6);
+        $events = \App\Models\Event::latest()->get();
 
-        return view('admin.artikel.index', compact('artikels'));
+        return view('admin.artikel.index', compact('artikels', 'events'));
     }
 
     /**
@@ -167,9 +168,9 @@ class ArtikelController extends Controller
     /**
      * Display the specified article.
      */
-    public function show($slug)
+    public function show($id)
     {
-        $artikel = Artikel::with('gambar', 'user')->where('slug', $slug)->firstOrFail();
+        $artikel = Artikel::with('gambar', 'user')->findOrFail($id);
         $relatedArticles = Artikel::where('kategori', $artikel->kategori)
             ->where('artikel_id', '!=', $artikel->artikel_id)
             ->take(3)

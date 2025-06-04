@@ -1,4 +1,4 @@
-@props(['image', 'title', 'desc', 'date', 'author'])
+@props(['image', 'title', 'desc', 'date', 'author', 'id'])
 
 <div class="bg-white rounded-md shadow-sm overflow-hidden hover:shadow-md transition-shadow duration-300">
     <img src="{{ asset($image) }}" alt="{{ $title }}" class="w-full h-56 object-cover">
@@ -13,6 +13,6 @@
                 </svg>
             </button>
         </div>
-        <a href="{{ route('article.detail', ['slug' => Str::slug($title)]) }}" class="block w-full text-center py-2 bg-green-100 text-green-800 rounded-md hover:bg-green-200 transition-colors">Selengkapnya</a>
+        <a href="{{ route('artikel.show', $id) }}" class="block w-full text-center py-2 bg-green-100 text-green-800 rounded-md hover:bg-green-200 transition-colors">Selengkapnya</a>
     </div>
 </div>

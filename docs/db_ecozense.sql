@@ -28,8 +28,9 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `artikel` (
   `artikel_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `kategori` enum('event','artikel') NOT NULL,
+  `kategori` varchar(255) NOT NULL,
   `judul` varchar(255) NOT NULL,
+  `slug` varchar(255) DEFAULT NULL,
   `konten` longtext NOT NULL,
   `tanggal_publikasi` date NOT NULL,
   `user_id` bigint(20) unsigned NOT NULL COMMENT 'Admin yang membuat artikel',
@@ -94,7 +95,12 @@ CREATE TABLE `cache_locks` (
 CREATE TABLE `events` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `title` varchar(255) NOT NULL,
-  `description` text DEFAULT NULL,
+  `description` text NOT NULL,
+  `image` varchar(255) DEFAULT NULL,
+  `date` datetime NOT NULL,
+  `location` varchar(255) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
