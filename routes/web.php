@@ -22,6 +22,10 @@ Route::get('/', function () {
 
 // Public routes
 Route::get('/artikel', [ArtikelController::class, 'landing'])->name('artikel.index');
+Route::get('/artikel/{id}', [ArtikelController::class, 'show'])->name('artikel.show');
+Route::post('/artikel/{id}/feedback', [ArtikelController::class, 'storeFeedback'])->name('artikel.feedback.store');
+Route::get('/events', [EventController::class, 'list'])->name('events.index');
+Route::get('/events/{id}', [EventController::class, 'show'])->name('events.show');
 Route::get('/about', function () {
     return view('about');
 })->name('about');
@@ -107,5 +111,4 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/produk/{id}/like', [ProductController::class, 'toggleLike'])->name('produk.like');
 });
 
-Route::get('/shop/{id}', [ShopController::class, 'show'])->name('shop.show');
 Route::get('/stores', [\App\Http\Controllers\PBS\PengelolaController::class, 'stores'])->name('stores.index');

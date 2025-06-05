@@ -139,13 +139,6 @@
                             Data User
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('admin.events.*') ? 'active' : '' }}" 
-                           href="{{ route('admin.events.index') }}">
-                            <i class="fas fa-calendar"></i>
-                            <span>Kelola Event</span>
-                        </a>
-                    </li>
                     <li>
                         <a href="{{ route('logout') }}" 
                            onclick="event.preventDefault(); document.getElementById('sidebar-logout-form').submit();" 

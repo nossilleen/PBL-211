@@ -66,7 +66,7 @@
                             <div class="p-4">
                                 <h3 class="text-xl font-semibold text-gray-800 mb-2">{{ $event->title }}</h3>
                                 <p class="text-gray-600 text-sm mb-4">{{ Str::limit($event->description, 150) }}</p>
-                                <a href="{{ route('events.show', ['event' => $event->id]) }}" class="inline-block bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition-all duration-300 text-sm">Selengkapnya</a>
+                                <a href="{{ route('events.show', ['id' => $event->id]) }}" class="inline-block bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition-all duration-300 text-sm">Selengkapnya</a>
                             </div>
                         </div>
                         @endforeach

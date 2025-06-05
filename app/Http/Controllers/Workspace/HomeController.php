@@ -52,7 +52,7 @@ class HomeController extends Controller
         }
         
         // Ambil 5 produk teratas berdasarkan likes untuk ditampilkan di halaman welcome
-        $featuredProducts = Produk::orderBy('likes', 'desc')
+        $featuredProducts = Produk::orderBy('suka', 'desc')
                                  ->take(5)
                                  ->get();
         

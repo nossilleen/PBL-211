@@ -56,29 +56,7 @@
             </aside>
         </div>
 
-        {{-- Feedback --}}
-        <div class="mt-8">
-            <h3 class="font-semibold mb-4">Umpan Balik</h3>
 
-            <!-- Feedback Form -->
-            <form method="POST" action="{{ route('feedback.store', $artikel->artikel_id) }}" class="mb-6 flex flex-col space-y-4">
-                @csrf
-                <textarea name="komentar" rows="3" class="w-full rounded-lg border px-4 py-3 focus:outline-none focus:ring-2 focus:ring-green-500" placeholder="Tuangkan komentar Anda..."></textarea>
-                <button type="button" class="self-end bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded-lg transition">Kirim</button>
-            </form>
-
-            <!-- Feedback List -->
-            <div class="space-y-4">
-                @forelse($artikel->feedback as $feedback)
-                    <div class="bg-gray-100 p-4 rounded-lg">
-                        <div class="text-sm text-gray-600 mb-2">{{ $feedback->user->name }} - {{ $feedback->created_at->diffForHumans() }}</div>
-                        <p class="text-gray-800">{{ $feedback->komentar }}</p>
-                    </div>
-                @empty
-                    <p class="text-gray-500">Belum ada komentar.</p>
-                @endforelse
-            </div>
-        </div>
     </div>
 </div>
 <x-home.footer />

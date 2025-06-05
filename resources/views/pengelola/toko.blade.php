@@ -55,7 +55,7 @@
                         <span class="text-sm {{ $item->status_ketersediaan == 'Available' ? 'text-green-600' : 'text-red-600' }} font-medium">
                             {{ $item->status_ketersediaan }}
                         </span>
-                        <span class="text-sm text-gray-500">Likes: {{ $item->likes }}</span>
+                        <span class="text-sm text-gray-500">Likes: {{ $item->suka }}</span>
                     </div>
 
                     <!-- Action Buttons -->

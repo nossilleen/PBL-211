@@ -44,7 +44,7 @@ class ProductController extends Controller
                 'kategori' => $validated['kategori'],
                 'status_ketersediaan' => 'Available',
                 'user_id' => auth()->id(),
-                'likes' => 0
+                'suka' => 0
             ]);
 
             // Handle image upload
