@@ -33,18 +33,26 @@ class EventController extends Controller
             'banner' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
 
-        $bannerPath = $request->file('banner')->store('public/events');
+        try {
+            if ($request->hasFile('banner')) {
+                $bannerPath = $request->file('banner')->store('public/events');
+                
+                Event::create([
+                    'title' => $request->title,
+                    'description' => $request->description,
+                    'date' => $request->date,
+                    'location' => $request->location,
+                    'image' => $bannerPath
+                ]);
 
-        Event::create([
-            'title' => $request->title,
-            'description' => $request->description,
-            'date' => $request->date,
-            'location' => $request->location,
-            'image' => Storage::url($bannerPath)
-        ]);
-
-        return redirect()->route('admin.events.index')
-            ->with('success', 'Event berhasil dibuat');
+                return redirect()->route('admin.events.index')
+                    ->with('success', 'Event berhasil dibuat');
+            }
+        } catch (\Exception $e) {
+            return redirect()->back()
+                ->with('error', 'Terjadi kesalahan: ' . $e->getMessage())
+                ->withInput();
+        }
     }
 
     // Menampilkan form edit event
@@ -59,15 +67,35 @@ class EventController extends Controller
         $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
+            'date' => 'required|date',
+            'location' => 'required|string|max:255',
+            'banner' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
 
-        $event->update([
-            'title' => $request->title,
-            'description' => $request->description,
-        ]);
+        try {
+            if ($request->hasFile('banner')) {
+                // Hapus gambar lama jika ada
+                if ($event->image) {
+                    Storage::delete(str_replace('/storage', 'public', $event->image));
+                }
+                $bannerPath = $request->file('banner')->store('public/events');
+                $event->image = $bannerPath;
+            }
 
-        return redirect()->route('admin.events.index')
-            ->with('success', 'Event berhasil diperbarui');
+            $event->update([
+                'title' => $request->title,
+                'description' => $request->description,
+                'date' => $request->date,
+                'location' => $request->location
+            ]);
+
+            return redirect()->route('admin.events.index')
+                ->with('success', 'Event berhasil diperbarui');
+        } catch (\Exception $e) {
+            return redirect()->back()
+                ->with('error', 'Terjadi kesalahan: ' . $e->getMessage())
+                ->withInput();
+        }
     }
 
     // Menghapus event
@@ -80,8 +108,9 @@ class EventController extends Controller
     }
 
     // Menampilkan event di landing page
-    public function show(Event $event)
+    public function show($id)
     {
+        $event = Event::findOrFail($id);
         return view('events.show', compact('event'));
     }
 

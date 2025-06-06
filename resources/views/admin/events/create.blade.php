@@ -10,6 +10,12 @@
             Form Event
         </div>
         <div class="card-body">
+            @if(session('error'))
+                <div class="alert alert-danger">
+                    {{ session('error') }}
+                </div>
+            @endif
+
             <form action="{{ route('admin.events.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 
@@ -50,10 +56,11 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="image" class="form-label">Banner Event</label>
-                    <input type="file" class="form-control @error('image') is-invalid @enderror" 
-                           id="image" name="image" accept="image/*" required>
-                    @error('image')
+                    <label for="banner" class="form-label">Banner Event</label>
+                    <input type="file" class="form-control @error('banner') is-invalid @enderror" 
+                           id="banner" name="banner" accept="image/*" required>
+                    <small class="text-muted">Format yang didukung: JPG, JPEG, PNG, GIF. Maksimal 2MB</small>
+                    @error('banner')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
