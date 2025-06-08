@@ -33,10 +33,11 @@ class Artikel extends Model
         return $this->hasMany(ArtikelGambar::class, 'artikel_id');
     }
     
-    public function feedback()
-    {
-        return $this->hasMany(Feedback::class, 'artikel_id');
-    }
+   
+public function feedback()
+{
+    return $this->hasMany(Feedback::class, 'artikel_id', 'artikel_id')->latest();
+}
     
     public function setJudulAttribute($value)
     {
