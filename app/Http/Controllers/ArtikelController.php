@@ -168,14 +168,13 @@ class ArtikelController extends Controller
     /**
      * Display the specified article.
      */
-    public function show($id)
-    {
-        $artikel = Artikel::with('gambar', 'user')->findOrFail($id);
-        $relatedArticles = Artikel::where('kategori', $artikel->kategori)
-            ->where('artikel_id', '!=', $artikel->artikel_id)
-            ->take(3)
-            ->get();
+    
+public function show($id)
+{
+    $artikel = Artikel::with(['user', 'gambar', 'feedback.user'])->findOrFail($id);
+    $relatedArticles = Artikel::where('artikel_id', '!=', $id)->latest()->take(4)->get();
+    $feedback = $artikel->feedback()->latest()->get(); // semua feedback
 
-        return view('article-detail', compact('artikel', 'relatedArticles'));
-    }
+    return view('article-detail', compact('artikel', 'relatedArticles', 'feedback'));
+}
 }
