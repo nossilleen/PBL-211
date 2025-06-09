@@ -53,13 +53,19 @@ class PoinController extends Controller
         }
 
         $users = User::where('role', 'nasabah')
-                     ->where(function ($q) use ($query) {
-                         $q->where('nama', 'LIKE', "%{$query}%")
-                           ->orWhere('user_id', 'LIKE', "%{$query}%");
-                     })
-                     ->select('user_id', 'nama', 'points')
-                     ->take(10)
-                     ->get();
+             ->where(function ($q) use ($query) {
+                 $q->where('nama', 'LIKE', "%{$query}%")
+                   ->orWhere('user_id', 'LIKE', "%{$query}%");
+             })
+             ->select('user_id', 'nama', 'points')
+             // Prioritaskan yang cocok di awal
+             ->orderByRaw("CASE 
+                WHEN nama LIKE '{$query}%' THEN 1
+                WHEN user_id LIKE '{$query}%' THEN 2
+                ELSE 3
+             END")
+             ->take(10)
+             ->get();
 
         return response()->json($users);
     }

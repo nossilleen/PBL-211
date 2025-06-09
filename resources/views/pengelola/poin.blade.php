@@ -208,7 +208,8 @@
             const userSuggestions = document.getElementById('user_suggestions');
             const userPreview = document.getElementById('userPreview');
             const hiddenUserId = document.getElementById('user_id');
-            
+            let activeSuggestionIndex = -1;
+
             const wasteWeight = document.getElementById('wasteWeight');
             const weightUnit = document.getElementById('weightUnit');
             const pointsPreview = document.getElementById('pointsPreview');
@@ -222,6 +223,9 @@
                     userSuggestions.classList.add('hidden');
                     return;
                 }
+                
+                // Reset active suggestion on new query
+                activeSuggestionIndex = -1;
 
                 try {
                     const response = await fetch(`{{ route('pengelola.api.users.search') }}?query=${query}`);
@@ -232,11 +236,14 @@
                     if (users.length > 0) {
                         users.forEach(user => {
                             const suggestionItem = document.createElement('div');
-                            suggestionItem.className = 'p-3 hover:bg-gray-100 cursor-pointer';
-                            suggestionItem.textContent = `${user.nama} (ID: ${user.user_id})`;
+                            suggestionItem.className = 'p-3 hover:bg-gray-100 cursor-pointer border-b border-gray-100';
+                            suggestionItem.innerHTML = `<p class="font-medium">${user.nama}</p><p class="text-sm text-gray-500">ID: ${user.user_id}</p>`;
                             suggestionItem.dataset.userId = user.user_id;
                             suggestionItem.dataset.userName = user.nama;
                             suggestionItem.dataset.userPoints = user.points;
+                            
+                            suggestionItem.addEventListener('click', () => selectUser(suggestionItem));
+
                             userSuggestions.appendChild(suggestionItem);
                         });
                         userSuggestions.classList.remove('hidden');
@@ -251,18 +258,55 @@
                 }
             });
 
-            userSuggestions.addEventListener('click', function(e) {
-                if (e.target.dataset.userId) {
-                    const selectedUser = e.target;
-                    hiddenUserId.value = selectedUser.dataset.userId;
-                    userSearchInput.value = selectedUser.textContent;
-                    
-                    document.getElementById('previewName').textContent = selectedUser.dataset.userName;
-                    document.getElementById('previewId').textContent = `ID: ${selectedUser.dataset.userId}`;
-                    document.getElementById('previewCurrentPoints').textContent = `Total Poin: ${new Intl.NumberFormat().format(selectedUser.dataset.userPoints)}`;
+            function selectUser(userElement) {
+                if (userElement) {
+                    hiddenUserId.value = userElement.dataset.userId;
+                    userSearchInput.value = `${userElement.dataset.userName} (ID: ${userElement.dataset.userId})`;
+
+                    document.getElementById('previewName').textContent = userElement.dataset.userName;
+                    document.getElementById('previewId').textContent = `ID: ${userElement.dataset.userId}`;
+                    document.getElementById('previewCurrentPoints').textContent = `Total Poin: ${new Intl.NumberFormat().format(userElement.dataset.userPoints)}`;
                     
                     userPreview.classList.remove('hidden');
                     userSuggestions.classList.add('hidden');
+                    userSearchInput.focus();
+                }
+            }
+
+            userSearchInput.addEventListener('keydown', function(e) {
+                const suggestions = userSuggestions.querySelectorAll('div[data-user-id]');
+                if (suggestions.length === 0) return;
+
+                if (e.key === 'ArrowDown') {
+                    e.preventDefault();
+                    activeSuggestionIndex = (activeSuggestionIndex + 1) % suggestions.length;
+                    updateActiveSuggestion(suggestions);
+                } else if (e.key === 'ArrowUp') {
+                    e.preventDefault();
+                    activeSuggestionIndex = (activeSuggestionIndex - 1 + suggestions.length) % suggestions.length;
+                    updateActiveSuggestion(suggestions);
+                } else if (e.key === 'Enter') {
+                    e.preventDefault();
+                    if (activeSuggestionIndex > -1) {
+                        selectUser(suggestions[activeSuggestionIndex]);
+                    }
+                }
+            });
+            
+            function updateActiveSuggestion(suggestions) {
+                suggestions.forEach((suggestion, index) => {
+                    if (index === activeSuggestionIndex) {
+                        suggestion.classList.add('bg-gray-200');
+                    } else {
+                        suggestion.classList.remove('bg-gray-200');
+                    }
+                });
+            }
+
+            userSuggestions.addEventListener('click', function(e) {
+                const targetSuggestion = e.target.closest('div[data-user-id]');
+                if (targetSuggestion) {
+                    selectUser(targetSuggestion);
                 }
             });
 

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Transaksi;
 use App\Models\Produk; // Pastikan untuk meng-import model Produk
+use App\Models\PointHistory;
 
 class HomeController extends Controller
 {
@@ -35,6 +36,7 @@ class HomeController extends Controller
         // Load pesanan aktif dan riwayat transaksi jika user adalah nasabah
         $pesananAktif = collect();
         $riwayatTransaksi = collect();
+        $pointHistories = collect();
         
         if ($user->role == 'nasabah') {
             $pesananAktif = Transaksi::with('produk', 'lokasi')
@@ -49,6 +51,11 @@ class HomeController extends Controller
                 ->orderBy('created_at', 'desc')
                 ->limit(10) // Ambil 10 transaksi terakhir saja untuk halaman profile
                 ->get();
+            
+            $pointHistories = $user->pointHistories()
+                                 ->orderBy('created_at', 'desc')
+                                 ->limit(10)
+                                 ->get();
         }
         
         // Ambil 5 produk teratas berdasarkan likes untuk ditampilkan di halaman welcome
@@ -58,6 +65,6 @@ class HomeController extends Controller
         
         // Sekarang kita redirect semua user ke halaman profile 
         // yang sudah ter-integrated dengan dashboard masing-masing role
-        return view('profile', compact('pesananAktif', 'riwayatTransaksi', 'showDashboard', 'featuredProducts'));
+        return view('profile', compact('pesananAktif', 'riwayatTransaksi', 'showDashboard', 'featuredProducts', 'pointHistories'));
     }
 }
