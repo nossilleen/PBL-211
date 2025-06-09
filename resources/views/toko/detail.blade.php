@@ -82,6 +82,8 @@
             </div>
         </section>
     </main>
+
+    <x-home.footer />
 @endsection
 
 @push('scripts')

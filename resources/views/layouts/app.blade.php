@@ -15,6 +15,12 @@
             <div class="{{ !Request::is('toko/*') ? 'navbar-transparent' : 'navbar-solid' }} fixed top-0 left-0 right-0 z-50 h-12">
                 <x-home.navbar />
             </div>
+            <div class="{{ !Request::is('events/*') ? 'navbar-transparent' : 'navbar-solid' }} fixed top-0 left-0 right-0 z-50 h-12">
+                <x-home.navbar />
+            </div>
+             <div class="{{ !Request::is('artikel/*') ? 'navbar-transparent' : 'navbar-solid' }} fixed top-0 left-0 right-0 z-50 h-12">
+                <x-home.navbar />
+            </div>
             
             <!-- Main content with adjusted margin to match navbar height -->
             <main class="mt-12">
