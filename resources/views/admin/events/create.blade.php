@@ -66,7 +66,7 @@
                 </div>
 
                 <div class="d-flex justify-content-between">
-                    <a href="{{ route('admin.artikel.index') }}" class="btn btn-secondary">Kembali</a>
+                    <a href="{{ route('admin.events.index') }}" class="btn btn-secondary">Kembali</a>
                     <button type="submit" class="btn btn-primary">Simpan Event</button>
                 </div>
             </form>

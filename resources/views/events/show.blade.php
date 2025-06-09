@@ -6,9 +6,7 @@
     <div class="relative h-[60vh] w-full">
         @if($event->image)
         <div class="absolute inset-0">
-            <img src="{{ asset('storage/' . str_replace('public/', '', $event->image)) }}" 
-                 alt="{{ $event->title }}" 
-                 class="w-full h-full object-cover">
+            <img src="{{ asset($event->image) }}" alt="Banner" class="w-full h-auto">
             <div class="absolute inset-0 bg-black bg-opacity-50"></div>
         </div>
         @endif
@@ -79,6 +77,8 @@
     <i class="fas fa-arrow-up"></i>
 </button>
 
+<x-home.footer />
+
 @push('scripts')
 <script>
     // Back to Top Button
@@ -102,4 +102,4 @@
     });
 </script>
 @endpush
-@endsection 
+@endsection

@@ -35,7 +35,7 @@ class EventController extends Controller
 
         try {
             if ($request->hasFile('banner')) {
-                $bannerPath = $request->file('banner')->store('public/events');
+                $bannerPath = $request->file('banner')->store('events', 'public');
                 
                 Event::create([
                     'title' => $request->title,
@@ -78,7 +78,7 @@ class EventController extends Controller
                 if ($event->image) {
                     Storage::delete(str_replace('/storage', 'public', $event->image));
                 }
-                $bannerPath = $request->file('banner')->store('public/events');
+                $bannerPath = $request->file('banner')->store('events', 'public');
                 $event->image = $bannerPath;
             }
 
