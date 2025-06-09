@@ -8,22 +8,44 @@
         <h1 class="text-2xl font-bold text-gray-800">Konversi Sampah ke Poin</h1>
         <p class="text-gray-600 mt-2">Konversi berat sampah menjadi poin reward untuk nasabah</p>
 
-        <form action="{{ route('pengelola.poin') }}" method="POST" class="mt-8 space-y-6" id="conversionForm">
+        @if (session('success'))
+            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mt-4" role="alert">
+                <strong class="font-bold">Sukses!</strong>
+                <span class="block sm:inline">{{ session('success') }}</span>
+            </div>
+        @endif
+
+        @if (session('error'))
+            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mt-4" role="alert">
+                <strong class="font-bold">Gagal!</strong>
+                <span class="block sm:inline">{{ session('error') }}</span>
+            </div>
+        @endif
+        
+        @if ($errors->any())
+            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mt-4" role="alert">
+                <strong class="font-bold">Terjadi Kesalahan!</strong>
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
+        <form action="{{ route('pengelola.poin.store') }}" method="POST" class="mt-8 space-y-6" id="conversionForm">
             @csrf
+            <input type="hidden" name="user_id" id="user_id">
             <!-- User Search Section -->
             <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-                <label for="user" class="block text-lg font-semibold text-gray-800 mb-3">Cari Nasabah</label>
+                <label for="user_search" class="block text-lg font-semibold text-gray-800 mb-3">Cari Nasabah</label>
                 <div class="relative">
                     <input type="text" 
-                           id="user" 
-                           name="user" 
+                           id="user_search" 
+                           name="user_search" 
                            class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 text-lg px-4 py-3" 
                            placeholder="Masukkan nama atau ID nasabah">
-                    <div class="absolute inset-y-0 right-0 flex items-center pr-3">
-                        <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-                        </svg>
-                    </div>
+                    <div id="user_suggestions" class="absolute z-10 w-full bg-white border border-gray-300 rounded-lg mt-1 hidden"></div>
                 </div>
                 <!-- Preview User Card (Initially Hidden) -->
                 <div id="userPreview" class="hidden mt-4 p-4 bg-gray-50 rounded-lg">
@@ -36,9 +58,9 @@
                             </div>
                         </div>
                         <div>
-                            <p class="text-sm font-medium text-gray-900">John Doe</p>
-                            <p class="text-sm text-gray-500">ID: NSB123456</p>
-                            <p class="text-sm text-gray-500">Total Poin: 1,500</p>
+                            <p class="text-sm font-medium text-gray-900" id="previewName">John Doe</p>
+                            <p class="text-sm text-gray-500" id="previewId">ID: NSB123456</p>
+                            <p class="text-sm text-gray-500" id="previewCurrentPoints">Total Poin: 1,500</p>
                         </div>
                     </div>
                 </div>
@@ -104,29 +126,31 @@
             <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200 mb-4">
                 <div class="flex flex-wrap gap-4 items-center justify-between">
                     <div class="flex items-center space-x-4">
-                        <select class="rounded-lg border-gray-300 text-sm focus:ring-green-500 focus:border-green-500">
-                            <option value="all">Semua Periode</option>
-                            <option value="today">Hari Ini</option>
-                            <option value="week">Minggu Ini</option>
-                            <option value="month">Bulan Ini</option>
+                        <select id="periodFilter" name="period" class="rounded-lg border-gray-300 text-sm focus:ring-green-500 focus:border-green-500">
+                            <option value="all" @if(request('period') == 'all' || !request('period')) selected @endif>Semua Periode</option>
+                            <option value="today" @if(request('period') == 'today') selected @endif>Hari Ini</option>
+                            <option value="this_week" @if(request('period') == 'this_week') selected @endif>Minggu Ini</option>
+                            <option value="this_month" @if(request('period') == 'this_month') selected @endif>Bulan Ini</option>
                         </select>
-                        <select class="rounded-lg border-gray-300 text-sm focus:ring-green-500 focus:border-green-500">
-                            <option value="all">Semua Status</option>
-                            <option value="success">Berhasil</option>
-                            <option value="pending">Pending</option>
-                            <option value="failed">Gagal</option>
+                        <select id="statusFilter" name="status" class="rounded-lg border-gray-300 text-sm focus:ring-green-500 focus:border-green-500">
+                            <option value="all" @if(request('status') == 'all' || !request('status')) selected @endif>Semua Status</option>
+                            <option value="berhasil" @if(request('status') == 'berhasil') selected @endif>Berhasil</option>
+                            <option value="pending" @if(request('status') == 'pending') selected @endif>Pending</option>
+                            <option value="gagal" @if(request('status') == 'gagal') selected @endif>Gagal</option>
                         </select>
                     </div>
-                    <div class="relative">
-                        <input type="text" 
+                    <form id="searchForm" class="relative">
+                         <input type="text" 
+                               name="search"
                                placeholder="Cari nasabah..." 
+                               value="{{ request('search') }}"
                                class="rounded-lg border-gray-300 text-sm focus:ring-green-500 focus:border-green-500 w-64">
-                        <div class="absolute inset-y-0 right-0 flex items-center pr-3">
+                        <button type="submit" class="absolute inset-y-0 right-0 flex items-center pr-3">
                             <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
                             </svg>
-                        </div>
-                    </div>
+                        </button>
+                    </form>
                 </div>
             </div>
 
@@ -138,96 +162,41 @@
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tanggal</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID Nasabah</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nama</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Berat Sampah</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Deskripsi</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Poin</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
-                        <!-- Example rows -->
+                        @forelse($histories as $history)
                         <tr>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">7 Mei 2025</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">NSB123456</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">John Doe</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">2.5 kg</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">250</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $history->created_at->format('d M Y H:i') }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $history->user->user_id }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $history->user->nama }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $history->description }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 font-semibold text-green-600">+{{ $history->amount }}</td>
                             <td class="px-6 py-4 whitespace-nowrap">
-                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                                    Berhasil
+                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
+                                    @switch($history->status)
+                                        @case('berhasil') bg-green-100 text-green-800 @break
+                                        @case('pending') bg-yellow-100 text-yellow-800 @break
+                                        @case('gagal') bg-red-100 text-red-800 @break
+                                    @endswitch">
+                                    {{ ucfirst($history->status) }}
                                 </span>
                             </td>
                         </tr>
+                        @empty
                         <tr>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">7 Mei 2025</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">NSB123457</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Jane Smith</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">1.8 kg</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">180</td>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                                    Berhasil
-                                </span>
-                            </td>
+                            <td colspan="6" class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">Belum ada riwayat konversi poin.</td>
                         </tr>
-                        <tr>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">6 Mei 2025</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">NSB123458</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Mike Johnson</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">3.2 kg</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">320</td>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                                    Berhasil
-                                </span>
-                            </td>
-                        </tr>
+                        @endforelse
                     </tbody>
                 </table>
 
                 <!-- Pagination -->
                 <div class="bg-white px-4 py-3 border-t border-gray-200 sm:px-6">
-                    <div class="flex items-center justify-between">
-                        <div class="flex-1 flex justify-between sm:hidden">
-                            <a href="#" class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
-                                Previous
-                            </a>
-                            <a href="#" class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
-                                Next
-                            </a>
-                        </div>
-                        <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
-                            <div>
-                                <p class="text-sm text-gray-700">
-                                    Showing
-                                    <span class="font-medium">1</span>
-                                    to
-                                    <span class="font-medium">10</span>
-                                    of
-                                    <span class="font-medium">20</span>
-                                    results
-                                </p>
-                            </div>
-                            <div>
-                                <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
-                                    <a href="#" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
-                                        Previous
-                                    </a>
-                                    <a href="#" class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
-                                        1
-                                    </a>
-                                    <a href="#" class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
-                                        2
-                                    </a>
-                                    <a href="#" class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-green-50 text-sm font-medium text-green-600">
-                                        3
-                                    </a>
-                                    <a href="#" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
-                                        Next
-                                    </a>
-                                </nav>
-                            </div>
-                        </div>
-                    </div>
+                    {{ $histories->links() }}
                 </div>
             </div>
         </div>
@@ -235,20 +204,72 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const userInput = document.getElementById('user');
+            const userSearchInput = document.getElementById('user_search');
+            const userSuggestions = document.getElementById('user_suggestions');
             const userPreview = document.getElementById('userPreview');
+            const hiddenUserId = document.getElementById('user_id');
+            
             const wasteWeight = document.getElementById('wasteWeight');
             const weightUnit = document.getElementById('weightUnit');
             const pointsPreview = document.getElementById('pointsPreview');
             const previewWeight = document.getElementById('previewWeight');
             const previewPoints = document.getElementById('previewPoints');
 
-            // Show user preview when typing (demo purposes)
-            userInput.addEventListener('input', function() {
-                if (this.value.length > 2) {
+            userSearchInput.addEventListener('input', async function() {
+                const query = this.value;
+                
+                if (query.length < 2) {
+                    userSuggestions.classList.add('hidden');
+                    return;
+                }
+
+                try {
+                    const response = await fetch(`{{ route('pengelola.api.users.search') }}?query=${query}`);
+                    if (!response.ok) throw new Error('Network response was not ok.');
+                    const users = await response.json();
+
+                    userSuggestions.innerHTML = '';
+                    if (users.length > 0) {
+                        users.forEach(user => {
+                            const suggestionItem = document.createElement('div');
+                            suggestionItem.className = 'p-3 hover:bg-gray-100 cursor-pointer';
+                            suggestionItem.textContent = `${user.nama} (ID: ${user.user_id})`;
+                            suggestionItem.dataset.userId = user.user_id;
+                            suggestionItem.dataset.userName = user.nama;
+                            suggestionItem.dataset.userPoints = user.points;
+                            userSuggestions.appendChild(suggestionItem);
+                        });
+                        userSuggestions.classList.remove('hidden');
+                    } else {
+                        userSuggestions.innerHTML = '<div class="p-3 text-gray-500">Nasabah tidak ditemukan.</div>';
+                        userSuggestions.classList.remove('hidden');
+                    }
+                } catch (error) {
+                    console.error('Error fetching users:', error);
+                    userSuggestions.innerHTML = '<div class="p-3 text-red-500">Gagal memuat data.</div>';
+                    userSuggestions.classList.remove('hidden');
+                }
+            });
+
+            userSuggestions.addEventListener('click', function(e) {
+                if (e.target.dataset.userId) {
+                    const selectedUser = e.target;
+                    hiddenUserId.value = selectedUser.dataset.userId;
+                    userSearchInput.value = selectedUser.textContent;
+                    
+                    document.getElementById('previewName').textContent = selectedUser.dataset.userName;
+                    document.getElementById('previewId').textContent = `ID: ${selectedUser.dataset.userId}`;
+                    document.getElementById('previewCurrentPoints').textContent = `Total Poin: ${new Intl.NumberFormat().format(selectedUser.dataset.userPoints)}`;
+                    
                     userPreview.classList.remove('hidden');
-                } else {
-                    userPreview.classList.add('hidden');
+                    userSuggestions.classList.add('hidden');
+                }
+            });
+
+            // Hide suggestions when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!userSearchInput.contains(e.target) && !userSuggestions.contains(e.target)) {
+                    userSuggestions.classList.add('hidden');
                 }
             });
 
@@ -274,6 +295,31 @@
 
             wasteWeight.addEventListener('input', calculatePoints);
             weightUnit.addEventListener('change', calculatePoints);
+
+            const periodFilter = document.getElementById('periodFilter');
+            const statusFilter = document.getElementById('statusFilter');
+            const searchForm = document.getElementById('searchForm');
+
+            function applyFilters() {
+                const period = periodFilter.value;
+                const status = statusFilter.value;
+                const search = document.querySelector('input[name="search"]').value;
+
+                const url = new URL(window.location.href.split('?')[0]);
+                if (period !== 'all') url.searchParams.set('period', period);
+                if (status !== 'all') url.searchParams.set('status', status);
+                if (search) url.searchParams.set('search', search);
+
+                window.location.href = url.toString();
+            }
+
+            periodFilter.addEventListener('change', applyFilters);
+            statusFilter.addEventListener('change', applyFilters);
+            
+            searchForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                applyFilters();
+            });
         });
     </script>
 @endsection

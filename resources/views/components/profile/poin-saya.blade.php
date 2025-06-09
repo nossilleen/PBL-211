@@ -3,7 +3,7 @@
     <h2 class="text-lg font-bold">Poin Saya</h2>
     <div class="flex items-center justify-between">
         <div class="flex items-center">
-            <span class="text-3xl font-bold text-green-600">1.250 Poin</span>
+            <span class="text-3xl font-bold text-green-600">{{ number_format(Auth::user()->points ?? 0) }} Poin</span>
             <p class="ml-4 text-sm text-gray-600">Poin dapat ditukar dengan Eco Enzim atau Sembako di lokasi terdekat<br>Setor 3kg sampah lagi untuk tukar 1 produk Eco Enzim!</p>
         </div>
         <div class="flex items-center">

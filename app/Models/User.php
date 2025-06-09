@@ -37,6 +37,7 @@ class User extends Authenticatable
         'password',
         'no_hp',
         'role',
+        'points',
     ];
 
     /**
@@ -82,5 +83,10 @@ class User extends Authenticatable
     public function feedback()
     {
         return $this->hasMany(Feedback::class, 'user_id');
+    }
+
+    public function pointHistories()
+    {
+        return $this->hasMany(PointHistory::class, 'user_id', 'user_id');
     }
 }

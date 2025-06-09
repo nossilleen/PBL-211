@@ -13,6 +13,7 @@ use App\Http\Controllers\Workspace\TokoController;
 use App\Http\Controllers\Workspace\EventController;
 use App\Http\Controllers\ArtikelController;
 use App\Http\Controllers\FeedbackController;
+use App\Http\Controllers\Pengelola\PoinController;
 
 Route::post('/artikel/{artikel}/feedback', [FeedbackController::class, 'store'])->name('feedback.store');
 Route::get('/artikel/{artikel}/feedback', [ArtikelController::class, 'allFeedback'])->name('artikel.allFeedback');
@@ -104,7 +105,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/pengelola/alamat', [PengelolaController::class, 'alamat'])->name('pengelola.alamat');
     Route::get('/pengelola/toko', [ProductController::class, 'toko'])->name('pengelola.toko');
     Route::get('/pengelola/transaksi', [PengelolaController::class, 'transaksi'])->name('pengelola.transaksi');
-    Route::get('/pengelola/poin', [PengelolaController::class, 'poin'])->name('pengelola.poin');
     Route::get('/pengelola/nasabah', [PengelolaController::class, 'nasabah'])->name('pengelola.nasabah');
     Route::get('/pengelola/laporan', [PengelolaController::class, 'laporan'])->name('pengelola.laporan');
     Route::get('/pengelola/pesanan', [PengelolaController::class, 'pesanan'])->name('pengelola.pesanan');
@@ -116,3 +116,18 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::get('/stores', [\App\Http\Controllers\PBS\PengelolaController::class, 'stores'])->name('stores.index');
+
+
+// Route::get('/pengelola/poin', [PengelolaController::class, 'poin'])->name('pengelola.poin');
+Route::get('/pengelola/transaksi', [PengelolaController::class, 'transaksi'])->name('pengelola.transaksi');
+Route::get('/admin/events', [EventController::class, 'index'])->name('admin.events.index');
+
+Route::middleware(['auth', 'role:pengelola'])->prefix('pengelola')->name('pengelola.')->group(function () {
+    Route::get('/poin', [PoinController::class, 'index'])->name('poin.index');
+    Route::post('/poin/konversi', [PoinController::class, 'store'])->name('poin.store');
+    Route::get('/api/users/search', [PoinController::class, 'searchUser'])->name('api.users.search');
+});
+
+Route::get('/debug-sentry', function () {
+    throw new Exception('My first Sentry error!');
+});

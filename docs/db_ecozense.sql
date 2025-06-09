@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 04, 2025 at 04:35 PM
+-- Generation Time: Jun 09, 2025 at 03:28 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -210,6 +210,28 @@ CREATE TABLE `poin` (
   CONSTRAINT `poin_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE,
   CONSTRAINT `check_jumlah_poin` CHECK (`jumlah_poin` >= 0)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `point_histories`
+--
+
+CREATE TABLE `point_histories` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` bigint(20) unsigned NOT NULL,
+  `transaction_type` enum('credit','debit') NOT NULL,
+  `amount` bigint(20) unsigned NOT NULL,
+  `description` varchar(255) NOT NULL,
+  `related_type` varchar(255) DEFAULT NULL,
+  `related_id` bigint(20) unsigned DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `point_histories_user_id_foreign` (`user_id`),
+  KEY `point_histories_related_type_related_id_index` (`related_type`,`related_id`),
+  CONSTRAINT `point_histories_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -448,6 +470,7 @@ CREATE TABLE `user` (
   `nama` varchar(50) NOT NULL,
   `email` varchar(100) NOT NULL,
   `password` varchar(255) NOT NULL,
+  `points` bigint(20) unsigned NOT NULL DEFAULT 0,
   `no_hp` varchar(15) NOT NULL,
   `role` enum('admin','nasabah','pengelola') NOT NULL DEFAULT 'nasabah',
   `created_at` timestamp NULL DEFAULT NULL,
@@ -537,6 +560,14 @@ ALTER TABLE `poin`
   ADD PRIMARY KEY (`poin_id`),
   ADD UNIQUE KEY `user_lokasi_unique` (`user_id`,`lokasi_id`),
   ADD KEY `poin_lokasi_id_foreign` (`lokasi_id`);
+
+--
+-- Indexes for table `point_histories`
+--
+ALTER TABLE `point_histories`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `point_histories_user_id_foreign` (`user_id`),
+  ADD KEY `point_histories_related_type_related_id_index` (`related_type`,`related_id`);
 
 --
 -- Indexes for table `product_likes`
@@ -691,6 +722,12 @@ ALTER TABLE `poin`
   MODIFY `poin_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `point_histories`
+--
+ALTER TABLE `point_histories`
+  MODIFY `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `product_likes`
 --
 ALTER TABLE `product_likes`
@@ -773,6 +810,12 @@ ALTER TABLE `feedback`
 ALTER TABLE `poin`
   ADD CONSTRAINT `poin_lokasi_id_foreign` FOREIGN KEY (`lokasi_id`) REFERENCES `lokasi` (`lokasi_id`),
   ADD CONSTRAINT `poin_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`);
+
+--
+-- Constraints for table `point_histories`
+--
+ALTER TABLE `point_histories`
+  ADD CONSTRAINT `point_histories_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`);
 
 --
 -- Constraints for table `product_likes`
