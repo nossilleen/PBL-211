@@ -12,6 +12,10 @@ use App\Http\Controllers\PBS\BrowseController;
 use App\Http\Controllers\Workspace\TokoController;
 use App\Http\Controllers\Workspace\EventController;
 use App\Http\Controllers\ArtikelController;
+use App\Http\Controllers\FeedbackController;
+
+Route::post('/artikel/{artikel}/feedback', [FeedbackController::class, 'store'])->name('feedback.store');
+Route::get('/artikel/{artikel}/feedback', [ArtikelController::class, 'allFeedback'])->name('artikel.allFeedback');
 
 Route::get('/', function () {
     if (Auth::check()) {
