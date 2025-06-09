@@ -14,6 +14,7 @@ use App\Http\Controllers\Workspace\EventController;
 use App\Http\Controllers\ArtikelController;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\Pengelola\PoinController;
+use App\Http\Controllers\Workspace\UpgradeController;
 
 Route::post('/artikel/{artikel}/feedback', [FeedbackController::class, 'store'])->name('feedback.store');
 Route::get('/artikel/{artikel}/feedback', [ArtikelController::class, 'allFeedback'])->name('artikel.allFeedback');
@@ -72,6 +73,13 @@ Route::prefix('admin')->middleware('auth')->name('admin.')->group(function () {
     Route::post('/artikel/{artikelId}/feedback', [ArtikelController::class, 'storeFeedback'])->name('feedback.store');
 });
 
+// Pengajuan routes
+Route::prefix('admin')->middleware('auth')->group(function () {
+    Route::get('/pengajuan', [AdminController::class, 'pengajuan'])->name('admin.pengajuan');
+    Route::patch('/pengajuan/{id}/approve', [AdminController::class, 'approvePengajuan'])->name('admin.pengajuan.approve');
+    Route::patch('/pengajuan/{id}/reject', [AdminController::class, 'rejectPengajuan'])->name('admin.pengajuan.reject');
+});
+
 // Transaksi routes
 Route::prefix('transaksi')->middleware('auth')->group(function () {
     Route::get('/pesanan', [TransaksiController::class, 'pesananAktif'])->name('transaksi.pesanan');
@@ -97,6 +105,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/nasabah/poin-saya', function () {
         return view('components.profile.poin-saya');
     })->name('poin-saya');
+
+    Route::post('/nasabah/upgrade', [UpgradeController::class, 'UpgradeRequest'])->name('nasabah.upgrade');
 });
 
 // Pengelola routes

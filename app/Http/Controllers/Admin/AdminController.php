@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Event;
+use App\Models\User;
+use App\Models\Upgrade;
 
 class AdminController extends Controller
 {
@@ -35,9 +37,34 @@ class AdminController extends Controller
 
     public function pengajuan()
     {
-        return view('admin.pengajuan.index');
+        $pengajuan = Upgrade::where('status', 'pending')->get();
+
+        return view('admin.pengajuan.index', compact('pengajuan'));
+    }
+    public function approvePengajuan($id)
+    {
+        $pengajuan = Upgrade::findOrFail($id);
+
+        // Update the user's role to 'pengelola'
+        $user = User::findOrFail($pengajuan->user_id);
+        $user->update(['role' => 'pengelola']);
+
+        // Mark the submission as approved
+        $pengajuan->update(['status' => 'approved']);
+
+        return redirect()->route('admin.pengajuan')->with('success', 'Pengajuan berhasil disetujui.');
     }
 
+        public function rejectPengajuan($id)
+    {
+        $pengajuan = Upgrade::findOrFail($id);
+
+        // Mark the submission as rejected
+        $pengajuan->update(['status' => 'rejected']);
+
+        return redirect()->route('admin.pengajuan')->with('success', 'Pengajuan berhasil ditolak.');
+    }
+    
     public function user()
     {
         return view('admin.user.index');
