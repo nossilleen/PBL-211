@@ -1,4 +1,4 @@
-@props(['image', 'title', 'desc', 'price', 'status', 'bank', 'suka', 'productId', 'isLiked' => false])
+@props(['image', 'title', 'desc', 'price', 'harga_points', 'status', 'bank', 'suka', 'productId', 'isLiked' => false])
 
 <div class="bg-white rounded-lg shadow-md overflow-hidden flex flex-col h-full min-h-[400px]">
     {{-- Product Image with Like Button --}}
@@ -30,7 +30,10 @@
         {{-- Price, Status, and Bank --}}
         <div class="space-y-2">
             @isset($price)
-                <p class="text-lg font-bold text-yellow-500">Rp{{ $price }}</p>
+                <p class="text-lg font-bold text-yellow-500 mb-1">Rp{{ $price }}</p>
+                @if(!empty($harga_points))
+                    <p class="text-sm font-medium text-blue-600 mb-1">atau {{ number_format($harga_points) }} Poin</p>
+                @endif
             @endisset
             <div class="flex items-center justify-between">
                 <span class="text-sm {{ $status == 'Available' ? 'text-green-600' : 'text-red-600' }} font-medium">

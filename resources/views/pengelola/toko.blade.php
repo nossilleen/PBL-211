@@ -45,7 +45,10 @@
                     <h3 class="text-lg font-bold text-gray-800 mb-2">{{ $item->nama_produk }}</h3>
                     <p class="text-sm text-gray-600 mb-2">{{ Str::limit($item->deskripsi, 50) }}</p>
                     <p class="text-lg font-bold text-yellow-500 mb-2">Rp{{ number_format($item->harga, 0, ',', '.') }}</p>
-                    
+                    @if($item->harga_points)
+                        <p class="text-sm font-medium text-blue-600 mb-2">atau {{ number_format($item->harga_points) }} Poin</p>
+                    @endif
+
                     <!-- Add Category Display -->
                     <p class="text-sm text-blue-600 font-medium mb-2">
                         {{ ucwords(str_replace('_', ' ', $item->kategori)) }}
@@ -129,6 +132,13 @@
             <div class="mb-4">
                 <label for="harga" class="block text-gray-700 font-medium mb-2">Price (Rp) *</label>
                 <input type="number" name="harga" id="harga" required min="0"
+                       class="w-full border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500">
+            </div>
+
+            <!-- Product Poin Price -->
+            <div class="mb-4">
+                <label for="harga_points" class="block text-gray-700 font-medium mb-2">Poin Price (optional)</label>
+                <input type="number" name="harga_points" id="harga_points" min="0"
                        class="w-full border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500">
             </div>
 
@@ -255,6 +265,7 @@ function openProductModal(product = null) {
         // Fill in existing values
         document.getElementById('nama_produk').value = product.nama_produk;
         document.getElementById('harga').value = product.harga;
+        document.getElementById('harga_points').value = product.harga_points ?? '';
         document.getElementById('deskripsi').value = product.deskripsi;
         document.getElementById('kategori').value = product.kategori;
         document.getElementById('status_ketersediaan').value = product.status_ketersediaan;

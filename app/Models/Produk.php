@@ -14,11 +14,12 @@ class Produk extends Model
     protected $fillable = [
         'nama_produk',
         'harga',
+        'harga_points',
         'deskripsi',
         'kategori',
         'status_ketersediaan',
         'user_id',
-        'suka'  // Remove 'likes' from fillable - we only want 'suka'
+        'suka' 
     ];
 
     public function gambar()

@@ -59,7 +59,10 @@
                                 </div>
                             </div>
                             <!-- Price -->
-                            <div class="text-3xl font-bold text-yellow-500 mb-6">Rp{{ number_format($product->harga, 0, ',', '.') }}</div>
+                            <div class="text-3xl font-bold text-yellow-500 mb-2">Rp{{ number_format($product->harga, 0, ',', '.') }}</div>
+                            @if($product->harga_points)
+                                <div class="text-xl font-medium text-blue-600 mb-6">atau {{ number_format($product->harga_points) }} Poin</div>
+                            @endif
                             <!-- Product Info -->
                             <div class="space-y-3 mb-6">
                                 <div class="flex">
@@ -188,7 +191,16 @@
             </div>
             <div class="mb-6 flex items-center justify-between">
                 <span class="font-semibold text-gray-700">Total Harga</span>
-                <span id="total-harga" class="text-green-700 font-bold text-lg">Rp{{ number_format($product->harga, 0, ',', '.') }}</span>
+                <div class="text-right">
+                    <span id="total-harga" class="text-green-700 font-bold text-lg block">
+                        Rp{{ number_format($product->harga, 0, ',', '.') }}
+                    </span>
+                    @if($product->harga_points)
+                        <span id="total-poin" class="text-blue-600 font-medium text-sm block">
+                            atau {{ number_format($product->harga_points) }} Poin
+                        </span>
+                    @endif
+                </div>
             </div>
             <div class="flex flex-col gap-3">
                 <button class="bg-green-600 text-white py-2 rounded-md font-semibold hover:bg-green-700 transition">Bayar Sekarang</button>
@@ -199,6 +211,7 @@
     <script>
         // Harga satuan produk (ambil dari PHP)
         const hargaSatuan = {{ $product->harga ?? 0 }};
+        const poinSatuan = {{ $product->harga_points ?? 0 }};
         let qty = 1;
 
         function changeQty(val) {
@@ -206,6 +219,9 @@
             if (qty < 1) qty = 1;
             document.getElementById('qty').innerText = qty;
             document.getElementById('total-harga').innerText = 'Rp' + (qty * hargaSatuan).toLocaleString('id-ID');
+            if (poinSatuan > 0) {
+                document.getElementById('total-poin').innerText = 'atau ' + (qty * poinSatuan).toLocaleString('id-ID') + ' Poin';
+            }
         }
     </script>
 </body>

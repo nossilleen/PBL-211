@@ -56,6 +56,7 @@
                                 :title="$product->nama_produk"
                                 :desc="Str::limit($product->deskripsi, 50)"
                                 :price="number_format($product->harga, 0, ',', '.')"
+                                :harga_points="$product->harga_points"
                                 :status="$product->status_ketersediaan"
                                 :bank="$shop->nama"
                                 :suka="$product->suka"

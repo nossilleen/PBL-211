@@ -71,6 +71,11 @@
                                     <p class="text-lg font-bold text-yellow-500 mb-2">
                                         Rp{{ number_format($product->harga, 0, ',', '.') }}
                                     </p>
+                                    @if($product->harga_points)
+                                        <p class="text-sm font-medium text-blue-600 mb-2">
+                                            atau {{ number_format($product->harga_points) }} Poin
+                                        </p>
+                                    @endif
                                     <div class="flex items-center justify-between">
                                         <span class="text-sm {{ $product->status_ketersediaan == 'Available' ? 'text-green-600' : 'text-red-600' }} font-medium">
                                             {{ $product->status_ketersediaan }}

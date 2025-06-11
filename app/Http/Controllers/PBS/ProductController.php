@@ -30,6 +30,7 @@ class ProductController extends Controller
         $validated = $request->validate([
             'nama_produk' => 'required|string|max:255',
             'harga' => 'required|numeric|min:0',
+            'harga_points' => 'nullable|numeric|min:0',
             'deskripsi' => 'nullable|string',
             'kategori' => 'required|string',
             'image' => 'required|image|mimes:jpeg,png,jpg|max:2048'
@@ -40,6 +41,7 @@ class ProductController extends Controller
             $product = Produk::create([
                 'nama_produk' => $validated['nama_produk'],
                 'harga' => $validated['harga'],
+                'harga_points' => $validated['harga_points'] ?? null,
                 'deskripsi' => $validated['deskripsi'],
                 'kategori' => $validated['kategori'],
                 'status_ketersediaan' => 'Available',
@@ -83,6 +85,7 @@ class ProductController extends Controller
         $validated = $request->validate([
             'nama_produk' => 'required|string|max:255',
             'harga' => 'required|numeric|min:0',
+            'harga_points' => 'nullable|numeric|min:0',
             'deskripsi' => 'required|string',
             'kategori' => 'required|in:eco_enzim,sembako',
             'status_ketersediaan' => 'required|in:Available,Unavailable', // Updated to match enum
@@ -99,6 +102,7 @@ class ProductController extends Controller
             $product->update([
                 'nama_produk' => $validated['nama_produk'],
                 'harga' => $validated['harga'],
+                'harga_points' => $validated['harga_points'] ?? null,
                 'deskripsi' => $validated['deskripsi'],
                 'kategori' => $validated['kategori'],
                 'status_ketersediaan' => $validated['status_ketersediaan']
