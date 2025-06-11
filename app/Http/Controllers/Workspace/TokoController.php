@@ -11,8 +11,12 @@ class TokoController extends Controller
 {
     public function detail($id)
     {
-        $shop = \App\Models\User::findOrFail($id);
-        $products = \App\Models\Produk::where('user_id', $id)->with('gambar')->get();
-        return view('toko.detail', compact('shop', 'products'));
+        $pengelola = User::findOrFail($id);
+        $products = Produk::where('user_id', $id)
+            ->with('gambar')
+            ->get()
+            ->groupBy('kategori');
+
+        return view('store-detail', compact('pengelola', 'products'));
     }
 }

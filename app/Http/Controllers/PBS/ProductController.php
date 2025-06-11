@@ -160,21 +160,41 @@ class ProductController extends Controller
 
     public function show($id)
     {
-        // Fetch the product by ID
-        $product = Produk::findOrFail($id);
-
-        // Pass the product to the product-detail view
+        $product = Produk::with(['user', 'gambar'])->findOrFail($id);
         return view('product-detail', compact('product'));
     }
 
     public function toko()
     {
-        // Only show products belonging to the current user
-        $products = Produk::where('user_id', auth()->id())
-                         ->with('gambar')
-                         ->paginate(12);
+        $user = auth()->user();
+        $products = Produk::where('user_id', auth()->id())->paginate(12);
+        return view('pengelola.toko', compact('products', 'user'));
+    }
 
-        return view('pengelola.toko', compact('products'));
+    public function updateToko(Request $request)
+    {
+        $validated = $request->validate([
+            'deskripsi_toko' => 'nullable|string',
+            'alamat_toko' => 'required|string',
+            'jam_operasional' => 'required|string',
+            'nomor_rekening' => 'required|string',
+            'nama_bank_rekening' => 'required|string',
+            'foto_toko' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+        ]);
+
+        $user = auth()->user();
+
+        if ($request->hasFile('foto_toko')) {
+            if ($user->foto_toko) {
+                Storage::delete('public/' . $user->foto_toko);
+            }
+            $path = $request->file('foto_toko')->store('toko-photos', 'public');
+            $validated['foto_toko'] = $path;
+        }
+
+        $user->update($validated);
+
+        return redirect()->route('pengelola.toko')->with('success', 'Informasi toko berhasil diperbarui');
     }
 
     public function toggleLike(Request $request, $id)

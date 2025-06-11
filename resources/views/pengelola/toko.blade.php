@@ -29,7 +29,7 @@
 @endif
 
 <!-- Products Grid -->
-<div class="bg-white rounded-lg shadow-md p-6">
+<div class="bg-white rounded-lg shadow-md p-6 mb-8">
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         @foreach ($products as $item)
             <div class="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden">
@@ -167,6 +167,76 @@
             </div>
         </form>
     </div>
+</div>
+
+<!-- Toko Settings -->
+<div class="bg-white rounded-lg shadow-md p-6 mb-8">
+    <form action="{{ route('pengelola.toko.update') }}" method="POST" enctype="multipart/form-data">
+        @csrf
+        @method('PUT')
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Profile Picture -->
+            <div class="col-span-2">
+                <label class="block text-sm font-medium text-gray-700 mb-2">Foto Toko</label>
+                <div class="flex items-center space-x-4">
+                    <div class="w-24 h-24 rounded-full overflow-hidden bg-gray-100">
+                        <img id="preview-image" src="{{ $user->foto_toko ? Storage::url($user->foto_toko) : asset('images/default-store.png') }}" 
+                             class="w-full h-full object-cover">
+                    </div>
+                    <input type="file" name="foto_toko" id="foto_toko" accept="image/*" class="hidden"
+                           onchange="document.getElementById('preview-image').src = window.URL.createObjectURL(this.files[0])">
+                    <label for="foto_toko" 
+                           class="px-4 py-2 bg-gray-200 text-gray-700 rounded cursor-pointer hover:bg-gray-300">
+                        Pilih Foto
+                    </label>
+                </div>
+            </div>
+
+            <!-- Alamat -->
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Alamat Toko</label>
+                <input type="text" name="alamat_toko" value="{{ $user->alamat_toko }}"
+                       class="w-full px-3 py-2 border rounded focus:ring-green-500 focus:border-green-500">
+            </div>
+
+            <!-- Jam Operasional -->
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Jam Operasional</label>
+                <input type="text" name="jam_operasional" value="{{ $user->jam_operasional }}"
+                       class="w-full px-3 py-2 border rounded focus:ring-green-500 focus:border-green-500"
+                       placeholder="Contoh: 08.00 - 17.00">
+            </div>
+
+            <!-- Rekening -->
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Nomor Rekening</label>
+                <input type="text" name="nomor_rekening" value="{{ $user->nomor_rekening }}"
+                       class="w-full px-3 py-2 border rounded focus:ring-green-500 focus:border-green-500">
+            </div>
+
+            <!-- Nama Bank -->
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Nama Bank</label>
+                <input type="text" name="nama_bank_rekening" value="{{ $user->nama_bank_rekening }}"
+                       class="w-full px-3 py-2 border rounded focus:ring-green-500 focus:border-green-500"
+                       placeholder="Contoh: BCA, Mandiri, dll">
+            </div>
+
+            <!-- Deskripsi -->
+            <div class="col-span-2">
+                <label class="block text-sm font-medium text-gray-700 mb-2">Deskripsi Toko</label>
+                <textarea name="deskripsi_toko" rows="4" 
+                          class="w-full px-3 py-2 border rounded focus:ring-green-500 focus:border-green-500">{{ $user->deskripsi_toko }}</textarea>
+            </div>
+        </div>
+
+        <div class="mt-6">
+            <button type="submit" class="px-6 py-2 bg-green-600 text-white rounded hover:bg-green-700">
+                Simpan Perubahan
+            </button>
+        </div>
+    </form>
 </div>
 
 <script>

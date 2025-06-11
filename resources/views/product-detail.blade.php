@@ -174,7 +174,9 @@
             <h2 class="text-2xl font-bold text-green-700 mb-4 text-center">Konfirmasi Pembelian</h2>
             <div class="mb-4">
                 <div class="text-gray-700 font-semibold mb-1">Rekening Penjual</div>
-                <div class="bg-gray-100 rounded px-4 py-2 text-gray-800 text-sm select-all">BCA 1234567890 a.n. EcoZense</div>
+                <div class="bg-gray-100 rounded px-4 py-2 text-gray-800 text-sm select-all">
+                    {{ $product->user->nama_bank_rekening ?? 'Belum ditentukan' }} {{ $product->user->nomor_rekening ?? 'Belum ditentukan' }} a.n. {{ $product->user->nama }}
+                </div>
             </div>
             <div class="mb-4 flex items-center justify-between">
                 <span class="font-semibold text-gray-700">Jumlah</span>

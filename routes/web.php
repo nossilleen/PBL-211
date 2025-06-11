@@ -36,11 +36,10 @@ Route::get('/about', function () {
     return view('about');
 })->name('about');
 Route::get('/browse', [PengelolaController::class, 'browse'])->name('browse');
-Route::get('/toko/{id}', [TokoController::class, 'detail'])->name('toko.detail');
+Route::get('/toko/{id}', [TokoController::class, 'detail'])
+    ->name('toko.detail')
+    ->middleware('web');
 Route::get('/product/{id}', [ProductController::class, 'detail'])->name('product.detail');
-Route::get('/store/{id}', function ($id) {
-    return view('store-detail');
-})->name('store.detail');
 
 // Authentication routes
 Auth::routes();
@@ -123,6 +122,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/product/{id}', [ProductController::class, 'show'])->name('product.detail');
     Route::resource('/pengelola/products', ProductController::class);
     Route::post('/produk/{id}/like', [ProductController::class, 'toggleLike'])->name('produk.like');
+    Route::put('/pengelola/toko/update', [ProductController::class, 'updateToko'])->name('pengelola.toko.update');
 });
 
 Route::get('/stores', [\App\Http\Controllers\PBS\PengelolaController::class, 'stores'])->name('stores.index');

@@ -38,6 +38,12 @@ class User extends Authenticatable
         'no_hp',
         'role',
         'points',
+        'deskripsi_toko',
+        'alamat_toko',
+        'jam_operasional',
+        'nomor_rekening',
+        'nama_bank_rekening',
+        'foto_toko'
     ];
 
     /**
