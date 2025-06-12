@@ -101,13 +101,12 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                         @forelse ($shops as $shop)
                             <x-browse.product-card
-                                :image="asset($shop->profile_picture ?? 'images/default-shop.jpg')"
+                                :image="$shop->foto_toko ? Storage::url($shop->foto_toko) : asset('images/default-store.png')"        
                                 :title="$shop->nama ?? 'Nama Toko'"
-                                :desc="Str::limit($shop->deskripsi ?? 'Bank Sampah Eco Enzim', 50)"
-                                :status="'Toko Eco Enzim'"
-                                :bank="!empty($shop->alamat) ? $shop->alamat : ''"
-                                :suka="$shop->suka ?? 0"
+                                :desc="Str::limit($shop->deskripsi_toko ?? 'Belum ada deskripsi', 50)"
+                                :bank="$shop->alamat_toko ?? 'Belum ada alamat'"
                                 :productId="$shop->id"
+                                :showLike="false"
                             >
                                 <a href="{{ route('toko.detail', ['id' => $shop->user_id]) }}" 
                                    class="w-full px-6 py-3 bg-green-600 text-white text-lg font-semibold rounded-md hover:bg-green-700 transition-colors text-center">

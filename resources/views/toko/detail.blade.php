@@ -3,35 +3,7 @@
 @section('content')
     <!-- Remove pt-16 since we'll handle spacing differently -->
     <main>
-        <!-- Store Header - Add mt-16 to start content below navbar -->
-        <section class="mt-16 bg-white shadow-sm">
-            <div class="container mx-auto px-4 py-12">
-                <div class="flex flex-col md:flex-row items-center gap-8">
-                    <div class="w-40 h-40 md:w-48 md:h-48 rounded-full overflow-hidden shadow-lg">
-                        <img src="{{ asset($shop->profile_picture ?? 'images/Frame 2305.png') }}" alt="Foto Toko" class="w-full h-full object-cover">
-                    </div>
-                    <div class="flex-1 text-center md:text-left">
-                        <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">{{ $shop->nama ?? 'Nama Toko' }}</h1>
-                        <p class="text-lg text-gray-600 mb-6 max-w-2xl">{{ $shop->deskripsi ?? 'Deskripsi singkat tentang toko ini dan produk-produk yang dijual. Kami menyediakan berbagai produk eco enzyme berkualitas.' }}</p>
-                        <div class="flex flex-wrap gap-6 justify-center md:justify-start">
-                            <div class="flex items-center bg-gray-50 px-4 py-2 rounded-lg">
-                                <svg class="w-6 h-6 text-green-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
-                                </svg>
-                                <span class="text-gray-700">{{ $shop->alamat ?? 'Lokasi Toko' }}</span>
-                            </div>
-                            <div class="flex items-center bg-gray-50 px-4 py-2 rounded-lg">
-                                <svg class="w-6 h-6 text-green-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                </svg>
-                                <span class="text-gray-700">Jam Operasional: 08.00 - 17.00</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+
 
         <!-- Product Categories -->
         <section class="py-8">

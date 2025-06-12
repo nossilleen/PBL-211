@@ -1,22 +1,36 @@
-@props(['image', 'title', 'desc', 'price', 'harga_points', 'status', 'bank', 'suka', 'productId', 'isLiked' => false])
+@props([
+    'image',
+    'title',
+    'desc',
+    'price' => null,
+    'harga_points' => null,
+    'status' => null,
+    'bank' => null,
+    'suka' => null,
+    'productId' => null,
+    'isLiked' => false,
+    'showLike' => true,
+])
 
 <div class="bg-white rounded-lg shadow-md overflow-hidden flex flex-col h-full min-h-[400px]">
     {{-- Product Image with Like Button --}}
     <div class="relative h-48">
         <img src="{{ $image }}" alt="{{ $title }}" class="w-full h-full object-cover">
-        <button type="button"
-            onclick="toggleLike({{ $productId }})" 
-            class="like-button absolute top-2 right-2 p-2 rounded-full bg-white shadow-md hover:bg-gray-100">
-            <svg id="heart-{{ $productId }}" 
-                class="w-6 h-6 {{ $isLiked ? 'text-red-500' : '' }}" 
-                fill="{{ $isLiked ? 'currentColor' : 'none' }}"
-                stroke="currentColor" 
-                viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                    d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z">
-                </path>
-            </svg>
-        </button>
+        @if($showLike)
+            <button type="button"
+                onclick="toggleLike({{ $productId }})" 
+                class="like-button absolute top-2 right-2 p-2 rounded-full bg-white shadow-md hover:bg-gray-100">
+                <svg id="heart-{{ $productId }}" 
+                    class="w-6 h-6 {{ $isLiked ? 'text-red-500' : '' }}" 
+                    fill="{{ $isLiked ? 'currentColor' : 'none' }}"
+                    stroke="currentColor" 
+                    viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                        d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z">
+                    </path>
+                </svg>
+            </button>
+        @endif
     </div>
 
     {{-- Product Info --}}
@@ -39,7 +53,10 @@
                 <span class="text-sm {{ $status == 'Available' ? 'text-green-600' : 'text-red-600' }} font-medium">
                     {{ $status }}
                 </span>
-                <span class="text-sm text-gray-500" id="like-count-{{ $productId }}">❤ {{ $suka }}</span>
+                @if($showLike)
+                    <span class="text-sm text-gray-500" id="like-count-{{ $productId }}">❤ {{ $suka }}</span>
+                @endif
+            
             </div>
             @if(!empty($bank))
                 <p class="text-sm text-blue-600 truncate">{{ $bank }}</p>
