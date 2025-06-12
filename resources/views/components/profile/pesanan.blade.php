@@ -18,12 +18,17 @@
                 <tr>
                     <td class="py-4 px-4">
                         <div class="flex items-center">
-                            <div class="h-12 w-12 flex-shrink-0">
-                                <img class="h-12 w-12 rounded-md object-cover" src="{{ $pesanan->produk->gambar_utama ?? '/images/produk/default.jpg' }}" alt="{{ $pesanan->produk->nama_produk ?? 'Produk' }}">
+                            <div class="h-10 w-10 flex-shrink-0">
+                                <img 
+                                    class="h-10 w-10 rounded object-cover border border-gray-200"
+                                    src="{{ $pesanan->produk && $pesanan->produk->gambar_utama ? asset('storage/' . $pesanan->produk->gambar_utama) : asset('/images/produk/default.jpg') }}"
+                                    alt="{{ $pesanan->produk->nama_produk ?? 'Produk' }}"
+                                    onerror="this.onerror=null;this.src='{{ asset('/images/produk/default.jpg') }}';"
+                                />
                             </div>
-                            <div class="ml-4">
+                            <div class="ml-3">
                                 <div class="text-sm font-medium text-gray-900">{{ $pesanan->produk->nama_produk ?? 'Produk' }}</div>
-                                <div class="text-sm text-gray-500">{{ $pesanan->tanggal->format('d M Y') ?? '' }}</div>
+                                <div class="text-xs text-gray-500">{{ $pesanan->tanggal->format('d M Y') ?? '' }}</div>
                             </div>
                         </div>
                     </td>
@@ -52,133 +57,17 @@
                     </td>
                     <td class="py-4 px-4 text-sm font-medium">
                         @if($pesanan->status == 'belum dibayar' && $pesanan->pay_method == 'transfer')
-                        <button type="button" onclick="openUploadModal('{{ $pesanan->transaksi_id }}')" class="text-green-600 hover:text-green-900 mr-3">Upload Bukti</button>
+                            <button type="button" onclick="openUploadModal('{{ $pesanan->transaksi_id }}')" class="text-green-600 hover:text-green-900 mr-3">Upload Bukti</button>
+                        @elseif($pesanan->status == 'sedang dikirim')
+                            <form action="{{ route('transaksi.complete', $pesanan->transaksi_id) }}" method="POST" class="inline">
+                                @csrf
+                                <button type="submit" class="text-green-600 hover:text-green-900 mr-3">Tandai Selesai</button>
+                            </form>
                         @endif
                         <a href="#" class="text-blue-600 hover:text-blue-900">Detail</a>
                     </td>
                 </tr>
                 @endforeach
-
-                <!-- Contoh Pesanan 1: Belum Dibayar (Transfer) -->
-                <tr>
-                    <td class="py-4 px-4">
-                        <div class="flex items-center">
-                            <div class="h-12 w-12 flex-shrink-0">
-                                <img class="h-12 w-12 rounded-md object-cover" src="/images/produk/default.jpg" alt="Eco-Friendly Tote Bag">
-                            </div>
-                            <div class="ml-4">
-                                <div class="text-sm font-medium text-gray-900">Eco-Friendly Tote Bag</div>
-                                <div class="text-sm text-gray-500">{{ now()->format('d M Y') }}</div>
-                            </div>
-                        </div>
-                    </td>
-                    <td class="py-4 px-4 text-sm text-gray-900">2</td>
-                    <td class="py-4 px-4 text-sm text-gray-900">Rp150.000</td>
-                    <td class="py-4 px-4 text-sm text-gray-900">
-                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
-                            Transfer
-                        </span>
-                    </td>
-                    <td class="py-4 px-4">
-                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
-                            Belum Dibayar
-                        </span>
-                    </td>
-                    <td class="py-4 px-4 text-sm font-medium">
-                        <button type="button" onclick="openUploadModal('TRX-001')" class="text-green-600 hover:text-green-900 mr-3">Upload Bukti</button>
-                        <a href="#" class="text-blue-600 hover:text-blue-900">Detail</a>
-                    </td>
-                </tr>
-
-                <!-- Contoh Pesanan 2: Belum Dibayar (Poin) -->
-                <tr>
-                    <td class="py-4 px-4">
-                        <div class="flex items-center">
-                            <div class="h-12 w-12 flex-shrink-0">
-                                <img class="h-12 w-12 rounded-md object-cover" src="/images/produk/default.jpg" alt="Tempat Sampah Pilah">
-                            </div>
-                            <div class="ml-4">
-                                <div class="text-sm font-medium text-gray-900">Tempat Sampah Pilah</div>
-                                <div class="text-sm text-gray-500">{{ now()->format('d M Y') }}</div>
-                            </div>
-                        </div>
-                    </td>
-                    <td class="py-4 px-4 text-sm text-gray-900">1</td>
-                    <td class="py-4 px-4 text-sm text-gray-900">Rp275.000</td>
-                    <td class="py-4 px-4 text-sm text-gray-900">
-                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-purple-100 text-purple-800">
-                            Poin
-                        </span>
-                    </td>
-                    <td class="py-4 px-4">
-                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
-                            Belum Dibayar
-                        </span>
-                    </td>
-                    <td class="py-4 px-4 text-sm font-medium">
-                        <a href="#" class="text-blue-600 hover:text-blue-900">Detail</a>
-                    </td>
-                </tr>
-
-                <!-- Contoh Pesanan 3: Menunggu Konfirmasi (Transfer) -->
-                <tr>
-                    <td class="py-4 px-4">
-                        <div class="flex items-center">
-                            <div class="h-12 w-12 flex-shrink-0">
-                                <img class="h-12 w-12 rounded-md object-cover" src="/images/produk/default.jpg" alt="Eco Enzyme Pembersih Lantai">
-                            </div>
-                            <div class="ml-4">
-                                <div class="text-sm font-medium text-gray-900">Eco Enzyme Pembersih Lantai</div>
-                                <div class="text-sm text-gray-500">{{ now()->subDays(1)->format('d M Y') }}</div>
-                            </div>
-                        </div>
-                    </td>
-                    <td class="py-4 px-4 text-sm text-gray-900">3</td>
-                    <td class="py-4 px-4 text-sm text-gray-900">Rp125.000</td>
-                    <td class="py-4 px-4 text-sm text-gray-900">
-                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
-                            Transfer
-                        </span>
-                    </td>
-                    <td class="py-4 px-4">
-                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
-                            Menunggu Konfirmasi
-                        </span>
-                    </td>
-                    <td class="py-4 px-4 text-sm font-medium">
-                        <a href="#" class="text-blue-600 hover:text-blue-900">Detail</a>
-                    </td>
-                </tr>
-
-                <!-- Contoh Pesanan 4: Sedang Dikirim (Transfer) -->
-                <tr>
-                    <td class="py-4 px-4">
-                        <div class="flex items-center">
-                            <div class="h-12 w-12 flex-shrink-0">
-                                <img class="h-12 w-12 rounded-md object-cover" src="/images/produk/default.jpg" alt="Paket Eco Enzyme Lengkap">
-                            </div>
-                            <div class="ml-4">
-                                <div class="text-sm font-medium text-gray-900">Paket Eco Enzyme Lengkap</div>
-                                <div class="text-sm text-gray-500">{{ now()->subDays(3)->format('d M Y') }}</div>
-                            </div>
-                        </div>
-                    </td>
-                    <td class="py-4 px-4 text-sm text-gray-900">1</td>
-                    <td class="py-4 px-4 text-sm text-gray-900">Rp350.000</td>
-                    <td class="py-4 px-4 text-sm text-gray-900">
-                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
-                            Transfer
-                        </span>
-                    </td>
-                    <td class="py-4 px-4">
-                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
-                            Sedang Dikirim
-                        </span>
-                    </td>
-                    <td class="py-4 px-4 text-sm font-medium">
-                        <a href="#" class="text-blue-600 hover:text-blue-900">Detail</a>
-                    </td>
-                </tr>
 
                 @if(empty($pesananAktif) || count($pesananAktif) == 0)
                 <tr>
@@ -190,4 +79,4 @@
             </tbody>
         </table>
     </div>
-</div> 
+</div>

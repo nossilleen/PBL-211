@@ -82,248 +82,42 @@
         </div>
     </div>
 
-    <!-- Waiting for Verification Orders -->
-    <div class="space-y-6">
-        <!-- Order Card 1 -->
-        <div class="bg-white rounded-lg shadow-md overflow-hidden">
-            <div class="p-6 border-b border-gray-200">
-                <div class="flex items-center justify-between mb-4">
-                    <div>
-                        <div class="flex items-center">
-                            <span class="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-xs font-semibold">Menunggu Verifikasi</span>
-                            <span class="ml-3 text-sm text-gray-500">Order ID: #ORD78965</span>
-                        </div>
-                        <h3 class="text-lg font-semibold text-gray-800 mt-2">Ani Setiawati</h3>
-                        <p class="text-sm text-gray-500">2 Mei 2023, 14:30</p>
-                    </div>
-                    <div class="text-right">
-                        <p class="text-lg font-bold text-gray-800">Rp 450.000</p>
-                        <p class="text-sm text-gray-500">Pembayaran: Transfer Bank</p>
-                    </div>
-                </div>
-                
-                <div class="border-t border-gray-100 pt-4">
-                    <div class="flex flex-col md:flex-row items-start gap-6">
-                        <!-- Order Items -->
-                        <div class="flex-1">
-                            <h4 class="font-medium text-gray-700 mb-3">Produk yang Dipesan</h4>
-                            <div class="space-y-3">
-                                <div class="flex items-start">
-                                    <div class="w-12 h-12 rounded-lg bg-gray-200 overflow-hidden mr-3 flex-shrink-0">
-                                        <img src="https://via.placeholder.com/100" alt="Eco Tote Bag" class="w-full h-full object-cover">
-                                    </div>
-                                    <div>
-                                        <p class="font-medium text-gray-800">Eco Tote Bag</p>
-                                        <div class="flex items-center text-sm text-gray-500">
-                                            <span>2 x Rp 75.000</span>
-                                        </div>
-                                    </div>
-                                    <div class="ml-auto text-right">
-                                        <p class="font-medium text-gray-800">Rp 150.000</p>
-                                    </div>
-                                </div>
-                                <div class="flex items-start">
-                                    <div class="w-12 h-12 rounded-lg bg-gray-200 overflow-hidden mr-3 flex-shrink-0">
-                                        <img src="https://via.placeholder.com/100" alt="Bambu Straw Set" class="w-full h-full object-cover">
-                                    </div>
-                                    <div>
-                                        <p class="font-medium text-gray-800">Bambu Straw Set</p>
-                                        <div class="flex items-center text-sm text-gray-500">
-                                            <span>3 x Rp 100.000</span>
-                                        </div>
-                                    </div>
-                                    <div class="ml-auto text-right">
-                                        <p class="font-medium text-gray-800">Rp 300.000</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Payment Proof -->
-                        <div class="md:w-1/3">
-                            <h4 class="font-medium text-gray-700 mb-3">Bukti Pembayaran</h4>
-                            <div class="border border-gray-200 rounded-lg overflow-hidden">
-                                <div class="p-2">
-                                    <img src="https://via.placeholder.com/800x500" alt="Bukti Transfer" class="w-full h-auto rounded">
-                                </div>
-                                <div class="p-3 bg-gray-50">
-                                    <p class="text-sm font-medium text-gray-700">Transfer Bank BCA</p>
-                                    <p class="text-sm text-gray-500">2 Mei 2023, 13:42</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="bg-gray-50 p-4 flex justify-end space-x-3">
-                <button class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-300 transition-colors">
-                    Tolak Pesanan
-                </button>
-                <button class="px-4 py-2 bg-green-600 text-white rounded-lg text-sm font-medium hover:bg-green-700 transition-colors">
-                    Verifikasi & Proses
-                </button>
-            </div>
-        </div>
-        
-        <!-- Order Card 2 -->
-        <div class="bg-white rounded-lg shadow-md overflow-hidden">
-            <div class="p-6 border-b border-gray-200">
-                <div class="flex items-center justify-between mb-4">
-                    <div>
-                        <div class="flex items-center">
-                            <span class="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-xs font-semibold">Menunggu Verifikasi</span>
-                            <span class="ml-3 text-sm text-gray-500">Order ID: #ORD78963</span>
-                        </div>
-                        <h3 class="text-lg font-semibold text-gray-800 mt-2">Budi Santoso</h3>
-                        <p class="text-sm text-gray-500">1 Mei 2023, 10:15</p>
-                    </div>
-                    <div class="text-right">
-                        <p class="text-lg font-bold text-gray-800">Rp 225.000</p>
-                        <p class="text-sm text-gray-500">Pembayaran: Transfer Bank</p>
-                    </div>
-                </div>
-                
-                <div class="border-t border-gray-100 pt-4">
-                    <div class="flex flex-col md:flex-row items-start gap-6">
-                        <!-- Order Items -->
-                        <div class="flex-1">
-                            <h4 class="font-medium text-gray-700 mb-3">Produk yang Dipesan</h4>
-                            <div class="space-y-3">
-                                <div class="flex items-start">
-                                    <div class="w-12 h-12 rounded-lg bg-gray-200 overflow-hidden mr-3 flex-shrink-0">
-                                        <img src="https://via.placeholder.com/100" alt="Tempat Sampah Organik" class="w-full h-full object-cover">
-                                    </div>
-                                    <div>
-                                        <p class="font-medium text-gray-800">Tempat Sampah Organik</p>
-                                        <div class="flex items-center text-sm text-gray-500">
-                                            <span>1 x Rp 225.000</span>
-                                        </div>
-                                    </div>
-                                    <div class="ml-auto text-right">
-                                        <p class="font-medium text-gray-800">Rp 225.000</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Payment Proof -->
-                        <div class="md:w-1/3">
-                            <h4 class="font-medium text-gray-700 mb-3">Bukti Pembayaran</h4>
-                            <div class="border border-gray-200 rounded-lg overflow-hidden">
-                                <div class="p-2">
-                                    <img src="https://via.placeholder.com/800x500" alt="Bukti Transfer" class="w-full h-auto rounded">
-                                </div>
-                                <div class="p-3 bg-gray-50">
-                                    <p class="text-sm font-medium text-gray-700">Transfer Bank Mandiri</p>
-                                    <p class="text-sm text-gray-500">1 Mei 2023, 09:58</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="bg-gray-50 p-4 flex justify-end space-x-3">
-                <button class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-300 transition-colors">
-                    Tolak Pesanan
-                </button>
-                <button class="px-4 py-2 bg-green-600 text-white rounded-lg text-sm font-medium hover:bg-green-700 transition-colors">
-                    Verifikasi & Proses
-                </button>
-            </div>
-        </div>
-
-        <!-- Order Card 3 -->
-        <div class="bg-white rounded-lg shadow-md overflow-hidden">
-            <div class="p-6 border-b border-gray-200">
-                <div class="flex items-center justify-between mb-4">
-                    <div>
-                        <div class="flex items-center">
-                            <span class="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-xs font-semibold">Menunggu Verifikasi</span>
-                            <span class="ml-3 text-sm text-gray-500">Order ID: #ORD78960</span>
-                        </div>
-                        <h3 class="text-lg font-semibold text-gray-800 mt-2">Dewi Lestari</h3>
-                        <p class="text-sm text-gray-500">30 April 2023, 16:45</p>
-                    </div>
-                    <div class="text-right">
-                        <p class="text-lg font-bold text-gray-800">Rp 375.000</p>
-                        <p class="text-sm text-gray-500">Pembayaran: Transfer Bank</p>
-                    </div>
-                </div>
-                
-                <div class="border-t border-gray-100 pt-4">
-                    <div class="flex flex-col md:flex-row items-start gap-6">
-                        <!-- Order Items -->
-                        <div class="flex-1">
-                            <h4 class="font-medium text-gray-700 mb-3">Produk yang Dipesan</h4>
-                            <div class="space-y-3">
-                                <div class="flex items-start">
-                                    <div class="w-12 h-12 rounded-lg bg-gray-200 overflow-hidden mr-3 flex-shrink-0">
-                                        <img src="https://via.placeholder.com/100" alt="Eco Bottle Set" class="w-full h-full object-cover">
-                                    </div>
-                                    <div>
-                                        <p class="font-medium text-gray-800">Eco Bottle Set</p>
-                                        <div class="flex items-center text-sm text-gray-500">
-                                            <span>1 x Rp 175.000</span>
-                                        </div>
-                                    </div>
-                                    <div class="ml-auto text-right">
-                                        <p class="font-medium text-gray-800">Rp 175.000</p>
-                                    </div>
-                                </div>
-                                <div class="flex items-start">
-                                    <div class="w-12 h-12 rounded-lg bg-gray-200 overflow-hidden mr-3 flex-shrink-0">
-                                        <img src="https://via.placeholder.com/100" alt="Lunch Box Bambu" class="w-full h-full object-cover">
-                                    </div>
-                                    <div>
-                                        <p class="font-medium text-gray-800">Lunch Box Bambu</p>
-                                        <div class="flex items-center text-sm text-gray-500">
-                                            <span>2 x Rp 100.000</span>
-                                        </div>
-                                    </div>
-                                    <div class="ml-auto text-right">
-                                        <p class="font-medium text-gray-800">Rp 200.000</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Payment Proof -->
-                        <div class="md:w-1/3">
-                            <h4 class="font-medium text-gray-700 mb-3">Bukti Pembayaran</h4>
-                            <div class="border border-gray-200 rounded-lg overflow-hidden">
-                                <div class="p-2">
-                                    <img src="https://via.placeholder.com/800x500" alt="Bukti Transfer" class="w-full h-auto rounded">
-                                </div>
-                                <div class="p-3 bg-gray-50">
-                                    <p class="text-sm font-medium text-gray-700">Transfer Bank BNI</p>
-                                    <p class="text-sm text-gray-500">30 April 2023, 16:20</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="bg-gray-50 p-4 flex justify-end space-x-3">
-                <button class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-300 transition-colors">
-                    Tolak Pesanan
-                </button>
-                <button class="px-4 py-2 bg-green-600 text-white rounded-lg text-sm font-medium hover:bg-green-700 transition-colors">
-                    Verifikasi & Proses
-                </button>
-            </div>
-        </div>
-    </div>
+    <!-- Pesanan Table -->
+<div class="bg-white rounded-lg shadow-md p-4 mt-6">
+    <table class="min-w-full bg-white border border-gray-200">
+        <thead>
+            <tr>
+                <th class="py-3 px-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border-b">Produk</th>
+                <th class="py-3 px-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border-b">Status</th>
+                <th class="py-3 px-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border-b">Aksi</th>
+            </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-200">
+            @foreach($pesananMasuk as $pesanan)
+                <tr>
+                    <td class="py-4 px-4">{{ $pesanan->produk->nama_produk ?? '-' }}</td>
+                    <td class="py-4 px-4">{{ ucfirst($pesanan->status) }}</td>
+                    <td class="py-4 px-4">
+                        @if($pesanan->status == 'menunggu konfirmasi')
+                            <form action="{{ route('pengelola.pesanan.verifikasi', $pesanan->transaksi_id) }}" method="POST" class="inline">
+                                @csrf
+                                <button type="submit" class="text-green-600 hover:text-green-900">Verifikasi & Proses</button>
+                            </form>
+                        @elseif($pesanan->status == 'sedang dikirim')
+                            <form action="{{ route('pengelola.pesanan.selesai', $pesanan->transaksi_id) }}" method="POST" class="inline">
+                                @csrf
+                                <button type="submit" class="text-blue-600 hover:text-blue-900">Tandai Selesai</button>
+                            </form>
+                        @endif
+                    </td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
+</div>
 
     <!-- Pagination -->
     <div class="mt-6 flex items-center justify-between">
-        <div>
-            <p class="text-sm text-gray-700">
-                Menampilkan <span class="font-medium">1</span> sampai <span class="font-medium">3</span> dari <span class="font-medium">12</span> pesanan
-            </p>
-        </div>
         <div class="flex space-x-1">
             <a href="#" class="px-3 py-2 bg-white border border-gray-300 rounded-md text-sm font-medium text-gray-500 hover:bg-gray-50">
                 Sebelumnya
@@ -401,4 +195,4 @@
             // For demo, we would add modal open/close functionality here
         });
     </script>
-@endsection 
+@endsection

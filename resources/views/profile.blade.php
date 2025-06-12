@@ -73,13 +73,14 @@
 
             <!-- Pesanan Section (Hidden by Default) -->
             <div id="pesanan-section" class="hidden">
-                <x-profile.pesanan />
+                @include('components.profile.pesanan', ['pesananAktif' => $pesananAktif])
             </div>
 
             <!-- Riwayat Transaksi Section (Hidden by Default) -->
             <div id="riwayat-section" class="hidden">
                 <x-profile.riwayat-transaksi />
             </div>
+
         </div>
     </div>
 </div>

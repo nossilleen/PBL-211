@@ -22,8 +22,7 @@ class TransaksiController extends Controller
             ->whereIn('status', ['belum dibayar', 'menunggu konfirmasi', 'sedang dikirim'])
             ->orderBy('created_at', 'desc')
             ->get();
-            
-        return view('pesanan.index', compact('pesananAktif'));
+    return view('pesanan.index', compact('pesananAktif'));
     }
     
     /**
@@ -153,4 +152,54 @@ class TransaksiController extends Controller
         
         return redirect()->route('profile')->with('success', 'Transaksi telah diselesaikan');
     }
-} 
+    
+    /**
+     * Membeli produk
+     */
+    public function beli(Request $request)
+    {
+        $validated = $request->validate([
+            'produk_id' => 'required|exists:produk,produk_id',
+            'jumlah' => 'required|integer|min:1',
+            'use_poin' => 'nullable|boolean',
+        ]);
+
+        $produk = Produk::findOrFail($validated['produk_id']);
+        $user = auth()->user();
+        $usePoin = $request->input('use_poin', false);
+
+        if ($usePoin) {
+            // Check if user has enough points
+            if ($user->poin < ($produk->harga_points * $validated['jumlah'])) {
+                return back()->with('error', 'Poin tidak cukup');
+            }
+            // Deduct points
+            $user->poin -= ($produk->harga_points * $validated['jumlah']);
+            $user->save();
+
+            $transaksi = Transaksi::create([
+                'user_id' => $user->user_id,
+                'produk_id' => $produk->produk_id,
+                'jumlah_produk' => $validated['jumlah'],
+                'harga_total' => 0,
+                'poin_used' => $produk->harga_points * $validated['jumlah'],
+                'tanggal' => now(),
+                'status' => 'sedang dikirim',
+                'pay_method' => 'poin',
+            ]);
+        } else {
+            $transaksi = Transaksi::create([
+                'user_id' => $user->user_id,
+                'produk_id' => $produk->produk_id,
+                'jumlah_produk' => $validated['jumlah'],
+                'harga_total' => $produk->harga * $validated['jumlah'],
+                'poin_used' => 0,
+                'tanggal' => now(),
+                'status' => 'belum dibayar',
+                'pay_method' => 'transfer',
+            ]);
+        }
+
+        return redirect()->route('profile', ['#pesanan'])->with('success', 'Pesanan berhasil dibuat');
+    }
+}

@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User; // Import the User model
 use App\Models\Product; // Import the Product model
 use App\Models\Produk; // Import the Produk model
+use App\Models\Transaksi; // Import the Transaksi model
 
 class PengelolaController extends Controller
 {
@@ -118,5 +119,45 @@ class PengelolaController extends Controller
         $product = Produk::create($data);
 
         return redirect()->back()->with('success', 'Product created successfully');
+    }
+
+    // Show all pesanan for products owned by this pengelola
+    public function pesananMasuk()
+    {
+        $pengelolaId = auth()->id();
+        $pesananMasuk = Transaksi::with('produk')
+            ->whereHas('produk', function($q) use ($pengelolaId) {
+                $q->where('user_id', $pengelolaId);
+            })
+            ->whereIn('status', ['menunggu konfirmasi', 'sedang dikirim'])
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        // Make sure the variable name matches what you use in the Blade
+        return view('pengelola.pesanan', compact('pesananMasuk'));
+    }
+
+    // Verifikasi pesanan (set status to sedang dikirim)
+    public function verifikasi($id)
+    {
+        $transaksi = Transaksi::findOrFail($id);
+        if ($transaksi->status !== 'menunggu konfirmasi') {
+            return back()->with('error', 'Status tidak valid');
+        }
+        $transaksi->status = 'sedang dikirim';
+        $transaksi->save();
+        return back()->with('success', 'Pesanan telah diverifikasi dan diproses');
+    }
+
+    // Tandai selesai
+    public function selesai($id)
+    {
+        $transaksi = Transaksi::findOrFail($id);
+        if ($transaksi->status !== 'sedang dikirim') {
+            return back()->with('error', 'Status tidak valid');
+        }
+        $transaksi->status = 'selesai';
+        $transaksi->save();
+        return back()->with('success', 'Pesanan telah selesai');
     }
 }

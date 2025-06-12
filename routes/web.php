@@ -87,6 +87,7 @@ Route::prefix('transaksi')->middleware('auth')->group(function () {
     Route::get('/detail/{id}', [TransaksiController::class, 'detail'])->name('transaksi.detail');
     Route::post('/cancel/{id}', [TransaksiController::class, 'cancel'])->name('transaksi.cancel');
     Route::post('/complete/{id}', [TransaksiController::class, 'complete'])->name('transaksi.complete');
+    Route::post('/beli', [TransaksiController::class, 'beli'])->name('produk.beli');
 });
 
 Route::get('/check-data', [DataController::class, 'index']);
@@ -140,4 +141,16 @@ Route::middleware(['auth', 'role:pengelola'])->prefix('pengelola')->name('pengel
 
 Route::get('/debug-sentry', function () {
     throw new Exception('My first Sentry error!');
+});
+
+// Pengelola pesanan management routes
+Route::middleware(['auth'])->group(function () {
+    // Show pesanan table (make sure this uses pesananMasuk, not pesanan)
+    Route::get('/pengelola/pesanan', [\App\Http\Controllers\PBS\PengelolaController::class, 'pesananMasuk'])->name('pengelola.pesanan');
+
+    // Verifikasi pesanan (set status to sedang dikirim)
+    Route::post('/pengelola/pesanan/{id}/verifikasi', [\App\Http\Controllers\PBS\PengelolaController::class, 'verifikasi'])->name('pengelola.pesanan.verifikasi');
+
+    // Tandai pesanan selesai
+    Route::post('/pengelola/pesanan/{id}/selesai', [\App\Http\Controllers\PBS\PengelolaController::class, 'selesai'])->name('pengelola.pesanan.selesai');
 });

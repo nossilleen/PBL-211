@@ -29,42 +29,42 @@ class HomeController extends Controller
     public function index()
     {
         $user = Auth::user();
-        
-        // For admin and pengelola, set a flag to show dashboard by default
         $showDashboard = in_array($user->role, ['admin', 'pengelola']);
-        
-        // Load pesanan aktif dan riwayat transaksi jika user adalah nasabah
+
         $pesananAktif = collect();
         $riwayatTransaksi = collect();
         $pointHistories = collect();
-        
+
         if ($user->role == 'nasabah') {
-            $pesananAktif = Transaksi::with('produk', 'lokasi')
+            $pesananAktif = \App\Models\Transaksi::with('produk')
                 ->where('user_id', $user->user_id)
                 ->whereIn('status', ['belum dibayar', 'menunggu konfirmasi', 'sedang dikirim'])
                 ->orderBy('created_at', 'desc')
                 ->get();
-                
+
             $riwayatTransaksi = Transaksi::with('produk', 'lokasi')
                 ->where('user_id', $user->user_id)
                 ->whereIn('status', ['selesai', 'dibatalkan'])
                 ->orderBy('created_at', 'desc')
-                ->limit(10) // Ambil 10 transaksi terakhir saja untuk halaman profile
+                ->limit(10)
                 ->get();
-            
+
             $pointHistories = $user->pointHistories()
-                                 ->orderBy('created_at', 'desc')
-                                 ->limit(10)
-                                 ->get();
+                ->orderBy('created_at', 'desc')
+                ->limit(10)
+                ->get();
         }
-        
-        // Ambil 5 produk teratas berdasarkan likes untuk ditampilkan di halaman welcome
+
         $featuredProducts = Produk::orderBy('suka', 'desc')
-                                 ->take(5)
-                                 ->get();
-        
-        // Sekarang kita redirect semua user ke halaman profile 
-        // yang sudah ter-integrated dengan dashboard masing-masing role
-        return view('profile', compact('pesananAktif', 'riwayatTransaksi', 'showDashboard', 'featuredProducts', 'pointHistories'));
+            ->take(5)
+            ->get();
+
+        return view('profile', compact(
+            'pesananAktif',
+            'riwayatTransaksi',
+            'showDashboard',
+            'featuredProducts',
+            'pointHistories'
+        ));
     }
 }
