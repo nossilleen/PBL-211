@@ -11,6 +11,7 @@
         "tinker": "php artisan tinker",
         "test": "php artisan test",
         "db:restart": "php artisan migrate:fresh --seed",
+        "dummy": "php artisan migrate:fresh --seeder=FactorySeeder",
         "clear": "php artisan cache:clear && php artisan config:clear && php artisan route:clear && php artisan view:clear && php artisan optimize:clear",
         "info": "php artisan about",
         "format": "prettier --write \"resources/**/*.{js,vue,css,scss}\"",
