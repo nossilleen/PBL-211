@@ -173,6 +173,30 @@
         
         // Toggle section when hash changes
         window.addEventListener('hashchange', toggleSectionByHash);
+
+        // Handle active section from redirect
+        const activeSection = '{{ session("activeSection") }}';
+        if (activeSection) {
+            // Hide all sections first
+            document.querySelectorAll('[id$="-section"]').forEach(section => {
+                section.classList.add('hidden');
+            });
+            
+            // Show the active section
+            const targetSection = document.getElementById(activeSection + '-section');
+            if (targetSection) {
+                targetSection.classList.remove('hidden');
+            }
+            
+            // Update sidebar active state
+            const sidebarLinks = document.querySelectorAll('.sidebar-link');
+            sidebarLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('data-section') === activeSection) {
+                    link.classList.add('active');
+                }
+            });
+        }
     });
     
     // Script untuk mengakhiri preloader

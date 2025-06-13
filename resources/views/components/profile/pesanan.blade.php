@@ -62,10 +62,28 @@
                         </span>
                     </td>
                     <td class="py-4 px-4 text-sm font-medium">
-                        @if($pesanan->status == 'belum dibayar' && $pesanan->pay_method == 'transfer')
-                            <button type="button" onclick="openUploadModal('{{ $pesanan->transaksi_id }}')" class="text-green-600 hover:text-green-900 mr-3">Upload Bukti</button>
-                        @endif
-                        <a href="#" class="text-blue-600 hover:text-blue-900">Detail</a>
+                        <div class="flex gap-2">
+                            @if($pesanan->status == 'belum dibayar' && $pesanan->pay_method == 'transfer')
+                                <button type="button" 
+                                    onclick="openUploadModal('{{ $pesanan->transaksi_id }}')" 
+                                    class="inline-flex items-center px-3 py-1.5 bg-green-600 text-white text-sm font-medium rounded-md hover:bg-green-700 transition-colors duration-150">
+                                    <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/>
+                                    </svg>
+                                    Upload Bukti
+                                </button>
+                            @else
+                                <button type="button"
+                                    onclick="showDetailModal('{{ $pesanan->bukti_transfer }}')"
+                                    class="inline-flex items-center px-3 py-1.5 border border-gray-300 bg-gray-50 text-gray-700 text-sm font-medium rounded-md hover:bg-gray-100 transition-colors duration-150">
+                                    <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                                    </svg>
+                                    Lihat Detail
+                                </button>
+                            @endif
+                        </div>
                     </td>
                 </tr>
                 @endforeach
@@ -81,3 +99,51 @@
         </table>
     </div>
 </div>
+
+
+<!-- Add this modal at the top of your file -->
+<div id="buktiModal" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full flex items-center justify-center">
+    <div class="relative w-full max-w-2xl max-h-full">
+        <!-- Modal content -->
+        <div class="relative bg-white rounded-lg shadow">
+            <!-- Modal header -->
+            <div class="flex items-start justify-between p-4 border-b rounded-t">
+                <h3 class="text-xl font-semibold text-gray-900">
+                    Bukti Transfer
+                </h3>
+                <button type="button" onclick="closeBuktiModal()" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center">
+                    <svg class="w-3 h-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                    </svg>
+                </button>
+            </div>
+            <!-- Modal body -->
+            <div class="p-6 space-y-6">
+                <img id="modalImage" src="" alt="Bukti Transfer" class="w-full">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Replace your existing JavaScript with this -->
+<script>
+function showDetailModal(transaksiId) {
+    const modal = document.getElementById('buktiModal');
+    const modalImage = document.getElementById('modalImage');
+    modalImage.src = `/storage/${transaksiId}`;
+    modal.classList.remove('hidden');
+}
+
+function closeBuktiModal() {
+    const modal = document.getElementById('buktiModal');
+    modal.classList.add('hidden');
+}
+
+// Close on background click
+document.addEventListener('click', function(event) {
+    const modal = document.getElementById('buktiModal');
+    if (event.target === modal) {
+        closeBuktiModal();
+    }
+});
+</script>

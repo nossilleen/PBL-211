@@ -207,10 +207,14 @@ class TransaksiController extends Controller
                     ->update(['points' => $userTotalPoin - $totalPoinNeeded]);
 
                 DB::commit();
-                return redirect()->route('profile', ['#pesanan'])->with('success', 'Pesanan berhasil dibuat');
+                return redirect()
+                    ->route('profile')
+                    ->with([
+                        'success' => 'Pesanan berhasil dibuat',
+                        'section' => 'pesanan'
+                    ]);
             } catch (\Exception $e) {
                 DB::rollBack();
-                \Log::error('Transaction failed', ['error' => $e->getMessage()]);
                 return back()->with('error', 'Gagal membuat pesanan: ' . $e->getMessage());
             }
         } else {
@@ -226,7 +230,10 @@ class TransaksiController extends Controller
                     'pay_method' => 'transfer',
                 ]);
 
-                return redirect()->route('profile', ['#pesanan'])->with('success', 'Pesanan berhasil dibuat');
+                return redirect()
+                    ->route('profile')
+                    ->with('success', 'Pesanan berhasil dibuat')
+                    ->with('showSection', 'pesanan-section');
             } catch (\Exception $e) {
                 return back()->with('error', 'Gagal membuat pesanan: ' . $e->getMessage());
             }

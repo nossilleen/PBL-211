@@ -15,6 +15,7 @@ use App\Http\Controllers\ArtikelController;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\Pengelola\PoinController;
 use App\Http\Controllers\Workspace\UpgradeController;
+use App\Http\Controllers\Workspace\ProfileController;
 
 Route::post('/artikel/{artikel}/feedback', [FeedbackController::class, 'store'])->name('feedback.store');
 Route::get('/artikel/{artikel}/feedback', [ArtikelController::class, 'allFeedback'])->name('artikel.allFeedback');
@@ -107,6 +108,9 @@ Route::middleware('auth')->group(function () {
     })->name('poin-saya');
 
     Route::post('/nasabah/upgrade', [UpgradeController::class, 'UpgradeRequest'])->name('nasabah.upgrade');
+    Route::get('/profile/pesanan/{id}/detail', [ProfileController::class, 'pesananDetail'])
+        ->name('profile.pesanan.detail')
+        ->middleware('auth');
 });
 
 // Pengelola routes
@@ -157,4 +161,10 @@ Route::middleware(['auth'])->group(function () {
     // Add this new route for rejecting orders
     Route::post('/pengelola/pesanan/{id}/tolak', [\App\Http\Controllers\PBS\PengelolaController::class, 'tolak'])
         ->name('pengelola.pesanan.tolak');
+});
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/nasabah/pesanan/{id}/detail', [Workspace\NasabahController::class, 'pesananDetail'])
+        ->name('nasabah.pesanan.detail')
+        ->middleware('auth');
 });

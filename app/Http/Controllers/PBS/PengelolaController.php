@@ -122,19 +122,49 @@ class PengelolaController extends Controller
     }
 
     // Show all pesanan for products owned by this pengelola
-    public function pesananMasuk()
+    public function pesananMasuk(Request $request)
     {
         $pengelolaId = auth()->id();
-        $pesananMasuk = Transaksi::with('produk')
+        $status = $request->get('status', 'menunggu konfirmasi');
+
+        // Get statistics for cards
+        $pesananBaru = Transaksi::whereHas('produk', function($q) use ($pengelolaId) {
+            $q->where('user_id', $pengelolaId);
+        })->where('status', 'menunggu konfirmasi')->count();
+
+        $sedangDiproses = Transaksi::whereHas('produk', function($q) use ($pengelolaId) {
+            $q->where('user_id', $pengelolaId);
+        })->whereIn('status', ['diproses', 'sedang dikirim'])->count();
+
+        $pesananSelesai = Transaksi::whereHas('produk', function($q) use ($pengelolaId) {
+            $q->where('user_id', $pengelolaId);
+        })->where('status', 'selesai')
+          ->whereMonth('updated_at', now()->month)->count();
+
+        $totalPendapatan = Transaksi::whereHas('produk', function($q) use ($pengelolaId) {
+            $q->where('user_id', $pengelolaId);
+        })->where('status', 'selesai')
+          ->where('pay_method', 'transfer')
+          ->sum('harga_total');
+
+        // Update pesananMasuk query with proper pagination
+        $pesananMasuk = Transaksi::with(['user', 'produk'])
             ->whereHas('produk', function($q) use ($pengelolaId) {
                 $q->where('user_id', $pengelolaId);
             })
-            ->whereIn('status', ['menunggu konfirmasi', 'sedang dikirim'])
+            ->where('status', $status)  // Filter by status
             ->orderBy('created_at', 'desc')
-            ->get();
+            ->paginate(5)  // Show 5 items per page
+            ->withQueryString();  // Preserve other query parameters
 
-        // Make sure the variable name matches what you use in the Blade
-        return view('pengelola.pesanan', compact('pesananMasuk'));
+        return view('pengelola.pesanan', compact(
+            'pesananMasuk',
+            'pesananBaru',
+            'sedangDiproses',
+            'pesananSelesai',
+            'totalPendapatan',
+            'status'
+        ));
     }
 
     // Verifikasi pesanan (set status to sedang dikirim)
