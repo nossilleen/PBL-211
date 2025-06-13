@@ -160,4 +160,14 @@ class PengelolaController extends Controller
         $transaksi->save();
         return back()->with('success', 'Pesanan telah selesai');
     }
+
+    // Tambahkan method tolak untuk menolak pesanan
+    public function tolak($id)
+    {
+        $transaksi = Transaksi::findOrFail($id);
+        $transaksi->status = 'dibatalkan';
+        $transaksi->save();
+
+        return redirect()->back()->with('success', 'Pesanan ditolak');
+    }
 }

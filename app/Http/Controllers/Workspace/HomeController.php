@@ -28,43 +28,38 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $user = Auth::user();
+        $user = auth()->user();
         $showDashboard = in_array($user->role, ['admin', 'pengelola']);
 
         $pesananAktif = collect();
         $riwayatTransaksi = collect();
-        $pointHistories = collect();
 
         if ($user->role == 'nasabah') {
-            $pesananAktif = \App\Models\Transaksi::with('produk')
+            // Pesanan aktif
+            $pesananAktif = Transaksi::with('produk')
                 ->where('user_id', $user->user_id)
                 ->whereIn('status', ['belum dibayar', 'menunggu konfirmasi', 'sedang dikirim'])
                 ->orderBy('created_at', 'desc')
                 ->get();
 
-            $riwayatTransaksi = Transaksi::with('produk', 'lokasi')
+            // Riwayat transaksi - pastikan ini mendapatkan status selesai dan dibatalkan
+            $riwayatTransaksi = Transaksi::with('produk')
                 ->where('user_id', $user->user_id)
                 ->whereIn('status', ['selesai', 'dibatalkan'])
                 ->orderBy('created_at', 'desc')
-                ->limit(10)
                 ->get();
 
-            $pointHistories = $user->pointHistories()
-                ->orderBy('created_at', 'desc')
-                ->limit(10)
-                ->get();
+            \Log::info('Mengambil riwayat', [
+                'user_id' => $user->user_id,
+                'count' => $riwayatTransaksi->count(),
+                'data' => $riwayatTransaksi
+            ]);
         }
-
-        $featuredProducts = Produk::orderBy('suka', 'desc')
-            ->take(5)
-            ->get();
 
         return view('profile', compact(
             'pesananAktif',
             'riwayatTransaksi',
-            'showDashboard',
-            'featuredProducts',
-            'pointHistories'
+            'showDashboard'
         ));
     }
 }

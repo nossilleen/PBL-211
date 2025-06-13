@@ -99,10 +99,11 @@
                     <td class="py-4 px-4">{{ ucfirst($pesanan->status) }}</td>
                     <td class="py-4 px-4">
                         @if($pesanan->status == 'menunggu konfirmasi')
-                            <form action="{{ route('pengelola.pesanan.verifikasi', $pesanan->transaksi_id) }}" method="POST" class="inline">
-                                @csrf
-                                <button type="submit" class="text-green-600 hover:text-green-900">Verifikasi & Proses</button>
-                            </form>
+                            <button type="button" 
+                                    onclick="openVerifikasiModal('{{ $pesanan->transaksi_id }}', '{{ $pesanan->bukti_transfer }}')" 
+                                    class="text-green-600 hover:text-green-900">
+                                Verifikasi & Proses
+                            </button>
                         @elseif($pesanan->status == 'sedang dikirim')
                             <form action="{{ route('pengelola.pesanan.selesai', $pesanan->transaksi_id) }}" method="POST" class="inline">
                                 @csrf
@@ -172,6 +173,61 @@
         </div>
     </div>
 
+    <!-- Verifikasi Modal -->
+    <div id="verifikasiModal" class="fixed inset-0 z-50 hidden overflow-y-auto">
+        <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            <div class="fixed inset-0 transition-opacity" aria-hidden="true">
+                <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+            </div>
+            
+            <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                    <div class="sm:flex sm:items-start">
+                        <div class="mt-3 text-center sm:mt-0 sm:text-left w-full">
+                            <h3 class="text-lg leading-6 font-medium text-gray-900 mb-4">
+                                Verifikasi Bukti Pembayaran
+                            </h3>
+                            <div class="mt-2">
+                                <!-- Bukti Transfer Image -->
+                                <div class="mb-4">
+                                    <img id="buktiTransferImage" 
+                                         src="" 
+                                         alt="Bukti Transfer" 
+                                         class="max-w-full h-auto rounded-lg shadow-sm">
+                                </div>
+                                
+                                <!-- Buttons -->
+                                <div class="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
+                                    <form id="verifikasiForm" method="POST" class="inline">
+                                        @csrf
+                                        <button type="submit" 
+                                                class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-600 text-base font-medium text-white hover:bg-green-700 focus:outline-none sm:ml-3 sm:w-auto sm:text-sm">
+                                            Verifikasi
+                                        </button>
+                                    </form>
+                                    
+                                    <form id="tolakForm" method="POST" class="inline">
+                                        @csrf
+                                        <button type="submit" 
+                                                class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
+                                            Tolak
+                                        </button>
+                                    </form>
+                                    
+                                    <button type="button" 
+                                            onclick="closeVerifikasiModal()"
+                                            class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
+                                        Tutup
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         // For demo purposes only
         document.addEventListener('DOMContentLoaded', function() {
@@ -194,5 +250,35 @@
             
             // For demo, we would add modal open/close functionality here
         });
+
+        function openVerifikasiModal(transaksiId, buktiTransfer) {
+            const modal = document.getElementById('verifikasiModal');
+            const image = document.getElementById('buktiTransferImage');
+            const verifikasiForm = document.getElementById('verifikasiForm');
+            const tolakForm = document.getElementById('tolakForm');
+
+            // Set the image source
+            image.src = `{{ asset('storage') }}/${buktiTransfer}`;
+
+            // Set the form actions
+            verifikasiForm.action = `{{ url('pengelola/pesanan') }}/${transaksiId}/verifikasi`;
+            tolakForm.action = `{{ url('pengelola/pesanan') }}/${transaksiId}/tolak`;
+
+            // Show the modal
+            modal.classList.remove('hidden');
+        }
+
+        function closeVerifikasiModal() {
+            const modal = document.getElementById('verifikasiModal');
+            modal.classList.add('hidden');
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('verifikasiModal');
+            if (event.target == modal) {
+                closeVerifikasiModal();
+            }
+        }
     </script>
 @endsection

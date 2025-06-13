@@ -33,7 +33,13 @@
                         </div>
                     </td>
                     <td class="py-4 px-4 text-sm text-gray-900">{{ $pesanan->jumlah_produk ?? '1' }}</td>
-                    <td class="py-4 px-4 text-sm text-gray-900">Rp{{ number_format($pesanan->harga_total ?? 0, 0, ',', '.') }}</td>
+                    <td class="py-4 px-4 text-sm text-gray-900">
+                        @if($pesanan->pay_method == 'poin')
+                            {{ number_format($pesanan->poin_used, 0, ',', '.') }} Poin
+                        @else
+                            Rp{{ number_format($pesanan->harga_total ?? 0, 0, ',', '.') }}
+                        @endif
+                    </td>
                     <td class="py-4 px-4 text-sm text-gray-900">
                         <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ $pesanan->pay_method == 'poin' ? 'bg-purple-100 text-purple-800' : 'bg-blue-100 text-blue-800' }}">
                             {{ $pesanan->pay_method == 'poin' ? 'Poin' : 'Transfer' }}
@@ -58,11 +64,6 @@
                     <td class="py-4 px-4 text-sm font-medium">
                         @if($pesanan->status == 'belum dibayar' && $pesanan->pay_method == 'transfer')
                             <button type="button" onclick="openUploadModal('{{ $pesanan->transaksi_id }}')" class="text-green-600 hover:text-green-900 mr-3">Upload Bukti</button>
-                        @elseif($pesanan->status == 'sedang dikirim')
-                            <form action="{{ route('transaksi.complete', $pesanan->transaksi_id) }}" method="POST" class="inline">
-                                @csrf
-                                <button type="submit" class="text-green-600 hover:text-green-900 mr-3">Tandai Selesai</button>
-                            </form>
                         @endif
                         <a href="#" class="text-blue-600 hover:text-blue-900">Detail</a>
                     </td>

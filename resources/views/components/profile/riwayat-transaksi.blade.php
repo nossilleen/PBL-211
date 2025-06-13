@@ -49,7 +49,13 @@
                         </div>
                     </td>
                     <td class="py-4 px-4 text-sm text-gray-900">{{ $transaksi->jumlah_produk ?? '1' }}</td>
-                    <td class="py-4 px-4 text-sm text-gray-900">Rp{{ number_format($transaksi->harga_total ?? 0, 0, ',', '.') }}</td>
+                    <td class="py-4 px-4 text-sm text-gray-900">
+                        @if($transaksi->pay_method == 'poin')
+                            {{ number_format($transaksi->poin_used, 0, ',', '.') }} Poin
+                        @else
+                            Rp{{ number_format($transaksi->harga_total ?? 0, 0, ',', '.') }}
+                        @endif
+                    </td>
                     <td class="py-4 px-4 text-sm text-gray-900">
                         <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ $transaksi->pay_method == 'poin' ? 'bg-purple-100 text-purple-800' : 'bg-blue-100 text-blue-800' }}">
                             {{ $transaksi->pay_method == 'poin' ? 'Poin' : 'Transfer' }}
@@ -73,126 +79,6 @@
                     </td>
                 </tr>
                 @endforeach
-
-                <!-- Contoh Riwayat Transaksi 1: Selesai (Transfer) -->
-                <tr>
-                    <td class="py-4 px-4">
-                        <div class="flex items-center">
-                            <div class="h-12 w-12 flex-shrink-0">
-                                <img class="h-12 w-12 rounded-md object-cover" src="/images/produk/default.jpg" alt="Eco Enzyme Pembersih Kaca">
-                            </div>
-                            <div class="ml-4">
-                                <div class="text-sm font-medium text-gray-900">Eco Enzyme Pembersih Kaca</div>
-                                <div class="text-sm text-gray-500">{{ now()->subDays(10)->format('d M Y') }}</div>
-                            </div>
-                        </div>
-                    </td>
-                    <td class="py-4 px-4 text-sm text-gray-900">2</td>
-                    <td class="py-4 px-4 text-sm text-gray-900">Rp90.000</td>
-                    <td class="py-4 px-4 text-sm text-gray-900">
-                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
-                            Transfer
-                        </span>
-                    </td>
-                    <td class="py-4 px-4">
-                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                            Selesai
-                        </span>
-                    </td>
-                    <td class="py-4 px-4 text-sm font-medium">
-                        <a href="#" class="text-blue-600 hover:text-blue-900">Detail</a>
-                    </td>
-                </tr>
-
-                <!-- Contoh Riwayat Transaksi 2: Selesai (Poin) -->
-                <tr>
-                    <td class="py-4 px-4">
-                        <div class="flex items-center">
-                            <div class="h-12 w-12 flex-shrink-0">
-                                <img class="h-12 w-12 rounded-md object-cover" src="/images/produk/default.jpg" alt="Ramah Lingkungan Bag">
-                            </div>
-                            <div class="ml-4">
-                                <div class="text-sm font-medium text-gray-900">Ramah Lingkungan Bag</div>
-                                <div class="text-sm text-gray-500">{{ now()->subDays(15)->format('d M Y') }}</div>
-                            </div>
-                        </div>
-                    </td>
-                    <td class="py-4 px-4 text-sm text-gray-900">1</td>
-                    <td class="py-4 px-4 text-sm text-gray-900">Rp120.000</td>
-                    <td class="py-4 px-4 text-sm text-gray-900">
-                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-purple-100 text-purple-800">
-                            Poin
-                        </span>
-                    </td>
-                    <td class="py-4 px-4">
-                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                            Selesai
-                        </span>
-                    </td>
-                    <td class="py-4 px-4 text-sm font-medium">
-                        <a href="#" class="text-blue-600 hover:text-blue-900">Detail</a>
-                    </td>
-                </tr>
-
-                <!-- Contoh Riwayat Transaksi 3: Dibatalkan (Transfer) -->
-                <tr>
-                    <td class="py-4 px-4">
-                        <div class="flex items-center">
-                            <div class="h-12 w-12 flex-shrink-0">
-                                <img class="h-12 w-12 rounded-md object-cover" src="/images/produk/default.jpg" alt="Eco Enzyme All Purpose">
-                            </div>
-                            <div class="ml-4">
-                                <div class="text-sm font-medium text-gray-900">Eco Enzyme All Purpose</div>
-                                <div class="text-sm text-gray-500">{{ now()->subDays(20)->format('d M Y') }}</div>
-                            </div>
-                        </div>
-                    </td>
-                    <td class="py-4 px-4 text-sm text-gray-900">3</td>
-                    <td class="py-4 px-4 text-sm text-gray-900">Rp195.000</td>
-                    <td class="py-4 px-4 text-sm text-gray-900">
-                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
-                            Transfer
-                        </span>
-                    </td>
-                    <td class="py-4 px-4">
-                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800">
-                            Dibatalkan
-                        </span>
-                    </td>
-                    <td class="py-4 px-4 text-sm font-medium">
-                        <a href="#" class="text-blue-600 hover:text-blue-900">Detail</a>
-                    </td>
-                </tr>
-
-                <!-- Contoh Riwayat Transaksi 4: Dibatalkan (Poin) -->
-                <tr>
-                    <td class="py-4 px-4">
-                        <div class="flex items-center">
-                            <div class="h-12 w-12 flex-shrink-0">
-                                <img class="h-12 w-12 rounded-md object-cover" src="/images/produk/default.jpg" alt="Beras Organik Premium">
-                            </div>
-                            <div class="ml-4">
-                                <div class="text-sm font-medium text-gray-900">Beras Organik Premium</div>
-                                <div class="text-sm text-gray-500">{{ now()->subDays(25)->format('d M Y') }}</div>
-                            </div>
-                        </div>
-                    </td>
-                    <td class="py-4 px-4 text-sm text-gray-900">2</td>
-                    <td class="py-4 px-4 text-sm text-gray-900">Rp300.000</td>
-                    <td class="py-4 px-4 text-sm text-gray-900">
-                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-purple-100 text-purple-800">
-                            Poin
-                        </span>
-                    </td>
-                    <td class="py-4 px-4">
-                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800">
-                            Dibatalkan
-                        </span>
-                    </td>
-                    <td class="py-4 px-4 text-sm font-medium">
-                        <a href="#" class="text-blue-600 hover:text-blue-900">Detail</a>
-                    </td>
-                </tr>
 
                 @if(empty($riwayatTransaksi) || count($riwayatTransaksi) == 0)
                 <tr>
@@ -245,4 +131,4 @@
             });
         }
     });
-</script> 
+</script>

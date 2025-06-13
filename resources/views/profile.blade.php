@@ -78,7 +78,7 @@
 
             <!-- Riwayat Transaksi Section (Hidden by Default) -->
             <div id="riwayat-section" class="hidden">
-                <x-profile.riwayat-transaksi />
+                <x-profile.riwayat-transaksi :riwayatTransaksi="$riwayatTransaksi" />
             </div>
 
         </div>

@@ -8,6 +8,7 @@ use App\Models\Produk;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
 
 class TransaksiController extends Controller
 {
@@ -164,42 +165,71 @@ class TransaksiController extends Controller
             'use_poin' => 'nullable|boolean',
         ]);
 
-        $produk = Produk::findOrFail($validated['produk_id']);
-        $user = auth()->user();
-        $usePoin = $request->input('use_poin', false);
-
-        if ($usePoin) {
-            // Check if user has enough points
-            if ($user->poin < ($produk->harga_points * $validated['jumlah'])) {
-                return back()->with('error', 'Poin tidak cukup');
-            }
-            // Deduct points
-            $user->poin -= ($produk->harga_points * $validated['jumlah']);
-            $user->save();
-
-            $transaksi = Transaksi::create([
-                'user_id' => $user->user_id,
-                'produk_id' => $produk->produk_id,
-                'jumlah_produk' => $validated['jumlah'],
-                'harga_total' => 0,
-                'poin_used' => $produk->harga_points * $validated['jumlah'],
-                'tanggal' => now(),
-                'status' => 'sedang dikirim',
-                'pay_method' => 'poin',
-            ]);
-        } else {
-            $transaksi = Transaksi::create([
-                'user_id' => $user->user_id,
-                'produk_id' => $produk->produk_id,
-                'jumlah_produk' => $validated['jumlah'],
-                'harga_total' => $produk->harga * $validated['jumlah'],
-                'poin_used' => 0,
-                'tanggal' => now(),
-                'status' => 'belum dibayar',
-                'pay_method' => 'transfer',
-            ]);
+        $produk = Produk::where('produk_id', $validated['produk_id'])->first();
+        if (!$produk) {
+            return back()->with('error', 'Produk tidak ditemukan');
         }
 
-        return redirect()->route('profile', ['#pesanan'])->with('success', 'Pesanan berhasil dibuat');
+        $user = auth()->user();
+        $usePoin = $request->boolean('use_poin', false);
+
+        if ($usePoin) {
+            // Get points from correct column name
+            $userTotalPoin = (int) DB::table('user')->where('user_id', $user->user_id)->value('points');
+            $totalPoinNeeded = $produk->harga_points * $validated['jumlah'];
+
+            \Log::info('Points debug', [
+                'raw_points' => $userTotalPoin,
+                'points_needed' => $totalPoinNeeded
+            ]);
+
+            if ($userTotalPoin < $totalPoinNeeded) {
+                return back()->with('error', 'Poin tidak cukup');
+            }
+
+            try {
+                DB::beginTransaction();
+
+                $transaksi = Transaksi::create([
+                    'user_id' => $user->user_id,
+                    'produk_id' => $produk->produk_id,
+                    'jumlah_produk' => $validated['jumlah'],
+                    'harga_total' => 0,
+                    'poin_used' => $totalPoinNeeded,
+                    'tanggal' => now(),
+                    'status' => 'sedang dikirim',
+                    'pay_method' => 'poin',
+                ]);
+
+                // Update points using correct column name
+                DB::table('user')
+                    ->where('user_id', $user->user_id)
+                    ->update(['points' => $userTotalPoin - $totalPoinNeeded]);
+
+                DB::commit();
+                return redirect()->route('profile', ['#pesanan'])->with('success', 'Pesanan berhasil dibuat');
+            } catch (\Exception $e) {
+                DB::rollBack();
+                \Log::error('Transaction failed', ['error' => $e->getMessage()]);
+                return back()->with('error', 'Gagal membuat pesanan: ' . $e->getMessage());
+            }
+        } else {
+            try {
+                $transaksi = Transaksi::create([
+                    'user_id' => $user->user_id,
+                    'produk_id' => $produk->produk_id,
+                    'jumlah_produk' => $validated['jumlah'],
+                    'harga_total' => $produk->harga * $validated['jumlah'],
+                    'poin_used' => 0,
+                    'tanggal' => now(),
+                    'status' => 'belum dibayar',
+                    'pay_method' => 'transfer',
+                ]);
+
+                return redirect()->route('profile', ['#pesanan'])->with('success', 'Pesanan berhasil dibuat');
+            } catch (\Exception $e) {
+                return back()->with('error', 'Gagal membuat pesanan: ' . $e->getMessage());
+            }
+        }
     }
 }

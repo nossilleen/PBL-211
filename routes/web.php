@@ -153,4 +153,8 @@ Route::middleware(['auth'])->group(function () {
 
     // Tandai pesanan selesai
     Route::post('/pengelola/pesanan/{id}/selesai', [\App\Http\Controllers\PBS\PengelolaController::class, 'selesai'])->name('pengelola.pesanan.selesai');
+
+    // Add this new route for rejecting orders
+    Route::post('/pengelola/pesanan/{id}/tolak', [\App\Http\Controllers\PBS\PengelolaController::class, 'tolak'])
+        ->name('pengelola.pesanan.tolak');
 });

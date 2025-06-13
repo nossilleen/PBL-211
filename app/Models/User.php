@@ -64,6 +64,7 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
+        'poin' => 'integer',  // Add this to ensure proper type casting
     ];
 
     public function artikel()
