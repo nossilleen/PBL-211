@@ -28,7 +28,13 @@ class UserFactory extends Factory
             'password' => static::$password ??= Hash::make('password'),
             'no_hp' => fake()->numerify('08##########'),
             'role' => fake()->randomElement(['admin','nasabah','pengelola']),
-            'points' => fake()->numberBetween(0, 1000),
+            'points' => fake()->numberBetween(0, 10000),
+            'deskripsi_toko' => fake()->optional()->paragraph(),
+            'alamat_toko' => fake()->optional()->address(),
+            'jam_operasional' => fake()->optional()->regexify('[0-9]{2}:00 - [0-9]{2}:00'),
+            'nomor_rekening' => fake()->optional()->bankAccountNumber(),
+            'nama_bank_rekening' => fake()->optional()->randomElement(['BCA','Mandiri','BNI','BRI','CIMB']),
+            'foto_toko' => fake()->optional()->imageUrl(640,480,'business'),
         ];
     }
 

@@ -18,7 +18,7 @@ class TransaksiFactory extends Factory
 
     public function definition(): array
     {
-        $jumlah = $this->faker->numberBetween(1, 5);
+        $jumlah = $this->faker->numberBetween(1, 20);
         $harga = $this->faker->numberBetween(5000, 100000);
         $status = $this->faker->randomElement(['belum dibayar', 'menunggu konfirmasi', 'sedang dikirim', 'selesai']);
         $payMethod = $this->faker->randomElement(['transfer','poin']);

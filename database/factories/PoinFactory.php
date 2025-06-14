@@ -19,7 +19,7 @@ class PoinFactory extends Factory
         return [
             'user_id' => User::factory(),
             'lokasi_id' => Lokasi::factory(),
-            'jumlah_poin' => $this->faker->numberBetween(0, 1000),
+            'jumlah_poin' => $this->faker->numberBetween(0, 100000),
         ];
     }
 } 
