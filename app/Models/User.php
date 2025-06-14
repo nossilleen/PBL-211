@@ -43,7 +43,8 @@ class User extends Authenticatable
         'jam_operasional',
         'nomor_rekening',
         'nama_bank_rekening',
-        'foto_toko'
+        'foto_toko',
+        'force_password_change'
     ];
 
     /**

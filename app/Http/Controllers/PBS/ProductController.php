@@ -255,4 +255,12 @@ class ProductController extends Controller
             return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
         }
     }
+
+    public function getBestSellers()
+    {
+        return Produk::with('gambar')
+            ->orderBy('suka', 'desc')
+            ->take(4)
+            ->get();
+    }
 }

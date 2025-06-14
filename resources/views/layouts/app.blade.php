@@ -9,7 +9,7 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         @stack('styles')
     </head>
-    <body class="bg-gray-100">
+    <body class="bg-gray-100 font-sans antialiased">
         <div id="app">
             <!-- Navbar with conditional classes and standard height -->
             <div class="{{ !Request::is('toko', 'toko/*', 'events/*', 'artikel/*') ? 'navbar-transparent' : 'navbar-solid' }} fixed top-0 left-0 right-0 z-50 h-12">
@@ -18,6 +18,7 @@
             
             <!-- Main content with adjusted margin to match navbar height -->
             <main class="mt-12">
+                <x-flash-message />
                 @yield('content')
             </main>
         </div>

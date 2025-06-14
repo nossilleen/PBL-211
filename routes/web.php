@@ -21,10 +21,8 @@ Route::post('/artikel/{artikel}/feedback', [FeedbackController::class, 'store'])
 Route::get('/artikel/{artikel}/feedback', [ArtikelController::class, 'allFeedback'])->name('artikel.allFeedback');
 
 Route::get('/', function () {
-    if (Auth::check()) {
-        return view('welcome');
-    }
-    return view('welcome');
+    $bestSellers = app(ProductController::class)->getBestSellers();
+    return view('welcome', compact('bestSellers'));
 })->name('welcome');
 
 // Public routes
@@ -167,4 +165,18 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/nasabah/pesanan/{id}/detail', [Workspace\NasabahController::class, 'pesananDetail'])
         ->name('nasabah.pesanan.detail')
         ->middleware('auth');
+});
+
+// Admin password reset routes
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::post('/admin/users/{user}/reset-password', [App\Http\Controllers\Admin\UserPasswordController::class, 'resetPassword'])
+        ->name('admin.users.reset-password');
+});
+
+// Forced password change routes
+Route::middleware(['auth'])->group(function () {
+    Route::get('/password/force-change', [App\Http\Controllers\Admin\UserPasswordController::class, 'showForceChangeForm'])
+        ->name('password.force-change');
+    Route::post('/password/force-update', [App\Http\Controllers\Admin\UserPasswordController::class, 'forceChange'])
+        ->name('password.force-update');
 });

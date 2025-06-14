@@ -38,8 +38,13 @@ class LoginController extends Controller
         $this->middleware('auth')->only('logout');
     }
 
-    public function authenticated($request, $user)
+    protected function authenticated($request, $user)
     {
+        if ($user->force_password_change) {
+            return redirect()->route('password.force-change')
+                ->with('warning', 'Anda harus mengganti password default sebelum melanjutkan.');
+        }
+
         // Set flash message untuk notifikasi selamat datang dengan nama user
         // Memastikan pesan menampilkan nama user yang sedang login
         $userName = $user->name ?? ''; // Fallback jika nama tidak tersedia

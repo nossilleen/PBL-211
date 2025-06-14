@@ -67,6 +67,7 @@ class AdminController extends Controller
     
     public function user()
     {
-        return view('admin.user.index');
+        $users = User::all();
+        return view('admin.user.index', compact('users'));
     }
-} 
+}
