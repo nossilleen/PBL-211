@@ -21,7 +21,7 @@
             <section class="relative h-[50vh]">
                 <!-- Background Image -->
                 <div class="absolute inset-0">
-                    <img src="{{ asset('images/bg1.jpeg') }}" alt="Event Background" class="w-full h-full object-cover">
+                    <img src="{{ asset('images/bg7.jpeg') }}" alt="Event Background" class="w-full h-full object-cover">
                 </div>
 
             </section>

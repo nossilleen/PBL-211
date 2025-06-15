@@ -96,4 +96,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(PointHistory::class, 'user_id', 'user_id');
     }
+
+    public function lokasi()
+    {
+        return $this->hasMany(Lokasi::class, 'user_id', 'user_id');
+    }
 }

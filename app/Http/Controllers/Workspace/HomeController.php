@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Transaksi;
 use App\Models\Produk; // Pastikan untuk meng-import model Produk
 use App\Models\PointHistory;
+use App\Models\Lokasi; // Import the Lokasi model
 
 class HomeController extends Controller
 {
@@ -18,7 +19,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth')->except('landingPage'); // Exclude landingPage from auth middleware
     }
 
     /**
@@ -61,5 +62,14 @@ class HomeController extends Controller
             'riwayatTransaksi',
             'showDashboard'
         ));
+    }
+
+    public function landingPage()
+    {
+        $locations = Lokasi::whereNotNull('latitude')
+                            ->whereNotNull('longitude')
+                            ->get();
+
+        return view('welcome', compact('locations'));
     }
 }

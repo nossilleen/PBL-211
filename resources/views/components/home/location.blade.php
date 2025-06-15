@@ -8,27 +8,37 @@
             Lokasi Bank Sampah di Batam
         </h2>
 
-        <div
-            class="rounded-lg overflow-hidden shadow-lg max-w-5xl mx-auto"
-            data-aos="zoom-in"
-            data-aos-delay="200"
-        >
-            <!-- Menggunakan peta dari Scribble Maps untuk menampilkan lokasi bank sampah di Batam -->
-            <img
-                src="https://www.scribblemaps.com/api/maps/images/m4WWZe7WeT_thumb_1200x630.jpg"
-                alt="Peta Lokasi Bank Sampah di Batam"
-                class="w-full h-96 object-cover hover-scale"
-            />
-            <div class="bg-white p-4">
-                <p class="text-center text-sm" data-aos="fade-up" data-aos-delay="300">
-                    Lokasi bank sampah yang tersebar di berbagai wilayah Batam
-                </p>
-                <div class="mt-3 text-center" data-aos="fade-up" data-aos-delay="400">
-                    <a href="#" class="text-blue-600 hover:underline transition-all duration-300"
-                        >Lihat peta lebih detail</a
-                    >
-                </div>
-            </div>
+        <div id="landing-map" style="height: 350px;" class="rounded-lg overflow-hidden shadow-lg max-w-5xl mx-auto mb-4" data-aos="zoom-in" data-aos-delay="200"></div>
+        
+        <div class="bg-white p-4 rounded-lg shadow-lg max-w-5xl mx-auto" data-aos="fade-up" data-aos-delay="300">
+            <p class="text-center text-sm">
+                Temukan lokasi bank sampah terdekat di berbagai wilayah Batam untuk menyetorkan sampah Anda.
+            </p>
         </div>
     </div>
 </section>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Inisialisasi peta
+        const map = L.map('landing-map').setView([1.0456, 104.0305], 12);
+
+        // Tambahkan tile layer
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        // Batasi area peta agar tidak infinite
+        const southWest = L.latLng(-90, -180);
+        const northEast = L.latLng(90, 180);
+        const bounds = L.latLngBounds(southWest, northEast);
+        map.setMaxBounds(bounds);
+
+        // Tambahkan marker untuk setiap lokasi
+        @foreach($locations as $location)
+            L.marker([{{ $location->latitude }}, {{ $location->longitude }}])
+                .bindPopup('<b>{{ $location->nama_lokasi }}</b><br>{{ $location->alamat }}')
+                .addTo(map);
+        @endforeach
+    });
+</script>

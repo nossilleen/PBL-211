@@ -11,7 +11,14 @@ class Lokasi extends Model
     
     protected $table = 'lokasi';
     protected $primaryKey = 'lokasi_id';
-    protected $fillable = ['nama_lokasi', 'alamat', 'kota'];
+    protected $fillable = [
+        'nama_lokasi', 
+        'alamat', 
+        'kota',
+        'latitude',
+        'longitude',
+        'user_id'
+    ];
     
     public function poin()
     {

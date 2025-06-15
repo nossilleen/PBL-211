@@ -16,6 +16,8 @@ return new class extends Migration
             $table->string('nama_lokasi', 100);
             $table->string('alamat', 255);
             $table->string('kota', 50);
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('user_id')->on('user')->onDelete('cascade');
             $table->timestamps();
         });
     }

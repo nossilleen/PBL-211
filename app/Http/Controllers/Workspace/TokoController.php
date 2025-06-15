@@ -16,7 +16,9 @@ class TokoController extends Controller
             ->with('gambar')
             ->get()
             ->groupBy('kategori');
+            
+        $lokasi = $pengelola->lokasi()->latest()->first();
 
-        return view('store-detail', compact('pengelola', 'products'));
+        return view('store-detail', compact('pengelola', 'products', 'lokasi'));
     }
 }

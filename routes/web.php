@@ -20,12 +20,7 @@ use App\Http\Controllers\Workspace\ProfileController;
 Route::post('/artikel/{artikel}/feedback', [FeedbackController::class, 'store'])->name('feedback.store');
 Route::get('/artikel/{artikel}/feedback', [ArtikelController::class, 'allFeedback'])->name('artikel.allFeedback');
 
-Route::get('/', function () {
-    if (Auth::check()) {
-        return view('welcome');
-    }
-    return view('welcome');
-})->name('welcome');
+Route::get('/', [HomeController::class, 'landingPage'])->name('welcome');
 
 // Public routes
 Route::get('/artikel', [ArtikelController::class, 'landing'])->name('artikel.index');
@@ -117,6 +112,7 @@ Route::middleware('auth')->group(function () {
 Route::middleware(['auth'])->group(function () {
     Route::get('/pengelola', [PengelolaController::class, 'index'])->name('pengelola.index');
     Route::get('/pengelola/alamat', [PengelolaController::class, 'alamat'])->name('pengelola.alamat');
+    Route::post('/pengelola/alamat/update', [PengelolaController::class, 'updateAlamat'])->name('pengelola.alamat.update');
     Route::get('/pengelola/toko', [ProductController::class, 'toko'])->name('pengelola.toko');
     Route::get('/pengelola/transaksi', [PengelolaController::class, 'transaksi'])->name('pengelola.transaksi');
     Route::get('/pengelola/nasabah', [PengelolaController::class, 'nasabah'])->name('pengelola.nasabah');
