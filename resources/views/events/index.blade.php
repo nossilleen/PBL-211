@@ -26,7 +26,7 @@
             <section class="h-[60vh] flex items-center relative">
                 <!-- Background image layer -->
                 <div class="absolute inset-0 z-0">
-                    <img src="{{ asset('images/bg7.jpeg') }}" class="w-full h-full object-cover" alt="Background">
+                    <img src="{{ asset('images/bg1.jpeg') }}" class="w-full h-full object-cover" alt="Background">
                 </div>
                 
                 <!-- Overlay -->

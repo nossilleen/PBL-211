@@ -23,7 +23,7 @@
         <x-home.navbar />
 
         <!-- Main Content Wrapper -->
-        <main class="overflow-x-hidden">
+        <main class="overflow-hidden">
             <!-- Hero Section dengan Parallax Effect -->
             <section class="relative py-20 md:py-40 bg-gradient-to-b from-green-500 to-green-900">
                 <div class="absolute inset-0 overflow-hidden opacity-20">

@@ -17,6 +17,7 @@ return new class extends Migration
             $table->enum('kategori', ['eco_enzim', 'sembako'])->default('eco_enzim');
             $table->enum('status_ketersediaan', ['Available', 'Unavailable'])->default('Available');
             $table->integer('harga')->unsigned();
+            $table->integer('harga_points')->unsigned();
             $table->integer('suka')->unsigned()->default(0);
             $table->text('deskripsi')->nullable();
             $table->foreignId('user_id')->nullable()->comment('Pengelola yang menyediakan produk')->constrained('user', 'user_id')->nullOnDelete();

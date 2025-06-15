@@ -77,7 +77,7 @@
         <x-home.navbar />
 
         <!-- Main Content Wrapper -->
-        <main class="overflow-x-hidden">
+        <main class="overflow-hidden">
             <!-- Hero Section -->
             <x-home.hero />
 
