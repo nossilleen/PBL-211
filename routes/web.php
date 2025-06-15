@@ -20,10 +20,7 @@ use App\Http\Controllers\Workspace\ProfileController;
 Route::post('/artikel/{artikel}/feedback', [FeedbackController::class, 'store'])->name('feedback.store');
 Route::get('/artikel/{artikel}/feedback', [ArtikelController::class, 'allFeedback'])->name('artikel.allFeedback');
 
-Route::get('/', function () {
-    $bestSellers = app(ProductController::class)->getBestSellers();
-    return view('welcome', compact('bestSellers'));
-})->name('welcome');
+Route::get('/', [HomeController::class, 'landingPage'])->name('welcome');
 
 // Public routes
 Route::get('/artikel', [ArtikelController::class, 'landing'])->name('artikel.index');
