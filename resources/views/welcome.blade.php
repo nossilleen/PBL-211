@@ -9,9 +9,10 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-            @vite(['resources/css/app.css', 'resources/js/app.js'])
+        <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="font-sans antialiased bg-image-fixed overflow-x-hidden">
+    <body class="font-sans antialiased bg-image-fixed overflow-x-hidden overflow-y-hidden">
         <!-- Notifikasi Selamat Datang -->
         @if(Auth::check() && session('welcome'))
             <div id="welcome-alert" class="fixed top-6 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-green-400 to-green-600 text-white px-8 py-4 rounded-xl shadow-lg flex items-center gap-4 z-[9998] animate-fade-in opacity-100 transition-all duration-500">
@@ -76,7 +77,7 @@
         <x-home.navbar />
 
         <!-- Main Content Wrapper -->
-        <main class="overflow-x-hidden">
+        <main class="overflow-hidden">
             <!-- Hero Section -->
             <x-home.hero />
 
@@ -96,7 +97,7 @@
             <x-home.program />
 
             <!-- Lokasi Bank Sampah Section -->
-            <x-home.location />
+            <x-home.location :locations="$locations" />
         </main>
 
         <!-- Footer -->
@@ -117,6 +118,7 @@
                     preloader.classList.add('opacity-0');
                     setTimeout(() => {
                         preloader.style.display = 'none';
+                        document.body.classList.remove('overflow-y-hidden');
                     }, 300);
                 }, 500);
             });
@@ -141,5 +143,6 @@
                 });
             });
         </script>
+        <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     </body>
 </html>

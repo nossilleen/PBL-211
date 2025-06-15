@@ -115,7 +115,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                     <!-- Example related products, you can make these dynamic if you want -->
                     <x-browse.product-card 
-                        :image="asset('images/bg1.jpeg')"
+                        :image="asset('images/bg7.jpeg')"
                         title="Produk Serupa 1"
                         desc="Deskripsi singkat produk serupa 1"
                         price="25.000"

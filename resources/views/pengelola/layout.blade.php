@@ -7,6 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    @stack('styles')
     <!-- Alpine.js -->
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -247,65 +248,67 @@
             // Function to check viewport width and set appropriate classes
             function checkViewport() {
                 if (window.innerWidth < 768) {
-                    // Mobile view
                     sidebar.classList.add('-translate-x-full');
-                    sidebar.classList.remove('sidebar-collapsed');
-                    pengelolaContent.classList.remove('sidebar-collapsed');
-                    pengelolaNavbar.classList.remove('sidebar-collapsed');
+                    sidebar.classList.remove('md:translate-x-0');
                 } else {
-                    // Desktop view - initialize with sidebar shown
                     sidebar.classList.remove('-translate-x-full');
-                    sidebar.classList.remove('sidebar-collapsed');
+                    sidebar.classList.add('md:translate-x-0');
                 }
             }
-            
-            // Initial check
-            checkViewport();
-            
-            // Toggle sidebar visibility
+
+            // Highlight active menu item
+            function highlightActiveMenu() {
+                const currentRoute = '{{ Route::currentRouteName() }}';
+                const menuItems = document.querySelectorAll('.menu-item');
+                
+                menuItems.forEach(item => {
+                    const itemRoute = item.getAttribute('data-route');
+                    if (itemRoute === currentRoute) {
+                        item.classList.add('bg-green-50', 'text-green-600');
+                        item.classList.remove('text-gray-700');
+                    } else {
+                        item.classList.remove('bg-green-50', 'text-green-600');
+                        item.classList.add('text-gray-700');
+                    }
+                });
+            }
+
+            // Call highlight function on page load
+            highlightActiveMenu();
+
+            // Toggle sidebar
             sidebarToggle.addEventListener('click', () => {
-                if (window.innerWidth < 768) {
-                    // Mobile behavior
-                    sidebar.classList.toggle('-translate-x-full');
-                    sidebarOverlay.classList.toggle('hidden');
-                } else {
-                    // Desktop behavior
-                    sidebar.classList.toggle('sidebar-collapsed');
-                    pengelolaContent.classList.toggle('sidebar-collapsed');
-                    pengelolaNavbar.classList.toggle('sidebar-collapsed');
-                }
+                sidebar.classList.toggle('-translate-x-full');
+                sidebar.classList.toggle('md:translate-x-0');
+                pengelolaContent.classList.toggle('sidebar-collapsed');
+                pengelolaNavbar.classList.toggle('sidebar-collapsed');
             });
-            
-            // Close sidebar on overlay click (mobile)
-            sidebarOverlay.addEventListener('click', () => {
-                sidebar.classList.add('-translate-x-full');
-                sidebarOverlay.classList.add('hidden');
-            });
-            
-            // Close sidebar with button (mobile)
+
+            // Close sidebar on mobile
             closeSidebarButton.addEventListener('click', () => {
                 sidebar.classList.add('-translate-x-full');
                 sidebarOverlay.classList.add('hidden');
             });
-            
-            // Adjust layout on window resize
-            window.addEventListener('resize', checkViewport);
-            
-            // Highlight active menu item
-            const currentRoute = "{{ Route::currentRouteName() }}";
-            const menuItems = document.querySelectorAll('.menu-item');
-            
-            menuItems.forEach(item => {
-                const route = item.getAttribute('data-route');
-                if (route === currentRoute) {
-                    item.classList.add('bg-green-50', 'text-green-600', 'font-medium');
+
+            // Show overlay when sidebar is open on mobile
+            sidebarToggle.addEventListener('click', () => {
+                if (window.innerWidth < 768) {
+                    sidebarOverlay.classList.toggle('hidden');
                 }
             });
+
+            // Close sidebar when clicking overlay
+            sidebarOverlay.addEventListener('click', () => {
+                sidebar.classList.add('-translate-x-full');
+                sidebarOverlay.classList.add('hidden');
+            });
+
+            // Check viewport on load and resize
+            window.addEventListener('resize', checkViewport);
+            checkViewport();
         });
     </script>
-    
-    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hidden">
-        @csrf
-    </form>
+
+    @stack('scripts')
 </body>
 </html>

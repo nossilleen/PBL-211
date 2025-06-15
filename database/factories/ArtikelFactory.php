@@ -19,7 +19,7 @@ class ArtikelFactory extends Factory
         return [
             'kategori' => $this->faker->randomElement(['event','artikel']),
             'judul' => $judul,
-            'konten' => $this->faker->paragraphs(3, true),
+            'konten' => '<p>'.implode('</p><p>',$this->faker->paragraphs(rand(3,7))).'</p>',
             'tanggal_publikasi' => $this->faker->date(),
             'user_id' => User::factory(),
         ];

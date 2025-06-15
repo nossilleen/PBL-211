@@ -115,6 +115,7 @@ Route::middleware('auth')->group(function () {
 Route::middleware(['auth'])->group(function () {
     Route::get('/pengelola', [PengelolaController::class, 'index'])->name('pengelola.index');
     Route::get('/pengelola/alamat', [PengelolaController::class, 'alamat'])->name('pengelola.alamat');
+    Route::post('/pengelola/alamat/update', [PengelolaController::class, 'updateAlamat'])->name('pengelola.alamat.update');
     Route::get('/pengelola/toko', [ProductController::class, 'toko'])->name('pengelola.toko');
     Route::get('/pengelola/transaksi', [PengelolaController::class, 'transaksi'])->name('pengelola.transaksi');
     Route::get('/pengelola/nasabah', [PengelolaController::class, 'nasabah'])->name('pengelola.nasabah');

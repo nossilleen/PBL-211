@@ -19,7 +19,7 @@ class PointHistoryFactory extends Factory
         return [
             'user_id' => User::factory(),
             'transaction_type' => $transactionType,
-            'amount' => $this->faker->numberBetween(10, 500),
+            'amount' => $this->faker->numberBetween(10, 5000),
             'description' => $this->faker->sentence(),
             'related_id' => null,
             'related_type' => null,

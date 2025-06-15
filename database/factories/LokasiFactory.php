@@ -17,7 +17,9 @@ class LokasiFactory extends Factory
         return [
             'nama_lokasi' => 'Bank Sampah ' . $this->faker->city(),
             'alamat' => $this->faker->streetAddress(),
-            'kota' => $this->faker->city(),
+            'latitude' => $this->faker->latitude(),
+            'longitude' => $this->faker->longitude(),
+            'user_id' => 1 // Default user_id, bisa disesuaikan
         ];
     }
 } 

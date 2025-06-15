@@ -23,6 +23,27 @@ class PengelolaController extends Controller
         });
     }
 
+    public function update(Request $request)
+    {
+    $request->validate([
+        'latitude' => 'required|numeric',
+        'longitude' => 'required|numeric',
+    ]);
+
+    $pengelola = auth()->user(); // atau model pengelola sesuai aplikasi Anda
+    $pengelola->latitude = $request->latitude;
+    $pengelola->longitude = $request->longitude;
+    $pengelola->save();
+
+    return back()->with('success', 'Lokasi berhasil disimpan!');
+    }
+
+    public function edit()
+    {
+    $pengelola = auth()->user(); // atau Pengelola::find($id)
+    return view('pengelola.alamat', compact('pengelola'));
+    }   
+
     public function index()
     {
         // Main dashboard for pengelola
@@ -31,8 +52,8 @@ class PengelolaController extends Controller
 
     public function alamat()
     {
-        // Alamat page for pengelola
-        return view('pengelola.alamat');
+        $lokasi = \App\Models\Lokasi::where('user_id', auth()->id())->latest()->first();
+        return view('pengelola.alamat', compact('lokasi'));
     }
 
     public function toko()
@@ -199,5 +220,36 @@ class PengelolaController extends Controller
         $transaksi->save();
 
         return redirect()->back()->with('success', 'Pesanan ditolak');
+    }
+
+    public function updateAlamat(Request $request)
+    {
+        $request->validate([
+            'nama_lokasi' => 'required|string|max:100',
+            'alamat' => 'required|string|max:255',
+            'latitude' => 'required|numeric',
+            'longitude' => 'required|numeric',
+        ]);
+
+        $data = [
+            'nama_lokasi' => $request->nama_lokasi,
+            'alamat' => $request->alamat,
+            'latitude' => $request->latitude,
+            'longitude' => $request->longitude,
+            'user_id' => auth()->id()
+        ];
+
+        // Cari lokasi yang sudah ada untuk pengguna yang sedang login
+        $lokasi = \App\Models\Lokasi::where('user_id', auth()->id())->first();
+
+        if ($lokasi) {
+            // Jika lokasi sudah ada, perbarui datanya
+            $lokasi->update($data);
+        } else {
+            // Jika belum ada lokasi, buat yang baru
+            \App\Models\Lokasi::create($data);
+        }
+
+        return redirect()->route('pengelola.alamat')->with('success', 'Data lokasi berhasil disimpan!');
     }
 }
