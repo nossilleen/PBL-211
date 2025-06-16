@@ -17,11 +17,13 @@
                 EcoZense adalah platform edukatif dan kolaboratif yang dirancang untuk menginspirasi gaya hidup ramah lingkungan. Dengan fitur toko, artikel informatif, dan event komunitas. EcoZense mendorong masyarakat untuk lebih peduli terhadap lingkungan melalui aksi nyata dan inovatif.
                 </p>
                 <div>
-                    <button
-                        class="bg-gray-800 text-white px-6 py-3 rounded-md hover:bg-gray-700 transition button-hover-effect"
-                    >
-                        Mulai Sekarang
-                    </button>
+                    <a href="{{ route('register') }}">
+                        <button
+                               class="bg-gray-800 text-white px-6 py-3 rounded-md hover:bg-gray-700 transition button-hover-effect"
+                        >
+                                Mulai Sekarang
+                        </button>
+                    </a>
                 </div>
             </div>
             <div class="flex items-center justify-center order-1 md:order-2 mb-8 md:mb-0" data-aos="fade-left" data-aos-delay="300">
