@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Pengelola;
+namespace App\Http\Controllers\PBS;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -111,4 +111,4 @@ class PoinController extends Controller
             return back()->with('error', 'Terjadi kesalahan pada server. Silakan coba lagi.');
         }
     }
-}
+} 

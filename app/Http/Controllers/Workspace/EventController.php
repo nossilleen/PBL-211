@@ -115,9 +115,31 @@ class EventController extends Controller
     }
 
     // Menampilkan daftar event di landing page
-    public function list()
+    public function list(Request $request)
     {
-        $events = Event::latest()->paginate(9);
-        return view('events.index', compact('events'));
+        $search = $request->input('search');
+        $sort   = $request->input('sort', 'terbaru');
+
+        $query = Event::query();
+
+        // Pencarian judul / deskripsi
+        if ($search) {
+            $query->where('title', 'like', "%{$search}%")
+                  ->orWhere('description', 'like', "%{$search}%");
+        }
+
+        // Penyortiran
+        if ($sort === 'populer') {
+            // Belum ada metrik popularitas, gunakan jumlah peserta jika tersedia.
+            // Sementara urutkan berdasarkan jumlah view (jika kolom ada) atau gunakan title sebagai fallback.
+            $query->orderBy('title');
+        } else {
+            // Terbaru berdasarkan created_at
+            $query->orderByDesc('created_at');
+        }
+
+        $events = $query->paginate(9)->withQueryString();
+
+        return view('events.index', compact('events', 'search', 'sort'));
     }
 }

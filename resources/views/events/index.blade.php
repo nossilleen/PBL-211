@@ -44,15 +44,30 @@
                         
                         <!-- Search Bar -->
                         <div class="max-w-xl mx-auto mt-8 relative">
-                            <div class="flex items-center bg-white rounded-full shadow-lg overflow-hidden border-2 border-green-100 hover:border-green-200 transition-all duration-300">
-                                <input type="text" placeholder="Cari event..." class="w-full px-6 py-3 text-gray-700 focus:outline-none text-lg">
-                                <button class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 transition-all duration-300 flex items-center">
+                            <form method="GET" action="{{ route('events.index') }}" class="flex items-center bg-white rounded-full shadow-lg overflow-hidden border-2 border-green-100 hover:border-green-200 transition-all duration-300">
+                                <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari event..." class="w-full px-6 py-3 text-gray-700 focus:outline-none text-lg" />
+                                <input type="hidden" name="sort" value="{{ request('sort', 'terbaru') }}" />
+                                <button type="submit" class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 transition-all duration-300 flex items-center">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                                     </svg>
                                 </button>
-                            </div>
+                            </form>
                         </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Filter Tabs Section -->
+            <section class="bg-white border-b border-gray-200">
+                <div class="container mx-auto px-4">
+                    <div class="flex space-x-6 py-4">
+                        @php
+                            $currentSort = request('sort', 'terbaru');
+                            $query = request()->all();
+                        @endphp
+                        <a href="{{ route('events.index', array_merge($query, ['sort' => 'populer'])) }}" class="text-gray-700 hover:text-green-600 border-b-2 {{ $currentSort === 'populer' ? 'border-green-600' : 'border-transparent' }} px-1 py-2 font-medium">Terpopuler</a>
+                        <a href="{{ route('events.index', array_merge($query, ['sort' => 'terbaru'])) }}" class="text-gray-700 hover:text-green-600 border-b-2 {{ $currentSort === 'terbaru' ? 'border-green-600' : 'border-transparent' }} px-1 py-2 font-medium">Terbaru</a>
                     </div>
                 </div>
             </section>

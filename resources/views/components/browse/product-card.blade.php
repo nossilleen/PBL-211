@@ -10,9 +10,24 @@
     'productId' => null,
     'isLiked' => false,
     'showLike' => true,
+    'createdAt' => null,
+    'href' => null,
 ])
 
-<div class="bg-white rounded-lg shadow-md overflow-hidden flex flex-col h-full min-h-[400px]">
+@php
+    use Carbon\Carbon;
+    $isNew = false;
+    if($createdAt){
+        try {
+            $isNew = Carbon::parse($createdAt)->diffInDays(Carbon::now()) <= 7;
+        } catch (Exception $e) {
+            $isNew = false;
+        }
+    }
+    $detailUrl = $href ?? ($productId ? route('product.detail', ['id' => $productId]) : '#');
+@endphp
+
+<div class="bg-white rounded-lg shadow-md overflow-hidden flex flex-col h-full min-h-[400px] relative group">
     {{-- Product Image with Like Button --}}
     <div class="relative h-48">
         <img src="{{ $image }}" alt="{{ $title }}" class="w-full h-full object-cover">
@@ -30,6 +45,10 @@
                     </path>
                 </svg>
             </button>
+        @endif
+
+        @if($isNew)
+            <span class="absolute top-2 left-2 bg-yellow-500 text-white text-[10px] font-semibold px-2 py-1 rounded">Baru</span>
         @endif
     </div>
 
@@ -66,6 +85,10 @@
 
     {{-- Action Button (Slot) --}}
     <div class="p-4 pt-0 mt-auto">
-        {{ $slot }}
+        @if($slot->isEmpty())
+            <a href="{{ $detailUrl }}" class="w-full block px-4 py-2 bg-green-600 text-white font-medium rounded-md hover:bg-green-700 transition-colors text-center">Lihat Produk</a>
+        @else
+            {{ $slot }}
+        @endif
     </div>
 </div>

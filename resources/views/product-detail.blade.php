@@ -10,6 +10,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @php
+        use Illuminate\Support\Str;
+    @endphp
 </head>
 <body class="font-sans antialiased bg-gray-100 overflow-x-hidden">
     <!-- Preloader -->
@@ -26,57 +29,58 @@
         <section class="py-8 bg-white">
             <div class="container mx-auto px-4">
                 <div class="bg-white rounded-lg shadow-sm p-6">
-                    <div class="flex flex-col md:flex-row gap-8">
+                    <div class="grid grid-cols-1 lg:grid-cols-7 gap-8 relative">
                         <!-- Product Image -->
-                        <div class="w-full md:w-1/3">
-                            <div class="bg-white rounded-lg overflow-hidden">
+                        <div class="lg:col-span-3 w-full">
+                            <div class="bg-gray-100 rounded-lg overflow-hidden shadow-sm">
                                 <img id="mainImage" src="{{ asset($product->image_url) }}" alt="{{ $product->nama_produk }}" class="w-full h-auto object-cover">
                             </div>
                         </div>
-                        
+
                         <!-- Product Details -->
-                        <div class="w-full md:w-2/3">
-                            <div class="flex items-center justify-between">
-                                <h1 class="text-3xl font-bold text-gray-800">{{ $product->nama_produk }}</h1>
-                                <!-- Share and Like Buttons -->
-                                <div class="flex items-center">
-                                    <!-- Share Button -->
-                                    <div class="ml-4">
-                                        <button class="flex items-center text-gray-500 hover:text-green-600">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
-                                            </svg>
-                                        </button>
-                                    </div>
-                                    <!-- Like Button -->
-                                    <div class="ml-2">
-                                        <button class="flex items-center text-gray-500 hover:text-red-600">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                                            </svg>
-                                        </button>
-                                    </div>
+                        <div class="lg:col-span-4 w-full space-y-4">
+                            <!-- Title & Vertical Action Buttons -->
+                            <div class="flex items-start justify-between">
+                                <h1 class="text-2xl sm:text-3xl font-bold text-gray-800 leading-snug max-w-xl">{{ $product->nama_produk }}</h1>
+
+                                <!-- Floating vertical actions (desktop) -->
+                                <div class="hidden lg:flex flex-col space-y-2">
+                                    <button class="p-3 rounded-md bg-gray-100 hover:bg-gray-200 text-gray-500 hover:text-green-600 shadow transition" title="Bagikan">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+                                        </svg>
+                                    </button>
+                                    <button class="p-3 rounded-md bg-gray-100 hover:bg-gray-200 text-gray-500 hover:text-red-600 shadow transition" title="Favoritkan">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                                        </svg>
+                                    </button>
                                 </div>
                             </div>
+
                             <!-- Price -->
-                            <div class="text-3xl font-bold text-yellow-500 mb-2">Rp{{ number_format($product->harga, 0, ',', '.') }}</div>
-                            @if($product->harga_points)
-                                <div class="text-xl font-medium text-blue-600 mb-6">atau {{ number_format($product->harga_points) }} Poin</div>
-                            @endif
-                            <!-- Product Info -->
-                            <div class="space-y-3 mb-6">
-                                <div class="flex">
-                                    <span class="w-40 text-gray-600">Status Ketersediaan</span>
-                                    <span class="{{ $product->status_ketersediaan == 'Available' ? 'text-green-600' : 'text-red-600' }} font-medium">{{ $product->status_ketersediaan }}</span>
+                            <div class="flex items-center space-x-3">
+                                <span class="text-3xl sm:text-4xl font-bold text-yellow-500">Rp{{ number_format($product->harga, 0, ',', '.') }}</span>
+                                @if($product->harga_points)
+                                    <span class="text-base sm:text-xl font-medium text-blue-600">/{{ number_format($product->harga_points) }} Poin</span>
+                                @endif
+                            </div>
+
+                            <!-- Availability & Seller -->
+                            <div class="space-y-2 text-sm sm:text-base">
+                                <div class="flex items-center gap-2">
+                                    <span class="text-gray-600">Status:</span>
+                                    <span class="{{ $product->status_ketersediaan == 'Available' ? 'text-green-600' : 'text-red-600' }} font-semibold">{{ $product->status_ketersediaan }}</span>
                                 </div>
-                                <div class="flex">
-                                    <span class="w-40 text-gray-600">Bank Sampah</span>
-                                    <span class="text-gray-800">{{ $product->user->nama ?? '-' }}</span>
+                                <div class="flex items-center gap-2">
+                                    <span class="text-gray-600">Bank Sampah:</span>
+                                    <span class="text-gray-800 font-medium">{{ $product->user->nama ?? '-' }}</span>
                                 </div>
                             </div>
-                            <!-- Action Buttons -->
-                            <div class="mt-8">
-                                <button class="w-full md:w-auto px-8 py-3 bg-green-600 text-white font-medium rounded-md hover:bg-green-700 transition-colors font-['Lexend_Deca',_sans-serif]" onclick="document.getElementById('popup-beli').classList.remove('hidden')">
+
+                            <!-- CTA -->
+                            <div class="pt-4">
+                                <button class="w-full sm:w-auto px-8 py-3 bg-gradient-to-r from-green-600 to-green-500 hover:from-green-700 hover:to-green-600 text-white font-semibold rounded-md shadow-lg transition" onclick="document.getElementById('popup-beli').classList.remove('hidden')">
                                     Beli Sekarang
                                 </button>
                             </div>
@@ -108,33 +112,33 @@
             </div>
         </section>
         
-        <!-- Related Products Section -->
+        <!-- Produk Lain dari Toko Ini -->
         <section class="py-8 bg-gray-100">
             <div class="container mx-auto px-4">
-                <h2 class="text-2xl font-bold text-gray-800 mb-6">Produk Serupa</h2>
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">Produk Lainnya dari {{ $product->user->nama ?? 'Toko Ini' }}</h2>
+
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                    <!-- Example related products, you can make these dynamic if you want -->
-                    <x-browse.product-card 
-                        :image="asset('images/bg7.jpeg')"
-                        title="Produk Serupa 1"
-                        desc="Deskripsi singkat produk serupa 1"
-                        price="25.000"
-                        status="Available"
-                        bank="Steven"
-                        suka="42"
-                        productId="1"
-                    />
-                    <x-browse.product-card 
-                        :image="asset('images/bg2.jpeg')"
-                        title="Produk Serupa 2"
-                        desc="Deskripsi singkat produk serupa 2"
-                        price="30.000"
-                        status="Available"
-                        bank="Arif"
-                        suka="18"
-                        productId="2"
-                    />
-                    <!-- Add more as needed -->
+                    @forelse($relatedProducts as $item)
+                        <x-browse.product-card 
+                            :image="asset($item->image_url ?? 'images/default-product.jpg')"
+                            :title="$item->nama_produk"
+                            :desc="Str::limit($item->deskripsi, 50)"
+                            :price="number_format($item->harga, 0, ',', '.')"
+                            :harga_points="$item->harga_points"
+                            :status="$item->status_ketersediaan"
+                            :bank="$product->user->nama"
+                            :createdAt="$item->created_at"
+                            :suka="$item->suka"
+                            :productId="$item->produk_id"
+                        >
+                            <a href="{{ route('product.detail', ['id' => $item->produk_id]) }}"
+                               class="w-full px-4 py-2 bg-green-600 text-white font-medium rounded-md hover:bg-green-700 transition-colors text-center">
+                                Lihat Produk
+                            </a>
+                        </x-browse.product-card>
+                    @empty
+                        <div class="col-span-4 text-center text-gray-500">Tidak ada produk lain dari toko ini.</div>
+                    @endforelse
                 </div>
             </div>
         </section>

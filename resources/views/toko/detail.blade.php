@@ -31,6 +31,7 @@
                                 :harga_points="$product->harga_points"
                                 :status="$product->status_ketersediaan"
                                 :bank="$shop->nama"
+                                :createdAt="$product->created_at"
                                 :suka="$product->suka"
                                 :productId="$product->produk_id"
                             >

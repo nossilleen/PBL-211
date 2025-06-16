@@ -21,6 +21,9 @@ class ProdukFactory extends Factory
             'kategori' => $this->faker->randomElement(['eco_enzim','sembako']),
             'status_ketersediaan' => $this->faker->randomElement(['Available','Unavailable']),
             'harga' => $this->faker->numberBetween(5000, 5000000),
+            'harga_points' => function (array $attributes) {
+                return $attributes['harga'];
+            },
             'suka' => $this->faker->numberBetween(0, 5000),
             'deskripsi' => $this->faker->paragraphs(rand(2,5), true),
             'user_id' => User::factory(),

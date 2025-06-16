@@ -13,7 +13,7 @@ use App\Http\Controllers\Workspace\TokoController;
 use App\Http\Controllers\Workspace\EventController;
 use App\Http\Controllers\ArtikelController;
 use App\Http\Controllers\FeedbackController;
-use App\Http\Controllers\Pengelola\PoinController;
+use App\Http\Controllers\PBS\PoinController;
 use App\Http\Controllers\Workspace\UpgradeController;
 use App\Http\Controllers\Workspace\ProfileController;
 
@@ -35,7 +35,7 @@ Route::get('/browse', [PengelolaController::class, 'browse'])->name('browse');
 Route::get('/toko/{id}', [TokoController::class, 'detail'])
     ->name('toko.detail')
     ->middleware('web');
-Route::get('/product/{id}', [ProductController::class, 'detail'])->name('product.detail');
+Route::get('/product/{id}', [ProductController::class, 'show'])->name('product.detail');
 
 // Authentication routes
 Auth::routes();
@@ -45,7 +45,7 @@ Route::get('/home', function () {
 Route::get('/profile', [HomeController::class, 'index'])->name('profile');
 
 // Admin routes
-Route::prefix('admin')->middleware('auth')->name('admin.')->group(function () {
+Route::prefix('admin')->middleware(['auth', 'role:admin'])->name('admin.')->group(function () {
     Route::get('/', [AdminController::class, 'index'])->name('index');
     Route::get('/pengajuan', [AdminController::class, 'pengajuan'])->name('pengajuan');
     Route::get('/user', [AdminController::class, 'user'])->name('user');
@@ -69,14 +69,14 @@ Route::prefix('admin')->middleware('auth')->name('admin.')->group(function () {
 });
 
 // Pengajuan routes
-Route::prefix('admin')->middleware('auth')->group(function () {
+Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/pengajuan', [AdminController::class, 'pengajuan'])->name('admin.pengajuan');
     Route::patch('/pengajuan/{id}/approve', [AdminController::class, 'approvePengajuan'])->name('admin.pengajuan.approve');
     Route::patch('/pengajuan/{id}/reject', [AdminController::class, 'rejectPengajuan'])->name('admin.pengajuan.reject');
 });
 
 // Transaksi routes
-Route::prefix('transaksi')->middleware('auth')->group(function () {
+Route::prefix('transaksi')->middleware(['auth', 'role:nasabah'])->group(function () {
     Route::get('/pesanan', [TransaksiController::class, 'pesananAktif'])->name('transaksi.pesanan');
     Route::get('/riwayat', [TransaksiController::class, 'riwayatTransaksi'])->name('transaksi.riwayat');
     Route::post('/upload-bukti', [TransaksiController::class, 'uploadBukti'])->name('transaksi.upload-bukti');
@@ -89,7 +89,7 @@ Route::prefix('transaksi')->middleware('auth')->group(function () {
 Route::get('/check-data', [DataController::class, 'index']);
 
 // Nasabah routes
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'role:nasabah'])->group(function () {
     Route::get('/nasabah/dashboard', function () {
         return view('nasabah.dashboard');
     })->name('nasabah.dashboard');
@@ -109,7 +109,7 @@ Route::middleware('auth')->group(function () {
 });
 
 // Pengelola routes
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', 'role:pengelola'])->group(function () {
     Route::get('/pengelola', [PengelolaController::class, 'index'])->name('pengelola.index');
     Route::get('/pengelola/alamat', [PengelolaController::class, 'alamat'])->name('pengelola.alamat');
     Route::post('/pengelola/alamat/update', [PengelolaController::class, 'updateAlamat'])->name('pengelola.alamat.update');
@@ -119,8 +119,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/pengelola/laporan', [PengelolaController::class, 'laporan'])->name('pengelola.laporan');
     Route::get('/pengelola/pesanan', [PengelolaController::class, 'pesanan'])->name('pengelola.pesanan');
     
-    // Product routes
-    Route::get('/product/{id}', [ProductController::class, 'show'])->name('product.detail');
+    // Product routes khusus pengelola (gunakan prefix /pengelola/products dari resource)
     Route::resource('/pengelola/products', ProductController::class);
     Route::post('/produk/{id}/like', [ProductController::class, 'toggleLike'])->name('produk.like');
     Route::put('/pengelola/toko/update', [ProductController::class, 'updateToko'])->name('pengelola.toko.update');
@@ -128,23 +127,8 @@ Route::middleware(['auth'])->group(function () {
 
 Route::get('/stores', [\App\Http\Controllers\PBS\PengelolaController::class, 'stores'])->name('stores.index');
 
-
-// Route::get('/pengelola/poin', [PengelolaController::class, 'poin'])->name('pengelola.poin');
-Route::get('/pengelola/transaksi', [PengelolaController::class, 'transaksi'])->name('pengelola.transaksi');
-Route::get('/admin/events', [EventController::class, 'index'])->name('admin.events.index');
-
-Route::middleware(['auth', 'role:pengelola'])->prefix('pengelola')->name('pengelola.')->group(function () {
-    Route::get('/poin', [PoinController::class, 'index'])->name('poin.index');
-    Route::post('/poin/konversi', [PoinController::class, 'store'])->name('poin.store');
-    Route::get('/api/users/search', [PoinController::class, 'searchUser'])->name('api.users.search');
-});
-
-Route::get('/debug-sentry', function () {
-    throw new Exception('My first Sentry error!');
-});
-
 // Pengelola pesanan management routes
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', 'role:pengelola'])->group(function () {
     // Show pesanan table (make sure this uses pesananMasuk, not pesanan)
     Route::get('/pengelola/pesanan', [\App\Http\Controllers\PBS\PengelolaController::class, 'pesananMasuk'])->name('pengelola.pesanan');
 
@@ -159,10 +143,9 @@ Route::middleware(['auth'])->group(function () {
         ->name('pengelola.pesanan.tolak');
 });
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', 'role:nasabah'])->group(function () {
     Route::get('/nasabah/pesanan/{id}/detail', [Workspace\NasabahController::class, 'pesananDetail'])
-        ->name('nasabah.pesanan.detail')
-        ->middleware('auth');
+        ->name('nasabah.pesanan.detail');
 });
 
 // Admin password reset routes
@@ -177,4 +160,16 @@ Route::middleware(['auth'])->group(function () {
         ->name('password.force-change');
     Route::post('/password/force-update', [App\Http\Controllers\Admin\UserPasswordController::class, 'forceChange'])
         ->name('password.force-update');
+});
+
+// Pengelola Poin management routes (role protected)
+Route::middleware(['auth', 'role:pengelola'])->prefix('pengelola')->name('pengelola.')->group(function () {
+    Route::get('/poin', [PoinController::class, 'index'])->name('poin.index');
+    Route::post('/poin/konversi', [PoinController::class, 'store'])->name('poin.store');
+    Route::get('/api/users/search', [PoinController::class, 'searchUser'])->name('api.users.search');
+});
+
+// Debug route (development only)
+Route::get('/debug-sentry', function () {
+    throw new Exception('My first Sentry error!');
 });

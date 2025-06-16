@@ -98,11 +98,30 @@ class PengelolaController extends Controller
         return view('browse', compact('shops'));
     }
 
-    public function browse()
+    public function browse(Request $request)
     {
-        $products = \App\Models\Produk::with('user')->paginate(12);
+        $search = $request->input('search');
+        $sort   = $request->input('sort', 'terbaru');
 
-        // Add the likedByCurrentUser property for each product
+        // ===== Produk =====
+        $productQuery = \App\Models\Produk::with(['user', 'gambar']);
+
+        // Pencarian produk
+        if ($search) {
+            $productQuery->where('nama_produk', 'like', "%{$search}%");
+        }
+
+        // Penyortiran produk
+        if ($sort === 'populer') {
+            $productQuery->orderByDesc('suka');
+        } else {
+            // Default terbaru berdasarkan created_at
+            $productQuery->orderByDesc('created_at');
+        }
+
+        $products = $productQuery->paginate(12)->withQueryString();
+
+        // Tandai apakah produk disukai oleh user saat ini
         $products->getCollection()->transform(function ($product) {
             $product->likedByCurrentUser = \DB::table('product_likes')
                 ->where('user_id', auth()->id())
@@ -111,8 +130,28 @@ class PengelolaController extends Controller
             return $product;
         });
 
-        $shops = \App\Models\User::where('role', 'pengelola')->get();
-        return view('browse', compact('products', 'shops'));
+        // ===== Shops =====
+        $shopQuery = \App\Models\User::where('role', 'pengelola');
+
+        if ($search) {
+            $shopQuery->where('nama', 'like', "%{$search}%")
+                      ->orWhere('alamat_toko', 'like', "%{$search}%");
+        }
+
+        // Saat ini, penyortiran toko berdasarkan popularitas belum tersedia,
+        // jadi gunakan created_at untuk terbaru
+        if ($sort === 'populer') {
+            // Jika memiliki metrik popularitas toko, seperti jumlah produk atau transaksi,
+            // tambahkan di sini. Untuk sementara, gunakan nama alfabet.
+            $shopQuery->orderBy('nama');
+        } else {
+            $shopQuery->orderByDesc('created_at');
+        }
+
+        // Gunakan pagination 8 item per halaman
+        $shops = $shopQuery->paginate(8)->withQueryString();
+
+        return view('browse', compact('products', 'shops', 'search', 'sort'));
     }
 
     public function storeProduct(Request $request)

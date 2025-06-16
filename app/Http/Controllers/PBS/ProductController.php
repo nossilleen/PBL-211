@@ -164,8 +164,18 @@ class ProductController extends Controller
 
     public function show($id)
     {
+        // Ambil produk yang diminta beserta relasinya
         $product = Produk::with(['user', 'gambar'])->findOrFail($id);
-        return view('product-detail', compact('product'));
+
+        // Ambil produk lain dari toko (user) yang sama, kecuali produk yang sedang dilihat
+        $relatedProducts = Produk::with('gambar')
+            ->where('user_id', $product->user_id)
+            ->where('produk_id', '!=', $product->produk_id)
+            ->latest()
+            ->take(4)
+            ->get();
+
+        return view('product-detail', compact('product', 'relatedProducts'));
     }
 
     public function toko()

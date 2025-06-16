@@ -22,7 +22,7 @@ class ArtikelController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Artikel::query();
+        $query = Artikel::withCount('feedback');
 
         // Search
         if ($request->search) {
@@ -30,7 +30,18 @@ class ArtikelController extends Controller
                   ->orWhere('konten', 'like', '%' . $request->search . '%');
         }
 
-        $artikels = $query->orderByDesc('tanggal_publikasi')->paginate(6);
+        // Penentuan urutan: terbaru (default) atau terpopuler
+        $sort = $request->input('sort', 'terbaru');
+
+        if ($sort === 'populer') {
+            // Urutkan berdasarkan jumlah feedback terbanyak
+            $query->orderByDesc('feedback_count');
+        } else {
+            // Default urutkan berdasarkan tanggal publikasi terbaru
+            $query->orderByDesc('tanggal_publikasi');
+        }
+
+        $artikels = $query->paginate(6)->withQueryString();
         $events = \App\Models\Event::latest()->get();
 
         return view('admin.artikel.index', compact('artikels', 'events'));
@@ -138,8 +149,20 @@ class ArtikelController extends Controller
                   ->orWhere('konten', 'like', '%' . $request->search . '%');
         }
 
-        // Ambil artikel terbaru dengan pagination
-        $artikels = $query->orderByDesc('tanggal_publikasi')->paginate(6);
+        // Penentuan urutan: terbaru (default) atau terpopuler
+        $sort = $request->input('sort', 'terbaru');
+
+        if ($sort === 'populer') {
+            // Urutkan berdasarkan jumlah feedback terbanyak
+            $query->withCount('feedback')
+                  ->orderByDesc('feedback_count');
+        } else {
+            // Default urutkan berdasarkan tanggal publikasi terbaru
+            $query->orderByDesc('tanggal_publikasi');
+        }
+
+        // Ambil artikel dengan pagination dan pertahankan query string
+        $artikels = $query->paginate(6)->withQueryString();
 
         return view('artikel', compact('artikels'));
     }
