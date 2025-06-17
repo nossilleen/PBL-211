@@ -15,7 +15,7 @@
         <div class="w-full md:w-1/2 bg-green-800 p-6">
             <!-- Logo -->
             <div class="mb-8 ml-4">
-                <img src="{{ asset('images/logo.png') }}" alt="EcoZense Logo" class="h-12">
+                <img src="{{ asset('images/logo.jpg') }}" alt="EcoZense Logo" class="h-12">
             </div>
 
             <!-- Login Form -->
