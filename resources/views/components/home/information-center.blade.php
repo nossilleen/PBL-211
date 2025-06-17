@@ -63,7 +63,7 @@
 
             <!-- Card 3 - Artikel -->
             <div data-aos="fade-up" data-aos-delay="400" class="bg-white bg-opacity-10 backdrop-blur-sm rounded-lg shadow-lg h-full">
-                <a href="#" class="block h-full">
+                <a href="/artikel" class="block h-full">
                     <div
                         class="bg-cover bg-center rounded-t-lg overflow-hidden h-48 sm:h-60 md:h-64 transition-transform duration-300 hover:scale-105"
                         style="background-image: url('{{ asset('images/bg5.jpeg') }}');"
