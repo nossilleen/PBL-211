@@ -34,7 +34,7 @@ class UserFactory extends Factory
             'jam_operasional' => fake()->optional()->regexify('[0-9]{2}:00 - [0-9]{2}:00'),
             'nomor_rekening' => fake()->optional()->bankAccountNumber(),
             'nama_bank_rekening' => fake()->optional()->randomElement(['BCA','Mandiri','BNI','BRI','CIMB']),
-            'foto_toko' => 'images/toko-photos/1.png',
+            'foto_toko' => 'toko-photos/1.png',
         ];
     }
 
