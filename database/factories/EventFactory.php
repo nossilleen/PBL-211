@@ -17,7 +17,7 @@ class EventFactory extends Factory
         return [
             'title' => $this->faker->sentence(),
             'description' => $this->faker->paragraphs(3, true),
-            'image' => 'images/events/' . $this->faker->uuid() . '.jpg',
+            'image' => 'images/events/1.png',
             'date' => $this->faker->dateTimeBetween('now', '+1 year'),
             'location' => $this->faker->city(),
         ];

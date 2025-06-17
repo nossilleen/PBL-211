@@ -149,19 +149,15 @@ class ArtikelController extends Controller
                   ->orWhere('konten', 'like', '%' . $request->search . '%');
         }
 
-        // Penentuan urutan: terbaru (default) atau terpopuler
-        $sort = $request->input('sort', 'terbaru');
-
-        if ($sort === 'populer') {
-            // Urutkan berdasarkan jumlah feedback terbanyak
-            $query->withCount('feedback')
-                  ->orderByDesc('feedback_count');
-        } else {
-            // Default urutkan berdasarkan tanggal publikasi terbaru
+        // Sorting
+        if ($request->sort === 'populer') {
+            // Urutkan berdasarkan jumlah feedback (asumsi populer = banyak feedback)
+            $query->withCount('feedback')->orderByDesc('feedback_count');
+        } else { // default 'terbaru'
             $query->orderByDesc('tanggal_publikasi');
         }
 
-        // Ambil artikel dengan pagination dan pertahankan query string
+        // Ambil artikel dengan pagination dan sertakan query string agar paginasi mempertahankan filter
         $artikels = $query->paginate(6)->withQueryString();
 
         return view('artikel', compact('artikels'));

@@ -100,58 +100,62 @@ class PengelolaController extends Controller
 
     public function browse(Request $request)
     {
-        $search = $request->input('search');
-        $sort   = $request->input('sort', 'terbaru');
+        // ----------------------
+        // PRODUCTS QUERY
+        // ----------------------
+        $productsQuery = \App\Models\Produk::with('user');
 
-        // ===== Produk =====
-        $productQuery = \App\Models\Produk::with(['user', 'gambar']);
-
-        // Pencarian produk
-        if ($search) {
-            $productQuery->where('nama_produk', 'like', "%{$search}%");
+        // Pencarian berdasarkan nama / deskripsi produk
+        if ($request->filled('search')) {
+            $keyword = $request->search;
+            $productsQuery->where(function ($q) use ($keyword) {
+                $q->where('nama_produk', 'like', "%{$keyword}%")
+                  ->orWhere('deskripsi', 'like', "%{$keyword}%");
+            });
         }
 
-        // Penyortiran produk
-        if ($sort === 'populer') {
-            $productQuery->orderByDesc('suka');
-        } else {
-            // Default terbaru berdasarkan created_at
-            $productQuery->orderByDesc('created_at');
+        // Sorting
+        if ($request->sort === 'populer') {
+            $productsQuery->orderByDesc('suka');
+        } else { // default terbaru
+            $productsQuery->orderByDesc('created_at');
         }
 
-        $products = $productQuery->paginate(12)->withQueryString();
+        $products = $productsQuery->paginate(12)->withQueryString();
 
-        // Tandai apakah produk disukai oleh user saat ini
+        // Tandai apakah produk sudah dilike oleh user saat ini
         $products->getCollection()->transform(function ($product) {
-            $product->likedByCurrentUser = \DB::table('product_likes')
+            $product->likedByCurrentUser = auth()->check() && \DB::table('product_likes')
                 ->where('user_id', auth()->id())
                 ->where('produk_id', $product->produk_id)
                 ->exists();
             return $product;
         });
 
-        // ===== Shops =====
-        $shopQuery = \App\Models\User::where('role', 'pengelola');
+        // ----------------------
+        // SHOPS QUERY
+        // ----------------------
+        $shopsQuery = \App\Models\User::where('role', 'pengelola');
 
-        if ($search) {
-            $shopQuery->where('nama', 'like', "%{$search}%")
-                      ->orWhere('alamat_toko', 'like', "%{$search}%");
+        if ($request->filled('search')) {
+            $keyword = $request->search;
+            $shopsQuery->where(function ($q) use ($keyword) {
+                $q->where('nama', 'like', "%{$keyword}%")
+                  ->orWhere('deskripsi_toko', 'like', "%{$keyword}%");
+            });
         }
 
-        // Saat ini, penyortiran toko berdasarkan popularitas belum tersedia,
-        // jadi gunakan created_at untuk terbaru
-        if ($sort === 'populer') {
-            // Jika memiliki metrik popularitas toko, seperti jumlah produk atau transaksi,
-            // tambahkan di sini. Untuk sementara, gunakan nama alfabet.
-            $shopQuery->orderBy('nama');
+        // Untuk toko, terpopuler dapat diartikan sebagai toko dengan total suka produk terbanyak
+        if ($request->sort === 'populer') {
+            $shopsQuery->withSum('produk as total_suka', 'suka')
+                       ->orderByDesc('total_suka');
         } else {
-            $shopQuery->orderByDesc('created_at');
+            $shopsQuery->orderByDesc('created_at');
         }
 
-        // Gunakan pagination 8 item per halaman
-        $shops = $shopQuery->paginate(8)->withQueryString();
+        $shops = $shopsQuery->paginate(12)->withQueryString();
 
-        return view('browse', compact('products', 'shops', 'search', 'sort'));
+        return view('browse', compact('products', 'shops'));
     }
 
     public function storeProduct(Request $request)

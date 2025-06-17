@@ -32,7 +32,7 @@ class TransaksiFactory extends Factory
             'tanggal' => $this->faker->dateTimeBetween('-2 months', 'now'),
             'status' => $status,
             'pay_method' => $payMethod,
-            'bukti_transfer' => $payMethod === 'transfer' && $status !== 'belum dibayar' ? 'images/bukti_transfer/' . Str::uuid() . '.jpg' : null,
+            'bukti_transfer' => $payMethod === 'transfer' && $status !== 'belum dibayar' ? 'images/bukti_transfer/1.png' : null,
         ];
     }
 } 
