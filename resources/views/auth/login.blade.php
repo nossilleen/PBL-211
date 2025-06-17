@@ -8,31 +8,32 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <style>
-        html, body {
-            height: 100%;
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-        }
-    </style>
 </head>
-<body class="font-sans antialiased">
-    <div class="min-h-screen flex">
-        <div class="w-full bg-green-800 p-6 flex flex-col md:flex-row items-center justify-between relative">
-            <!-- Form Login -->
-            <div class="flex-1 flex flex-col justify-center">
-                <div class="mb-8 ml-4">
-                    <img src="{{ asset('images/logo.png') }}" alt="EcoZense Logo" class="h-12">
-                </div>
+<body class="font-sans antialiased relative" style="background: url('{{ asset('images/bg1.jpeg') }}') no-repeat center center fixed; background-size: cover;">
+    <!-- Blur overlay -->
+    <div class="absolute inset-0 backdrop-blur-sm bg-white/30 z-0"></div>
 
-                <div class="max-w-md ml-4">
-                    <h1 class="text-3xl font-bold text-yellow-300 mb-8">LOGIN</h1>
-                    <form method="POST" action="{{ route('login') }}" class="space-y-6">
+    <div class="flex items-center justify-center min-h-screen relative z-10">
+        <div class="flex w-full max-w-3xl rounded-3xl shadow-2xl overflow-hidden bg-white/0 h-[600px] items-center relative z-30">
+            <!-- Left Box -->
+            <div class="hidden md:flex md:w-1/2 h-full items-center justify-center relative">
+                <div class="absolute inset-0" style="background: url('{{ asset('images/bg7.jpeg') }}') center center / cover no-repeat;"></div>
+                <div class="absolute inset-0 bg-white" style="opacity:0.04;"></div>
+                <img src="{{ asset('images/1.png') }}" alt="Ilustrasi"
+                     class="absolute -left-28 top-1/2 -translate-y-1/2 w-56 h-auto object-contain z-20 pointer-events-none">
+            </div>
+            <!-- Right Box: Login Form -->
+            <div class="w-full md:w-1/2 flex flex-col justify-center h-full relative">
+                <div class="absolute inset-0 bg-white" style="opacity:0.9;"></div>
+                <div class="relative z-10 p-10 flex flex-col justify-center h-full">
+                    <div class="mb-6 text-center">
+                        <img src="{{ asset('images/logo.png') }}" alt="EcoZense Logo" class="h-10 mx-auto">
+                    </div>
+                    <h1 class="text-2xl font-bold text-green-800 mb-6 text-center">LOGIN</h1>
+                    <form method="POST" action="{{ route('login') }}" class="space-y-4">
                         @csrf
-
                         @if($errors->any())
-                        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4">
+                        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-3 text-sm">
                             <ul>
                                 @foreach($errors->all() as $error)
                                     <li>{{ $error }}</li>
@@ -40,63 +41,77 @@
                             </ul>
                         </div>
                         @endif
-
-                        <div class="space-y-2">
-                            <label class="block text-gray-200">Email</label>
-                            <input type="email" name="email" class="w-full px-4 py-3 rounded-2xl bg-white focus:outline-none" required autofocus>
-                        </div>
-
-                        <div class="space-y-2">
-                            <label class="block text-gray-200">Password</label>
+                        <div class="space-y-1">
+                            <label class="block text-gray-700 text-sm">Email</label>
                             <div class="relative">
-                                <input type="password" name="password" class="w-full px-4 py-3 rounded-2xl bg-white focus:outline-none pr-10" required>
-                                <button type="button" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400" onclick="togglePassword(this)">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                        <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
-                                        <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd" />
+                                <span class="absolute left-3 top-1/2 -translate-y-1/2 text-green-500">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                                     </svg>
-                                </button>
+                                </span>
+                                <input type="email" name="email" class="w-full pl-10 pr-3 py-2 rounded-2xl bg-white shadow border border-green-100 focus:outline-none" required autofocus>
                             </div>
                         </div>
-
-                        <div class="flex items-center">
-                            <input type="checkbox" name="remember" id="remember" class="rounded border-gray-300">
-                            <label for="remember" class="ml-2 text-gray-200">Remember me?</label>
+                        <div class="space-y-1">
+                            <label class="block text-gray-700 text-sm">Password</label>
+                            <div class="relative">
+                                <button type="button" tabindex="-1" id="toggleLockBtn"
+                                    class="absolute left-3 top-1/2 -translate-y-1/2 text-green-500 focus:outline-none transition"
+                                    onclick="togglePasswordIcon(this)">
+                                    <svg id="lockIcon" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 11h14v8a2 2 0 01-2 2H7a2 2 0 01-2-2v-8z"/>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 11V7a5 5 0 0110 0v4"/>
+                                    </svg>
+                                </button>
+                                <input type="password" name="password" class="w-full pl-10 pr-3 py-2 rounded-2xl bg-white shadow border border-green-100 focus:outline-none" required id="passwordInput">
+                            </div>
                         </div>
-
-                        <button type="submit" class="w-full py-3 px-4 bg-yellow-300 hover:bg-yellow-400 text-green-900 font-semibold rounded-2xl transition duration-200">
-                            LOGIN
-                        </button>
-
-                        <div class="text-center">
-                            <a href="{{ route('password.request') }}" class="text-gray-400 hover:text-gray-200 text-sm">
+                        <div class="flex items-center justify-between mb-8 mt-2">
+                            <div class="flex items-center">
+                                <input type="checkbox" name="remember" id="remember" class="rounded border-gray-300">
+                                <label for="remember" class="ml-2 text-gray-700 text-sm">Remember me?</label>
+                            </div>
+                            <a href="{{ route('password.request') }}" class="text-gray-400 hover:text-gray-700 text-sm">
                                 Forgot Password?
                             </a>
                         </div>
+                        <button type="submit" class="w-full py-2 px-3 bg-yellow-300 hover:bg-yellow-400 text-green-900 font-semibold rounded-2xl transition duration-200 mt-4">
+                            LOGIN
+                        </button>
+                        <div class="text-center mt-2">
+                            <p class="text-gray-500 text-sm">
+                                Belum punya akun?
+                                <a href="{{ route('register') }}" class="text-yellow-500 hover:text-yellow-600 font-semibold">
+                                    Daftar disini
+                                </a>
+                            </p>
+                        </div>
                     </form>
                 </div>
-            </div>
-
-            <!-- Gambar -->
-            <div class="hidden md:flex items-center justify-center flex-1">
-                <img src="{{ asset('images/4.png') }}" alt="Ilustrasi" class="w-[250px] h-auto object-contain">
             </div>
         </div>
     </div>
 
     <script>
-        function togglePassword(button) {
-            const input = button.parentElement.querySelector('input');
-            const icon = button.querySelector('svg');
-
-            if (input.type === 'password') {
-                input.type = 'text';
-                icon.innerHTML = `<path fill-rule="evenodd" d="M3.707 2.293a1 1 0 00-1.414 1.414l14 14a1 1 0 001.414-1.414l-1.473-1.473A10.014 10.014 0 0019.542 10C18.268 5.943 14.478 3 10 3a9.958 9.958 0 00-4.512 1.074l-1.78-1.781zm4.261 4.26l1.514 1.515a2.003 2.003 0 012.45 2.45l1.514 1.514a4 4 0 00-5.478-5.478z" clip-rule="evenodd" /><path d="M12.454 16.697L9.75 13.992a4 4 0 01-3.742-3.741L2.335 6.578A9.98 9.98 0 00.458 10c1.274 4.057 5.065 7 9.542 7 .847 0 1.669-.105 2.454-.303z" />`;
-            } else {
-                input.type = 'password';
-                icon.innerHTML = `<path d="M10 12a2 2 0 100-4 2 2 0 000 4z" /><path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd" />`;
-            }
+    function togglePasswordIcon(btn) {
+        const input = document.getElementById('passwordInput');
+        const icon = btn.querySelector('svg');
+        if (input.type === 'password') {
+            input.type = 'text';
+            icon.innerHTML = `
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 11h14v8a2 2 0 01-2 2H7a2 2 0 01-2-2v-8z"/>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 7a5 5 0 015 5"/>
+            `;
+            btn.classList.replace('text-green-500', 'text-yellow-500');
+        } else {
+            input.type = 'password';
+            icon.innerHTML = `
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 11h14v8a2 2 0 01-2 2H7a2 2 0 01-2-2v-8z"/>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 11V7a5 5 0 0110 0v4"/>
+            `;
+            btn.classList.replace('text-yellow-500', 'text-green-500');
         }
+    }
     </script>
 </body>
 </html>
