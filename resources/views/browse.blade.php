@@ -47,10 +47,10 @@
                         </p>
                         <!-- Search Bar -->
                         <div class="max-w-xl mx-auto mt-8 relative">
-                            <form method="GET" action="{{ route('browse') }}" class="flex items-center bg-white rounded-full shadow-lg overflow-hidden border-2 border-green-100 hover:border-green-200 transition-all duration-300">
-                                <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari toko atau produk..." class="w-full px-6 py-3 text-gray-700 focus:outline-none text-lg" />
+                            <form method="GET" action="{{ route('browse') }}" class="relative flex items-center max-w-lg mx-auto">                                 
+                                <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari toko atau produk..." class="w-full pl-4 pr-12 py-3 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent shadow-sm"/>
                                 <input type="hidden" name="sort" value="{{ request('sort', 'terbaru') }}" />
-                                <button type="submit" class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 transition-all duration-300 flex items-center">
+                                <button type="submit" class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-green-500 hover:bg-green-600 text-white p-2 rounded-full transition-colors">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                                     </svg>

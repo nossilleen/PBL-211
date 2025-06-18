@@ -18,7 +18,7 @@
             <!-- Left Box -->
             <div class="hidden md:flex md:w-1/2 h-full items-center justify-center relative">
                 <div class="absolute inset-0 bg-white/0" style="opacity:0.04;"></div>
-                <img src="{{ asset('images/1.png') }}" alt="Ilustrasi"
+                <img src="{{ asset('images/2.png') }}" alt="Ilustrasi"
                      class="w-auto h-auto object-contain z-20 pointer-events-none">
             </div>
             <!-- Right Box: Login Form -->
