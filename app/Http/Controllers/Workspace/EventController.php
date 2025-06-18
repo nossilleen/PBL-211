@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Event;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Schema;
 
 class EventController extends Controller
 {
@@ -117,29 +118,31 @@ class EventController extends Controller
     // Menampilkan daftar event di landing page
     public function list(Request $request)
     {
-        $search = $request->input('search');
-        $sort   = $request->input('sort', 'terbaru');
-
-        $query = Event::query();
+        $eventsQuery = Event::query();
 
         // Pencarian judul / deskripsi
-        if ($search) {
-            $query->where('title', 'like', "%{$search}%")
-                  ->orWhere('description', 'like', "%{$search}%");
+        if ($request->filled('search')) {
+            $keyword = $request->search;
+            $eventsQuery->where(function($q) use ($keyword) {
+                $q->where('title', 'like', "%{$keyword}%")
+                  ->orWhere('description', 'like', "%{$keyword}%");
+            });
         }
 
-        // Penyortiran
-        if ($sort === 'populer') {
-            // Belum ada metrik popularitas, gunakan jumlah peserta jika tersedia.
-            // Sementara urutkan berdasarkan jumlah view (jika kolom ada) atau gunakan title sebagai fallback.
-            $query->orderBy('title');
+        // Sorting
+        if ($request->sort === 'populer') {
+            // Asumsi populer = banyak peserta; untuk saat ini gunakan terbesar views jika ada kolom 'views', jika tidak gunakan created_at
+            if (Schema::hasColumn('events', 'views')) {
+                $eventsQuery->orderByDesc('views');
+            } else {
+                $eventsQuery->orderByDesc('created_at');
+            }
         } else {
-            // Terbaru berdasarkan created_at
-            $query->orderByDesc('created_at');
+            $eventsQuery->orderByDesc('created_at');
         }
 
-        $events = $query->paginate(9)->withQueryString();
+        $events = $eventsQuery->paginate(9)->withQueryString();
 
-        return view('events.index', compact('events', 'search', 'sort'));
+        return view('events.index', compact('events'));
     }
 }

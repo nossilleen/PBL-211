@@ -257,7 +257,7 @@
 <script>
     function showDeleteModal(artikelId) {
         const modal = document.getElementById('modalHapusArtikel');
-        const form = document.getElementById('formHapusArtikel');
+        const form = document.getElementById('formHapus');
         form.action = `/admin/artikel/${artikelId}`;
         modal.classList.remove('hidden');
     }

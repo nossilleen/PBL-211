@@ -83,12 +83,8 @@
                         
                         <!-- Tabs -->
                         <div class="w-full md:w-auto flex space-x-6">
-                            @php
-                                $currentSort = request('sort', 'terbaru');
-                                $query = request()->all();
-                            @endphp
-                            <a href="{{ route('browse', array_merge($query, ['sort' => 'populer'])) }}" class="text-gray-700 hover:text-green-600 border-b-2 {{ $currentSort === 'populer' ? 'border-green-600' : 'border-transparent' }} px-1 py-2 font-medium">Terpopuler</a>
-                            <a href="{{ route('browse', array_merge($query, ['sort' => 'terbaru'])) }}" class="text-gray-700 hover:text-green-600 border-b-2 {{ $currentSort === 'terbaru' ? 'border-green-600' : 'border-transparent' }} px-1 py-2 font-medium">Terbaru</a>
+                            <a href="{{ request()->fullUrlWithQuery(['sort' => 'populer']) }}" class="text-gray-700 hover:text-green-600 border-b-2 {{ request('sort') === 'populer' ? 'border-green-600' : 'border-transparent' }} px-1 py-2 font-medium">Terpopuler</a>
+                            <a href="{{ request()->fullUrlWithQuery(['sort' => 'terbaru']) }}" class="text-gray-700 hover:text-green-600 border-b-2 {{ request('sort') === 'populer' ? 'border-transparent' : 'border-green-600' }} px-1 py-2 font-medium">Terbaru</a>
                         </div>
                     </div>
                 </div>
@@ -151,6 +147,7 @@
                                 :createdAt="$product->created_at"
                                 :suka="$product->suka"
                                 :productId="$product->produk_id"
+                                :isLiked="$product->likedByCurrentUser"
                             >
                                 <!-- Remove the duplicate like button, keep only the Beli button -->
                                 <a href="{{ route('product.detail', $product->produk_id) }}"

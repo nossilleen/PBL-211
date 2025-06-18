@@ -17,7 +17,7 @@ class ProdukGambarFactory extends Factory
     {
         return [
             'produk_id' => Produk::factory(),
-            'file_path' => 'images/produk/' . $this->faker->uuid() . '.jpg',
+            'file_path' => 'products/1.png',
         ];
     }
 } 
