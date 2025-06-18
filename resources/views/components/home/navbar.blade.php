@@ -16,7 +16,7 @@
         <!-- Logo - Far Left -->
         <a href="/" class="flex items-center flex-shrink-0" data-aos="fade-right" data-aos-delay="100">
             <div class="bg-transparent rounded-md">
-                <img src="{{ asset('images/logo.png') }}" alt="EcoZense Logo" class="h-5 md:h-7 w-auto">
+                <img src="{{ asset('images/logo.jpg') }}" alt="EcoZense Logo" class="h-5 md:h-7 w-auto">
             </div>
         </a>
         

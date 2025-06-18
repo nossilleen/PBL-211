@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
         <meta name="description" content="EcoZense - Tentang Kami" />
         <meta name="theme-color" content="#8DD363" />
-        <title>Tentang Kami - EcoZense</title>
+        <title>Tentang Kami</title>
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -31,9 +31,9 @@
                 </div>
                 <div class="container mx-auto px-4 relative z-10">
                     <div class="text-center max-w-3xl mx-auto" data-aos="fade-up" data-aos-duration="1000">
-                        <h1 class="text-4xl md:text-6xl font-bold text-white mb-4 md:mb-6 leading-tight">Tentang EcoZense</h1>
+                        <h1 class="text-4xl md:text-6xl font-bold text-white mb-4 md:mb-6 leading-tight">Tentang Kami - Tim PBL TRPL 211</h1>
                         <div class="w-24 h-1 bg-green-300 mx-auto mb-6 md:mb-8"></div>
-                        <p class="text-lg md:text-xl text-green-100 mb-8 md:mb-10">Bersama mengubah sampah organik menjadi solusi ramah lingkungan melalui Eco Enzim</p>
+                        <p class="text-lg md:text-xl text-green-100 mb-8 md:mb-10">Kami adalah sekelompok pengembang muda dari Program Studi Teknologi Rekayasa Perangkat Lunak yang tergabung dalam Tim PBL 211. Kami percaya bahwa teknologi dapat menjadi solusi nyata bagi permasalahan di sekitar kita.</p>
                         <a href="#misi-kami" class="inline-block text-white bg-green-600 hover:bg-green-700 py-2 px-6 md:py-3 md:px-8 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 font-medium text-sm md:text-base">
                             Pelajari Lebih Lanjut
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 md:h-5 md:w-5 inline-block ml-2 animate-bounce" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -64,18 +64,18 @@
                         <div class="bg-white p-6 md:p-8 rounded-xl shadow-lg mb-10 md:mb-12" data-aos="fade-up" data-aos-delay="100">
                             <div class="flex flex-col md:flex-row items-center">
                                 <div class="md:w-1/3 mb-6 md:mb-0">
-                                    <img src="{{ asset('images/logo.png') }}" alt="EcoZense Logo" class="w-36 h-36 md:w-48 md:h-48 object-contain mx-auto md:mx-0 rounded-lg p-4 bg-green-50 border-2 border-green-100">
+                                    <img src="{{ asset('images/logo.jpg') }}" alt="EcoZense Logo" class="w-36 h-36 md:w-48 md:h-48 object-contain mx-auto md:mx-0 rounded-lg p-4 bg-green-50 border-2 border-green-100">
                                 </div>
                                 <div class="md:w-2/3 md:pl-8">
-                                    <h3 class="text-xl md:text-2xl font-semibold text-green-700 mb-3 md:mb-4 text-center md:text-left">Tentang EcoZense</h3>
+                                    <h3 class="text-xl md:text-2xl font-semibold text-green-700 mb-3 md:mb-4 text-center md:text-left"> Tentang Tim Pengembang</h3>
                                     <p class="text-gray-600 mb-3 md:mb-4 text-sm md:text-base">
-                                        EcoZense adalah platform yang menghubungkan masyarakat dengan solusi pengelolaan sampah organik berbasis Eco Enzim. Kami percaya bahwa setiap rumah tangga dapat berkontribusi positif terhadap lingkungan melalui pengelolaan sampah organik yang tepat.
+                                    Tim PBL 211 adalah sekelompok mahasiswa dari Program Studi Teknologi Rekayasa Perangkat Lunak yang berkolaborasi dalam pengembangan aplikasi EcoZense sebagai bagian dari pembelajaran berbasis proyek (Project-Based Learning).
                                     </p>
                                     <p class="text-gray-600 mb-3 md:mb-4 text-sm md:text-base">
-                                        Didirikan pada tahun 2024, EcoZense fokus pada peningkatan kesadaran dan pemahaman masyarakat mengenai pentingnya pemanfaatan Eco Enzim untuk menjaga kelestarian lingkungan, terutama dalam pengelolaan sampah organik rumah tangga.
+                                    Terdiri dari enam orang dengan latar belakang dan minat yang beragam di bidang pengembangan perangkat lunak, kami menggabungkan keahlian dalam perancangan antarmuka, pemrograman web, manajemen proyek, dan pengujian sistem untuk menciptakan solusi digital yang fungsional dan berdampak nyata.
                                     </p>
                                     <p class="text-gray-600 text-sm md:text-base">
-                                        Dengan menghadirkan solusi terintegrasi, EcoZense memfasilitasi proses pembuatan, penggunaan, dan distribusi produk Eco Enzim untuk kegiatan sehari-hari dan pengembangan usaha ramah lingkungan.
+                                    Dengan semangat kolaborasi, inovasi, dan kepedulian terhadap lingkungan, kami merancang EcoZense untuk menjadi platform yang tidak hanya bermanfaat secara teknologi, tetapi juga mampu menjawab tantangan pengelolaan sampah organik di masyarakat.
                                     </p>
                                 </div>
                             </div>
@@ -135,7 +135,7 @@
                         <h2 class="text-3xl md:text-4xl font-bold text-green-800 mb-4">Mengapa Kami Ada</h2>
                         <div class="w-16 md:w-24 h-1 bg-green-300 mx-auto mb-6 md:mb-8"></div>
                         <p class="text-gray-600 text-sm md:text-base px-2">
-                            Kami hadir untuk menjawab tantangan lingkungan melalui solusi inovatif dan berkelanjutan dengan memanfaatkan Eco Enzim.
+                        Kami hadir sebagai tim mahasiswa yang ingin menggabungkan teknologi dan kepedulian sosial melalui pengembangan aplikasi berbasis proyek nyata.
                         </p>
                     </div>
                     
@@ -149,9 +149,10 @@
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
                                         </svg>
                                     </div>
-                                    <h3 class="text-lg md:text-xl font-semibold text-gray-800 mb-3 md:mb-4 group-hover:text-green-600 transition-colors">Mengurangi Sampah Organik</h3>
+                                    <h3 class="text-lg md:text-xl font-semibold text-gray-800 mb-3 md:mb-4 group-hover:text-green-600 transition-colors">Belajar dari Proyek Nyata</h3>
                                     <p class="text-gray-600 text-sm md:text-base">
-                                        Indonesia menghasilkan lebih dari 175.000 ton sampah per hari, 60% di antaranya adalah sampah organik. EcoZense hadir untuk membantu mengatasi masalah ini dengan mengubah sampah organik menjadi sumber daya bermanfaat.
+                                    Kami percaya bahwa pembelajaran terbaik terjadi saat teori bertemu praktik.
+                                    Melalui proyek EcoZense, kami menerapkan langsung ilmu pengembangan perangkat lunak untuk membangun aplikasi yang berdampak nyata.
                                     </p>
                                 </div>
                             </div>
@@ -166,9 +167,10 @@
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                                         </svg>
                                     </div>
-                                    <h3 class="text-lg md:text-xl font-semibold text-gray-800 mb-3 md:mb-4 group-hover:text-green-600 transition-colors">Solusi Keberlanjutan Lokal</h3>
+                                    <h3 class="text-lg md:text-xl font-semibold text-gray-800 mb-3 md:mb-4 group-hover:text-green-600 transition-colors">Kolaborasi dan Inovasi</h3>
                                     <p class="text-gray-600 text-sm md:text-base">
-                                        Eco Enzim merupakan solusi lokal yang ramah lingkungan, mudah dibuat, dan dapat dimanfaatkan untuk berbagai keperluan seperti pembersih alami, pupuk organik, dan penghilang bau.
+                                    Kami datang dari latar belakang dan keahlian yang beragam.
+                                    Dengan menggabungkan kemampuan dalam desain, pemrograman, dan analisis, kami bekerja sama sebagai satu tim yang solid untuk menciptakan solusi digital berkelanjutan.
                                     </p>
                                 </div>
                             </div>
@@ -183,9 +185,10 @@
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7" />
                                         </svg>
                                     </div>
-                                    <h3 class="text-lg md:text-xl font-semibold text-gray-800 mb-3 md:mb-4 group-hover:text-green-600 transition-colors">Menciptakan Nilai Ekonomi</h3>
+                                    <h3 class="text-lg md:text-xl font-semibold text-gray-800 mb-3 md:mb-4 group-hover:text-green-600 transition-colors">Berkarya untuk Lingkungan</h3>
                                     <p class="text-gray-600 text-sm md:text-base">
-                                        Kami membantu masyarakat tidak hanya mengolah sampah tetapi juga mengembangkan produk berbasis Eco Enzim yang memiliki nilai ekonomi dan membuka peluang usaha baru.
+                                    Lebih dari sekadar tugas kampus.
+                                    Proyek ini adalah bentuk kepedulian kami terhadap lingkungan. Kami berharap EcoZense dapat menjadi langkah kecil dari generasi muda untuk menghadirkan perubahan positif di masyarakat.
                                     </p>
                                 </div>
                             </div>
@@ -205,7 +208,9 @@
                         <h2 class="text-3xl md:text-4xl font-bold text-green-800 mb-4">Komitmen Kami</h2>
                         <div class="w-16 md:w-24 h-1 bg-green-300 mx-auto mb-6 md:mb-8"></div>
                         <p class="text-gray-600 text-sm md:text-base px-2">
-                            Kami berkomitmen untuk menciptakan dampak positif bagi lingkungan dan masyarakat melalui inovasi berkelanjutan.
+                        Tim PBL 211 bukan hanya sekadar menyelesaikan proyek. Kami berkomitmen untuk terus belajar, tumbuh, dan memberi dampak melalui kerja tim dan teknologi.
+
+
                         </p>
                     </div>
                     
@@ -213,17 +218,17 @@
                         <div class="group rounded-xl overflow-hidden shadow-lg transition-all duration-300 hover:shadow-2xl" data-aos="fade-right">
                             <div class="h-40 md:h-56 bg-cover bg-center" style="background-image: url('{{ asset('images/bg1.jpeg') }}')">
                                 <div class="h-full w-full bg-gradient-to-t from-green-900 to-transparent flex items-end p-4 md:p-6">
-                                    <h3 class="text-xl md:text-2xl font-bold text-white group-hover:scale-105 transition-transform">Edukasi & Kesadaran</h3>
+                                    <h3 class="text-xl md:text-2xl font-bold text-white group-hover:scale-105 transition-transform">Rasa Ingin Tahu yang Tinggi</h3>
                                 </div>
                             </div>
                             <div class="p-4 md:p-6 bg-white">
                                 <p class="text-gray-600 mb-4 md:mb-6 text-sm md:text-base">
-                                    Kami berkomitmen untuk terus mengedukasi masyarakat tentang manfaat Eco Enzim dan pentingnya pengolahan sampah organik untuk keberlanjutan lingkungan.
+                                Kami memulai proyek ini dengan rasa penasaran dan semangat belajar yang besar. Setiap tantangan adalah kesempatan untuk memahami lebih dalam dunia teknologi dan pengembangan aplikasi.
                                 </p>
                                 <div class="flex flex-wrap gap-2">
-                                    <span class="px-2 py-1 md:px-3 md:py-1 bg-green-100 text-green-700 rounded-full text-xs md:text-sm">Workshop</span>
-                                    <span class="px-2 py-1 md:px-3 md:py-1 bg-green-100 text-green-700 rounded-full text-xs md:text-sm">Webinar</span>
-                                    <span class="px-2 py-1 md:px-3 md:py-1 bg-green-100 text-green-700 rounded-full text-xs md:text-sm">Konten Edukatif</span>
+                                    <span class="px-2 py-1 md:px-3 md:py-1 bg-green-100 text-green-700 rounded-full text-xs md:text-sm">Belajar Terus</span>
+                                    <span class="px-2 py-1 md:px-3 md:py-1 bg-green-100 text-green-700 rounded-full text-xs md:text-sm">Riset Mandiri</span>
+                                    <span class="px-2 py-1 md:px-3 md:py-1 bg-green-100 text-green-700 rounded-full text-xs md:text-sm">Explorasi</span>
                                 </div>
                             </div>
                         </div>
@@ -231,17 +236,17 @@
                         <div class="group rounded-xl overflow-hidden shadow-lg transition-all duration-300 hover:shadow-2xl" data-aos="fade-left">
                             <div class="h-40 md:h-56 bg-cover bg-center" style="background-image: url('{{ asset('images/bg2.jpeg') }}')">
                                 <div class="h-full w-full bg-gradient-to-t from-green-900 to-transparent flex items-end p-4 md:p-6">
-                                    <h3 class="text-xl md:text-2xl font-bold text-white group-hover:scale-105 transition-transform">Kolaborasi & Inovasi</h3>
+                                    <h3 class="text-xl md:text-2xl font-bold text-white group-hover:scale-105 transition-transform">Tumbuh Lewat Proses</h3>
                                 </div>
                             </div>
                             <div class="p-4 md:p-6 bg-white">
                                 <p class="text-gray-600 mb-4 md:mb-6 text-sm md:text-base">
-                                    Kami berkomitmen untuk terus berinovasi dan berkolaborasi dengan berbagai pihak dalam mengembangkan solusi Eco Enzim yang lebih baik dan bermanfaat.
+                                Kami percaya bahwa kesalahan adalah bagian dari perjalanan. Kami belajar dari kegagalan, memperbaikinya bersama, dan terus melangkah untuk menjadi versi terbaik dari diri kami sebagai tim.
                                 </p>
                                 <div class="flex flex-wrap gap-2">
-                                    <span class="px-2 py-1 md:px-3 md:py-1 bg-green-100 text-green-700 rounded-full text-xs md:text-sm">Riset</span>
-                                    <span class="px-2 py-1 md:px-3 md:py-1 bg-green-100 text-green-700 rounded-full text-xs md:text-sm">Pengembangan Produk</span>
-                                    <span class="px-2 py-1 md:px-3 md:py-1 bg-green-100 text-green-700 rounded-full text-xs md:text-sm">Kemitraan</span>
+                                    <span class="px-2 py-1 md:px-3 md:py-1 bg-green-100 text-green-700 rounded-full text-xs md:text-sm">Belajar dari Gagal</span>
+                                    <span class="px-2 py-1 md:px-3 md:py-1 bg-green-100 text-green-700 rounded-full text-xs md:text-sm">Evaluasi</span>
+                                    <span class="px-2 py-1 md:px-3 md:py-1 bg-green-100 text-green-700 rounded-full text-xs md:text-sm">Progres Bersama</span>
                                 </div>
                             </div>
                         </div>
@@ -249,17 +254,17 @@
                         <div class="group rounded-xl overflow-hidden shadow-lg transition-all duration-300 hover:shadow-2xl" data-aos="fade-right">
                             <div class="h-40 md:h-56 bg-cover bg-center" style="background-image: url('{{ asset('images/bg4.jpeg') }}')">
                                 <div class="h-full w-full bg-gradient-to-t from-green-900 to-transparent flex items-end p-4 md:p-6">
-                                    <h3 class="text-xl md:text-2xl font-bold text-white group-hover:scale-105 transition-transform">Pemberdayaan Masyarakat</h3>
+                                    <h3 class="text-xl md:text-2xl font-bold text-white group-hover:scale-105 transition-transform">Terbuka dan Komunikatif</h3>
                                 </div>
                             </div>
                             <div class="p-4 md:p-6 bg-white">
                                 <p class="text-gray-600 mb-4 md:mb-6 text-sm md:text-base">
-                                    Kami berkomitmen untuk memberdayakan masyarakat melalui pelatihan dan pendampingan dalam mengembangkan usaha berbasis Eco Enzim sebagai sumber penghasilan alternatif.
+                                Setiap ide dihargai. Kami menjaga komunikasi terbuka, saling mendengarkan, dan menyelesaikan perbedaan pendapat dengan kepala dingin. Karena kami tahu: tim yang kuat dibangun dari kepercayaan.
                                 </p>
                                 <div class="flex flex-wrap gap-2">
-                                    <span class="px-2 py-1 md:px-3 md:py-1 bg-green-100 text-green-700 rounded-full text-xs md:text-sm">Pelatihan</span>
-                                    <span class="px-2 py-1 md:px-3 md:py-1 bg-green-100 text-green-700 rounded-full text-xs md:text-sm">Pendampingan</span>
-                                    <span class="px-2 py-1 md:px-3 md:py-1 bg-green-100 text-green-700 rounded-full text-xs md:text-sm">Akses Pasar</span>
+                                    <span class="px-2 py-1 md:px-3 md:py-1 bg-green-100 text-green-700 rounded-full text-xs md:text-sm">Diskusi Sehat</span>
+                                    <span class="px-2 py-1 md:px-3 md:py-1 bg-green-100 text-green-700 rounded-full text-xs md:text-sm">Tim Solid</span>
+                                    <span class="px-2 py-1 md:px-3 md:py-1 bg-green-100 text-green-700 rounded-full text-xs md:text-sm">Dengar Aktif</span>
                                 </div>
                             </div>
                         </div>
@@ -267,17 +272,17 @@
                         <div class="group rounded-xl overflow-hidden shadow-lg transition-all duration-300 hover:shadow-2xl" data-aos="fade-left">
                             <div class="h-40 md:h-56 bg-cover bg-center" style="background-image: url('{{ asset('images/bg3.jpeg') }}')">
                                 <div class="h-full w-full bg-gradient-to-t from-green-900 to-transparent flex items-end p-4 md:p-6">
-                                    <h3 class="text-xl md:text-2xl font-bold text-white group-hover:scale-105 transition-transform">Keberlanjutan Lingkungan</h3>
+                                    <h3 class="text-xl md:text-2xl font-bold text-white group-hover:scale-105 transition-transform">Bekerja dengan Tujuan</h3>
                                 </div>
                             </div>
                             <div class="p-4 md:p-6 bg-white">
                                 <p class="text-gray-600 mb-4 md:mb-6 text-sm md:text-base">
-                                    Kami berkomitmen untuk terus mengembangkan praktik-praktik ramah lingkungan dalam setiap aspek operasional kami dan mendukung inisiatif pelestarian lingkungan.
+                                Kami tidak hanya membuat aplikasi — kami membangun sesuatu yang bermakna. Setiap baris kode yang kami tulis punya misi: menciptakan dampak dan menyelesaikan masalah nyata.
                                 </p>
                                 <div class="flex flex-wrap gap-2">
-                                    <span class="px-2 py-1 md:px-3 md:py-1 bg-green-100 text-green-700 rounded-full text-xs md:text-sm">Efisiensi</span>
-                                    <span class="px-2 py-1 md:px-3 md:py-1 bg-green-100 text-green-700 rounded-full text-xs md:text-sm">Pengurangan Limbah</span>
-                                    <span class="px-2 py-1 md:px-3 md:py-1 bg-green-100 text-green-700 rounded-full text-xs md:text-sm">Konservasi</span>
+                                    <span class="px-2 py-1 md:px-3 md:py-1 bg-green-100 text-green-700 rounded-full text-xs md:text-sm">Makna di Balik Teknologi</span>
+                                    <span class="px-2 py-1 md:px-3 md:py-1 bg-green-100 text-green-700 rounded-full text-xs md:text-sm">Proyek Bermisi</span>
+                                    <span class="px-2 py-1 md:px-3 md:py-1 bg-green-100 text-green-700 rounded-full text-xs md:text-sm">Tech With Purpose</span>
                                 </div>
                             </div>
                         </div>
@@ -307,14 +312,13 @@
                         <div class="group" data-aos="fade-up" data-aos-delay="100">
                             <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform group-hover:-translate-y-2 border border-gray-100 h-full">
                                 <div class="relative overflow-hidden">
-                                    <img src="{{ asset('images/team1.jpg') }}" alt="Arshafin Alfisyahrin" class="w-full h-32 md:h-40 object-cover object-center transform transition-transform group-hover:scale-110">
+                                    <img src="{{ asset('images/arshafin.jpg') }}" alt="Arshafin Alfisyahrin - Back-End Developer" class="w-full h-32 md:h-40 object-cover object-center transform transition-transform group-hover:scale-110">
                                     <div class="absolute inset-0 bg-gradient-to-t from-green-900 via-transparent to-transparent opacity-0 group-hover:opacity-70 transition-opacity"></div>
                                     <div class="absolute bottom-0 left-0 right-0 p-2 transform translate-y-full group-hover:translate-y-0 transition-transform">
                                         <div class="flex space-x-2 justify-center">
                                             <a href="#" class="w-6 h-6 bg-white rounded-full flex items-center justify-center text-green-700 hover:bg-green-600 hover:text-white transition-colors">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-linkedin" viewBox="0 0 16 16">
                                                     <path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248-.822 0-1.359.54-1.359 1.248 0 .694.521 1.248 1.327 1.248h.016zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016a5.54 5.54 0 0 1 .016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225h2.4z"/>
-                                                </svg>
                                             </a>
                                             <a href="#" class="w-6 h-6 bg-white rounded-full flex items-center justify-center text-green-700 hover:bg-green-600 hover:text-white transition-colors">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16">
@@ -327,21 +331,24 @@
                                 <div class="p-3 md:p-4">
                                     <h3 class="text-sm md:text-base font-semibold text-gray-800 mb-1 text-center">Arshafin Alfisyahrin</h3>
                                     <p class="text-green-600 mb-2 text-center text-xs md:text-sm">4342401075</p>
+                                    <div class="border-t border-gray-100 pt-2 mt-2">
+                                        <p class="text-gray-600 text-xs md:text-sm mb-2 text-center font-medium">Database Design & Backend Programmer</p>
+                                        <p class="text-gray-500 text-xs italic text-center">"Would Rather Watch A Tree Grow or A Knee Grow"</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="group" data-aos="fade-up" data-aos-delay="200">
                             <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform group-hover:-translate-y-2 border border-gray-100 h-full">
                                 <div class="relative overflow-hidden">
-                                    <img src="{{ asset('images/team2.jpg') }}" alt="Muhamad Ariffadhlullah" class="w-full h-32 md:h-40 object-cover object-center transform transition-transform group-hover:scale-110">
+                                    <img src="{{ asset('images/arif.jpg') }}" alt="Muhamad Ariffadhlullah - Project Manager" class="w-full h-32 md:h-40 object-cover object-center transform transition-transform group-hover:scale-110">
                                     <div class="absolute inset-0 bg-gradient-to-t from-green-900 via-transparent to-transparent opacity-0 group-hover:opacity-70 transition-opacity"></div>
                                     <div class="absolute bottom-0 left-0 right-0 p-2 transform translate-y-full group-hover:translate-y-0 transition-transform">
                                         <div class="flex space-x-2 justify-center">
                                             <a href="#" class="w-6 h-6 bg-white rounded-full flex items-center justify-center text-green-700 hover:bg-green-600 hover:text-white transition-colors">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-linkedin" viewBox="0 0 16 16">
                                                     <path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248-.822 0-1.359.54-1.359 1.248 0 .694.521 1.248 1.327 1.248h.016zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016a5.54 5.54 0 0 1 .016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225h2.4z"/>
-                                                </svg>
                                             </a>
                                             <a href="#" class="w-6 h-6 bg-white rounded-full flex items-center justify-center text-green-700 hover:bg-green-600 hover:text-white transition-colors">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16">
@@ -352,23 +359,26 @@
                                     </div>
                                 </div>
                                 <div class="p-3 md:p-4">
-                                    <h3 class="text-sm md:text-base font-semibold text-gray-800 mb-1 text-center">M. Ariffadhlullah</h3>
+                                    <h3 class="text-sm md:text-base font-semibold text-gray-800 mb-1 text-center">Muhamad Ariffadhlullah</h3>
                                     <p class="text-green-600 mb-2 text-center text-xs md:text-sm">4342401070</p>
+                                    <div class="border-t border-gray-100 pt-2 mt-2">
+                                        <p class="text-gray-600 text-xs md:text-sm mb-2 text-center font-medium">Database Design & Frontend Programmer</p>
+                                        <p class="text-gray-500 text-xs italic text-center">"Think Lightly of Yourself and Deeply of The World"</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="group" data-aos="fade-up" data-aos-delay="300">
                             <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform group-hover:-translate-y-2 border border-gray-100 h-full">
                                 <div class="relative overflow-hidden">
-                                    <img src="{{ asset('images/team3.jpg') }}" alt="Steven Kumala" class="w-full h-32 md:h-40 object-cover object-center transform transition-transform group-hover:scale-110">
+                                    <img src="{{ asset('images/steven.jpg') }}" alt="Steven Kumala - Full-Stack Developer" class="w-full h-32 md:h-40 object-cover object-center transform transition-transform group-hover:scale-110">
                                     <div class="absolute inset-0 bg-gradient-to-t from-green-900 via-transparent to-transparent opacity-0 group-hover:opacity-70 transition-opacity"></div>
                                     <div class="absolute bottom-0 left-0 right-0 p-2 transform translate-y-full group-hover:translate-y-0 transition-transform">
                                         <div class="flex space-x-2 justify-center">
                                             <a href="#" class="w-6 h-6 bg-white rounded-full flex items-center justify-center text-green-700 hover:bg-green-600 hover:text-white transition-colors">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-linkedin" viewBox="0 0 16 16">
                                                     <path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248-.822 0-1.359.54-1.359 1.248 0 .694.521 1.248 1.327 1.248h.016zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016a5.54 5.54 0 0 1 .016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225h2.4z"/>
-                                                </svg>
                                             </a>
                                             <a href="#" class="w-6 h-6 bg-white rounded-full flex items-center justify-center text-green-700 hover:bg-green-600 hover:text-white transition-colors">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16">
@@ -381,21 +391,24 @@
                                 <div class="p-3 md:p-4">
                                     <h3 class="text-sm md:text-base font-semibold text-gray-800 mb-1 text-center">Steven Kumala</h3>
                                     <p class="text-green-600 mb-2 text-center text-xs md:text-sm">4342401068</p>
+                                    <div class="border-t border-gray-100 pt-2 mt-2">
+                                        <p class="text-gray-600 text-xs md:text-sm mb-2 text-center font-medium">Quality Assurance & Frontend Programmer</p>
+                                        <p class="text-gray-500 text-xs italic text-center">"Have you ever played Roblox Tower Defense with your life on the line?"</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="group" data-aos="fade-up" data-aos-delay="400">
                             <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform group-hover:-translate-y-2 border border-gray-100 h-full">
                                 <div class="relative overflow-hidden">
-                                    <img src="{{ asset('images/team4.jpg') }}" alt="Muhammad Faldy Rizaldi" class="w-full h-32 md:h-40 object-cover object-center transform transition-transform group-hover:scale-110">
+                                    <img src="{{ asset('images/faldy.jpg') }}" alt="Muhammad Faldy Rizaldi - UI/UX Designer" class="w-full h-32 md:h-40 object-cover object-center transform transition-transform group-hover:scale-110">
                                     <div class="absolute inset-0 bg-gradient-to-t from-green-900 via-transparent to-transparent opacity-0 group-hover:opacity-70 transition-opacity"></div>
                                     <div class="absolute bottom-0 left-0 right-0 p-2 transform translate-y-full group-hover:translate-y-0 transition-transform">
                                         <div class="flex space-x-2 justify-center">
                                             <a href="#" class="w-6 h-6 bg-white rounded-full flex items-center justify-center text-green-700 hover:bg-green-600 hover:text-white transition-colors">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-linkedin" viewBox="0 0 16 16">
                                                     <path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248-.822 0-1.359.54-1.359 1.248 0 .694.521 1.248 1.327 1.248h.016zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016a5.54 5.54 0 0 1 .016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225h2.4z"/>
-                                                </svg>
                                             </a>
                                             <a href="#" class="w-6 h-6 bg-white rounded-full flex items-center justify-center text-green-700 hover:bg-green-600 hover:text-white transition-colors">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16">
@@ -406,23 +419,26 @@
                                     </div>
                                 </div>
                                 <div class="p-3 md:p-4">
-                                    <h3 class="text-sm md:text-base font-semibold text-gray-800 mb-1 text-center">M. Faldy Rizaldi</h3>
+                                    <h3 class="text-sm md:text-base font-semibold text-gray-800 mb-1 text-center">Muhammad Faldy Rizaldi</h3>
                                     <p class="text-green-600 mb-2 text-center text-xs md:text-sm">4342401079</p>
+                                    <div class="border-t border-gray-100 pt-2 mt-2">
+                                        <p class="text-gray-600 text-xs md:text-sm mb-2 text-center font-medium">Quality Assurance & UI/UX Design</p>
+                                        <p class="text-gray-500 text-xs italic text-center">"ya"</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="group" data-aos="fade-up" data-aos-delay="500">
                             <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform group-hover:-translate-y-2 border border-gray-100 h-full">
                                 <div class="relative overflow-hidden">
-                                    <img src="{{ asset('images/team5.jpg') }}" alt="Thalita Aurelia Marsim" class="w-full h-32 md:h-40 object-cover object-center transform transition-transform group-hover:scale-110">
+                                    <img src="{{ asset('images/thalita.jpg') }}" alt="Thalita Aurelia Marsim - UI/UX Designer" class="w-full h-32 md:h-40 object-cover object-center transform transition-transform group-hover:scale-110">
                                     <div class="absolute inset-0 bg-gradient-to-t from-green-900 via-transparent to-transparent opacity-0 group-hover:opacity-70 transition-opacity"></div>
                                     <div class="absolute bottom-0 left-0 right-0 p-2 transform translate-y-full group-hover:translate-y-0 transition-transform">
                                         <div class="flex space-x-2 justify-center">
                                             <a href="#" class="w-6 h-6 bg-white rounded-full flex items-center justify-center text-green-700 hover:bg-green-600 hover:text-white transition-colors">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-linkedin" viewBox="0 0 16 16">
                                                     <path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248-.822 0-1.359.54-1.359 1.248 0 .694.521 1.248 1.327 1.248h.016zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016a5.54 5.54 0 0 1 .016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225h2.4z"/>
-                                                </svg>
                                             </a>
                                             <a href="#" class="w-6 h-6 bg-white rounded-full flex items-center justify-center text-green-700 hover:bg-green-600 hover:text-white transition-colors">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16">
@@ -433,23 +449,26 @@
                                     </div>
                                 </div>
                                 <div class="p-3 md:p-4">
-                                    <h3 class="text-sm md:text-base font-semibold text-gray-800 mb-1 text-center">Thalita Aurelia M.</h3>
+                                    <h3 class="text-sm md:text-base font-semibold text-gray-800 mb-1 text-center">Thalita Aurelia Marsim</h3>
                                     <p class="text-green-600 mb-2 text-center text-xs md:text-sm">4342401066</p>
+                                    <div class="border-t border-gray-100 pt-2 mt-2">
+                                        <p class="text-gray-600 text-xs md:text-sm mb-2 text-center font-medium">Business Analyst & Backend Programmer</p>
+                                        <p class="text-gray-500 text-xs italic text-center">"I may live in the shadows of the frontend, but I hold the system together."</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="group" data-aos="fade-up" data-aos-delay="600">
                             <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform group-hover:-translate-y-2 border border-gray-100 h-full">
                                 <div class="relative overflow-hidden">
-                                    <img src="{{ asset('images/team6.jpg') }}" alt="Agnes Natalia Silalahi" class="w-full h-32 md:h-40 object-cover object-center transform transition-transform group-hover:scale-110">
+                                    <img src="{{ asset('images/agnes.jpg') }}" alt="Agnes Natalia Silalahi - UI/UX Designer" class="w-full h-32 md:h-40 object-cover object-center transform transition-transform group-hover:scale-110">
                                     <div class="absolute inset-0 bg-gradient-to-t from-green-900 via-transparent to-transparent opacity-0 group-hover:opacity-70 transition-opacity"></div>
                                     <div class="absolute bottom-0 left-0 right-0 p-2 transform translate-y-full group-hover:translate-y-0 transition-transform">
                                         <div class="flex space-x-2 justify-center">
                                             <a href="#" class="w-6 h-6 bg-white rounded-full flex items-center justify-center text-green-700 hover:bg-green-600 hover:text-white transition-colors">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-linkedin" viewBox="0 0 16 16">
                                                     <path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248-.822 0-1.359.54-1.359 1.248 0 .694.521 1.248 1.327 1.248h.016zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016a5.54 5.54 0 0 1 .016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225h2.4z"/>
-                                                </svg>
                                             </a>
                                             <a href="#" class="w-6 h-6 bg-white rounded-full flex items-center justify-center text-green-700 hover:bg-green-600 hover:text-white transition-colors">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16">
@@ -460,8 +479,12 @@
                                     </div>
                                 </div>
                                 <div class="p-3 md:p-4">
-                                    <h3 class="text-sm md:text-base font-semibold text-gray-800 mb-1 text-center">Agnes Natalia S.</h3>
+                                    <h3 class="text-sm md:text-base font-semibold text-gray-800 mb-1 text-center">Agnes Natalia Silalahi</h3>
                                     <p class="text-green-600 mb-2 text-center text-xs md:text-sm">4342401082</p>
+                                    <div class="border-t border-gray-100 pt-2 mt-2">
+                                        <p class="text-gray-600 text-xs md:text-sm mb-2 text-center font-medium">UI/UX Design & Frontend Programmer</p>
+                                        <p class="text-gray-500 text-xs italic text-center">"Out of the mountain of despair, a stone of hope."</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -588,7 +611,7 @@
                             <a href="{{ route('register') }}" class="bg-white text-green-700 hover:bg-green-100 py-2 md:py-3 px-6 md:px-8 rounded-full font-semibold transition-all text-sm md:text-base shadow-lg hover:shadow-xl transform hover:-translate-y-1">
                                 Daftar Sekarang
                             </a>
-                            <a href="#" class="bg-transparent border-2 border-white text-white hover:bg-white/10 py-2 md:py-3 px-6 md:px-8 rounded-full font-semibold transition-all text-sm md:text-base shadow-lg hover:shadow-xl transform hover:-translate-y-1 mt-3 md:mt-0">
+                                                       <a href="#" class="bg-transparent border-2 border-white text-white hover:bg-white/10 py-2 md:py-3 px-6 md:px-8 rounded-full font-semibold transition-all text-sm md:text-base shadow-lg hover:shadow-xl transform hover:-translate-y-1 mt-3 md:mt-0">
                                 Pelajari Selengkapnya
                             </a>
                         </div>
@@ -691,7 +714,7 @@
                                 // Check if answer is currently open
                                 const isOpen = answer.classList.contains('active');
                                 
-                                // Close all answers
+                                // Close all other answers
                                 document.querySelectorAll('.faq-answer').forEach(ans => {
                                     ans.classList.remove('active');
                                     ans.style.paddingTop = '0';
@@ -723,7 +746,7 @@
                 <!-- Decorative elements -->
                 <div class="absolute top-0 left-0 w-full h-20 overflow-hidden">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" class="absolute -top-10 w-full h-40 text-white fill-current">
-                        <path d="M0,64L48,80C96,96,192,128,288,138.7C384,149,480,139,576,122.7C672,107,768,85,864,96C960,107,1056,149,1152,154.7C1248,160,1344,128,1392,112L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+                        <path d="M8.051 1.999h.089c.822.003 4.987.033 6.11.335a2.01 2.01 0 0 1 1.415 1.42c.101.38.172.883.22 1.402l.01.104.022.26.008.104c.065.914.073 1.77.074 1.957v.075c-.001.194-.01 1.108-.082 2.06l-.008.105-.009.104c-.05.572-.124 1.14-.235 1.558a2.007 2.007 0 0 1-1.415 1.42c-1.16.312-5.569.334-6.18.335h-.142c-.309 0-1.587-.006-2.927-.052l-.17-.006-.087-.004-.171-.007-.171-.007c-1.11-.049-2.167-.128-2.654-.26a2.007 2.007 0 0 1-1.415-1.419c-.111-.417-.185-.986-.235-1.558L.09 9.82l-.008-.104A31.4 31.4 0 0 1 0 7.68v-.123c.002-.215.01-.958.064-1.778l.007-.103.003-.052.008-.104.022-.26.01-.104c.048-.519.119-1.023.22-1.402a2.007 2.007 0 0 1 1.415-1.42c.487-.13 1.544-.21 2.654-.26l.17-.007.172-.006.086-.003.171-.007A99.788 99.788 0 0 1 7.858 2h.193zM6.4 5.209v4.818l4.157-2.408L6.4 5.209z"/>
                     </svg>
                 </div>
                 
@@ -782,14 +805,14 @@
                                         <a href="#" class="group">
                                             <div class="w-12 h-12 bg-green-100 text-green-600 rounded-full flex items-center justify-center group-hover:bg-green-600 group-hover:text-white transition-colors">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-facebook" viewBox="0 0 16 16">
-                                                    <path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z"/>
+                                                    <path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0 .002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z"/>
                                                 </svg>
                                             </div>
                                         </a>
                                         <a href="#" class="group">
                                             <div class="w-12 h-12 bg-green-100 text-green-600 rounded-full flex items-center justify-center group-hover:bg-green-600 group-hover:text-white transition-colors">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-instagram" viewBox="0 0 16 16">
-                                                    <path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.917 3.917 0 0 0-1.417.923A3.927 3.927 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.916 3.916 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.926 3.926 0 0 1-.923-1.417A3.911 3.911 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0h.003zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599.28.28.453.546.598.92.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.47 2.47 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.478 2.478 0 0 1-.92-.598 2.48 2.48 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233 0-2.136.008-2.388.046-3.231.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92.28-.28.546-.453.92-.598.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045v.002zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92zm-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217zm0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334z"/>
+                                                    <path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.917 3.917 0 0 0-1.417.923A3.927 3.927 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.916 3.916 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.926 3.926 0 0 1-.923-1.417A3.911 3.911 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0h.003zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599.28.28.453.546.598.92.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.036.78-.166 1.203-.275 1.485a2.47 2.47 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.478 2.478 0 0 1-.92-.598 2.48 2.48 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233 0-2.136.008-2.388.046-3.231.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92.28-.28.546-.453.92-.598.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045v.002zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92zm-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217zm0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334z"/>
                                                 </svg>
                                             </div>
                                         </a>
@@ -903,4 +926,4 @@
     });
 </script>
 </body>
-</html> 
+</html>
