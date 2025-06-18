@@ -10,7 +10,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="font-sans antialiased relative overflow-hidden">
-    <div class="absolute inset-0 bg-cover bg-center z-0" style="background-image: url('{{ asset('images/bg5.jpeg') }}');"></div>
+    <div class="absolute inset-0 bg-cover bg-center z-0" style="background-image: url('{{ asset('images/test.jpeg') }}');"></div>
     <div class="absolute inset-0 bg-white/20 z-10"></div>
 
     <!-- Konten Register -->
@@ -18,8 +18,8 @@
         <div class="flex w-full max-w-5xl rounded-3xl shadow-2xl overflow-hidden bg-white/0 h-[600px] items-center relative">
             <!-- Left Box -->
             <div class="hidden md:flex md:w-1/2 h-full items-center justify-center relative">
-                <div class="absolute inset-0 bg-white rounded-r-3xl shadow-2xl border-r-2 border-green-300"></div>
-                <img src="{{ asset('images/1.png') }}" alt="Ilustrasi" class="absolute -left-28 top-1/2 -translate-y-1/2 w-56 h-auto object-contain z-20 pointer-events-none">
+                <div class="absolute inset-0 bg-white/0  shadow-5x1 border-r-2 border-green-300"></div>
+                <img src="{{ asset('images/1.png') }}" alt="Ilustrasi" class="w-auto h-auto object-contain z-20 pointer-events-none">
             </div>
 
             <!-- Right Box: Register Form -->

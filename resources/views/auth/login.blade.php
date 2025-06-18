@@ -17,10 +17,9 @@
         <div class="flex w-full max-w-3xl rounded-3xl shadow-2xl overflow-hidden bg-white/0 h-[600px] items-center relative z-30">
             <!-- Left Box -->
             <div class="hidden md:flex md:w-1/2 h-full items-center justify-center relative">
-                <div class="absolute inset-0" style="background: url('{{ asset('images/bg7.jpeg') }}') center center / cover no-repeat;"></div>
-                <div class="absolute inset-0 bg-white" style="opacity:0.04;"></div>
+                <div class="absolute inset-0 bg-white/0" style="opacity:0.04;"></div>
                 <img src="{{ asset('images/1.png') }}" alt="Ilustrasi"
-                     class="absolute -left-28 top-1/2 -translate-y-1/2 w-56 h-auto object-contain z-20 pointer-events-none">
+                     class="w-auto h-auto object-contain z-20 pointer-events-none">
             </div>
             <!-- Right Box: Login Form -->
             <div class="w-full md:w-1/2 flex flex-col justify-center h-full relative">
