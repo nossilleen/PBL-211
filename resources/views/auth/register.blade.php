@@ -27,7 +27,7 @@
                 <div class="absolute inset-0 bg-white" style="opacity:0.50;"></div>
                 <div class="relative z-10 p-6 flex flex-col justify-center h-full">
                     <div class="mb-3 text-center">
-                        <img src="{{ asset('images/logo.png') }}" alt="EcoZense Logo" class="h-10 mx-auto mb-2">
+                        <img src="{{ asset('images/logo.jpg') }}" alt="EcoZense Logo" class="h-10 mx-auto mb-2">
                     </div>
                     <h1 class="text-xl font-bold text-green-800 mb-3 text-center">REGISTER</h1>
                     <form method="POST" action="{{ route('register') }}" class="space-y-3" id="registerForm">

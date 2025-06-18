@@ -26,7 +26,7 @@
                 <div class="absolute inset-0 bg-white" style="opacity:0.9;"></div>
                 <div class="relative z-10 p-10 flex flex-col justify-center h-full">
                     <div class="mb-6 text-center">
-                        <img src="{{ asset('images/logo.png') }}" alt="EcoZense Logo" class="h-10 mx-auto">
+                        <img src="{{ asset('images/logo.jpg') }}" alt="EcoZense Logo" class="h-20 mx-auto">
                     </div>
                     <h1 class="text-2xl font-bold text-green-800 mb-6 text-center">LOGIN</h1>
                     <form method="POST" action="{{ route('login') }}" class="space-y-4">
