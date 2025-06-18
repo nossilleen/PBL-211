@@ -130,6 +130,7 @@
                             :createdAt="$item->created_at"
                             :suka="$item->suka"
                             :productId="$item->produk_id"
+                            :isLiked="auth()->check() ? \DB::table('product_likes')->where('user_id', auth()->id())->where('produk_id', $item->produk_id)->exists() : false"
                         >
                             <a href="{{ route('product.detail', ['id' => $item->produk_id]) }}"
                                class="w-full px-4 py-2 bg-green-600 text-white font-medium rounded-md hover:bg-green-700 transition-colors text-center">

@@ -17,7 +17,7 @@
             @foreach($bestSellers as $product)
             <div class="bg-white rounded-lg overflow-hidden shadow-lg card-hover-effect flex flex-col h-full" data-aos="fade-up" data-aos-delay="{{ 200 + $loop->index * 100 }}">
                 <div class="aspect-w-16 aspect-h-9">
-                    <img src="{{ asset('storage/' . $product->gambar) }}" 
+                    <img src="{{ $product->image_url }}" 
                          alt="{{ $product->nama_produk }}" 
                          class="object-cover w-full h-48">
                 </div>

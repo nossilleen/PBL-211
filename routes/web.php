@@ -64,7 +64,6 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->name('admin.')->grou
     Route::put('/admin/artikel/{id}', [ArtikelController::class, 'update'])->name('artikel.update');
     // Route untuk hapus artikel
     Route::delete('/admin/artikel/{id}', [ArtikelController::class, 'destroy'])->name('artikel.destroy');
-    Route::delete('admin/artikel/{artikel}', [ArtikelController::class, 'destroy'])->name('artikel.destroy');
     Route::post('/artikel/{artikelId}/feedback', [ArtikelController::class, 'storeFeedback'])->name('feedback.store');
 });
 
@@ -117,11 +116,10 @@ Route::middleware(['auth', 'role:pengelola'])->group(function () {
     Route::get('/pengelola/transaksi', [PengelolaController::class, 'transaksi'])->name('pengelola.transaksi');
     Route::get('/pengelola/nasabah', [PengelolaController::class, 'nasabah'])->name('pengelola.nasabah');
     Route::get('/pengelola/laporan', [PengelolaController::class, 'laporan'])->name('pengelola.laporan');
-    Route::get('/pengelola/pesanan', [PengelolaController::class, 'pesanan'])->name('pengelola.pesanan');
+    // Route::get('/pengelola/pesanan', [PengelolaController::class, 'pesanan'])->name('pengelola.pesanan');
     
     // Product routes khusus pengelola (gunakan prefix /pengelola/products dari resource)
     Route::resource('/pengelola/products', ProductController::class);
-    Route::post('/produk/{id}/like', [ProductController::class, 'toggleLike'])->name('produk.like');
     Route::put('/pengelola/toko/update', [ProductController::class, 'updateToko'])->name('pengelola.toko.update');
 });
 
@@ -141,11 +139,6 @@ Route::middleware(['auth', 'role:pengelola'])->group(function () {
     // Add this new route for rejecting orders
     Route::post('/pengelola/pesanan/{id}/tolak', [\App\Http\Controllers\PBS\PengelolaController::class, 'tolak'])
         ->name('pengelola.pesanan.tolak');
-});
-
-Route::middleware(['auth', 'role:nasabah'])->group(function () {
-    Route::get('/nasabah/pesanan/{id}/detail', [Workspace\NasabahController::class, 'pesananDetail'])
-        ->name('nasabah.pesanan.detail');
 });
 
 // Admin password reset routes
@@ -169,7 +162,10 @@ Route::middleware(['auth', 'role:pengelola'])->prefix('pengelola')->name('pengel
     Route::get('/api/users/search', [PoinController::class, 'searchUser'])->name('api.users.search');
 });
 
+// Like / Unlike produk (dapat diakses oleh semua user yang login)
+Route::middleware('auth')->post('/produk/{id}/like', [ProductController::class, 'toggleLike'])->name('produk.like');
+
 // Debug route (development only)
-Route::get('/debug-sentry', function () {
+Route::middleware('auth')->get('/debug-sentry', function () {
     throw new Exception('My first Sentry error!');
-});
+})->name('debug.sentry');

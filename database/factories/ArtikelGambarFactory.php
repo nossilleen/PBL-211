@@ -17,7 +17,7 @@ class ArtikelGambarFactory extends Factory
     {
         return [
             'artikel_id' => Artikel::factory(),
-            'file_path' => 'images/artikel/' . $this->faker->uuid() . '.jpg',
+            'file_path' => 'storage/artikel_gambar/1.png',
             'judul' => $this->faker->sentence(3),
         ];
     }
