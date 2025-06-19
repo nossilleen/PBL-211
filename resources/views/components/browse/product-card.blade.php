@@ -27,20 +27,28 @@
     $detailUrl = $href ?? ($productId ? route('product.detail', ['id' => $productId]) : '#');
 @endphp
 
-<div class="bg-white rounded-lg shadow-md overflow-hidden flex flex-col h-full min-h-[400px] relative group">
+<div class="bg-white rounded-xl shadow-lg hover:shadow-2xl overflow-hidden flex flex-col h-full min-h-[420px] relative group transition-all duration-300 ease-in-out transform hover:-translate-y-2 hover:scale-[1.02] cursor-pointer border border-gray-100"
+     onclick="window.location.href='{{ $detailUrl }}'">
+    
     {{-- Product Image with Like Button --}}
-    <div class="relative h-48">
-        <img src="{{ $image }}" alt="{{ $title }}" class="w-full h-full object-cover">
+    <div class="relative h-52 overflow-hidden">
+        <img src="{{ $image }}" 
+             alt="{{ $title }}" 
+             class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+        
+        {{-- Gradient Overlay --}}
+        <div class="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+        
         @if($showLike)
             <button type="button"
-                onclick="toggleLike({{ $productId }})" 
-                class="like-button absolute top-2 right-2 p-2 rounded-full bg-white shadow-md hover:bg-gray-100">
+                onclick="event.stopPropagation(); toggleLike({{ $productId }})" 
+                class="like-button absolute top-3 right-3 p-2.5 rounded-full bg-white/90 backdrop-blur-sm shadow-lg hover:bg-white hover:scale-110 transition-all duration-200 z-10">
                 <svg id="heart-{{ $productId }}" 
-                    class="w-6 h-6 {{ $isLiked ? 'text-red-500' : '' }}" 
+                    class="w-5 h-5 {{ $isLiked ? 'text-red-500' : 'text-gray-600' }}" 
                     fill="{{ $isLiked ? 'currentColor' : 'none' }}"
                     stroke="currentColor" 
                     viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" 
                         d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z">
                     </path>
                 </svg>
@@ -48,47 +56,97 @@
         @endif
 
         @if($isNew)
-            <span class="absolute top-2 left-2 bg-yellow-500 text-white text-[10px] font-semibold px-2 py-1 rounded">Baru</span>
+            <span class="absolute top-3 left-3 bg-gradient-to-r from-yellow-400 to-orange-500 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg animate-pulse">
+                ✨ Baru
+            </span>
         @endif
-    </div>
 
-    {{-- Product Info --}}
-    <div class="p-4 flex-grow flex flex-col justify-between space-y-4">
-        {{-- Title and Description --}}
-        <div>
-            <h3 class="text-lg font-semibold text-gray-800 truncate">{{ $title }}</h3>
-            <p class="text-sm text-gray-600 mt-1 line-clamp-2">{{ $desc }}</p>
-        </div>
-
-        {{-- Price, Status, and Bank --}}
-        <div class="space-y-2">
-            @isset($price)
-                <p class="text-lg font-bold text-yellow-500 mb-1">Rp{{ $price }}</p>
-                @if(!empty($harga_points))
-                    <p class="text-sm font-medium text-blue-600 mb-1">atau {{ number_format($harga_points) }} Poin</p>
-                @endif
-            @endisset
-            <div class="flex items-center justify-between">
-                <span class="text-sm {{ $status == 'Available' ? 'text-green-600' : 'text-red-600' }} font-medium">
+        {{-- Status Badge --}}
+        @if($status)
+            <div class="absolute bottom-3 left-3">
+                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold {{ $status == 'Available' ? 'bg-green-100 text-green-800 border border-green-200' : 'bg-red-100 text-red-800 border border-red-200' }}">
+                    <span class="w-1.5 h-1.5 rounded-full {{ $status == 'Available' ? 'bg-green-500' : 'bg-red-500' }} mr-1.5"></span>
                     {{ $status }}
                 </span>
-                @if($showLike)
-                    <span class="text-sm text-gray-500" id="like-count-{{ $productId }}">❤ {{ $suka }}</span>
-                @endif
-            
             </div>
-            @if(!empty($bank))
-                <p class="text-sm text-blue-600 truncate">{{ $bank }}</p>
-            @endif
+        @endif
+    </div>
+
+    {{-- Content Section --}}
+    <div class="p-5 flex-grow flex flex-col justify-between space-y-4">
+        {{-- Title and Description --}}
+        <div class="space-y-2">
+            <h3 class="text-xl font-bold text-gray-900 line-clamp-1 group-hover:text-blue-600 transition-colors duration-200">
+                {{ $title }}
+            </h3>
+            <p class="text-sm text-gray-600 line-clamp-2 leading-relaxed">{{ $desc }}</p>
+        </div>
+
+        {{-- Price Section --}}
+        <div class="space-y-3">
+            @isset($price)
+                <div class="space-y-1">
+                    <p class="text-2xl font-bold bg-gradient-to-r from-yellow-500 to-orange-500 bg-clip-text text-transparent">
+                        Rp{{$price}}
+                    </p>
+                    @if(!empty($harga_points))
+                        <p class="text-sm font-medium text-blue-600 flex items-center">
+                            <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                            </svg>
+                            {{ number_format($harga_points) }} Poin
+                        </p>
+                    @endif
+                </div>
+            @endisset
+
+            {{-- Footer Info --}}
+            <div class="flex items-center justify-between pt-2">
+                @if(!empty($bank))
+                    <p class="text-sm text-blue-600 font-medium flex items-center">
+                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/>
+                        </svg>
+                        {{ $bank }}
+                    </p>
+                @endif
+                
+                @if($showLike)
+                    <span class="text-sm text-red-400 flex items-center font-medium" id="like-count-{{ $productId }}">
+                        <svg class="w-4 h-4 mr-1 text-red-400" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"/>
+                        </svg>
+                        {{ $suka }}
+                    </span>
+                @endif
+            </div>
         </div>
     </div>
 
-    {{-- Action Button (Slot) --}}
-    <div class="p-4 pt-0 mt-auto">
-        @if($slot->isEmpty())
-            <a href="{{ $detailUrl }}" class="w-full block px-4 py-2 bg-green-600 text-white font-medium rounded-md hover:bg-green-700 transition-colors text-center">Lihat Produk</a>
-        @else
+    {{-- Hover Effect Indicator --}}
+    <div class="absolute inset-x-0 bottom-0 h-1 bg-gradient-to-r from-blue-500 to-purple-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
+    
+    {{-- Custom Slot Content (if provided) --}}
+    @if(!$slot->isEmpty())
+        <div class="p-5 pt-0 mt-auto" onclick="event.stopPropagation();">
             {{ $slot }}
-        @endif
-    </div>
+        </div>
+    @endif
 </div>
+
+{{-- Add this CSS to your app.css or in a style tag --}}
+<style>
+    .line-clamp-1 {
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+    
+    .line-clamp-2 {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+</style>

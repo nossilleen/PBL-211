@@ -110,10 +110,6 @@
                                 :showLike="false"
                                 href="{{ route('toko.detail', ['id' => $shop->user_id]) }}"
                             >
-                                <a href="{{ route('toko.detail', ['id' => $shop->user_id]) }}" 
-                                   class="w-full px-6 py-3 bg-green-600 text-white text-lg font-semibold rounded-md hover:bg-green-700 transition-colors text-center">
-                                    Lihat Toko
-                                </a>
                             </x-browse.product-card>
                         @empty
                             <div class="col-span-4 text-center text-gray-500">Belum ada toko Bank Sampah.</div>
@@ -150,10 +146,6 @@
                                 :isLiked="$product->likedByCurrentUser"
                             >
                                 <!-- Remove the duplicate like button, keep only the Beli button -->
-                                <a href="{{ route('product.detail', $product->produk_id) }}"
-                                   class="w-full px-4 py-2 bg-green-600 text-white font-medium rounded-md hover:bg-green-700 transition-colors text-center">
-                                    Beli Sekarang
-                                </a>
                             </x-browse.product-card>
                         @endforeach
                     </div>

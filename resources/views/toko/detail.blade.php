@@ -35,10 +35,7 @@
                                 :suka="$product->suka"
                                 :productId="$product->produk_id"
                             >
-                                <a href="{{ route('product.detail', ['id' => $product->produk_id]) }}"
-                                   class="w-full px-4 py-2 bg-green-600 text-white font-medium rounded-md hover:bg-green-700 transition-colors text-center">
-                                    Beli Sekarang
-                                </a>
+
                             </x-browse.product-card>
                         @empty
                             <div class="col-span-4 text-center text-gray-500">Belum ada produk eco enzim.</div>

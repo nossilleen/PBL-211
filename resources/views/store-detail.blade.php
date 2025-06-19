@@ -57,43 +57,23 @@
         </div>
 
         <!-- Products Sections -->
-        @foreach($products as $kategori => $items)
+        @foreach($products as $kategori => $productCollection)
             <div id="{{ $kategori }}-products" class="category-section {{ $loop->first ? '' : 'hidden' }}">
                 <h2 class="text-2xl font-bold text-gray-800 mb-6">{{ ucwords(str_replace('_', ' ', $kategori)) }}</h2>
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                    @foreach($items as $product)
-                        <div class="bg-white rounded-lg shadow-sm overflow-hidden">
-                            <a href="{{ route('product.detail', $product->produk_id) }}" class="block">
-                                <!-- Product Image -->
-                                <div class="relative h-40">
-                                    <img src="{{ $product->gambar->first() ? Storage::url($product->gambar->first()->file_path) : asset('images/default-product.jpg') }}" 
-                                         class="w-full h-full object-cover">
-                                </div>
-                                
-                                <!-- Product Info -->
-                                <div class="p-4">
-                                    <h3 class="text-lg font-bold text-gray-800 mb-2">{{ $product->nama_produk }}</h3>
-                                    <p class="text-sm text-gray-600 mb-2">{{ Str::limit($product->deskripsi, 60) }}</p>
-                                    <p class="text-lg font-bold text-yellow-500 mb-2">
-                                        Rp{{ number_format($product->harga, 0, ',', '.') }}
-                                    </p>
-                                    @if($product->harga_points)
-                                        <p class="text-sm font-medium text-blue-600 mb-2">
-                                            atau {{ number_format($product->harga_points) }} Poin
-                                        </p>
-                                    @endif
-                                    <div class="flex items-center justify-between">
-                                        <span class="text-sm {{ $product->status_ketersediaan == 'Available' ? 'text-green-600' : 'text-red-600' }} font-medium">
-                                            {{ $product->status_ketersediaan }}
-                                        </span>
-                                        <span class="text-sm text-gray-500">Likes: {{ $product->suka }}</span>
-                                    </div>
-                                    <button class="w-full mt-4 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors">
-                                        Beli
-                                    </button>
-                                </div>
-                            </a>
-                        </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+                    @foreach($productCollection as $product)
+                        <x-browse.product-card 
+                            :image="asset($product->image_url)"
+                            :title="$product->nama_produk"
+                            :desc="Str::limit($product->deskripsi, 50)"
+                            :price="number_format($product->harga, 0, ',', '.')"
+                            :harga_points="$product->harga_points"
+                            :status="$product->status_ketersediaan"
+                            :bank="$product->user->nama"
+                            :createdAt="$product->created_at"
+                            :suka="$product->suka"
+                            :productId="$product->produk_id"
+                        />
                     @endforeach
                 </div>
             </div>
