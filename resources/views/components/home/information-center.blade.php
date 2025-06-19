@@ -1,100 +1,88 @@
-<!-- resources/views/components/home/information-center.blade.php -->
-<section
-    id="information-center"
-    class="min-h-screen flex items-center py-16 md:py-24"
-    style="background-image: url('{{ asset('images/bg2.jpeg') }}'); background-size: cover; background-position: center;"
->
-    <div class="container mx-auto px-4 md:px-6">
-        <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-4 md:mb-8" data-aos="fade-up">Pusat Informasi</h2>
-        <p class="text-center max-w-xl sm:max-w-2xl mx-auto mb-8 md:mb-12 text-sm sm:text-base" data-aos="fade-up" data-aos-delay="100">
-            Di Pusat Informasi EcoZense, kami menghadirkan artikel, video, dan kegiatan yang membuka wawasan tentang pentingnya menjaga keseimbangan alam.
-        </p>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-            <!-- Card 1 - Events -->
-            <div data-aos="fade-up" data-aos-delay="200" class="bg-white bg-opacity-10 backdrop-blur-sm rounded-lg shadow-lg h-full">
-                <a href="/events" class="block h-full">
-                    <div
-                        class="bg-cover bg-center rounded-t-lg overflow-hidden h-48 sm:h-60 md:h-64 transition-transform duration-300 hover:scale-105"
-                        style="background-image: url('{{ asset('images/bg3.jpeg') }}');"
-                    >
-                        <div class="p-4 sm:p-6 flex flex-col justify-between h-full bg-gradient-to-b from-transparent to-black/50">
-                            <h3 class="text-xl sm:text-2xl font-bold text-white mb-2">EVENTS</h3>
-                            <div
-                                class="rounded-full w-12 h-12 md:w-14 md:h-14 flex items-center justify-center bg-white/20 border border-white transition-transform duration-300 hover:scale-110"
-                            >
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    class="h-6 w-6 text-white"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke="currentColor"
-                                >
-                                    <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M10 19l-7-7m0 0l7-7m-7 7h18"
-                                    />
-                                </svg>
+<section class="min-h-60vh" style="background-color: #155A52">  
+        <div class="container mx-auto px-4 md:px-6 py-16 md:py-24 relative z-10">
+            <!-- Enhanced Section Header -->
+            <div class="text-center mb-12 md:mb-16" data-aos="fade-up">
+                <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-green-400 via-green-300 to-green-400 bg-clip-text text-transparent">
+                    Pusat Informasi
+                </h2>
+                <p class="text-gray-300 text-lg md:text-xl max-w-3xl mx-auto leading-relaxed">
+                    Di Pusat Informasi EcoZense, kami menghadirkan artikel, video, dan kegiatan yang membuka wawasan tentang pentingnya menjaga keseimbangan alam.
+                </p>
+            </div>
+            
+        <!-- Enhanced Cards Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
+            <!-- Events Card -->
+            <div data-aos="fade-up" data-aos-delay="200" class="group relative">
+                <div class="absolute -inset-0.5 bg-gradient-to-r from-green-500 to-green-600 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-500"></div>
+                <div class="relative bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 overflow-hidden border border-gray-100">
+                    <a href="/events" class="block h-full">
+                        <div class="relative h-56 md:h-64 overflow-hidden">
+                            <div class="absolute inset-0 bg-gradient-to-br from-green-500 to-green-600"></div>
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                            <div class="absolute bottom-6 left-6 right-6 flex items-end justify-between">
+                                <h3 class="text-2xl font-bold text-white">EVENTS</h3>
+                                <div class="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center border border-white/30 group-hover:scale-110 transition-transform duration-300">
+                                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                    </svg>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="text-center p-4">
-                        <h4 class="font-semibold">Kegiatan dan Event</h4>
-                    </div>
-                </a>
-            </div>
-
-            <!-- Card 2 - Video -->
-            <div data-aos="fade-up" data-aos-delay="300" class="bg-white bg-opacity-10 backdrop-blur-sm rounded-lg shadow-lg h-full">
-                <div class="h-48 sm:h-60 md:h-64 rounded-t-lg overflow-hidden">
-                    <iframe 
-                        src="https://drive.google.com/file/d/1cSYkE_qRdEnRY_PwwJFJJxKba309gKD6/preview" 
-                        allow="autoplay"
-                        allowfullscreen
-                        class="w-full h-full"
-                        loading="lazy"
-                    ></iframe>
-                </div>
-                <div class="text-center p-4">
-                    <h4 class="font-semibold">Video Animasi Mengenai Eco Enzim</h4>
+                        <div class="p-6 text-center">
+                            <h4 class="font-semibold text-lg text-gray-800 mb-2">Kegiatan dan Event</h4>
+                            <p class="text-gray-600 text-sm">Bergabunglah dengan berbagai kegiatan ramah lingkungan</p>
+                        </div>
+                    </a>
                 </div>
             </div>
 
-            <!-- Card 3 - Artikel -->
-            <div data-aos="fade-up" data-aos-delay="400" class="bg-white bg-opacity-10 backdrop-blur-sm rounded-lg shadow-lg h-full">
-                <a href="/artikel" class="block h-full">
-                    <div
-                        class="bg-cover bg-center rounded-t-lg overflow-hidden h-48 sm:h-60 md:h-64 transition-transform duration-300 hover:scale-105"
-                        style="background-image: url('{{ asset('images/bg5.jpeg') }}');"
-                    >
-                        <div class="p-4 sm:p-6 flex flex-col justify-between h-full bg-gradient-to-b from-transparent to-black/50">
-                            <h3 class="text-xl sm:text-2xl font-bold text-white mb-2">ARTIKEL</h3>
-                            <div
-                                class="rounded-full w-12 h-12 md:w-14 md:h-14 flex items-center justify-center bg-white/20 border border-white transition-transform duration-300 hover:scale-110"
-                            >
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    class="h-6 w-6 text-white"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke="currentColor"
-                                >
-                                    <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M14 5l7 7m0 0l-7 7m7-7H3"
-                                    />
-                                </svg>
+            <!-- Video Card -->
+            <div data-aos="fade-up" data-aos-delay="300" class="group relative">
+                <div class="absolute -inset-0.5 bg-gradient-to-r from-blue-500 to-green-500 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-500"></div>
+                <div class="relative bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 overflow-hidden border border-gray-100">
+                    <div class="h-56 md:h-64 rounded-t-xl overflow-hidden">
+                        <iframe 
+                            src="https://drive.google.com/file/d/1cSYkE_qRdEnRY_PwwJFJJxKba309gKD6/preview" 
+                            allow="autoplay"
+                            allowfullscreen
+                            class="w-full h-full transition-transform duration-500 group-hover:scale-105"
+                            loading="lazy"
+                        ></iframe>
+                    </div>
+                    <div class="p-6 text-center">
+                        <h4 class="font-semibold text-lg text-gray-800 mb-2">Video Animasi Mengenai Eco Enzim</h4>
+                        <p class="text-gray-600 text-sm">Pelajari cara membuat eco enzyme yang berkelanjutan</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Articles Card -->
+            <div data-aos="fade-up" data-aos-delay="400" class="group relative">
+                <div class="absolute -inset-0.5 bg-gradient-to-r from-green-600 to-green-700 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-500"></div>
+                <div class="relative bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 overflow-hidden border border-gray-100">
+                    <a href="#" class="block h-full">
+                        <div class="relative h-56 md:h-64 overflow-hidden">
+                            <div class="absolute inset-0 bg-gradient-to-br from-green-600 to-green-700"></div>
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                            <div class="absolute bottom-6 left-6 right-6 flex items-end justify-between">
+                                <h3 class="text-2xl font-bold text-white">ARTIKEL</h3>
+                                <div class="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center border border-white/30 group-hover:scale-110 transition-transform duration-300">
+                                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                                    </svg>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="text-center p-4">
-                        <h4 class="font-semibold">Artikel</h4>
-                    </div>
-                </a>
+                        <div class="p-6 text-center">
+                            <h4 class="font-semibold text-lg text-gray-800 mb-2">Artikel</h4>
+                            <p class="text-gray-600 text-sm">Baca artikel terbaru tentang kehidupan berkelanjutan</p>
+                        </div>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
 </section>
+
+<div class="spacer stack3"></div>

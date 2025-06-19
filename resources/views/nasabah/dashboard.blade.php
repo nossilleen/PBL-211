@@ -15,7 +15,7 @@
         <nav class="bg-green-800 text-white shadow-lg">
             <div class="container mx-auto px-4 py-3 flex justify-between items-center">
                 <div class="flex items-center">
-                    <img src="{{ asset('images/logo.png') }}" alt="EcoZense Logo" class="h-10">
+                    <img src="{{ asset('images/logo.jp) }}" alt="EcoZense Logo" class="h-10">
                     <span class="ml-4 text-xl font-semibold">Nasabah Dashboard</span>
                 </div>
                 <div>

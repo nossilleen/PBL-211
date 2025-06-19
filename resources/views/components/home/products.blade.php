@@ -6,7 +6,7 @@
         ->get();
 @endphp
 
-<section class="py-16 relative" style="background-image: url('{{ asset('images/bg5.jpeg') }}'); background-size: cover; background-position: center;">
+<section class="py-16 relative" style="background-color: #99f159; background-size: cover; background-position: center;">
 <div class="container mx-auto px-4">
         <h2 class="text-3xl font-bold text-center mb-6" data-aos="fade-up">
             Produk Eco Enzim terlaris
@@ -53,3 +53,5 @@
         </div>
     </div>
 </section>
+
+<div class="spacer2 wave4"></div>

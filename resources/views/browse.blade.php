@@ -36,7 +36,7 @@
                     <div class="max-w-4xl mx-auto text-center">
                         <!-- Logo -->
                         <div class="flex justify-center mb-8">
-                            <img src="{{ asset('images/Logo.png') }}" alt="EcoZense Logo" class="h-20 md:h-24 w-auto">
+                            <img src="{{ asset('images/Logo.jpg') }}" alt="EcoZense Logo" class="h-20 md:h-24 w-auto">
                         </div>
                         
                         <h1 class="text-4xl md:text-5xl font-bold text-white mb-4 animate-fade-in">

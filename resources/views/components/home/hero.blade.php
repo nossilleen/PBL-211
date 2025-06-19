@@ -1,6 +1,6 @@
 <!-- resources/views/components/home/hero.blade.php -->
 <section
-    class="min-h-screen flex items-center py-20 md:py-0"
+    class="min-h-screen flex items-center py-20 md:py-0" 
     style="background-image: url('{{ asset('images/Frame 2305.png') }}'); background-size: cover; background-position: center;"
 >
     <div class="container mx-auto px-4 md:px-6 lg:px-8">
@@ -40,3 +40,6 @@
         </div>
     </div>
 </section>
+
+<div class="spacer stack1"></div>
+

@@ -1,5 +1,6 @@
 <!-- resources/views/components/home/about-us.blade.php -->
-<section class="py-20" id="about-us" style="background-image: url('{{ asset('images/bg3.jpeg') }}'); background-size: cover; background-position: center;">
+<section class="py-20" id="about-us" style="background-image: url('{{ asset('images/polygon2.svg') }}'); background-size: cover; background-position: center;">
+    
     <div class="container mx-auto px-4">
         <div class="text-center mb-12">
             <h2 class="text-3xl md:text-4xl font-bold text-green-500 mb-4" data-aos="fade-up">Tentang EcoZense</h2>
@@ -71,3 +72,5 @@
         </div>
     </div>
 </section>
+
+<div class="spacer stack4"></div>

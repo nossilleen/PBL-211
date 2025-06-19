@@ -102,7 +102,7 @@
             <!-- Fixed EcoZense Logo -->
             <div class="mb-6">
                 <div class="w-24 h-24 mx-auto">
-                    <img src="{{ asset('images/logo.png') }}" alt="EcoZense" class="w-full h-full object-contain">
+                    <img src="{{ asset('images/logo.jpg') }}" alt="EcoZense" class="w-full h-full object-contain">
                 </div>
             </div>
             <h2 class="text-xl font-bold text-gray-800 mb-6">Dashboard</h2>
