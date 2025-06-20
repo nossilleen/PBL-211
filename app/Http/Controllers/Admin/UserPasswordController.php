@@ -11,9 +11,12 @@ class UserPasswordController extends Controller
 {
     public function resetPassword(User $user)
     {
+        $currentRole = $user->role; // Save current role
+        
         $user->update([
             'password' => Hash::make('password'),
-            'force_password_change' => true
+            'force_password_change' => true,
+            'role' => $currentRole // Ensure role stays the same
         ]);
 
         // Tambahkan flash message untuk user yang passwordnya direset
@@ -33,10 +36,12 @@ class UserPasswordController extends Controller
         ]);
 
         $user = auth()->user();
+        $currentRole = $user->role; // Save current role
         
         $user->update([
             'password' => Hash::make($request->password),
-            'force_password_change' => false
+            'force_password_change' => false,
+            'role' => $currentRole // Ensure role stays the same
         ]);
 
         return redirect('/')->with('success', 'Password berhasil diubah.');
