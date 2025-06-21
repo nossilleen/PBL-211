@@ -116,7 +116,7 @@ Route::middleware(['auth', 'role:pengelola'])->group(function () {
     Route::get('/pengelola/transaksi', [PengelolaController::class, 'transaksi'])->name('pengelola.transaksi');
     Route::get('/pengelola/nasabah', [PengelolaController::class, 'nasabah'])->name('pengelola.nasabah');
     Route::get('/pengelola/laporan', [PengelolaController::class, 'laporan'])->name('pengelola.laporan');
-    // Route::get('/pengelola/pesanan', [PengelolaController::class, 'pesanan'])->name('pengelola.pesanan');
+    Route::get('/pengelola/riwayat', [PengelolaController::class, 'riwayat'])->name('pengelola.riwayat');
     
     // Product routes khusus pengelola (gunakan prefix /pengelola/products dari resource)
     Route::resource('/pengelola/products', ProductController::class);

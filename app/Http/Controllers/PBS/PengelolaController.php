@@ -46,8 +46,96 @@ class PengelolaController extends Controller
 
     public function index()
     {
-        // Main dashboard for pengelola
-        return view('pengelola.dashboard');
+        $pengelolaId = auth()->id();
+        // Card stats
+        $totalTransaksi = \App\Models\Transaksi::whereHas('produk', function($q) use ($pengelolaId) {
+            $q->where('user_id', $pengelolaId);
+        })->count();
+        $totalSelesai = \App\Models\Transaksi::whereHas('produk', function($q) use ($pengelolaId) {
+            $q->where('user_id', $pengelolaId);
+        })->where('status', 'selesai')->count();
+        $totalPendapatan = \App\Models\Transaksi::whereHas('produk', function($q) use ($pengelolaId) {
+            $q->where('user_id', $pengelolaId);
+        })->where('status', 'selesai')->where('pay_method', 'transfer')->sum('harga_total');
+        $totalPoinTerkirim = \App\Models\PointHistory::where('user_id', $pengelolaId)
+            ->where('transaction_type', 'debit')->sum('amount');
+
+        // Activity feed
+        $poinActivities = \App\Models\PointHistory::with('user')
+            ->where('user_id', $pengelolaId)
+            ->where('transaction_type', 'debit')
+            ->latest()->take(5)->get();
+        $transaksiActivities = \App\Models\Transaksi::with(['produk', 'user'])
+            ->whereHas('produk', function($q) use ($pengelolaId) {
+                $q->where('user_id', $pengelolaId);
+            })
+            ->where('status', 'selesai')
+            ->latest('tanggal')->take(5)->get();
+
+        // Transaction statistics (last 30 days)
+        $startDate = now()->subDays(29)->startOfDay();
+        $endDate = now()->endOfDay();
+        $dateRange = collect(range(0, 29))->map(function($i) use ($startDate) {
+            return $startDate->copy()->addDays($i)->format('Y-m-d');
+        });
+        $completedStats = \App\Models\Transaksi::whereHas('produk', function($q) use ($pengelolaId) {
+                $q->where('user_id', $pengelolaId);
+            })
+            ->where('status', 'selesai')
+            ->whereBetween('tanggal', [$startDate, $endDate])
+            ->get()
+            ->groupBy(function($trx) { return $trx->tanggal->format('Y-m-d'); });
+        $pendingStats = \App\Models\Transaksi::whereHas('produk', function($q) use ($pengelolaId) {
+                $q->where('user_id', $pengelolaId);
+            })
+            ->whereNotIn('status', ['selesai', 'dibatalkan'])
+            ->whereBetween('tanggal', [$startDate, $endDate])
+            ->get()
+            ->groupBy(function($trx) { return $trx->tanggal->format('Y-m-d'); });
+        $chartData30 = $dateRange->map(function($date) use ($completedStats, $pendingStats) {
+            return [
+                'date' => $date,
+                'completed' => isset($completedStats[$date]) ? $completedStats[$date]->count() : 0,
+                'pending' => isset($pendingStats[$date]) ? $pendingStats[$date]->count() : 0,
+            ];
+        });
+
+        // Transaction statistics (all time)
+        $allDates = \App\Models\Transaksi::whereHas('produk', function($q) use ($pengelolaId) {
+                $q->where('user_id', $pengelolaId);
+            })
+            ->orderBy('tanggal')
+            ->pluck('tanggal')->map(function($d) { return \Carbon\Carbon::parse($d)->format('Y-m-d'); })->unique()->values();
+        $completedStatsAll = \App\Models\Transaksi::whereHas('produk', function($q) use ($pengelolaId) {
+                $q->where('user_id', $pengelolaId);
+            })
+            ->where('status', 'selesai')
+            ->get()
+            ->groupBy(function($trx) { return $trx->tanggal->format('Y-m-d'); });
+        $pendingStatsAll = \App\Models\Transaksi::whereHas('produk', function($q) use ($pengelolaId) {
+                $q->where('user_id', $pengelolaId);
+            })
+            ->whereNotIn('status', ['selesai', 'dibatalkan'])
+            ->get()
+            ->groupBy(function($trx) { return $trx->tanggal->format('Y-m-d'); });
+        $chartDataAll = $allDates->map(function($date) use ($completedStatsAll, $pendingStatsAll) {
+            return [
+                'date' => $date,
+                'completed' => isset($completedStatsAll[$date]) ? $completedStatsAll[$date]->count() : 0,
+                'pending' => isset($pendingStatsAll[$date]) ? $pendingStatsAll[$date]->count() : 0,
+            ];
+        });
+
+        return view('pengelola.dashboard', compact(
+            'totalTransaksi',
+            'totalSelesai',
+            'totalPendapatan',
+            'totalPoinTerkirim',
+            'poinActivities',
+            'transaksiActivities',
+            'chartData30',
+            'chartDataAll'
+        ));
     }
 
     public function alamat()
@@ -294,5 +382,17 @@ class PengelolaController extends Controller
         }
 
         return redirect()->route('pengelola.alamat')->with('success', 'Data lokasi berhasil disimpan!');
+    }
+
+    public function riwayat()
+    {
+        $pengelolaId = auth()->id();
+        $riwayatTransaksi = \App\Models\Transaksi::with(['produk', 'user'])
+            ->whereHas('produk', function($q) use ($pengelolaId) {
+                $q->where('user_id', $pengelolaId);
+            })
+            ->orderByDesc('tanggal')
+            ->get();
+        return view('pengelola.riwayat', compact('riwayatTransaksi'));
     }
 }

@@ -88,17 +88,27 @@ class PoinController extends Controller
         DB::beginTransaction();
         try {
             $user = User::find($request->user_id);
+            $pengelola = auth()->user();
 
-            // 1. Catat riwayat
+            // 1. Catat riwayat untuk nasabah (credit)
             PointHistory::create([
                 'user_id' => $user->user_id,
                 'transaction_type' => 'credit',
                 'amount' => $points,
-                'description' => "Konversi {$request->wasteWeight} {$request->weightUnit} sampah",
+                'description' => "Konversi {$request->wasteWeight} {$request->weightUnit} sampah dari {$pengelola->nama}",
                 'status' => 'berhasil',
             ]);
 
-            // 2. Update poin pengguna
+            // 2. Catat riwayat untuk pengelola (debit)
+            PointHistory::create([
+                'user_id' => $pengelola->user_id,
+                'transaction_type' => 'debit',
+                'amount' => $points,
+                'description' => "Kirim ke {$user->nama} (ID: {$user->user_id})",
+                'status' => 'berhasil',
+            ]);
+
+            // 3. Update poin pengguna
             $user->increment('points', $points);
 
             DB::commit();
