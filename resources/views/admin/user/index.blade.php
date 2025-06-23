@@ -57,10 +57,6 @@
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                             <div class="flex space-x-2">
-                                <button onclick="showResetConfirmation({{ $user->user_id }})" 
-                                        class="bg-yellow-100 hover:bg-yellow-200 text-yellow-700 px-3 py-1 rounded transition-colors">
-                                    Reset Password
-                                </button>
                                 <button class="bg-red-100 hover:bg-red-200 text-red-700 px-3 py-1 rounded transition-colors">
                                     Delete
                                 </button>
@@ -72,56 +68,4 @@
             </table>
         </div>
     </div>
-
-    <!-- Reset Password Confirmation Modal -->
-    <div id="resetConfirmationModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
-        <div class="bg-white rounded-lg p-6 w-96">
-            <h3 class="text-lg font-semibold text-gray-900 mb-4">Konfirmasi Reset Password</h3>
-            <div class="mb-6">
-                <p class="text-gray-600 mb-2">Apakah Anda yakin ingin mereset password user ini?</p>
-                <div class="bg-yellow-50 rounded p-3 text-sm">
-                    <p class="font-medium text-yellow-800">Informasi Penting:</p>
-                    <ul class="list-disc list-inside text-yellow-700 mt-1">
-                        <li>Password akan direset menjadi: "<span class="font-mono font-bold">password</span>"</li>
-                        <li>User akan diminta mengganti password saat login berikutnya</li>
-                    </ul>
-                </div>
-            </div>
-            <form id="resetPasswordForm" method="POST" class="space-y-4">
-                @csrf
-                <div>
-                    <label class="inline-flex items-center">
-                        <input type="checkbox" name="confirm_reset" class="rounded border-gray-300 text-green-600 focus:ring-green-500" required>
-                        <span class="ml-2 text-gray-700">Ya, saya yakin ingin mereset password</span>
-                    </label>
-                </div>
-                <div class="flex justify-end space-x-3">
-                    <button type="button" onclick="hideResetConfirmation()" 
-                            class="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-800 rounded-lg transition-colors">
-                        Batal
-                    </button>
-                    <button type="submit" 
-                            class="px-4 py-2 bg-yellow-500 hover:bg-yellow-600 text-white rounded-lg transition-colors">
-                        Reset Password
-                    </button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <script>
-        function showResetConfirmation(userId) {
-            const modal = document.getElementById('resetConfirmationModal');
-            const form = document.getElementById('resetPasswordForm');
-            modal.classList.remove('hidden');
-            modal.classList.add('flex');
-            form.action = `/admin/users/${userId}/reset-password`;
-        }
-
-        function hideResetConfirmation() {
-            const modal = document.getElementById('resetConfirmationModal');
-            modal.classList.remove('flex');
-            modal.classList.add('hidden');
-        }
-    </script>
 @endsection
