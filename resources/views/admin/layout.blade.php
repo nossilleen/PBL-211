@@ -101,10 +101,10 @@
             <!-- Fixed EcoZense Logo -->
             <div class="mb-6">
                 <div class="w-24 h-24 mx-auto">
-                    <img src="{{ asset('images/logo.png') }}" alt="EcoZense" class="w-full h-full object-contain">
+                    <img src="{{ asset('images/logo.jpg') }}" alt="EcoZense" class="w-full h-full object-contain">
                 </div>
             </div>
-            <h2 class="text-xl font-bold text-gray-800 mb-6">Dashboard</h2>
+            <h2 class="text-xl font-bold text-gray-800 mb-6 text-center">Dasbor Admin</h2>
             <nav class="flex-grow">
                 <ul class="space-y-4">
                     <li>
@@ -120,7 +120,7 @@
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
                             </svg>
-                            Artikel & Event
+                            Artikel & Acara
                         </a>
                     </li>
                     <li>
@@ -136,7 +136,7 @@
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
                             </svg>
-                            Data User
+                            Data Pengguna
                         </a>
                     </li>
                     <li>
@@ -146,7 +146,7 @@
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
                             </svg>
-                            Logout
+                            Keluar
                         </a>
                         <form id="sidebar-logout-form" action="{{ route('logout') }}" method="POST" class="hidden">
                             @csrf
@@ -177,7 +177,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                     </svg>
                 </button>
-                <span class="ml-4 text-xl font-semibold">Admin Dashboard</span>
+                <span class="ml-4 text-xl font-semibold">Dasbor Admin</span>
             </div>
             
             <!-- Profile section -->
@@ -193,7 +193,7 @@
                     </button>
 
                     <div x-show="open" @click.away="open = false" class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50" style="display: none;">
-                        <a href="/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Kembali ke Homepage</a>
+                        <a href="/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Kembali ke Beranda</a>
                         
                         <div class="border-t border-gray-100"></div>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hidden">
@@ -202,7 +202,7 @@
                         <a href="{{ route('logout') }}" 
                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                            Logout
+                            Keluar
                         </a>
                     </div>
                 </div>

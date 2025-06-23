@@ -42,7 +42,25 @@ class ArtikelController extends Controller
         }
 
         $artikels = $query->paginate(6)->withQueryString();
-        $events = \App\Models\Event::latest()->get();
+        
+        // Event query dengan pagination
+        $eventQuery = \App\Models\Event::query();
+        
+        // Search untuk events
+        if ($request->event_search) {
+            $eventQuery->where('title', 'like', '%' . $request->event_search . '%')
+                      ->orWhere('description', 'like', '%' . $request->event_search . '%');
+        }
+        
+        // Sorting untuk events
+        $eventSort = $request->input('event_sort', 'terbaru');
+        if ($eventSort === 'terlama') {
+            $eventQuery->orderBy('created_at', 'asc');
+        } else {
+            $eventQuery->orderBy('created_at', 'desc');
+        }
+        
+        $events = $eventQuery->paginate(6, ['*'], 'event_page')->withQueryString();
 
         return view('admin.artikel.index', compact('artikels', 'events'));
     }

@@ -45,7 +45,7 @@
                         <!-- Search Bar -->
                         <div class="max-w-xl mx-auto mt-8 relative">
                             <form method="GET" action="{{ route('events.index') }}" class="relative flex items-center max-w-lg mx-auto">
-                                <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari event..." class="w-full pl-4 pr-12 py-3 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent shadow-sm"/>
+                                <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari acara..." class="w-full pl-4 pr-12 py-3 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent shadow-sm"/>
                                 <input type="hidden" name="sort" value="{{ request('sort', 'terbaru') }}" />
                                 <button type="submit" class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-green-500 hover:bg-green-600 text-white p-2 rounded-full transition-colors">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">

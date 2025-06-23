@@ -40,9 +40,21 @@ class LoginController extends Controller
 
     protected function authenticated($request, $user)
     {
+        // Logic statistik kunjungan login unik per user per hari
+        \App\Models\Visit::firstOrCreate([
+            'user_id' => $user->user_id,
+            'date' => now()->toDateString(),
+        ]);
+
         if ($user->force_password_change) {
             return redirect()->route('password.force-change')
                 ->with('warning', 'Anda harus mengganti password default sebelum melanjutkan.');
+        }
+
+        // Redirect admin ke dashboard admin
+        if ($user->role === 'admin') {
+            session()->flash('welcome', 'Selamat datang kembali, ' . $user->nama . ' Senang melihatmu lagi di EcoZense.');
+            return redirect()->intended('/admin');
         }
 
         // Set flash message untuk notifikasi selamat datang dengan nama user

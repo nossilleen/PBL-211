@@ -16,14 +16,14 @@
             <div class="container mx-auto px-4 py-3 flex justify-between items-center">
                 <div class="flex items-center">
                     <img src="{{ asset('images/logo.jpg') }}" alt="EcoZense Logo" class="h-10">
-                    <span class="ml-4 text-xl font-semibold">Admin Dashboard</span>
+                    <span class="ml-4 text-xl font-semibold">Dasbor Admin</span>
                 </div>
                 <div>
                     <span class="font-medium">{{ Auth::user()->nama }}</span>
                     <a href="{{ route('logout') }}" 
                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();" 
                        class="ml-4 bg-red-600 hover:bg-red-700 px-3 py-1 rounded text-sm">
-                        Logout
+                        Keluar
                     </a>
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hidden">
                         @csrf

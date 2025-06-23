@@ -4,8 +4,8 @@
 
 @section('content')
     <div class="mb-6">
-        <h1 class="text-2xl font-bold text-gray-800">Dashboard</h1>
-        <p class="text-gray-600 mt-1">Selamat datang di dashboard pengelola bank sampah EcoZense</p>
+        <h1 class="text-2xl font-bold text-gray-800">Beranda Pengelola Bank Sampah</h1>
+        <p class="text-gray-600 mt-1">Selamat datang di dasbor pengelola bank sampah EcoZense</p>
     </div>
     
     <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
