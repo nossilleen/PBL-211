@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Artikel;
 use App\Models\ArtikelGambar;
+use App\Models\Notification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -180,6 +181,11 @@ class ArtikelController extends Controller
 
         // Hapus artikel
         $artikel->delete();
+
+        // Hapus notifikasi terkait artikel ini (jika ada)
+        Notification::where('type', 'artikel')
+            ->where('url', '/artikel/' . $id)
+            ->delete();
 
         return redirect()->route('admin.artikel.index')->with('success', 'Artikel berhasil dihapus!');
     }

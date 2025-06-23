@@ -61,7 +61,7 @@
             <div data-aos="fade-up" data-aos-delay="400" class="group relative">
                 <div class="absolute -inset-0.5 bg-gradient-to-r from-green-600 to-green-700 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-500"></div>
                 <div class="relative bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 overflow-hidden border border-gray-100">
-                    <a href="#" class="block h-full">
+                    <a href="{{ route('artikel.index') }}" class="block h-full">
                         <div class="relative h-56 md:h-64 overflow-hidden">
                             <div class="absolute inset-0 bg-gradient-to-br from-green-600 to-green-700"></div>
                             <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>

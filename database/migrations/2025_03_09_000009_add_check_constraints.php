@@ -35,9 +35,6 @@ return new class extends Migration
             (pay_method = "poin" AND poin_used > 0) OR 
             (pay_method = "transfer" AND (poin_used IS NULL OR poin_used = 0))
         )');
-        
-        // Check constraint untuk kolom jumlah_poin di tabel poin (minimal 0)
-        DB::statement('ALTER TABLE poin ADD CONSTRAINT check_jumlah_poin CHECK (jumlah_poin >= 0)');
     }
 
     /**
@@ -53,6 +50,5 @@ return new class extends Migration
         DB::statement('ALTER TABLE transaksi DROP CONSTRAINT check_jumlah_produk');
         DB::statement('ALTER TABLE transaksi DROP CONSTRAINT check_harga_total');
         DB::statement('ALTER TABLE transaksi DROP CONSTRAINT check_poin_used_pay_method');
-        DB::statement('ALTER TABLE poin DROP CONSTRAINT check_jumlah_poin');
     }
 }; 
