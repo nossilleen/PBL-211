@@ -201,8 +201,12 @@
             <div class="flex items-center ml-auto">
                 <div class="relative" x-data="{ open: false }">
                     <button @click="open = !open" class="flex items-center space-x-2 focus:outline-none">
-                        <div class="w-8 h-8 rounded-full bg-white flex items-center justify-center text-green-600">
-                            <span class="text-sm font-semibold">{{ substr(Auth::user()->nama, 0, 1) }}</span>
+                        <div class="w-8 h-8 rounded-full bg-white flex items-center justify-center text-green-600 overflow-hidden">
+                            @if(Auth::user()->role === 'pengelola' && Auth::user()->foto_toko)
+                                <img src="{{ Storage::url(Auth::user()->foto_toko) }}" alt="Foto Toko" class="w-full h-full object-cover">
+                            @else
+                                <span class="text-sm font-semibold">{{ substr(Auth::user()->nama, 0, 1) }}</span>
+                            @endif
                         </div>
                         <span class="text-white font-medium">{{ Auth::user()->nama }}</span>
                     </button>

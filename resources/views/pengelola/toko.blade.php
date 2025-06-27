@@ -201,13 +201,9 @@
                         Pilih Foto
                     </label>
                 </div>
-            </div>
-
-            <!-- Alamat -->
-            <div>
-                <label class="block text-sm font-medium text-gray-700 mb-2">Alamat Toko</label>
-                <input type="text" name="alamat_toko" value="{{ $user->alamat_toko }}"
-                       class="w-full px-3 py-2 border rounded focus:ring-green-500 focus:border-green-500">
+                @error('foto_toko')
+                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                @enderror
             </div>
 
             <!-- Jam Operasional -->

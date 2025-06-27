@@ -76,8 +76,12 @@
             <!-- Show user profile dropdown for authenticated users -->
             <div class="relative" x-data="{ open: false }">
                 <button @click="open = !open" class="flex items-center space-x-2 focus:outline-none">
-                    <div class="w-8 h-8 rounded-full bg-green-600 flex items-center justify-center text-white">
-                        <span class="text-sm font-semibold">{{ substr(Auth::user()->nama, 0, 1) }}</span>
+                    <div class="w-8 h-8 rounded-full bg-green-600 flex items-center justify-center text-white overflow-hidden">
+                        @if(Auth::user()->role === 'pengelola' && Auth::user()->foto_toko)
+                            <img src="{{ Storage::url(Auth::user()->foto_toko) }}" alt="Foto Toko" class="w-full h-full object-cover">
+                        @else
+                            <span class="text-sm font-semibold">{{ substr(Auth::user()->nama, 0, 1) }}</span>
+                        @endif
                     </div>
                     <span class="hidden md:inline text-green-800 font-medium">{{ Auth::user()->nama }}</span>
                 </button>

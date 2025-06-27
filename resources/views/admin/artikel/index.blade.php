@@ -314,7 +314,13 @@
                     </div>
                     <div class="mb-4">
                         <label for="image" class="block text-sm font-medium text-gray-700">Banner Event</label>
-                        <input type="file" name="image" id="image" accept="image/*" required class="mt-1 block w-full">
+                        <input type="file" name="image" id="event-image" accept="image/*" required class="mt-1 block w-full">
+                        <div id="event-cropper-container" class="mt-4" style="display:none;">
+                            <img id="event-cropper-image" style="max-width:100%; max-height:200px;">
+                            <button type="button" id="event-crop-btn" class="mt-2 bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded">Crop Gambar</button>
+                        </div>
+                        <input type="hidden" name="cropped_gambar" id="event-cropped-gambar">
+                        <div id="event-cropped-preview" class="mt-2"></div>
                     </div>
                     <div class="flex justify-end space-x-3">
                         <button type="button" onclick="closeEventModal()" class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-lg transition-colors">Batal</button>
@@ -355,7 +361,11 @@
 </div>
 @endsection
 
+@push('styles')
+<link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" rel="stylesheet"/>
+@endpush
 @push('scripts')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
 <script>
     function showDeleteModal(artikelId) {
         const modal = document.getElementById('modalHapusArtikel');
@@ -395,6 +405,59 @@
         if (event.target == modal) {
             closeEventModal();
         }
+    }
+
+    let eventCropper;
+    const eventInput = document.getElementById('event-image');
+    const eventCropperContainer = document.getElementById('event-cropper-container');
+    const eventCropperImage = document.getElementById('event-cropper-image');
+    const eventCropBtn = document.getElementById('event-crop-btn');
+    const eventCroppedInput = document.getElementById('event-cropped-gambar');
+    const eventCroppedPreview = document.getElementById('event-cropped-preview');
+
+    if(eventInput) {
+        eventInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    eventCropperImage.src = event.target.result;
+                    eventCropperContainer.style.display = 'block';
+                    if (eventCropper) eventCropper.destroy();
+                    eventCropper = new Cropper(eventCropperImage, {
+                        aspectRatio: 16 / 9,
+                        viewMode: 1,
+                        autoCropArea: 1,
+                    });
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        eventCropBtn.addEventListener('click', function() {
+            if (eventCropper) {
+                const canvas = eventCropper.getCroppedCanvas({
+                    width: 1280,
+                    height: 720
+                });
+                canvas.toBlob(function(blob) {
+                    const reader = new FileReader();
+                    reader.onloadend = function() {
+                        eventCroppedInput.value = reader.result;
+                        eventCroppedPreview.innerHTML = '<img src="' + reader.result + '" class="mt-2 rounded shadow" style="max-width:100%;">';
+                        eventInput.removeAttribute('required');
+                    };
+                    reader.readAsDataURL(blob);
+                }, 'image/jpeg');
+            }
+        });
+        // Saat submit, jika ada cropped_gambar, hapus input file asli agar hanya cropped yang dikirim
+        const eventForm = eventInput.closest('form');
+        eventForm.addEventListener('submit', function(e) {
+            if (eventCroppedInput.value) {
+                eventInput.removeAttribute('name');
+            }
+        });
     }
 </script>
 @endpush

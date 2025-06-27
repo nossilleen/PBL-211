@@ -11,104 +11,36 @@
     <!-- Statistics Cards -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         <!-- Users Card -->
-        <div class="bg-white rounded-lg shadow-sm p-6">
-            <div class="flex justify-between items-start">
-                <div>
-                    <p class="text-sm font-medium text-gray-500">Total Pengguna</p>
-                    <h3 class="text-2xl font-bold text-gray-800 mt-1">{{ $totalUsers }}</h3>
-                </div>
-                <div class="rounded-full bg-blue-50 p-3">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
-                    </svg>
-                </div>
-            </div>
-            <div class="mt-4 flex items-center text-sm font-medium">
-                <span class="text-green-500 flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
-                    </svg>
-                    Aktif
-                </span>
-                <span class="text-gray-500 ml-2">Semua pengguna</span>
-            </div>
+        <div class="bg-blue-50 rounded-lg p-6 shadow-sm">
+            <h3 class="text-lg font-semibold text-blue-800 mb-2">Total Pengguna</h3>
+            <p class="text-3xl font-bold text-blue-600">{{ $totalUsers }}</p>
+            <p class="text-sm text-gray-500 mt-2">Semua pengguna</p>
         </div>
 
         <!-- Articles Card -->
-        <div class="bg-white rounded-lg shadow-sm p-6">
-            <div class="flex justify-between items-start">
-                <div>
-                    <p class="text-sm font-medium text-gray-500">Total Artikel</p>
-                    <h3 class="text-2xl font-bold text-gray-800 mt-1">{{ $totalArticles }}</h3>
-                </div>
-                <div class="rounded-full bg-green-50 p-3">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                    </svg>
-                </div>
-            </div>
-            <div class="mt-4 flex items-center text-sm font-medium">
-                <span class="text-green-500 flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
-                    </svg>
-                    Dipublikasikan
-                </span>
-                <span class="text-gray-500 ml-2">Artikel tersedia</span>
-            </div>
+        <div class="bg-green-50 rounded-lg p-6 shadow-sm">
+            <h3 class="text-lg font-semibold text-green-800 mb-2">Total Artikel</h3>
+            <p class="text-3xl font-bold text-green-600">{{ $totalArticles }}</p>
+            <p class="text-sm text-gray-500 mt-2">Artikel tersedia</p>
         </div>
 
         <!-- Events Card -->
-        <div class="bg-white rounded-lg shadow-sm p-6">
-            <div class="flex justify-between items-start">
-                <div>
-                    <p class="text-sm font-medium text-gray-500">Total Acara</p>
-                    <h3 class="text-2xl font-bold text-gray-800 mt-1">{{ $totalEvents }}</h3>
-                </div>
-                <div class="rounded-full bg-purple-50 p-3">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-purple-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                    </svg>
-                </div>
-            </div>
-            <div class="mt-4 flex items-center text-sm font-medium">
-                <span class="text-green-500 flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
-                    </svg>
-                    Aktif
-                </span>
-                <span class="text-gray-500 ml-2">Acara tersedia</span>
-            </div>
+        <div class="bg-purple-50 rounded-lg p-6 shadow-sm">
+            <h3 class="text-lg font-semibold text-purple-800 mb-2">Total Acara</h3>
+            <p class="text-3xl font-bold text-purple-600">{{ $totalEvents }}</p>
+            <p class="text-sm text-gray-500 mt-2">Acara tersedia</p>
         </div>
 
         <!-- Submissions Card -->
-        <div class="bg-white rounded-lg shadow-sm p-6">
-            <div class="flex justify-between items-start">
-                <div>
-                    <p class="text-sm font-medium text-gray-500">Pengajuan Baru</p>
-                    <h3 class="text-2xl font-bold text-gray-800 mt-1">{{ $pendingUpgrades }}</h3>
-                </div>
-                <div class="rounded-full bg-yellow-50 p-3">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-                    </svg>
-                </div>
-            </div>
-            <div class="mt-4 flex items-center text-sm font-medium">
-                <span class="text-red-500 flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-                    </svg>
-                    Pending
-                </span>
-                <span class="text-gray-500 ml-2">Butuh persetujuan</span>
-            </div>
+        <div class="bg-yellow-50 rounded-lg p-6 shadow-sm">
+            <h3 class="text-lg font-semibold text-yellow-800 mb-2">Pengajuan Baru</h3>
+            <p class="text-3xl font-bold text-yellow-600">{{ $pendingUpgrades }}</p>
+            <p class="text-sm text-gray-500 mt-2">Butuh persetujuan</p>
         </div>
     </div>
 
     <!-- Peta Lokasi Bank Sampah Section (Card Style) -->
-    <div class="max-w-5xl mx-auto bg-white rounded-lg shadow-lg p-6 mb-8">
+    <div class="max-w-8xl mx-auto bg-white rounded-lg shadow-lg p-6 mb-8 mt-20">
         <h2 class="text-2xl font-bold text-center mb-6">Peta Lokasi Bank Sampah</h2>
         <div id="admin-map" style="height: 400px;" class="rounded-lg overflow-hidden shadow-lg mb-4"></div>
         <p class="text-center text-sm text-gray-600 mt-2">
@@ -118,6 +50,22 @@
 
     @push('styles')
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+        #admin-map {
+            z-index: 1;
+            position: relative;
+        }
+        .navbar-fixed, .pengelola-navbar {
+            z-index: 1050 !important;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+        }
+        .leaflet-control, .leaflet-top, .leaflet-popup {
+            z-index: 100 !important;
+        }
+    </style>
     @endpush
 
     @push('scripts')
@@ -264,7 +212,7 @@
     </div>
 
     <!-- Produk Terlaris Section -->
-    <div class="bg-white rounded-lg shadow-sm p-6 mb-8">
+    <!-- <div class="bg-white rounded-lg shadow-sm p-6 mb-8">
         <div class="flex justify-between items-center mb-6">
             <h2 class="text-xl font-bold text-gray-800">Produk Terlaris</h2>
             <a href="#" class="text-sm text-blue-500 hover:text-blue-700">Lihat Semua Produk</a>
@@ -405,7 +353,7 @@
                 </tbody>
             </table>
         </div>
-    </div>
+    </div> -->
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
