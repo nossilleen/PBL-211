@@ -101,6 +101,12 @@ Route::middleware(['auth', 'role:nasabah'])->group(function () {
     
     Route::get('/nasabah/notifikasi', [ProfileController::class, 'notifikasi'])->name('notifikasi');
     
+    // Delete single notification
+    Route::delete('/nasabah/notifikasi/{id}', [ProfileController::class, 'deleteNotification'])->name('notifikasi.delete');
+
+    // Clear all notifications
+    Route::delete('/nasabah/notifikasi', [ProfileController::class, 'clearNotifications'])->name('notifikasi.clear');
+
     Route::get('/nasabah/poin-saya', function () {
         return view('components.profile.poin-saya');
     })->name('poin-saya');

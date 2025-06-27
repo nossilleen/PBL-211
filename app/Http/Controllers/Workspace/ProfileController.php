@@ -35,4 +35,25 @@ class ProfileController extends Controller
         $tx = Transaksi::findOrFail($id);
         return view('profile.pesanan-detail', ['transaksi' => $tx]);
     }
+
+    public function deleteNotification($id)
+    {
+        $notification = Notification::where('id', $id)
+            ->where('user_id', Auth::id())
+            ->firstOrFail();
+
+        $notification->delete();
+
+        return response()->json(['success' => true]);
+    }
+
+    /**
+     * Hapus semua notifikasi milik user yang sedang login.
+     */
+    public function clearNotifications()
+    {
+        Notification::where('user_id', Auth::id())->delete();
+
+        return response()->json(['success' => true]);
+    }
 }

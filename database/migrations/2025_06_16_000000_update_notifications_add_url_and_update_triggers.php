@@ -12,6 +12,7 @@ return new class extends Migration
         // Tambah kolom url
         Schema::table('notifications', function (Blueprint $table) {
             $table->string('url')->nullable()->after('message');
+            $table->index('url');
         });
 
         // ----- Perbarui trigger -----
