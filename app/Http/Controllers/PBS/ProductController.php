@@ -189,7 +189,6 @@ class ProductController extends Controller
     {
         $validated = $request->validate([
             'deskripsi_toko' => 'nullable|string',
-            'alamat_toko' => 'required|string',
             'jam_operasional' => 'required|string',
             'nomor_rekening' => 'required|string',
             'nama_bank_rekening' => 'required|string',

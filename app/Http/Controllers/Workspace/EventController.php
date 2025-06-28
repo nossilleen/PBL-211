@@ -7,6 +7,7 @@ use App\Models\Event;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Schema;
+use App\Models\Notification;
 
 class EventController extends Controller
 {
@@ -102,7 +103,15 @@ class EventController extends Controller
     // Menghapus event
     public function destroy(Event $event)
     {
+        // Simpan id sebelum delete
+        $eventId = $event->id;
+
         $event->delete();
+
+        // Hapus notifikasi terkait event ini
+        Notification::where('type', 'event')
+            ->where('url', '/events/' . $eventId)
+            ->delete();
 
         return redirect()->route('admin.events.index')
             ->with('success', 'Event berhasil dihapus');

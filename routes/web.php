@@ -53,6 +53,7 @@ Route::get('/profile', [HomeController::class, 'index'])->name('profile');
 // Admin routes
 Route::prefix('admin')->middleware(['auth', 'role:admin'])->name('admin.')->group(function () {
     Route::get('/', [AdminController::class, 'index'])->name('index');
+    Route::get('/api/visit-stats', [AdminController::class, 'getVisitStats'])->name('api.visit_stats');
     Route::get('/pengajuan', [AdminController::class, 'pengajuan'])->name('pengajuan');
     Route::get('/user', [AdminController::class, 'user'])->name('user');
     Route::middleware(['auth'])->group(function () {
@@ -63,17 +64,23 @@ Route::get('/profil', [ArtikelController::class, 'showProfil'])->middleware('aut
     // Event routes
     Route::resource('events', \App\Http\Controllers\Admin\EventController::class);
     
-    // Artikel routes
-    Route::get('/artikel', [ArtikelController::class, 'index'])->name('artikel.index');
-    Route::get('/artikel/create', [ArtikelController::class, 'create'])->name('artikel.create');
-    Route::post('/artikel', [ArtikelController::class, 'store'])->name('artikel.store');
-    Route::get('/admin/artikel', [ArtikelController::class, 'index'])->name('admin.artikel.index');
+    // Artikel routes (CRUD)
+    // Path yang dihasilkan akan menjadi '/admin/artikel/...'
+    Route::get('/artikel', [ArtikelController::class, 'index'])->name('artikel.index');            // /admin/artikel
+    Route::get('/artikel/create', [ArtikelController::class, 'create'])->name('artikel.create');  // /admin/artikel/create
+    Route::post('/artikel', [ArtikelController::class, 'store'])->name('artikel.store');          // /admin/artikel (POST)
+
     // Route untuk edit artikel
-    Route::get('/admin/artikel/{id}/edit', [ArtikelController::class, 'edit'])->name('artikel.edit');
+    Route::get('/artikel/{id}/edit', [ArtikelController::class, 'edit'])->name('artikel.edit');   // /admin/artikel/{id}/edit
+
     // Route untuk update artikel
-    Route::put('/admin/artikel/{id}', [ArtikelController::class, 'update'])->name('artikel.update');
+    Route::put('/artikel/{id}', [ArtikelController::class, 'update'])->name('artikel.update');    // /admin/artikel/{id}
+
     // Route untuk hapus artikel
-    Route::delete('/admin/artikel/{id}', [ArtikelController::class, 'destroy'])->name('artikel.destroy');
+    Route::delete('/artikel/{id}', [ArtikelController::class, 'destroy'])->name('artikel.destroy'); // /admin/artikel/{id}
+
+    // Tidak perlu route tambahan untuk alias, nama route otomatis menggunakan prefix 'admin.'
+
     Route::post('/artikel/{artikelId}/feedback', [ArtikelController::class, 'storeFeedback'])->name('feedback.store');
 
 });
@@ -105,10 +112,14 @@ Route::middleware(['auth', 'role:nasabah'])->group(function () {
         return view('nasabah.dashboard');
     })->name('nasabah.dashboard');
     
-    Route::get('/nasabah/notifikasi', function () {
-        return view('components.profile.notifikasi');
-    })->name('notifikasi');
+    Route::get('/nasabah/notifikasi', [ProfileController::class, 'notifikasi'])->name('notifikasi');
     
+    // Delete single notification
+    Route::delete('/nasabah/notifikasi/{id}', [ProfileController::class, 'deleteNotification'])->name('notifikasi.delete');
+
+    // Clear all notifications
+    Route::delete('/nasabah/notifikasi', [ProfileController::class, 'clearNotifications'])->name('notifikasi.clear');
+
     Route::get('/nasabah/poin-saya', function () {
         return view('components.profile.poin-saya');
     })->name('poin-saya');

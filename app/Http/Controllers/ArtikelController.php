@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Artikel;
 use App\Models\ArtikelGambar;
+use App\Models\Notification;
 use App\Models\ArtikelLike;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -31,8 +32,26 @@ class ArtikelController extends Controller
             $query->orderByDesc('tanggal_publikasi');
         }
 
-        $artikels = $query->paginate(12)->withQueryString();
-        $events = \App\Models\Event::latest()->get();
+        $artikels = $query->paginate(6)->withQueryString();
+        
+        // Event query dengan pagination
+        $eventQuery = \App\Models\Event::query();
+        
+        // Search untuk events
+        if ($request->event_search) {
+            $eventQuery->where('title', 'like', '%' . $request->event_search . '%')
+                      ->orWhere('description', 'like', '%' . $request->event_search . '%');
+        }
+        
+        // Sorting untuk events
+        $eventSort = $request->input('event_sort', 'terbaru');
+        if ($eventSort === 'terlama') {
+            $eventQuery->orderBy('created_at', 'asc');
+        } else {
+            $eventQuery->orderBy('created_at', 'desc');
+        }
+        
+        $events = $eventQuery->paginate(6, ['*'], 'event_page')->withQueryString();
 
         return view('admin.artikel.index', compact('artikels', 'events'));
     }
@@ -121,6 +140,11 @@ class ArtikelController extends Controller
         }
 
         $artikel->delete();
+
+        // Hapus notifikasi terkait artikel ini (jika ada)
+        Notification::where('type', 'artikel')
+            ->where('url', '/artikel/' . $id)
+            ->delete();
 
         return redirect()->route('admin.artikel.index')->with('success', 'Artikel berhasil dihapus!');
     }

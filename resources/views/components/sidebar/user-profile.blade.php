@@ -1,7 +1,11 @@
 <div class="p-6 flex flex-col items-center bg-white border-b border-green-100">
     <div class="relative group">
         <div class="w-24 h-24 rounded-full bg-green-600 flex items-center justify-center text-white text-3xl font-bold shadow-md overflow-hidden">
-            {{ substr(Auth::user()->nama, 0, 1) }}
+            @if(Auth::user()->role === 'pengelola' && Auth::user()->foto_toko)
+                <img src="{{ Storage::url(Auth::user()->foto_toko) }}" alt="Foto Toko" class="w-full h-full object-cover">
+            @else
+                {{ substr(Auth::user()->nama, 0, 1) }}
+            @endif
         </div>
         <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-40 rounded-full flex items-center justify-center transition-all duration-300 cursor-pointer opacity-0 group-hover:opacity-100">
             <div class="text-white text-xs font-medium">
