@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\{User,Lokasi,Produk,ProdukGambar,Artikel,ArtikelGambar,Poin,Transaksi,Feedback,Upgrade,PointHistory,ProductLike,Event};
+use App\Models\{User,Lokasi,Produk,ProdukGambar,Artikel,ArtikelGambar,Transaksi,Feedback,Upgrade,PointHistory,ProductLike,Event};
 use Illuminate\Support\Collection;
 
 class FactorySeeder extends Seeder
@@ -39,13 +39,6 @@ class FactorySeeder extends Seeder
 
         // ---------------- EVENTS ----------------
         Event::factory()->count(20)->create();
-
-        // ---------------- POIN per Nasabah & Lokasi ----------------
-        foreach ($nasabahUsers as $nasabah) {
-            foreach ($lokasiList as $lokasi) {
-                Poin::factory()->for($nasabah, 'user')->for($lokasi, 'lokasi')->create();
-            }
-        }
 
         // ---------------- TRANSAKSI ----------------
         foreach ($nasabahUsers as $nasabah) {
