@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
@@ -25,16 +26,17 @@ class UserFactory extends Factory
         return [
             'nama' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
-            'password' => static::$password ??= Hash::make('password'),
-            'no_hp' => fake()->numerify('08##########'),
-            'role' => fake()->randomElement(['admin','nasabah','pengelola']),
-            'points' => fake()->numberBetween(0, 10000),
+            'email_verified_at' => now(),
+            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            'no_hp' => fake()->phoneNumber(),
+            'role' => fake()->randomElement(['admin', 'nasabah', 'pengelola']),
+            'points' => fake()->numberBetween(0, 1000),
             'deskripsi_toko' => fake()->optional()->paragraph(),
-            'alamat_toko' => fake()->optional()->address(),
-            'jam_operasional' => fake()->optional()->regexify('[0-9]{2}:00 - [0-9]{2}:00'),
+            'jam_operasional' => fake()->optional()->time(),
             'nomor_rekening' => fake()->optional()->bankAccountNumber(),
-            'nama_bank_rekening' => fake()->optional()->randomElement(['BCA','Mandiri','BNI','BRI','CIMB']),
-            'foto_toko' => 'toko-photos/1.png',
+            'nama_bank_rekening' => fake()->optional()->randomElement(['BCA', 'BNI', 'BRI', 'Mandiri']),
+            'foto_toko' => fake()->optional()->imageUrl(),
+            'remember_token' => Str::random(10),
         ];
     }
 
