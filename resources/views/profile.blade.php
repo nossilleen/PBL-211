@@ -63,7 +63,7 @@
 
             <!-- Notifikasi Section (Hidden by Default) -->
             <div id="notifikasi-section" class="hidden">
-                <x-profile.notifikasi />
+                <x-profile.notifikasi :notifications="$notifications" />
             </div>
 
             <!-- Poin saya Section (Hidden by Default) -->

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Event;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use App\Models\Notification;
 
 class EventController extends Controller
 {
@@ -124,6 +125,11 @@ class EventController extends Controller
                 Storage::delete(str_replace('/storage', 'public', $event->image));
             }
             $event->delete();
+
+            // Hapus notifikasi terkait event ini
+            Notification::where('type', 'event')
+                ->where('url', '/events/' . $event->id)
+                ->delete();
 
             return redirect()->route('admin.artikel.index')
                 ->with('success', 'Event berhasil dihapus');
