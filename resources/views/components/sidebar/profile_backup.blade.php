@@ -41,12 +41,12 @@
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <!-- Profile Section -->
                 <div class="flex flex-col lg:flex-row mt-8 gap-8">
-                    <!-- Left Sidebar -->
+                    <!-- Left Eco Enzyme -->
                     <div class="container mx-auto py-8 px-4">
                         <div class="flex flex-col lg:flex-row gap-8">
-                            <!-- Sidebar (Kiri) -->
+                            <!-- Eco Enzyme (Kiri) -->
                             <div class="w-full lg:w-1/4">
-                                <x-sidebar.container />
+                                <x-Eco Enzyme.container />
                             </div>
 
         <!-- Main Content (Kanan) -->
@@ -62,8 +62,31 @@
             </div>
 <!-- Favorit Section -->
 <div id="favorit-section" class="hidden">
-    <x-profile.favorit />
+    <div class="bg-white rounded-lg shadow-md p-6">
+        <h2 class="text-xl font-semibold text-green-700 mb-4">Favorit Saya</h2>
+
+        @if(count($favoritArtikels ?? []) > 0)
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            @foreach($favoritArtikels as $artikel)
+            <div class="bg-gray-100 rounded-lg overflow-hidden shadow hover:shadow-lg transition">
+                <img src="{{ asset($artikel->gambar) }}" alt="{{ $artikel->judul }}" class="h-40 w-full object-cover">
+                <div class="p-4">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-2">{{ $artikel->judul }}</h3>
+                    <p class="text-sm text-gray-600 mb-2 line-clamp-3">{{ $artikel->excerpt }}</p>
+                    <a href="{{ route('artikel.show', $artikel->slug) }}" class="text-green-600 hover:underline text-sm font-medium">Lihat Selengkapnya</a>
+                </div>
+            </div>
+            @endforeach
+        </div>
+        @else
+        <div class="text-center text-gray-500 py-10">
+            <p class="text-sm">Kamu belum menyukai artikel apa pun.</p>
+            <p class="text-sm">Temukan artikel menarik di halaman <a href="{{ route('artikel.index') }}" class="text-green-600 hover:underline">Artikel</a>.</p>
+        </div>
+        @endif
+    </div>
 </div>
+
 
             <!-- Pesanan Section (Hidden by Default) -->
             <div id="pesanan-section" class="hidden">
@@ -237,6 +260,20 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
+        const favoritLink = document.getElementById('nav-favorit');
+const favoritSection = document.getElementById('favorit-section');
+
+if (favoritLink) {
+    favoritLink.addEventListener('click', function(e) {
+        e.preventDefault();
+        hideAllSections();
+        favoritSection.classList.remove('hidden');
+        resetAllNavLinks();
+        favoritLink.classList.add('bg-white', 'border-green-600');
+        favoritLink.classList.remove('border-transparent', 'hover:border-green-600');
+    });
+}
+
         // Get navigation links
         const profileLink = document.getElementById('nav-profile');
         const dashboardLink = document.getElementById('nav-dashboard');
@@ -259,6 +296,11 @@
         
         // Function to reset all nav links
         function resetAllNavLinks() {
+            if (favoritLink) {
+    favoritLink.classList.remove('bg-white', 'border-green-600');
+    favoritLink.classList.add('border-transparent', 'hover:border-green-600');
+}
+
             profileLink.classList.remove('bg-white', 'border-green-600');
             profileLink.classList.add('border-transparent', 'hover:border-green-600');
             dashboardLink.classList.remove('bg-white', 'border-green-600');
@@ -363,27 +405,39 @@
     
     // Fungsi untuk toggle section berdasarkan hash
     function toggleSectionByHash() {
+
         const profileSection = document.getElementById('profile-section');
         const dashboardSection = document.getElementById('dashboard-section');
         const pesananSection = document.getElementById('pesanan-section');
         const riwayatSection = document.getElementById('riwayat-section');
+        const favoritSection = document.getElementById('favorit-section');
+if (favoritSection) favoritSection.classList.add('hidden'); // hide dulu di atas
+
+if (window.location.hash === '#favorit') {
+    if (favoritSection) favoritSection.classList.remove('hidden');
+    return;
+}
+
         
         // Hide all sections first
         if (profileSection) profileSection.classList.add('hidden');
         if (dashboardSection) dashboardSection.classList.add('hidden');
         if (pesananSection) pesananSection.classList.add('hidden');
         if (riwayatSection) riwayatSection.classList.add('hidden');
-        
+        if (favoritSection) favoritSection.classList.add('hidden'); // tambahkan ini
+
         // Show section based on hash
         if (window.location.hash === '#dashboard') {
-            if (dashboardSection) dashboardSection.classList.remove('hidden');
-        } else if (window.location.hash === '#pesanan') {
-            if (pesananSection) pesananSection.classList.remove('hidden');
-        } else if (window.location.hash === '#riwayat') {
-            if (riwayatSection) riwayatSection.classList.remove('hidden');
-        } else {
-            if (profileSection) profileSection.classList.remove('hidden');
-        }
+        if (dashboardSection) dashboardSection.classList.remove('hidden');
+    } else if (window.location.hash === '#pesanan') {
+        if (pesananSection) pesananSection.classList.remove('hidden');
+    } else if (window.location.hash === '#riwayat') {
+        if (riwayatSection) riwayatSection.classList.remove('hidden');
+    } else if (window.location.hash === '#favorit') {
+        if (favoritSection) favoritSection.classList.remove('hidden'); // tambahkan ini
+    } else {
+        if (profileSection) profileSection.classList.remove('hidden');
+    }
     }
     // Script untuk mengakhiri preloader
     window.addEventListener('load', function() {

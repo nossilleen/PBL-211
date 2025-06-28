@@ -13,7 +13,7 @@ class EventController extends Controller
     // Menampilkan daftar event di dashboard admin
     public function index()
     {
-        $events = Event::latest()->paginate(10);
+        $events = Event::latest()->paginate(12);
         return view('admin.events.index', compact('events'));
     }
 
@@ -141,8 +141,9 @@ class EventController extends Controller
             $eventsQuery->orderByDesc('created_at');
         }
 
-        $events = $eventsQuery->paginate(9)->withQueryString();
+        $events = $eventsQuery->paginate(12)->withQueryString();
 
         return view('events.index', compact('events'));
     }
+    
 }

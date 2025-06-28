@@ -17,6 +17,8 @@ use App\Http\Controllers\PBS\PoinController;
 use App\Http\Controllers\Workspace\UpgradeController;
 use App\Http\Controllers\Workspace\ProfileController;
 
+
+
 Route::post('/artikel/{artikel}/feedback', [FeedbackController::class, 'store'])->name('feedback.store');
 Route::get('/artikel/{artikel}/feedback', [ArtikelController::class, 'allFeedback'])->name('artikel.allFeedback');
 
@@ -26,7 +28,11 @@ Route::get('/', [HomeController::class, 'landingPage'])->name('welcome');
 Route::get('/artikel', [ArtikelController::class, 'landing'])->name('artikel.index');
 Route::get('/artikel/{id}', [ArtikelController::class, 'show'])->name('artikel.show');
 Route::post('/artikel/{id}/feedback', [ArtikelController::class, 'storeFeedback'])->name('artikel.feedback.store');
+Route::post('/artikel/{id}/like', [ArtikelController::class, 'like'])->name('artikel.like')->middleware('auth');
+
+
 Route::get('/events', [EventController::class, 'list'])->name('events.index');
+
 Route::get('/events/{id}', [EventController::class, 'show'])->name('events.show');
 Route::get('/about', function () {
     return view('about');
@@ -49,7 +55,11 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->name('admin.')->grou
     Route::get('/', [AdminController::class, 'index'])->name('index');
     Route::get('/pengajuan', [AdminController::class, 'pengajuan'])->name('pengajuan');
     Route::get('/user', [AdminController::class, 'user'])->name('user');
-    
+    Route::middleware(['auth'])->group(function () {
+    Route::get('/profil', [ArtikelController::class, 'favoritSaya'])->name('nasabah.profil');
+});
+Route::get('/profil', [ArtikelController::class, 'showProfil'])->middleware('auth')->name('nasabah.profil');
+
     // Event routes
     Route::resource('events', \App\Http\Controllers\Admin\EventController::class);
     
@@ -65,6 +75,7 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->name('admin.')->grou
     // Route untuk hapus artikel
     Route::delete('/admin/artikel/{id}', [ArtikelController::class, 'destroy'])->name('artikel.destroy');
     Route::post('/artikel/{artikelId}/feedback', [ArtikelController::class, 'storeFeedback'])->name('feedback.store');
+
 });
 
 // Pengajuan routes
@@ -83,6 +94,7 @@ Route::prefix('transaksi')->middleware(['auth', 'role:nasabah'])->group(function
     Route::post('/cancel/{id}', [TransaksiController::class, 'cancel'])->name('transaksi.cancel');
     Route::post('/complete/{id}', [TransaksiController::class, 'complete'])->name('transaksi.complete');
     Route::post('/beli', [TransaksiController::class, 'beli'])->name('produk.beli');
+    
 });
 
 Route::get('/check-data', [DataController::class, 'index']);
@@ -102,6 +114,7 @@ Route::middleware(['auth', 'role:nasabah'])->group(function () {
     })->name('poin-saya');
 
     Route::post('/nasabah/upgrade', [UpgradeController::class, 'UpgradeRequest'])->name('nasabah.upgrade');
+
     Route::get('/profile/pesanan/{id}/detail', [ProfileController::class, 'pesananDetail'])
         ->name('profile.pesanan.detail')
         ->middleware('auth');

@@ -1,20 +1,28 @@
 @extends('layouts.app')
 
 @section('content')
+@php
+    $eventStatus = \Carbon\Carbon::parse($event->date)->isPast() ? 'Selesai' : 'Tersedia';
+@endphp
+
 <div class="min-h-screen bg-gray-50">
-    <!-- Hero Section dengan Background Image -->
+    <!-- Hero Section -->
     <div class="relative h-[60vh] w-full">
         @if($event->image)
         <div class="absolute inset-0">
-            <img src="{{ asset($event->image) }}" alt="Banner" class="w-full h-auto">
+            <img src="{{ asset($event->image) }}" alt="Banner" class="w-full h-auto object-cover object-center">
             <div class="absolute inset-0 bg-black bg-opacity-50"></div>
         </div>
         @endif
-        
+
         <div class="relative h-full flex items-center">
             <div class="container mx-auto px-4">
-                <div class="max-w-3xl">
-                    <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">{{ $event->title }}</h1>
+                <div class="max-w-3xl animate-fade-in-up">
+                    <h1 class="text-4xl md:text-5xl font-bold text-white mb-2">{{ $event->title }}</h1>
+                    <span class="inline-block mb-4 px-3 py-1 rounded-full text-sm font-semibold 
+                        {{ $eventStatus == 'Selesai' ? 'bg-red-100 text-red-700' : 'bg-green-100 text-green-700' }}">
+                        {{ $eventStatus }}
+                    </span>
                     <div class="flex flex-wrap gap-4 text-white">
                         <div class="flex items-center">
                             <i class="fas fa-calendar-alt mr-2"></i>
@@ -34,16 +42,20 @@
     <div class="container mx-auto px-4 py-12">
         <div class="max-w-4xl mx-auto">
             <!-- Description Card -->
-            <div class="bg-white rounded-lg shadow-lg p-8 mb-8">
-                <h2 class="text-2xl font-semibold text-gray-800 mb-4">Deskripsi Event</h2>
+            <div class="bg-white rounded-lg shadow-lg p-8 mb-8 animate-fade-in-up">
+                <h2 class="text-2xl font-semibold text-gray-800 mb-4 flex items-center">
+                    <i class="fas fa-info-circle text-green-500 mr-2"></i> Deskripsi Event
+                </h2>
                 <div class="prose max-w-none">
                     {!! nl2br(e($event->description)) !!}
                 </div>
             </div>
 
             <!-- Registration Card -->
-            <div class="bg-white rounded-lg shadow-lg p-8">
-                <h2 class="text-2xl font-semibold text-gray-800 mb-6">Informasi Pendaftaran</h2>
+            <div class="bg-white rounded-lg shadow-lg p-8 animate-fade-in-up">
+                <h2 class="text-2xl font-semibold text-gray-800 mb-6 flex items-center">
+                    <i class="fas fa-edit text-green-500 mr-2"></i> Informasi Pendaftaran
+                </h2>
                 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                     <div class="bg-gray-50 p-4 rounded-lg">
@@ -62,10 +74,18 @@
                         <i class="fas fa-arrow-left mr-2"></i>
                         Kembali ke Daftar Event
                     </a>
-                    <button class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
-                        <i class="fas fa-ticket-alt mr-2"></i>
-                        Daftar Event
-                    </button>
+
+                    @if($eventStatus == 'Tersedia')
+                        <button class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                            <i class="fas fa-ticket-alt mr-2"></i>
+                            Daftar Event
+                        </button>
+                    @else
+                        <button class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-gray-400 cursor-not-allowed" disabled>
+                            <i class="fas fa-times-circle mr-2"></i>
+                            Event Telah Selesai
+                        </button>
+                    @endif
                 </div>
             </div>
         </div>

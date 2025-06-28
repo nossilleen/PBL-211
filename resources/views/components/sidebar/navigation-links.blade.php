@@ -39,6 +39,19 @@
         </svg>
         <span class="font-medium group-hover:text-green-600">Pesanan</span>
     </a>
+    
+
+<a href="#favorit" class="block px-6 py-3 hover:bg-white flex items-center transition-colors border-l-4 border-transparent hover:border-green-600 group" id="nav-favorit">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3 text-gray-500 group-hover:text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 010 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+    </svg>
+    <span class="font-medium group-hover:text-green-600">Favorit</span>
+</a>
+
+
+
+
+
     <a href="#riwayat" class="block px-6 py-3 hover:bg-white flex items-center transition-colors border-l-4 border-transparent hover:border-green-600 group" id="nav-riwayat">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3 text-gray-500 group-hover:text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
@@ -62,7 +75,20 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const role = "{{ Auth::user()->role }}";
-        
+        const favoritLink = document.getElementById('nav-favorit');
+const favoritSection = document.getElementById('favorit-section');
+
+if (favoritLink) {
+    favoritLink.addEventListener('click', function(e) {
+        e.preventDefault();
+        hideAllSections();
+        if (favoritSection) favoritSection.classList.remove('hidden');
+        resetAllNavLinks();
+        favoritLink.classList.add('bg-white', 'border-green-600');
+        favoritLink.classList.remove('border-transparent', 'hover:border-green-600');
+    });
+}
+
         // For admin and pengelola, always show dashboard
         if (role !== 'nasabah') {
             // Dashboard is already active by default for admin/pengelola
@@ -89,7 +115,10 @@
                 activateNav('pesanan');
             } else if (hash === '#riwayat') {
                 activateNav('riwayat');
+            } else if (hash === '#favorit') {
+                activateNav('favorit');
             }
+
         }
         
         // Helper function to activate a specific nav item

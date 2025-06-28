@@ -27,6 +27,20 @@ class Artikel extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+    public function likes()
+{
+    return $this->hasMany(ArtikelLike::class, 'artikel_id', 'artikel_id');
+}
+
+public function isLikedBy($user)
+{
+    return $this->likes()->where('user_id', $user?->user_id)->exists();
+}
+
+public function likedByUsers() {
+    return $this->belongsToMany(User::class, 'artikel_likes', 'artikel_id', 'user_id')->withTimestamps();
+}
+
     
     public function gambar()
     {
