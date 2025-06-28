@@ -105,7 +105,7 @@
                                 :image="$shop->foto_toko ? Storage::url($shop->foto_toko) : asset('images/default-store.png')"        
                                 :title="$shop->nama ?? 'Nama Toko'"
                                 :desc="Str::limit($shop->deskripsi_toko ?? 'Belum ada deskripsi', 50)"
-                                :bank="$shop->alamat_toko ?? 'Belum ada alamat'"
+                                :bank="$shop->jam_operasional ?? 'Belum ada jam operasional'"
                                 :productId="$shop->id"
                                 :showLike="false"
                                 href="{{ route('toko.detail', ['id' => $shop->user_id]) }}"

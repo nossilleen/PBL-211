@@ -41,12 +41,12 @@
             <a
                 href="/events"
                 class="text-green-800 hover:text-green-600 transition-all duration-300 border-b-2 border-transparent hover:border-green-600 font-medium text-sm xl:text-base py-1"
-                >Events</a
+                >Acara</a
             >
             <a
                 href="/about"
                 class="text-green-800 hover:text-green-600 transition-all duration-300 border-b-2 border-transparent hover:border-green-600 font-medium text-sm xl:text-base py-1"
-                >About Us</a
+                >Tentang Kami</a
             >
             @guest
             <a
@@ -76,8 +76,12 @@
             <!-- Show user profile dropdown for authenticated users -->
             <div class="relative" x-data="{ open: false }">
                 <button @click="open = !open" class="flex items-center space-x-2 focus:outline-none">
-                    <div class="w-8 h-8 rounded-full bg-green-600 flex items-center justify-center text-white">
-                        <span class="text-sm font-semibold">{{ substr(Auth::user()->nama, 0, 1) }}</span>
+                    <div class="w-8 h-8 rounded-full bg-green-600 flex items-center justify-center text-white overflow-hidden">
+                        @if(Auth::user()->role === 'pengelola' && Auth::user()->foto_toko)
+                            <img src="{{ Storage::url(Auth::user()->foto_toko) }}" alt="Foto Toko" class="w-full h-full object-cover">
+                        @else
+                            <span class="text-sm font-semibold">{{ substr(Auth::user()->nama, 0, 1) }}</span>
+                        @endif
                     </div>
                     <span class="hidden md:inline text-green-800 font-medium">{{ Auth::user()->nama }}</span>
                 </button>
@@ -89,13 +93,13 @@
                     
                     @if(Auth::user()->role === 'admin')
                         @if(Request::is('admin*'))
-                            <a href="/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Kembali ke Homepage</a>
+                            <a href="/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Kembali ke Beranda</a>
                         @else
                             <a href="/admin" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Dashboard</a>
                         @endif
                     @elseif(Auth::user()->role === 'pengelola')
                         @if(Request::is('pengelola*'))
-                            <a href="/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Kembali ke Homepage</a>
+                            <a href="/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Kembali ke Beranda</a>
                         @else
                             <a href="/pengelola" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Dashboard</a>
                         @endif
@@ -105,7 +109,7 @@
                     <a href="{{ route('logout') }}" 
                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                        Logout
+                        Keluar
                     </a>
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hidden">
                         @csrf
@@ -154,12 +158,12 @@
             <a
                 href="/events"
                 class="block text-green-800 hover:text-green-600 py-3 px-2 transition-all duration-300 border-l-4 border-transparent hover:border-green-600 hover:bg-green-50 rounded"
-                >Events</a
+                >Acara</a
             >
             <a
                 href="/about"
                 class="block text-green-800 hover:text-green-600 py-3 px-2 transition-all duration-300 border-l-4 border-transparent hover:border-green-600 hover:bg-green-50 rounded"
-                >About Us</a
+                >Tentang Kami</a
             >
             @guest
             <a

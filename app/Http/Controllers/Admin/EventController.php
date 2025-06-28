@@ -23,23 +23,46 @@ class EventController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
+        $hasCropped = $request->filled('cropped_gambar');
+        $rules = [
             'title' => 'required|string|max:255',
             'description' => 'required|string',
             'date' => 'required|date',
             'location' => 'required|string|max:255',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048'
-        ]);
+        ];
+        if (!$hasCropped) {
+            $rules['image'] = 'required|image|mimes:jpeg,png,jpg,gif|max:2048';
+        }
+        $request->validate($rules);
 
         try {
-            $bannerPath = $request->file('image')->store('public/events');
+            if ($hasCropped) {
+                $data = $request->input('cropped_gambar');
+                $data = preg_replace('/^data:image\/(png|jpg|jpeg);base64,/', '', $data);
+                $data = str_replace(' ', '+', $data);
+                $fileName = uniqid() . '.jpg';
+                $destinationPath = public_path('storage/events');
+                if (!file_exists($destinationPath)) {
+                    mkdir($destinationPath, 0777, true);
+                }
+                file_put_contents($destinationPath . '/' . $fileName, base64_decode($data));
+                $imagePath = 'storage/events/' . $fileName;
+            } else if ($request->hasFile('image')) {
+                $file = $request->file('image');
+                $fileName = uniqid() . '.' . $file->getClientOriginalExtension();
+                $destinationPath = public_path('storage/events');
+                $file->move($destinationPath, $fileName);
+                $imagePath = 'storage/events/' . $fileName;
+            } else {
+                $imagePath = null;
+            }
 
             Event::create([
                 'title' => $request->title,
                 'description' => $request->description,
                 'date' => $request->date,
                 'location' => $request->location,
-                'image' => Storage::url($bannerPath)
+                'image' => $imagePath
             ]);
 
             return redirect()->route('admin.artikel.index')
@@ -72,8 +95,11 @@ class EventController extends Controller
                 if ($event->image) {
                     Storage::delete(str_replace('/storage', 'public', $event->image));
                 }
-                $bannerPath = $request->file('image')->store('public/events');
-                $event->image = Storage::url($bannerPath);
+                $file = $request->file('image');
+                $fileName = uniqid() . '.' . $file->getClientOriginalExtension();
+                $destinationPath = public_path('storage/events');
+                $file->move($destinationPath, $fileName);
+                $event->image = 'storage/events/' . $fileName;
             }
 
             $event->update([

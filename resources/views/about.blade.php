@@ -333,7 +333,7 @@
                                     <p class="text-green-600 mb-2 text-center text-xs md:text-sm">4342401075</p>
                                     <div class="border-t border-gray-100 pt-2 mt-2">
                                         <p class="text-gray-600 text-xs md:text-sm mb-2 text-center font-medium">Database Design & Backend Programmer</p>
-                                        <p class="text-gray-500 text-xs italic text-center">"Would Rather Watch A Tree Grow or A Knee Grow"</p>
+                                        <p class="text-gray-500 text-xs italic text-center">"Would You Rather Watch A Tree Grow or A Knee Grow"</p>
                                     </div>
                                 </div>
                             </div>

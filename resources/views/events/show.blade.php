@@ -6,7 +6,7 @@
     <div class="relative h-[60vh] w-full">
         @if($event->image)
         <div class="absolute inset-0">
-            <img src="{{ asset($event->image) }}" alt="Banner" class="w-full h-auto">
+            <img src="{{ asset($event->image) }}" alt="Banner" class="w-full h-full object-cover">
             <div class="absolute inset-0 bg-black bg-opacity-50"></div>
         </div>
         @endif

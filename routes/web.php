@@ -47,6 +47,7 @@ Route::get('/profile', [HomeController::class, 'index'])->name('profile');
 // Admin routes
 Route::prefix('admin')->middleware(['auth', 'role:admin'])->name('admin.')->group(function () {
     Route::get('/', [AdminController::class, 'index'])->name('index');
+    Route::get('/api/visit-stats', [AdminController::class, 'getVisitStats'])->name('api.visit_stats');
     Route::get('/pengajuan', [AdminController::class, 'pengajuan'])->name('pengajuan');
     Route::get('/user', [AdminController::class, 'user'])->name('user');
     
