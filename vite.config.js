@@ -17,6 +17,12 @@ export default defineConfig({
             }
         })
     ],
+    server: {
+        host: '0.0.0.0',
+        hmr: {
+            host: '0.0.0.0'
+        },
+    },
     // Pastikan Vite dapat mengakses folder images
     build: {
         assetsInclude: ['resources/images/**'],
