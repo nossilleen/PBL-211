@@ -13,22 +13,24 @@ class AccessController extends Controller
     {
         $user = User::findOrFail($userId);
         
-        // Validasi request
+        // Validasi request (opsional boleh kosong)
         $request->validate([
-            'operations' => 'required|array',
+            'operations' => 'nullable|array',
             'operations.*' => 'in:create,read,update,delete'
         ]);
 
+        $operations = $request->input('operations', []);
+
         // Simpan hak akses dalam format JSON di kolom meta
         $user->meta = [
-            'product_operations' => $request->operations
+            'product_operations' => $operations
         ];
         $user->save();
 
         // Buat notifikasi manual di tabel notifications kustom
         CustomNotification::create([
             'user_id' => $user->user_id,
-            'type' => 'event', // gunakan salah satu enum yang sudah ada
+            'type' => 'event',
             'title' => 'Hak Akses Diubah',
             'message' => 'Hak akses produk Anda telah diubah oleh admin.',
             'url' => null,
@@ -36,7 +38,7 @@ class AccessController extends Controller
 
         return response()->json([
             'message' => 'Hak akses berhasil diperbarui',
-            'operations' => $request->operations
+            'operations' => $operations
         ]);
     }
 

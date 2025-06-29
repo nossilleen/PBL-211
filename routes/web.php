@@ -144,7 +144,7 @@ Route::middleware(['auth', 'role:pengelola'])->group(function () {
     Route::get('/pengelola/riwayat', [PengelolaController::class, 'riwayat'])->name('pengelola.riwayat');
     
     // Product routes khusus pengelola (gunakan prefix /pengelola/products dari resource)
-Route::middleware(['auth', 'role:pengelola', 'product.access:create,read,update,delete'])->resource('/pengelola/products', ProductController::class);
+    Route::middleware(['auth', 'role:pengelola', 'product.access:create|read|update|delete'])->resource('/pengelola/products', ProductController::class);
     Route::put('/pengelola/toko/update', [ProductController::class, 'updateToko'])->name('pengelola.toko.update');
 });
 

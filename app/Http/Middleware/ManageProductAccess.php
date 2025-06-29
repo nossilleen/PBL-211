@@ -18,7 +18,7 @@ class ManageProductAccess
         }
 
         // Parse operations yang diizinkan (create,read,update,delete)
-        $allowedOps = explode('|', $operations);
+        $allowedOps = preg_split('/[|,]/', $operations);
 
         // Cek hak akses pengelola
         if ($user->role === 'pengelola') {
