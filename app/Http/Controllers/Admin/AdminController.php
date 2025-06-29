@@ -212,4 +212,11 @@ class AdminController extends Controller
         $users = User::all();
         return view('admin.user.index', compact('users'));
     }
+
+    public function getAccess(User $user)
+    {
+        return response()->json([
+            'operations' => $user->meta['product_operations'] ?? []
+        ]);
+    }
 }

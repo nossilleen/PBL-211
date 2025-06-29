@@ -143,7 +143,7 @@ Route::middleware(['auth', 'role:pengelola'])->group(function () {
     Route::get('/pengelola/riwayat', [PengelolaController::class, 'riwayat'])->name('pengelola.riwayat');
     
     // Product routes khusus pengelola (gunakan prefix /pengelola/products dari resource)
-    Route::resource('/pengelola/products', ProductController::class);
+Route::middleware(['auth', 'role:pengelola', 'product.access:create,read,update,delete'])->resource('/pengelola/products', ProductController::class);
     Route::put('/pengelola/toko/update', [ProductController::class, 'updateToko'])->name('pengelola.toko.update');
 });
 
@@ -165,8 +165,15 @@ Route::middleware(['auth', 'role:pengelola'])->group(function () {
         ->name('pengelola.pesanan.tolak');
 });
 
-// Admin password reset routes
+// Admin management routes
 Route::middleware(['auth', 'role:admin'])->group(function () {
+    // Manage pengelola access
+    Route::post('/admin/users/{user}/access', [AccessController::class, 'manageAccess'])
+        ->name('admin.users.manage-access');
+    Route::get('/admin/users/{user}/access', [AccessController::class, 'getAccess'])
+        ->name('admin.users.get-access');
+
+    // Password reset routes
     Route::post('/admin/users/{user}/reset-password', [App\Http\Controllers\Admin\UserPasswordController::class, 'resetPassword'])
         ->name('admin.users.reset-password');
 });

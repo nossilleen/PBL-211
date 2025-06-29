@@ -140,6 +140,7 @@
                             Data Pengguna
                         </a>
                     </li>
+
                     <li>
                         <a href="{{ route('logout') }}" 
                            onclick="event.preventDefault(); document.getElementById('sidebar-logout-form').submit();" 

@@ -33,6 +33,7 @@
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nama</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Role</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Hak Akses</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Aksi</th>
                     </tr>
                 </thead>
@@ -55,8 +56,23 @@
                                 {{ ucfirst($user->role) }}
                             </span>
                         </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            @if($user->role === 'pengelola')
+                                <div class="text-sm text-gray-900">
+                                    {{ implode(', ', $user->meta['product_operations'] ?? []) }}
+                                </div>
+                            @else
+                                <div class="text-sm text-gray-400">-</div>
+                            @endif
+                        </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                             <div class="flex space-x-2">
+                                @if($user->role === 'pengelola')
+                                <button onclick="openAccessModal('{{ $user->user_id }}')" 
+                                    class="bg-blue-100 hover:bg-blue-200 text-blue-700 px-3 py-1 rounded transition-colors">
+                                    Edit Akses
+                                </button>
+                                @endif
                                 <button class="bg-red-100 hover:bg-red-200 text-red-700 px-3 py-1 rounded transition-colors">
                                     Delete
                                 </button>
@@ -68,4 +84,81 @@
             </table>
         </div>
     </div>
+
+    <!-- Modal Edit Akses -->
+    <div id="accessModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+        <div class="bg-white rounded-lg p-6 w-full max-w-md">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-lg font-bold">Edit Hak Akses Produk</h3>
+                <button onclick="closeAccessModal()" class="text-gray-500 hover:text-gray-700">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            <form id="accessForm" method="POST">
+                @csrf
+                <div class="space-y-3 mb-6">
+                    <label class="flex items-center">
+                        <input type="checkbox" name="operations[]" value="create" class="rounded text-green-500">
+                        <span class="ml-2">Create</span>
+                    </label>
+                    <label class="flex items-center">
+                        <input type="checkbox" name="operations[]" value="read" class="rounded text-green-500">
+                        <span class="ml-2">Read</span>
+                    </label>
+                    <label class="flex items-center">
+                        <input type="checkbox" name="operations[]" value="update" class="rounded text-green-500">
+                        <span class="ml-2">Update</span>
+                    </label>
+                    <label class="flex items-center">
+                        <input type="checkbox" name="operations[]" value="delete" class="rounded text-green-500">
+                        <span class="ml-2">Delete</span>
+                    </label>
+                </div>
+                <div class="flex justify-end space-x-3">
+                    <button type="button" onclick="closeAccessModal()" class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50">
+                        Batal
+                    </button>
+                    <button type="submit" class="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700">
+                        Simpan
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function openAccessModal(userId) {
+            const modal = document.getElementById('accessModal');
+            const form = document.getElementById('accessForm');
+            
+            // Set form action
+            form.action = `/admin/users/${userId}/access`;
+            
+            // Get current access
+            fetch(`/admin/users/${userId}/access`)
+                .then(response => response.json())
+                .then(data => {
+                    // Reset all checkboxes
+                    document.querySelectorAll('input[name="operations[]"]').forEach(checkbox => {
+                        checkbox.checked = false;
+                    });
+                    
+                    // Check the ones user has
+                    if (data.operations) {
+                        data.operations.forEach(op => {
+                            const checkbox = document.querySelector(`input[name="operations[]"][value="${op}"]`);
+                            if (checkbox) checkbox.checked = true;
+                        });
+                    }
+                    
+                    modal.classList.remove('hidden');
+                });
+        }
+        
+        function closeAccessModal() {
+            document.getElementById('accessModal').classList.add('hidden');
+        }
+    </script>
 @endsection
