@@ -5,8 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Notification;
-use App\Notifications\AccessChangedNotification;
+use App\Models\Notification as CustomNotification;
 
 class AccessController extends Controller
 {
@@ -26,11 +25,14 @@ class AccessController extends Controller
         ];
         $user->save();
 
-        // Kirim notifikasi ke pengelola
-        Notification::send($user, new AccessChangedNotification(
-            $request->operations,
-            auth()->user()
-        ));
+        // Buat notifikasi manual di tabel notifications kustom
+        CustomNotification::create([
+            'user_id' => $user->user_id,
+            'type' => 'event', // gunakan salah satu enum yang sudah ada
+            'title' => 'Hak Akses Diubah',
+            'message' => 'Hak akses produk Anda telah diubah oleh admin.',
+            'url' => null,
+        ]);
 
         return response()->json([
             'message' => 'Hak akses berhasil diperbarui',
