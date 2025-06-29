@@ -7,10 +7,6 @@ export default defineConfig({
         laravel({
             input: ['resources/css/app.css', 'resources/js/app.js'],
             refresh: true,
-            server: {
-                host: '192.168.1.14',
-                port: 5173
-            }
         }),
         vue({
             template: {
@@ -21,10 +17,6 @@ export default defineConfig({
             }
         })
     ],
-    server: {
-        host: '0.0.0.0',
-        port: 5173
-    },
     // Pastikan Vite dapat mengakses folder images
     build: {
         assetsInclude: ['resources/images/**'],
