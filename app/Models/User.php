@@ -36,14 +36,21 @@ class User extends Authenticatable
         'email',
         'password',
         'no_hp',
+        'tanggal_lahir',
         'role',
+        'jenis_kelamin',
+        'alamat',
         'points',
-        'deskripsi_toko',
-        'alamat_toko',
+        'foto_toko',
+        'alamat_toko', 
         'jam_operasional',
+        'deskripsi_toko',
         'nomor_rekening',
         'nama_bank_rekening',
-        'foto_toko'
+        'can_view_product',
+        'can_create_product', 
+        'can_edit_product',
+        'can_delete_product'
     ];
 
     /**
@@ -64,7 +71,11 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
-        'poin' => 'integer',  // Add this to ensure proper type casting
+        'poin' => 'integer',
+        'can_create_product' => 'boolean',
+        'can_edit_product' => 'boolean',
+        'can_delete_product' => 'boolean',
+        'can_view_product' => 'boolean'
     ];
 
     /**
@@ -111,5 +122,26 @@ class User extends Authenticatable
     public function lokasi()
     {
         return $this->hasMany(Lokasi::class, 'user_id', 'user_id');
+    }
+
+    // Helper methods untuk permissions
+    public function canCreateProduct(): bool
+    {
+        return $this->role === 'admin' || $this->can_create_product;
+    }
+
+    public function canEditProduct(): bool
+    {
+        return $this->role === 'admin' || $this->can_edit_product;
+    }
+
+    public function canDeleteProduct(): bool
+    {
+        return $this->role === 'admin' || $this->can_delete_product;
+    }
+
+    public function canViewProduct(): bool
+    {
+        return $this->role === 'admin' || $this->can_view_product;
     }
 }

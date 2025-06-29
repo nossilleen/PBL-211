@@ -45,9 +45,15 @@ class AdminController extends Controller
     {
         $pengajuan = Upgrade::findOrFail($id);
 
-        // Update the user's role to 'pengelola'
+        // Update the user's role to 'pengelola' and set default permissions
         $user = User::findOrFail($pengajuan->user_id);
-        $user->update(['role' => 'pengelola']);
+        $user->update([
+            'role' => 'pengelola',
+            'can_view_product' => true,
+            'can_create_product' => true,
+            'can_edit_product' => true,
+            'can_delete_product' => true
+        ]);
 
         // Mark the submission as approved
         $pengajuan->update(['status' => 'approved']);
@@ -69,5 +75,31 @@ class AdminController extends Controller
     {
         $users = User::all();
         return view('admin.user.index', compact('users'));
+    }
+
+    public function getUserPermissions(User $user)
+    {
+        return response()->json([
+            'can_view_product' => $user->can_view_product,
+            'can_create_product' => $user->can_create_product,
+            'can_edit_product' => $user->can_edit_product,
+            'can_delete_product' => $user->can_delete_product
+        ]);
+    }
+
+    public function updateUserPermissions(Request $request, User $user)
+    {
+        if ($user->role !== 'pengelola') {
+            return back()->with('error', 'Can only update permissions for pengelola users.');
+        }
+
+        $user->update([
+            'can_view_product' => $request->boolean('can_view_product'),
+            'can_create_product' => $request->boolean('can_create_product'),
+            'can_edit_product' => $request->boolean('can_edit_product'),
+            'can_delete_product' => $request->boolean('can_delete_product')
+        ]);
+
+        return back()->with('success', 'Permissions updated successfully.');
     }
 }

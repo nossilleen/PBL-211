@@ -10,9 +10,11 @@
 
 <!-- Add Product Button -->
 <div class="mb-6">
-    <button onclick="openProductModal()" class="px-6 py-3 bg-green-600 text-white font-medium rounded-md hover:bg-green-700 transition-all">
-        Add New Product
-    </button>
+    @if(auth()->user()->can_create_product)
+        <button onclick="openProductModal()" class="px-6 py-3 bg-green-600 text-white font-medium rounded-md hover:bg-green-700 transition-all">
+            Add New Product
+        </button>
+    @endif
 </div>
 
 <!-- Success/Error Messages -->
@@ -46,7 +48,7 @@
                     <p class="text-sm text-gray-600 mb-2">{{ Str::limit($item->deskripsi, 50) }}</p>
                     <p class="text-lg font-bold text-yellow-500 mb-2">Rp{{ number_format($item->harga, 0, ',', '.') }}</p>
                     @if($item->harga_points)
-                        <p class="text-sm font-medium text-blue-600 mb-2">atau {{ number_format($item->harga_points) }} Poin</p>
+                        <p class="text-sm font-medium text-blue-600 mb-2">or {{ number_format($item->harga_points) }} Points</p>
                     @endif
 
                     <!-- Add Category Display -->
@@ -63,21 +65,25 @@
 
                     <!-- Action Buttons -->
                     <div class="flex space-x-2">
-                        <button onclick="openProductModal({{ $item }})" 
-                                class="flex-1 px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700 transition-all">
-                            Edit
-                        </button>
-                        <form action="{{ route('products.destroy', ['product' => $item->produk_id]) }}" 
-                              method="POST" 
-                              class="flex-1"
-                              onsubmit="return confirm('Are you sure you want to delete this product?');">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" 
-                                    class="w-full px-4 py-2 bg-red-600 text-white text-sm font-medium rounded-md hover:bg-red-700 transition-all">
-                                Delete
+                        @if(auth()->user()->can_edit_product)
+                            <button onclick="openProductModal({{ $item }})" 
+                                    class="flex-1 px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700 transition-all">
+                                Edit
                             </button>
-                        </form>
+                        @endif
+                        @if(auth()->user()->can_delete_product)
+                            <form action="{{ route('pengelola.products.destroy', ['product' => $item->produk_id]) }}" 
+                                method="POST" 
+                                class="flex-1"
+                                onsubmit="return confirm('Are you sure you want to delete this product?');">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" 
+                                        class="w-full px-4 py-2 bg-red-600 text-white text-sm font-medium rounded-md hover:bg-red-700 transition-all">
+                                    Delete
+                                </button>
+                            </form>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -106,7 +112,7 @@
             </div>
         @endif
 
-        <form id="productForm" method="POST" action="{{ route('products.store') }}" enctype="multipart/form-data">
+        <form id="productForm" method="POST" action="{{ route('pengelola.products.store') }}" enctype="multipart/form-data">
             @csrf
             <input type="hidden" id="productId" name="_method" value="POST">
 
@@ -135,9 +141,9 @@
                        class="w-full border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500">
             </div>
 
-            <!-- Product Poin Price -->
+            <!-- Product Points Price -->
             <div class="mb-4">
-                <label for="harga_points" class="block text-gray-700 font-medium mb-2">Poin Price (optional)</label>
+                <label for="harga_points" class="block text-gray-700 font-medium mb-2">Points Price (optional)</label>
                 <input type="number" name="harga_points" id="harga_points" min="0"
                        class="w-full border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500">
             </div>
@@ -198,7 +204,7 @@
                            onchange="document.getElementById('preview-image').src = window.URL.createObjectURL(this.files[0])">
                     <label for="foto_toko" 
                            class="px-4 py-2 bg-gray-200 text-gray-700 rounded cursor-pointer hover:bg-gray-300">
-                        Pilih Foto
+                        Choose Photo
                     </label>
                 </div>
             </div>
@@ -243,7 +249,7 @@
 
         <div class="mt-6">
             <button type="submit" class="px-6 py-2 bg-green-600 text-white rounded hover:bg-green-700">
-                Simpan Perubahan
+                Save Changes
             </button>
         </div>
     </form>
@@ -274,7 +280,7 @@ function openProductModal(product = null) {
         imageInput.removeAttribute('required');
     } else {
         modalTitle.textContent = 'Add Product';
-        form.action = '{{ route('products.store') }}';
+        form.action = '{{ route('pengelola.products.store') }}';
         methodInput.value = 'POST';
         form.reset();
         

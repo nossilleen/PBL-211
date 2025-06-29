@@ -49,6 +49,8 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->name('admin.')->grou
     Route::get('/', [AdminController::class, 'index'])->name('index');
     Route::get('/pengajuan', [AdminController::class, 'pengajuan'])->name('pengajuan');
     Route::get('/user', [AdminController::class, 'user'])->name('user');
+    Route::get('/users/permissions', [App\Http\Controllers\Admin\UserPermissionController::class, 'index'])->name('users.permissions');
+    Route::put('/users/{user}/permissions', [App\Http\Controllers\Admin\UserPermissionController::class, 'update'])->name('users.permissions.update');
     
     // Event routes
     Route::resource('events', \App\Http\Controllers\Admin\EventController::class);
@@ -112,15 +114,23 @@ Route::middleware(['auth', 'role:pengelola'])->group(function () {
     Route::get('/pengelola', [PengelolaController::class, 'index'])->name('pengelola.index');
     Route::get('/pengelola/alamat', [PengelolaController::class, 'alamat'])->name('pengelola.alamat');
     Route::post('/pengelola/alamat/update', [PengelolaController::class, 'updateAlamat'])->name('pengelola.alamat.update');
-    Route::get('/pengelola/toko', [ProductController::class, 'toko'])->name('pengelola.toko');
+    Route::get('/pengelola/toko', [ProductController::class, 'toko'])->middleware('product.permission:view')->name('pengelola.toko');
     Route::get('/pengelola/transaksi', [PengelolaController::class, 'transaksi'])->name('pengelola.transaksi');
     Route::get('/pengelola/nasabah', [PengelolaController::class, 'nasabah'])->name('pengelola.nasabah');
     Route::get('/pengelola/laporan', [PengelolaController::class, 'laporan'])->name('pengelola.laporan');
     Route::get('/pengelola/riwayat', [PengelolaController::class, 'riwayat'])->name('pengelola.riwayat');
     
-    // Product routes khusus pengelola (gunakan prefix /pengelola/products dari resource)
-    Route::resource('/pengelola/products', ProductController::class);
-    Route::put('/pengelola/toko/update', [ProductController::class, 'updateToko'])->name('pengelola.toko.update');
+    // Product routes with permissions
+    Route::prefix('pengelola/products')->group(function () {
+        Route::get('/', [ProductController::class, 'index'])->middleware('product.permission:view')->name('pengelola.products.index');
+        Route::get('/create', [ProductController::class, 'create'])->middleware('product.permission:create')->name('pengelola.products.create');
+        Route::post('/', [ProductController::class, 'store'])->middleware('product.permission:create')->name('pengelola.products.store');
+        Route::get('/{product}/edit', [ProductController::class, 'edit'])->middleware('product.permission:edit')->name('pengelola.products.edit');
+        Route::put('/{product}', [ProductController::class, 'update'])->middleware('product.permission:edit')->name('pengelola.products.update');
+        Route::delete('/{product}', [ProductController::class, 'destroy'])->middleware('product.permission:delete')->name('pengelola.products.destroy');
+    });
+    
+    Route::put('/pengelola/toko/update', [ProductController::class, 'updateToko'])->middleware('product.permission:edit')->name('pengelola.toko.update');
 });
 
 Route::get('/stores', [\App\Http\Controllers\PBS\PengelolaController::class, 'stores'])->name('stores.index');
@@ -169,3 +179,9 @@ Route::middleware('auth')->post('/produk/{id}/like', [ProductController::class, 
 Route::middleware('auth')->get('/debug-sentry', function () {
     throw new Exception('My first Sentry error!');
 })->name('debug.sentry');
+
+// Admin permission management routes
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::get('/admin/users/{user}/permissions', [AdminController::class, 'getUserPermissions'])->name('admin.users.permissions.get');
+    Route::put('/admin/users/{user}/permissions', [AdminController::class, 'updateUserPermissions'])->name('admin.users.permissions.update');
+});

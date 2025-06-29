@@ -12,10 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('user', function (Blueprint $table) {
-            $table->boolean('can_view_product')->default(false);
-            $table->boolean('can_create_product')->default(false);
-            $table->boolean('can_edit_product')->default(false);
-            $table->boolean('can_delete_product')->default(false);
+            $table->boolean('can_create_product')->default(false)->after('role');
+            $table->boolean('can_edit_product')->default(false)->after('can_create_product');
+            $table->boolean('can_delete_product')->default(false)->after('can_edit_product');
+            $table->boolean('can_view_product')->default(true)->after('can_delete_product');
         });
     }
 
@@ -26,10 +26,10 @@ return new class extends Migration
     {
         Schema::table('user', function (Blueprint $table) {
             $table->dropColumn([
-                'can_view_product',
                 'can_create_product',
                 'can_edit_product',
-                'can_delete_product'
+                'can_delete_product',
+                'can_view_product'
             ]);
         });
     }

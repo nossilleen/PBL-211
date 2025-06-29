@@ -14,14 +14,12 @@ class ProductController extends Controller
 {
     public function index()
     {
-        // Use paginate instead of all()
-        $products = Produk::paginate(12);
+        $products = Produk::where('user_id', auth()->id())->paginate(12);
         return view('pengelola.toko', compact('products'));
     }
 
     public function create()
     {
-        // Show the form to create a new product
         return view('pengelola.products.create');
     }
 
@@ -37,7 +35,6 @@ class ProductController extends Controller
         ]);
 
         try {
-            // Create product
             $product = Produk::create([
                 'nama_produk' => $validated['nama_produk'],
                 'harga' => $validated['harga'],
@@ -49,14 +46,11 @@ class ProductController extends Controller
                 'suka' => 0
             ]);
 
-            // Handle image upload
             if ($request->hasFile('image')) {
                 $image = $request->file('image');
                 $imageName = time() . '.' . $image->extension();
-                // Update storage path
                 $path = $image->storeAs('products', $imageName, 'public');
 
-                // Update file path in database
                 ProdukGambar::create([
                     'produk_id' => $product->produk_id,
                     'file_path' => $path
@@ -64,19 +58,25 @@ class ProductController extends Controller
             }
 
             return redirect()->route('pengelola.toko')
-                ->with('success', 'Product created successfully!');
+                ->with('success', 'Produk berhasil dibuat!');
 
         } catch (\Exception $e) {
             return redirect()->back()
                 ->withInput()
-                ->with('error', 'Failed to create product: ' . $e->getMessage());
+                ->with('error', 'Gagal membuat produk: ' . $e->getMessage());
         }
     }
 
     public function edit($id)
     {
-        // Show the form to edit an existing product
-        $product = Produk::findOrFail($id); // Use the correct model
+        $product = Produk::findOrFail($id);
+        
+        // Check if user owns the product
+        if ($product->user_id !== auth()->id()) {
+            return redirect()->back()
+                ->with('error', 'Anda tidak memiliki akses untuk mengedit produk ini');
+        }
+
         return view('pengelola.products.edit', compact('product'));
     }
 
@@ -88,15 +88,17 @@ class ProductController extends Controller
             'harga_points' => 'nullable|numeric|min:0',
             'deskripsi' => 'required|string',
             'kategori' => 'required|in:eco_enzim,sembako',
-            'status_ketersediaan' => 'required|in:Available,Unavailable', // Updated to match enum
+            'status_ketersediaan' => 'required|in:Available,Unavailable',
             'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048'
         ]);
 
         try {
             $product = Produk::findOrFail($id);
             
+            // Check if user owns the product
             if ($product->user_id !== auth()->id()) {
-                return redirect()->back()->with('error', 'Unauthorized action.');
+                return redirect()->back()
+                    ->with('error', 'Anda tidak memiliki akses untuk mengedit produk ini');
             }
 
             $product->update([
@@ -113,13 +115,11 @@ class ProductController extends Controller
                 $imageName = time() . '.' . $image->extension();
                 $path = $image->storeAs('products', $imageName, 'public');
 
-                // Delete old image if exists
                 if ($product->gambar()->exists()) {
                     Storage::disk('public')->delete($product->gambar->first()->file_path);
                     $product->gambar()->delete();
                 }
 
-                // Create new image record
                 ProdukGambar::create([
                     'produk_id' => $product->produk_id,
                     'file_path' => $path
@@ -127,12 +127,12 @@ class ProductController extends Controller
             }
 
             return redirect()->route('pengelola.toko')
-                ->with('success', 'Product updated successfully!');
+                ->with('success', 'Produk berhasil diperbarui!');
 
         } catch (\Exception $e) {
             return redirect()->back()
                 ->withInput()
-                ->with('error', 'Failed to update product: ' . $e->getMessage());
+                ->with('error', 'Gagal memperbarui produk: ' . $e->getMessage());
         }
     }
 
@@ -141,24 +141,25 @@ class ProductController extends Controller
         try {
             $product = Produk::findOrFail($id);
             
+            // Check if user owns the product
             if ($product->user_id !== auth()->id()) {
-                return redirect()->back()->with('error', 'Unauthorized action.');
+                return redirect()->back()
+                    ->with('error', 'Anda tidak memiliki akses untuk menghapus produk ini');
             }
 
-            // Delete associated images from storage
             foreach ($product->gambar as $image) {
                 Storage::disk('public')->delete($image->file_path);
             }
             
-            $product->gambar()->delete(); // Delete image records
-            $product->forceDelete(); // Permanently delete the product
+            $product->gambar()->delete();
+            $product->forceDelete();
 
             return redirect()->route('pengelola.toko')
-                ->with('success', 'Product deleted successfully!');
+                ->with('success', 'Produk berhasil dihapus!');
 
         } catch (\Exception $e) {
             return redirect()->back()
-                ->with('error', 'Failed to delete product: ' . $e->getMessage());
+                ->with('error', 'Gagal menghapus produk: ' . $e->getMessage());
         }
     }
 
