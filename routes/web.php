@@ -16,6 +16,7 @@ use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\PBS\PoinController;
 use App\Http\Controllers\Workspace\UpgradeController;
 use App\Http\Controllers\Workspace\ProfileController;
+use App\Http\Controllers\Admin\AccessController;
 
 
 
