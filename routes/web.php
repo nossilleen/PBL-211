@@ -16,6 +16,11 @@ use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\PBS\PoinController;
 use App\Http\Controllers\Workspace\UpgradeController;
 use App\Http\Controllers\Workspace\ProfileController;
+use App\Http\Controllers\Admin\UserPasswordController;
+use App\Http\Controllers\Admin\UserPermissionController;
+use App\Http\Controllers\Admin\EventController as AdminEventController;
+use App\Http\Controllers\PBS\DatabaseMonitorController;
+use App\Http\Controllers\NotificationController;
 
 
 
@@ -56,11 +61,11 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->name('admin.')->grou
     Route::get('/api/visit-stats', [AdminController::class, 'getVisitStats'])->name('api.visit_stats');
     Route::get('/pengajuan', [AdminController::class, 'pengajuan'])->name('pengajuan');
     Route::get('/user', [AdminController::class, 'user'])->name('user');
-    Route::get('/users/permissions', [App\Http\Controllers\Admin\UserPermissionController::class, 'index'])->name('users.permissions');
-    Route::put('/users/{user}/permissions', [App\Http\Controllers\Admin\UserPermissionController::class, 'update'])->name('users.permissions.update');
+    Route::get('/users/permissions', [UserPermissionController::class, 'index'])->name('users.permissions');
+    Route::put('/users/{user}/permissions', [UserPermissionController::class, 'update'])->name('users.permissions.update');
     
     // Event routes
-    Route::resource('events', \App\Http\Controllers\Admin\EventController::class);
+    Route::resource('events', AdminEventController::class);
     
     // Artikel routes (CRUD)
     // Path yang dihasilkan akan menjadi '/admin/artikel/...'
@@ -173,15 +178,15 @@ Route::middleware(['auth', 'role:pengelola'])->group(function () {
 
 // Admin password reset routes
 Route::middleware(['auth', 'role:admin'])->group(function () {
-    Route::post('/admin/users/{user}/reset-password', [App\Http\Controllers\Admin\UserPasswordController::class, 'resetPassword'])
+    Route::post('/admin/users/{user}/reset-password', [UserPasswordController::class, 'resetPassword'])
         ->name('admin.users.reset-password');
 });
 
 // Forced password change routes
 Route::middleware(['auth'])->group(function () {
-    Route::get('/password/force-change', [App\Http\Controllers\Admin\UserPasswordController::class, 'showForceChangeForm'])
+    Route::get('/password/force-change', [UserPasswordController::class, 'showForceChangeForm'])
         ->name('password.force-change');
-    Route::post('/password/force-update', [App\Http\Controllers\Admin\UserPasswordController::class, 'forceChange'])
+    Route::post('/password/force-update', [UserPasswordController::class, 'forceChange'])
         ->name('password.force-update');
 });
 
@@ -204,4 +209,31 @@ Route::middleware('auth')->get('/debug-sentry', function () {
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/users/{user}/permissions', [AdminController::class, 'getUserPermissions'])->name('admin.users.permissions.get');
     Route::put('/admin/users/{user}/permissions', [AdminController::class, 'updateUserPermissions'])->name('admin.users.permissions.update');
+});
+
+// Database monitoring routes (admin only)
+Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/database-monitor', [DatabaseMonitorController::class, 'index'])->name('database-monitor');
+    Route::get('/database-monitor/real-time', [DatabaseMonitorController::class, 'realTimeActivity'])->name('database-monitor.real-time');
+    Route::get('/database-monitor/latest-activity', [DatabaseMonitorController::class, 'getLatestActivity'])->name('database-monitor.latest-activity');
+    Route::get('/privilege-management', [DatabaseMonitorController::class, 'privilegeManagement'])->name('privilege-management');
+    Route::post('/log-connection', [DatabaseMonitorController::class, 'logConnection'])->name('log-connection');
+    Route::post('/log-interaction', [DatabaseMonitorController::class, 'logInteraction'])->name('log-interaction');
+    Route::post('/users/{user}/privileges', [DatabaseMonitorController::class, 'updatePrivileges'])->name('update-privileges');
+});
+
+// Database Monitoring Routes
+Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
+    Route::get('/database-monitor', [DatabaseMonitorController::class, 'index'])->name('admin.database-monitor');
+    Route::get('/database-monitor/stats', [DatabaseMonitorController::class, 'getStats']);
+    Route::get('/database-monitor/latest-activity', [DatabaseMonitorController::class, 'getLatestActivity']);
+    Route::post('/database-monitor/log-connection', [DatabaseMonitorController::class, 'logConnection']);
+    Route::post('/database-monitor/log-interaction', [DatabaseMonitorController::class, 'logInteraction']);
+});
+
+// Notification routes
+Route::middleware('auth')->group(function () {
+    Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');
+    Route::post('/notifications/{id}/read', [NotificationController::class, 'markAsRead'])->name('notifications.mark-as-read');
+    Route::post('/notifications/mark-all-read', [NotificationController::class, 'markAllAsRead'])->name('notifications.mark-all-read');
 });

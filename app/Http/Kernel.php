@@ -63,6 +63,12 @@ class Kernel extends HttpKernel
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \App\Http\Middleware\CheckForcePasswordChange::class,
             \App\Http\Middleware\VisitTracker::class,
+            \App\Http\Middleware\LogDatabaseConnection::class,
+        ],
+
+        'api' => [
+            'throttle:api',
+            \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
     ];
 }

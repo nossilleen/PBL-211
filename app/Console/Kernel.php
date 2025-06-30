@@ -4,9 +4,14 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use App\Console\Commands\CleanupMonitoringData;
 
 class Kernel extends ConsoleKernel
 {
+    protected $commands = [
+        CleanupMonitoringData::class,
+    ];
+
     /**
      * Define the application's command schedule.
      */
@@ -18,6 +23,9 @@ class Kernel extends ConsoleKernel
 
         // Opsional: Bersihkan telescope yang lebih tua jika database mulai terlalu besar
         // $schedule->command('telescope:prune')->dailyAt('00:30');
+
+        // Jalankan pembersihan data pemantauan setiap minggu
+        $schedule->command('monitor:cleanup')->weekly();
     }
 
     /**
@@ -29,4 +37,4 @@ class Kernel extends ConsoleKernel
 
         require base_path('routes/console.php');
     }
-} 
+}
