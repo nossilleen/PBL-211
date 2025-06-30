@@ -7,13 +7,14 @@ use App\Models\Event;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Schema;
+use App\Models\Notification;
 
 class EventController extends Controller
 {
     // Menampilkan daftar event di dashboard admin
     public function index()
     {
-        $events = Event::latest()->paginate(10);
+        $events = Event::latest()->paginate(12);
         return view('admin.events.index', compact('events'));
     }
 
@@ -102,7 +103,15 @@ class EventController extends Controller
     // Menghapus event
     public function destroy(Event $event)
     {
+        // Simpan id sebelum delete
+        $eventId = $event->id;
+
         $event->delete();
+
+        // Hapus notifikasi terkait event ini
+        Notification::where('type', 'event')
+            ->where('url', '/events/' . $eventId)
+            ->delete();
 
         return redirect()->route('admin.events.index')
             ->with('success', 'Event berhasil dihapus');
@@ -141,8 +150,9 @@ class EventController extends Controller
             $eventsQuery->orderByDesc('created_at');
         }
 
-        $events = $eventsQuery->paginate(9)->withQueryString();
+        $events = $eventsQuery->paginate(12)->withQueryString();
 
         return view('events.index', compact('events'));
     }
+    
 }

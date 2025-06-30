@@ -17,6 +17,8 @@ use App\Http\Controllers\PBS\PoinController;
 use App\Http\Controllers\Workspace\UpgradeController;
 use App\Http\Controllers\Workspace\ProfileController;
 
+
+
 Route::post('/artikel/{artikel}/feedback', [FeedbackController::class, 'store'])->name('feedback.store');
 Route::get('/artikel/{artikel}/feedback', [ArtikelController::class, 'allFeedback'])->name('artikel.allFeedback');
 
@@ -26,7 +28,11 @@ Route::get('/', [HomeController::class, 'landingPage'])->name('welcome');
 Route::get('/artikel', [ArtikelController::class, 'landing'])->name('artikel.index');
 Route::get('/artikel/{id}', [ArtikelController::class, 'show'])->name('artikel.show');
 Route::post('/artikel/{id}/feedback', [ArtikelController::class, 'storeFeedback'])->name('artikel.feedback.store');
+Route::post('/artikel/{id}/like', [ArtikelController::class, 'like'])->name('artikel.like')->middleware('auth');
+
+
 Route::get('/events', [EventController::class, 'list'])->name('events.index');
+
 Route::get('/events/{id}', [EventController::class, 'show'])->name('events.show');
 Route::get('/about', function () {
     return view('about');
@@ -47,6 +53,7 @@ Route::get('/profile', [HomeController::class, 'index'])->name('profile');
 // Admin routes
 Route::prefix('admin')->middleware(['auth', 'role:admin'])->name('admin.')->group(function () {
     Route::get('/', [AdminController::class, 'index'])->name('index');
+    Route::get('/api/visit-stats', [AdminController::class, 'getVisitStats'])->name('api.visit_stats');
     Route::get('/pengajuan', [AdminController::class, 'pengajuan'])->name('pengajuan');
     Route::get('/user', [AdminController::class, 'user'])->name('user');
     Route::get('/users/permissions', [App\Http\Controllers\Admin\UserPermissionController::class, 'index'])->name('users.permissions');
@@ -55,18 +62,25 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->name('admin.')->grou
     // Event routes
     Route::resource('events', \App\Http\Controllers\Admin\EventController::class);
     
-    // Artikel routes
-    Route::get('/artikel', [ArtikelController::class, 'index'])->name('artikel.index');
-    Route::get('/artikel/create', [ArtikelController::class, 'create'])->name('artikel.create');
-    Route::post('/artikel', [ArtikelController::class, 'store'])->name('artikel.store');
-    Route::get('/admin/artikel', [ArtikelController::class, 'index'])->name('admin.artikel.index');
+    // Artikel routes (CRUD)
+    // Path yang dihasilkan akan menjadi '/admin/artikel/...'
+    Route::get('/artikel', [ArtikelController::class, 'index'])->name('artikel.index');            // /admin/artikel
+    Route::get('/artikel/create', [ArtikelController::class, 'create'])->name('artikel.create');  // /admin/artikel/create
+    Route::post('/artikel', [ArtikelController::class, 'store'])->name('artikel.store');          // /admin/artikel (POST)
+
     // Route untuk edit artikel
-    Route::get('/admin/artikel/{id}/edit', [ArtikelController::class, 'edit'])->name('artikel.edit');
+    Route::get('/artikel/{id}/edit', [ArtikelController::class, 'edit'])->name('artikel.edit');   // /admin/artikel/{id}/edit
+
     // Route untuk update artikel
-    Route::put('/admin/artikel/{id}', [ArtikelController::class, 'update'])->name('artikel.update');
+    Route::put('/artikel/{id}', [ArtikelController::class, 'update'])->name('artikel.update');    // /admin/artikel/{id}
+
     // Route untuk hapus artikel
-    Route::delete('/admin/artikel/{id}', [ArtikelController::class, 'destroy'])->name('artikel.destroy');
+    Route::delete('/artikel/{id}', [ArtikelController::class, 'destroy'])->name('artikel.destroy'); // /admin/artikel/{id}
+
+    // Tidak perlu route tambahan untuk alias, nama route otomatis menggunakan prefix 'admin.'
+
     Route::post('/artikel/{artikelId}/feedback', [ArtikelController::class, 'storeFeedback'])->name('feedback.store');
+
 });
 
 // Pengajuan routes
@@ -85,6 +99,7 @@ Route::prefix('transaksi')->middleware(['auth', 'role:nasabah'])->group(function
     Route::post('/cancel/{id}', [TransaksiController::class, 'cancel'])->name('transaksi.cancel');
     Route::post('/complete/{id}', [TransaksiController::class, 'complete'])->name('transaksi.complete');
     Route::post('/beli', [TransaksiController::class, 'beli'])->name('produk.beli');
+    
 });
 
 Route::get('/check-data', [DataController::class, 'index']);
@@ -95,15 +110,20 @@ Route::middleware(['auth', 'role:nasabah'])->group(function () {
         return view('nasabah.dashboard');
     })->name('nasabah.dashboard');
     
-    Route::get('/nasabah/notifikasi', function () {
-        return view('components.profile.notifikasi');
-    })->name('notifikasi');
+    Route::get('/nasabah/notifikasi', [ProfileController::class, 'notifikasi'])->name('notifikasi');
     
+    // Delete single notification
+    Route::delete('/nasabah/notifikasi/{id}', [ProfileController::class, 'deleteNotification'])->name('notifikasi.delete');
+
+    // Clear all notifications
+    Route::delete('/nasabah/notifikasi', [ProfileController::class, 'clearNotifications'])->name('notifikasi.clear');
+
     Route::get('/nasabah/poin-saya', function () {
         return view('components.profile.poin-saya');
     })->name('poin-saya');
 
     Route::post('/nasabah/upgrade', [UpgradeController::class, 'UpgradeRequest'])->name('nasabah.upgrade');
+
     Route::get('/profile/pesanan/{id}/detail', [ProfileController::class, 'pesananDetail'])
         ->name('profile.pesanan.detail')
         ->middleware('auth');

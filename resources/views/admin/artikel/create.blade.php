@@ -23,7 +23,13 @@
 
             <div class="mb-4">
                 <label for="gambar" class="block text-sm font-medium text-gray-700">Gambar</label>
-                <input type="file" name="gambar" id="gambar" class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-green-50 file:text-green-700 hover:file:bg-green-100">
+                <input type="file" name="gambar" id="gambar" accept="image/*" class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-green-50 file:text-green-700 hover:file:bg-green-100">
+                <div id="cropper-container" class="mt-4" style="display:none;">
+                    <img id="cropper-image" style="max-width:100%; max-height:300px;">
+                    <button type="button" id="crop-btn" class="mt-2 bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded">Crop Gambar</button>
+                </div>
+                <input type="hidden" name="cropped_gambar" id="cropped_gambar">
+                <div id="cropped-preview" class="mt-2"></div>
             </div>
 
             <div class="mb-4">
@@ -49,3 +55,61 @@
         </form>
     </div>
 @endsection
+
+@push('styles')
+<link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" rel="stylesheet"/>
+@endpush
+@push('scripts')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+<script>
+let cropper;
+const input = document.getElementById('gambar');
+const cropperContainer = document.getElementById('cropper-container');
+const cropperImage = document.getElementById('cropper-image');
+const cropBtn = document.getElementById('crop-btn');
+const croppedInput = document.getElementById('cropped_gambar');
+const croppedPreview = document.getElementById('cropped-preview');
+
+input.addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(event) {
+            cropperImage.src = event.target.result;
+            cropperContainer.style.display = 'block';
+            if (cropper) cropper.destroy();
+            cropper = new Cropper(cropperImage, {
+                aspectRatio: 16 / 9,
+                viewMode: 1,
+                autoCropArea: 1,
+            });
+        };
+        reader.readAsDataURL(file);
+    }
+});
+
+cropBtn.addEventListener('click', function() {
+    if (cropper) {
+        const canvas = cropper.getCroppedCanvas({
+            width: 1280,
+            height: 720
+        });
+        canvas.toBlob(function(blob) {
+            const reader = new FileReader();
+            reader.onloadend = function() {
+                croppedInput.value = reader.result;
+                croppedPreview.innerHTML = '<img src="' + reader.result + '" class="mt-2 rounded shadow" style="max-width:100%;">';
+            };
+            reader.readAsDataURL(blob);
+        }, 'image/jpeg');
+    }
+});
+// Saat submit, jika ada cropped_gambar, hapus input file asli agar hanya cropped yang dikirim
+const form = input.closest('form');
+form.addEventListener('submit', function(e) {
+    if (croppedInput.value) {
+        input.removeAttribute('name');
+    }
+});
+</script>
+@endpush

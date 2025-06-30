@@ -60,6 +60,10 @@
             <div id="dashboard-section" class="hidden">
                 <x-dashboard.container />
             </div>
+<!-- Favorit Section -->
+<div id="favorit-section" class="hidden">
+    <x-profile.favorit />
+</div>
 
             <!-- Pesanan Section (Hidden by Default) -->
             <div id="pesanan-section" class="hidden">

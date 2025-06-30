@@ -9,6 +9,7 @@ use App\Models\Transaksi;
 use App\Models\Produk; // Pastikan untuk meng-import model Produk
 use App\Models\PointHistory;
 use App\Models\Lokasi; // Import the Lokasi model
+use App\Models\Notification;
 
 class HomeController extends Controller
 {
@@ -34,6 +35,7 @@ class HomeController extends Controller
 
         $pesananAktif = collect();
         $riwayatTransaksi = collect();
+        $notifications = collect();
 
         if ($user->role == 'nasabah') {
             // Pesanan aktif
@@ -50,6 +52,15 @@ class HomeController extends Controller
                 ->orderBy('created_at', 'desc')
                 ->get();
 
+            // Notifikasi terbaru (batas 20)
+            $notifications = Notification::where('user_id', $user->user_id)
+                ->orderByDesc('created_at')
+                ->paginate(5)
+                ->withQueryString();
+
+            // Pastikan link paginasi tetap di #notifikasi
+            $notifications->fragment('notifikasi');
+
             \Log::info('Mengambil riwayat', [
                 'user_id' => $user->user_id,
                 'count' => $riwayatTransaksi->count(),
@@ -60,6 +71,7 @@ class HomeController extends Controller
         return view('profile', compact(
             'pesananAktif',
             'riwayatTransaksi',
+            'notifications',
             'showDashboard'
         ));
     }

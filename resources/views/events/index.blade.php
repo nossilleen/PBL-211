@@ -45,7 +45,7 @@
                         <!-- Search Bar -->
                         <div class="max-w-xl mx-auto mt-8 relative">
                             <form method="GET" action="{{ route('events.index') }}" class="relative flex items-center max-w-lg mx-auto">
-                                <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari event..." class="w-full pl-4 pr-12 py-3 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent shadow-sm"/>
+                                <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari acara..." class="w-full pl-4 pr-12 py-3 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent shadow-sm"/>
                                 <input type="hidden" name="sort" value="{{ request('sort', 'terbaru') }}" />
                                 <button type="submit" class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-green-500 hover:bg-green-600 text-white p-2 rounded-full transition-colors">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -77,19 +77,150 @@
                 <div class="container mx-auto px-4">
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         @foreach($events as $event)
-                        <div class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-all duration-300">
-                            <div class="p-4">
-                                <h3 class="text-xl font-semibold text-gray-800 mb-2">{{ $event->title }}</h3>
-                                <p class="text-gray-600 text-sm mb-4">{{ Str::limit($event->description, 150) }}</p>
-                                <a href="{{ route('events.show', ['id' => $event->id]) }}" class="inline-block bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition-all duration-300 text-sm">Selengkapnya</a>
-                            </div>
-                        </div>
+<div class="relative bg-white rounded-xl shadow-md overflow-hidden transition-transform duration-300 ease-in-out transform hover:scale-105 hover:shadow-xl">
+    <!-- Gambar Event -->
+    <div class="relative">
+        <img src="{{ asset($event->image ?? 'images/default-event.jpg') }}" alt="{{ $event->title }}" class="w-full h-48 object-cover">
+
+
+        <!-- Label Tanggal -->
+        <div class="absolute top-3 left-3 bg-white text-center text-xs px-2 py-1 rounded-md shadow">
+            <p class="text-black font-bold leading-tight">
+                {{ \Carbon\Carbon::parse($event->date)->format('d') }}
+                <br>
+                <span class="text-green-600 font-semibold uppercase">
+                    {{ \Carbon\Carbon::parse($event->date)->format('M') }}
+                </span>
+            </p>
+        </div>
+
+        <!-- Icon Favorite -->
+         @if(\Carbon\Carbon::parse($event->created_at)->diffInDays(now()) <= 7)
+    <div class="absolute bottom-3 right-3 bg-red-500 text-white text-xs px-3 py-1 rounded-full z-20 animate-bounce shadow-md" title="Event baru minggu ini!">
+    Baru!
+</div>
+
+@endif
+
+        <!-- Preview pengguna -->
+        <div class="absolute bottom-3 left-3 flex items-center space-x-1">
+            @for ($i = 0; $i < min(3, $event->attendees_count ?? 0); $i++)
+                <img src="{{ asset('images/user'.$i.'.jpg') }}" class="w-6 h-6 rounded-full border-2 border-white" alt="User">
+            @endfor
+            @if(($event->attendees_count ?? 0) > 3)
+                <span class="text-xs text-white ml-1 bg-black bg-opacity-50 px-2 py-0.5 rounded-full">+{{ $event->attendees_count - 3 }} Going</span>
+            @endif
+        </div>
+    </div>
+
+    <!-- Konten -->
+    <div class="p-4">
+        <!-- Kategori Sort (Populer atau Terbaru) -->
+        @php
+            $sort = request('sort', 'terbaru');
+            $label = $sort === 'populer' ? 'Terpopuler' : 'Terbaru';
+        @endphp
+        <span class="absolute top-6 right-0 bg-red-500 text-white text-xs font-semibold px-4 py-1 rounded-l-full shadow z-20">
+    {{ $label }}
+</span>
+
+
+
+
+
+
+
+        <!-- Judul -->
+<a href="{{ route('events.show', ['id' => $event->id]) }}" class="text-lg font-bold text-green-700 hover:underline hover:text-green-800 transition block">
+    {{ $event->title }}
+</a>
+
+        <!-- Lokasi dan Tanggal -->
+        <p class="flex items-center text-sm text-gray-600 mt-1">
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-1 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 12.414M9.172 8.172l4.242 4.242L20 4M4 20h16" />
+    </svg>
+    {{ $event->location }}
+</p>
+        <p class="text-sm text-gray-600 mt-1">
+            {{ \Carbon\Carbon::parse($event->date)->translatedFormat('l, d F Y - H:i') }}
+        </p>
+        @php
+    $isUpcoming = \Carbon\Carbon::parse($event->date)->isFuture();
+@endphp
+
+@if($isUpcoming)
+    <span class="inline-block bg-green-100 text-green-800 text-xs font-semibold px-3 py-1 rounded-full mb-2">
+        Open 🟢
+    </span>
+@else
+    <span class="inline-block bg-red-100 text-red-800 text-xs font-semibold px-3 py-1 rounded-full mb-2">
+        Close 🔴
+    </span>
+@endif
+
+
+        <!-- Tombol -->
+        <div class="mt-4 flex gap-2">
+    @if($isUpcoming)
+        <a href="{{ route('events.show', ['id' => $event->id]) }}" class="flex-1 bg-green-600 hover:bg-green-700 text-white text-center py-2 px-4 rounded-lg text-sm font-medium">
+            Daftar Event
+        </a>
+    @else
+        <button disabled class="flex-1 bg-gray-400 text-white text-center py-2 px-4 rounded-lg text-sm font-medium cursor-not-allowed">
+            Event Selesai
+        </button>
+    @endif
+    <a href="{{ route('events.show', ['id' => $event->id]) }}" class="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 text-center py-2 px-4 rounded-lg text-sm font-medium">
+        Lihat Detail
+    </a>
+</div>
+
+    </div>
+</div>
+
                         @endforeach
                     </div>
 
-                    <div class="d-flex justify-content-center mt-4">
-                        {{ $events->links() }}
-                    </div>
+                    <div class="mt-8 flex justify-center">
+    <ul class="flex border border-gray-300 rounded-md overflow-hidden bg-white text-sm">
+        {{-- Previous Page Link --}}
+        @if ($events->onFirstPage())
+            <li>
+                <span class="px-4 py-1.5 h-9 flex items-center text-gray-500 bg-white border-r border-gray-300 cursor-not-allowed select-none">Sebelumnya</span>
+            </li>
+        @else
+            <li>
+                <a href="{{ $events->previousPageUrl() }}" rel="prev" class="px-4 py-1.5 h-9 flex items-center text-gray-700 bg-white border-r border-gray-300 hover:bg-gray-100 transition">Sebelumnya</a>
+            </li>
+        @endif
+
+        {{-- Pagination Elements --}}
+        @foreach ($events->getUrlRange(1, $events->lastPage()) as $page => $url)
+            @if ($page == $events->currentPage())
+                <li>
+                    <span class="px-4 py-1.5 h-9 flex items-center font-bold text-white bg-green-600 border-r border-gray-300">{{ $page }}</span>
+                </li>
+            @else
+                <li>
+                    <a href="{{ $url }}" class="px-4 py-1.5 h-9 flex items-center text-gray-700 bg-white border-r border-gray-300 hover:bg-gray-100 transition">{{ $page }}</a>
+                </li>
+            @endif
+        @endforeach
+
+        {{-- Next Page Link --}}
+        @if ($events->hasMorePages())
+            <li>
+                <a href="{{ $events->nextPageUrl() }}" rel="next" class="px-4 py-1.5 h-9 flex items-center text-gray-700 bg-white hover:bg-gray-100 transition">Selanjutnya</a>
+            </li>
+        @else
+            <li>
+                <span class="px-4 py-1.5 h-9 flex items-center text-gray-500 bg-white cursor-not-allowed select-none">Selanjutnya</span>
+            </li>
+        @endif
+    </ul>
+</div>
+
                 </div>
             </section>
         </main>
@@ -135,5 +266,5 @@
                 });
             }
         </script>
-    </body>
+    </body>
 </html>

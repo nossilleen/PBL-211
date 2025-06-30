@@ -94,6 +94,23 @@ class User extends Authenticatable
         return $this->hasMany(Artikel::class, 'user_id');
     }
     
+    // use App\Models\User; ← pastikan ini ada di atas
+
+public function likes()
+{
+    return $this->belongsToMany(User::class, 'artikel_likes', 'artikel_id', 'user_id')->withTimestamps();
+}
+
+public function isLikedBy($user)
+{
+    return $this->likes()->where('artikel_likes.user_id', $user?->id)->exists();
+}
+
+public function likedArtikels() {
+    return $this->belongsToMany(Artikel::class, 'artikel_likes', 'user_id', 'artikel_id')->withTimestamps();
+}
+
+
     public function produk()
     {
         return $this->hasMany(Produk::class, 'user_id');
@@ -122,26 +139,5 @@ class User extends Authenticatable
     public function lokasi()
     {
         return $this->hasMany(Lokasi::class, 'user_id', 'user_id');
-    }
-
-    // Helper methods untuk permissions
-    public function canCreateProduct(): bool
-    {
-        return $this->role === 'admin' || $this->can_create_product;
-    }
-
-    public function canEditProduct(): bool
-    {
-        return $this->role === 'admin' || $this->can_edit_product;
-    }
-
-    public function canDeleteProduct(): bool
-    {
-        return $this->role === 'admin' || $this->can_delete_product;
-    }
-
-    public function canViewProduct(): bool
-    {
-        return $this->role === 'admin' || $this->can_view_product;
     }
 }
