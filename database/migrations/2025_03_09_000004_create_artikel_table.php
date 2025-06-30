@@ -13,8 +13,9 @@ return new class extends Migration
     {
         Schema::create('artikel', function (Blueprint $table) {
             $table->id('artikel_id');
-            $table->enum('kategori', ['event', 'artikel']);
+            $table->string('kategori');
             $table->string('judul', 255);
+            $table->string('slug')->nullable();
             $table->longText('konten');
             $table->date('tanggal_publikasi');
             $table->foreignId('user_id')->comment('Admin yang membuat artikel')->constrained('user', 'user_id')->cascadeOnDelete();

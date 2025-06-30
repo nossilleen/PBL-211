@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 return new class extends Migration
 {
@@ -14,7 +15,7 @@ return new class extends Migration
         Schema::create('transaksi', function (Blueprint $table) {
             $table->id('transaksi_id');
             $table->foreignId('user_id')->constrained('user', 'user_id');
-            $table->foreignId('lokasi_id')->constrained('lokasi', 'lokasi_id');
+            $table->foreignId('lokasi_id')->nullable()->constrained('lokasi', 'lokasi_id');
             $table->foreignId('produk_id')->constrained('produk', 'produk_id');
             $table->integer('jumlah_produk')->unsigned()->default(1);
             $table->integer('harga_total')->unsigned();
@@ -28,6 +29,11 @@ return new class extends Migration
             $table->index('tanggal', 'idx_transaksi_tanggal');
             $table->index('status', 'idx_transaksi_status');
         });
+
+        // ---- Check constraints ----
+        DB::statement('ALTER TABLE `transaksi` ADD CONSTRAINT check_jumlah_produk CHECK (jumlah_produk > 0)');
+        DB::statement('ALTER TABLE `transaksi` ADD CONSTRAINT check_harga_total CHECK (harga_total >= 0)');
+        DB::statement("ALTER TABLE `transaksi` ADD CONSTRAINT check_poin_used_pay_method CHECK ((pay_method = 'poin' AND poin_used > 0) OR (pay_method = 'transfer' AND (poin_used IS NULL OR poin_used = 0)))");
     }
 
     /**
@@ -36,5 +42,9 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('transaksi');
+
+        DB::statement('ALTER TABLE `transaksi` DROP CONSTRAINT IF EXISTS check_poin_used_pay_method');
+        DB::statement('ALTER TABLE `transaksi` DROP CONSTRAINT IF EXISTS check_harga_total');
+        DB::statement('ALTER TABLE `transaksi` DROP CONSTRAINT IF EXISTS check_jumlah_produk');
     }
 }; 

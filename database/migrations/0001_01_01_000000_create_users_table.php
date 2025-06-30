@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 return new class extends Migration
 {
@@ -15,9 +16,17 @@ return new class extends Migration
             $table->id('user_id');
             $table->string('nama', 50);
             $table->string('email', 100)->unique();
+            $table->timestamp('email_verified_at')->nullable();
             $table->string('password', 255);
             $table->string('no_hp', 15);
+            $table->rememberToken();
             $table->enum('role', ['admin', 'nasabah', 'pengelola'])->default('nasabah');
+            $table->unsignedBigInteger('points')->default(0);
+            $table->text('deskripsi_toko')->nullable();
+            $table->string('jam_operasional')->nullable();
+            $table->string('nomor_rekening')->nullable();
+            $table->string('nama_bank_rekening')->nullable();
+            $table->string('foto_toko')->nullable();
             $table->timestamps();
             
             $table->index('nama', 'idx_user_nama');
@@ -38,6 +47,10 @@ return new class extends Migration
             $table->longText('payload');
             $table->integer('last_activity')->index();
         });
+
+        // ---- Check constraints ----
+        DB::statement('ALTER TABLE `user` ADD CONSTRAINT check_email CHECK (email LIKE "%@%.%")');
+        DB::statement('ALTER TABLE `user` ADD CONSTRAINT check_no_hp CHECK (CHAR_LENGTH(no_hp) >= 10)');
     }
 
     /**
@@ -48,5 +61,9 @@ return new class extends Migration
         Schema::dropIfExists('user');
         Schema::dropIfExists('password_reset_tokens');
         Schema::dropIfExists('sessions');
+
+        // Drop constraints first (if exist)
+        DB::statement('ALTER TABLE `user` DROP CONSTRAINT IF EXISTS check_email');
+        DB::statement('ALTER TABLE `user` DROP CONSTRAINT IF EXISTS check_no_hp');
     }
 };
