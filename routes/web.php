@@ -56,6 +56,7 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->name('admin.')->grou
     Route::get('/api/visit-stats', [AdminController::class, 'getVisitStats'])->name('api.visit_stats');
     Route::get('/pengajuan', [AdminController::class, 'pengajuan'])->name('pengajuan');
     Route::get('/user', [AdminController::class, 'user'])->name('user');
+    Route::delete('/user/{id}', [AdminController::class, 'deleteUser'])->name('user.destroy');
     Route::middleware(['auth'])->group(function () {
     Route::get('/profil', [ArtikelController::class, 'favoritSaya'])->name('nasabah.profil');
 });
@@ -104,7 +105,6 @@ Route::prefix('transaksi')->middleware(['auth', 'role:nasabah'])->group(function
     
 });
 
-Route::get('/check-data', [DataController::class, 'index']);
 
 // Nasabah routes
 Route::middleware(['auth', 'role:nasabah'])->group(function () {

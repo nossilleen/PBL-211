@@ -212,4 +212,24 @@ class AdminController extends Controller
         $users = User::all();
         return view('admin.user.index', compact('users'));
     }
+
+    // Add method to delete user
+    public function deleteUser($id)
+    {
+        // Prevent admin from deleting themselves
+        if (Auth::id() === (int)$id) {
+            return redirect()->route('admin.user')->with([
+                'message' => 'Anda tidak dapat menghapus akun Anda sendiri.',
+                'type' => 'error'
+            ]);
+        }
+
+        $user = User::findOrFail($id);
+        $user->delete();
+
+        return redirect()->route('admin.user')->with([
+            'message' => 'User berhasil dihapus.',
+            'type' => 'success'
+        ]);
+    }
 }

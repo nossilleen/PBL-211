@@ -28,6 +28,7 @@ return new class extends Migration
             $table->string('nama_bank_rekening')->nullable();
             $table->string('foto_toko')->nullable();
             $table->timestamps();
+            $table->softDeletes();
             
             $table->index('nama', 'idx_user_nama');
             $table->index('role', 'idx_user_role');

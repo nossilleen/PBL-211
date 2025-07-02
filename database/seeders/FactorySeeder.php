@@ -106,8 +106,18 @@ class FactorySeeder extends Seeder
         foreach ($pointTotals as $userId => $tot) {
             $user = User::find($userId);
             if ($user) {
-                $user->points = max(0,$tot);
+                // Set points awal berdasarkan histori, kemudian tambahkan penyesuaian random 0-200
+                $randomBonus = rand(100,200000);
+                $user->points = max(0,$tot) + $randomBonus;
                 $user->save();
+            }
+        }
+
+        // Pastikan seluruh user memiliki points (untuk yang tidak punya histori)
+        foreach (User::all() as $u) {
+            if ($u->points === null || $u->points <= 0) {
+                $u->points = rand(500, 500000);
+                $u->save();
             }
         }
 
