@@ -81,6 +81,11 @@
                 <x-profile.riwayat-transaksi :riwayatTransaksi="$riwayatTransaksi" />
             </div>
 
+            <!-- Edit Profile Section (Hidden by Default) -->
+            <div id="edit-profile-section" class="hidden">
+                <x-profile.edit-profile />
+            </div>
+
         </div>
     </div>
 </div>
@@ -108,12 +113,10 @@
         function showSection(sectionId) {
             hideAllSections();
             resetAllNavLinks();
-            
             const section = document.getElementById(sectionId);
             if (section) {
                 section.classList.remove('hidden');
             }
-            
             const navId = sectionId.replace('-section', '');
             const navLink = document.getElementById('nav-' + navId);
             if (navLink) {
@@ -121,6 +124,7 @@
                 navLink.classList.remove('border-transparent', 'hover:border-green-600');
             }
         }
+        window.showSection = showSection;
 
         navLinks.forEach(link => {
             link.addEventListener('click', function(e) {

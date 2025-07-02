@@ -65,4 +65,27 @@ class ProfileController extends Controller
 
         return response()->json(['success' => true]);
     }
+
+    public function update(Request $request)
+    {
+        $user = Auth::user();
+        $validated = $request->validate([
+            'nama' => 'required|string|max:50',
+            'email' => 'required|email|max:100|unique:user,email,' . $user->user_id . ',user_id',
+            'password' => 'nullable|string|min:6',
+            'telepon' => 'nullable|string|max:20',
+        ]);
+
+        $user->nama = $validated['nama'];
+        $user->email = $validated['email'];
+        if (!empty($validated['password'])) {
+            $user->password = bcrypt($validated['password']);
+        }
+        if (isset($validated['telepon'])) {
+            $user->no_hp = $validated['telepon'];
+        }
+        $user->save();
+
+        return redirect()->route('profile')->with('success', 'Profil berhasil diperbarui!');
+    }
 }
