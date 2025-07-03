@@ -41,6 +41,7 @@ class EventController extends Controller
                 $data = preg_replace('/^data:image\/(png|jpg|jpeg);base64,/', '', $data);
                 $data = str_replace(' ', '+', $data);
                 $fileName = uniqid() . '.jpg';
+                
                 $destinationPath = public_path('storage/events');
                 if (!file_exists($destinationPath)) {
                     mkdir($destinationPath, 0777, true);

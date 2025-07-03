@@ -177,17 +177,22 @@ class ArtikelController extends Controller
 
     public function show($id)
     {
-    $artikel = Artikel::with(['user', 'gambar', 'feedback.user', 'likes'])->findOrFail($id);
-
-        $sort = request()->get('sort', 'terbaru');
-        $sortedFeedback = $sort === 'terlama'
-            ? $artikel->feedback->sortBy('created_at')
-            : $artikel->feedback->sortByDesc('created_at');
-
+        // Eager load relasi replies secara rekursif
+        $artikel = Artikel::with([
+            'user', 
+            'gambar', 
+            'likes', 
+            'feedback' => function ($query) {
+                $query->whereNull('parent_id')->orderBy('created_at', 'desc');
+            }, 
+            'feedback.user', 
+            'feedback.replies'
+        ])->findOrFail($id);
+    
         $relatedArticles = Artikel::where('artikel_id', '!=', $id)->latest()->take(4)->get();
-        $artikel->feedback_count = $artikel->feedback->count();
-
-        return view('article-detail', compact('artikel', 'relatedArticles', 'sortedFeedback'));
+        $artikel->feedback_count = $artikel->feedback()->count(); // Menghitung semua feedback
+    
+        return view('article-detail', compact('artikel', 'relatedArticles'));
     }
     
 public function like($id)
