@@ -17,6 +17,7 @@ return new class extends Migration
             $table->enum('transaction_type', ['credit', 'debit']);
             $table->unsignedBigInteger('amount');
             $table->string('description');
+            $table->enum('status', ['berhasil', 'pending', 'gagal'])->default('berhasil');
             $table->nullableMorphs('related');
             $table->timestamps();
         });

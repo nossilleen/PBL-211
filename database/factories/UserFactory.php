@@ -23,12 +23,17 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
+        // Gunakan satu kata nama dan jadikan email "nama@gmail.com"
+        $firstName = fake()->unique()->firstName();
+        $emailLocal = Str::slug($firstName, ''); // hilangkan karakter non-alphanumeric
+
         return [
-            'nama' => fake()->name(),
-            'email' => fake()->unique()->safeEmail(),
+            'nama' => $firstName,
+            'email' => strtolower($emailLocal).'@gmail.com',
             'email_verified_at' => now(),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-            'no_hp' => fake()->phoneNumber(),
+            // Nomor HP: hanya digit, max 15 karakter sesuai schema
+            'no_hp' => '08'.fake()->numerify('###########'),
             'role' => fake()->randomElement(['admin', 'nasabah', 'pengelola']),
             'points' => fake()->numberBetween(0, 1000),
             'deskripsi_toko' => fake()->optional()->paragraph(),

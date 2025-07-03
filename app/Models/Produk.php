@@ -39,13 +39,14 @@ class Produk extends Model
     // Add user relationship
     public function user()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        // Termasuk user yang telah di-soft-delete agar tidak error saat diakses
+        return $this->belongsTo(User::class, 'user_id')->withTrashed();
     }
     
     public function likedByCurrentUser()
     {
         return \DB::table('product_likes')
-            ->where('user_id', auth()->id())
+            ->where('user_id', auth()->user()->user_id)
             ->where('produk_id', $this->produk_id)
             ->exists();
     }

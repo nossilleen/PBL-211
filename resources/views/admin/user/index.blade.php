@@ -57,9 +57,14 @@
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                             <div class="flex space-x-2">
-                                <button class="bg-red-100 hover:bg-red-200 text-red-700 px-3 py-1 rounded transition-colors">
-                                    Delete
-                                </button>
+                                <form action="{{ route('admin.user.destroy', $user->user_id) }}" method="POST"
+                                      onsubmit="return confirm('Apakah Anda yakin?');">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="bg-red-100 hover:bg-red-200 text-red-700 px-3 py-1 rounded transition-colors">
+                                        Delete
+                                    </button>
+                                </form>
                             </div>
                         </td>
                     </tr>

@@ -6,11 +6,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Notifications\PasswordResetNotification;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\Produk;
 
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, SoftDeletes;
 
     /**
      * The table associated with the model.
@@ -64,6 +66,7 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
         'poin' => 'integer',  // Add this to ensure proper type casting
+        'deleted_at' => 'datetime',
     ];
 
     /**
@@ -133,5 +136,16 @@ public function likedArtikels() {
     return $this->belongsToMany(Artikel::class, 'artikel_likes')->withTimestamps();
 }
 
+    protected static function booted()
+    {
+        parent::booted();
+
+        static::deleted(function (self $user) {
+            // Saat user di-soft-delete, ubah semua produk miliknya menjadi unavailable
+            Produk::where('user_id', $user->user_id)->update([
+                'status_ketersediaan' => 'unavailable'
+            ]);
+        });
+    }
 
 }

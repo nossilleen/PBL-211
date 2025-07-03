@@ -15,9 +15,10 @@ return new class extends Migration
             $table->id('lokasi_id');
             $table->string('nama_lokasi', 100);
             $table->string('alamat', 255);
-            $table->string('kota', 50);
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('user_id')->on('user')->onDelete('cascade');
+            $table->decimal('latitude', 10, 7)->nullable();
+            $table->decimal('longitude', 10, 7)->nullable();
             $table->timestamps();
         });
     }
