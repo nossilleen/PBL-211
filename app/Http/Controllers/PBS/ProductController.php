@@ -234,8 +234,9 @@ class ProductController extends Controller
                     ->where('produk_id', $product->produk_id)
                     ->delete();
 
-                // Decrement the likes count
-                $product->decrement('suka');
+                // Decrement the likes count, but never below 0
+                $product->suka = max(0, $product->suka - 1);
+                $product->save();
 
                 return response()->json([
                     'success' => true,

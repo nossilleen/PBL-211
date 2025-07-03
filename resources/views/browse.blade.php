@@ -274,7 +274,7 @@ function toggleLike(productId) {
     // Get current state
     const isCurrentlyLiked = heartIcon.getAttribute('fill') === 'currentColor';
     
-    fetch(`/produk/${productId}/like`, {
+    fetch(`/product/${productId}/like`, {
         method: 'POST',
         headers: {
             'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
@@ -311,7 +311,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('.like-btn').forEach(function(btn) {
         btn.addEventListener('click', function() {
             const produkId = this.getAttribute('data-produk-id');
-            fetch(`/produk/${produkId}/like`, {
+            fetch(`/product/${produkId}/like`, {
                 method: 'POST',
                 headers: {
                     'X-CSRF-TOKEN': '{{ csrf_token() }}',

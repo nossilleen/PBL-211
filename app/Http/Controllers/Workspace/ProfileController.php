@@ -65,4 +65,18 @@ class ProfileController extends Controller
 
         return response()->json(['success' => true]);
     }
+
+    public function favorit()
+    {
+        $user = auth()->user();
+        $produkFavorit = \App\Models\Produk::whereIn('produk_id', function($q) use ($user) {
+            $q->select('produk_id')->from('product_likes')->where('user_id', $user->id);
+        })->get();
+
+        $artikelFavorit = \App\Models\Artikel::whereIn('artikel_id', function($q) use ($user) {
+            $q->select('artikel_id')->from('artikel_likes')->where('user_id', $user->id);
+        })->get();
+
+        return view('favorit', compact('produkFavorit', 'artikelFavorit'));
+    }
 }

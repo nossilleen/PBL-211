@@ -66,7 +66,6 @@
                             $currentSort = request('sort', 'terbaru');
                             $query = request()->all();
                         @endphp
-                        <a href="{{ route('events.index', array_merge($query, ['sort' => 'populer'])) }}" class="text-gray-700 hover:text-green-600 border-b-2 {{ $currentSort === 'populer' ? 'border-green-600' : 'border-transparent' }} px-1 py-2 font-medium">Terpopuler</a>
                         <a href="{{ route('events.index', array_merge($query, ['sort' => 'terbaru'])) }}" class="text-gray-700 hover:text-green-600 border-b-2 {{ $currentSort === 'terbaru' ? 'border-green-600' : 'border-transparent' }} px-1 py-2 font-medium">Terbaru</a>
                     </div>
                 </div>
@@ -115,21 +114,6 @@
 
     <!-- Konten -->
     <div class="p-4">
-        <!-- Kategori Sort (Populer atau Terbaru) -->
-        @php
-            $sort = request('sort', 'terbaru');
-            $label = $sort === 'populer' ? 'Terpopuler' : 'Terbaru';
-        @endphp
-        <span class="absolute top-6 right-0 bg-red-500 text-white text-xs font-semibold px-4 py-1 rounded-l-full shadow z-20">
-    {{ $label }}
-</span>
-
-
-
-
-
-
-
         <!-- Judul -->
 <a href="{{ route('events.show', ['id' => $event->id]) }}" class="text-lg font-bold text-green-700 hover:underline hover:text-green-800 transition block">
     {{ $event->title }}
@@ -151,11 +135,19 @@
 
 @if($isUpcoming)
     <span class="inline-block bg-green-100 text-green-800 text-xs font-semibold px-3 py-1 rounded-full mb-2">
-        Open 🟢
+        <svg class="w-4 h-4 inline mr-1 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="#22c55e"/>
+          <path stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4"/>
+        </svg>
+        Tersedia
     </span>
 @else
     <span class="inline-block bg-red-100 text-red-800 text-xs font-semibold px-3 py-1 rounded-full mb-2">
-        Close 🔴
+        <svg class="w-4 h-4 inline mr-1 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="#ef4444"/>
+          <path stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M15 9l-6 6m0-6l6 6"/>
+        </svg>
+        Tidak Tersedia
     </span>
 @endif
 
