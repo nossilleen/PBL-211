@@ -20,7 +20,7 @@
             </div>
             <div>
                 <h3 class="text-gray-500 text-sm font-medium mb-1">No. Telepon</h3>
-                <p class="text-gray-800 font-semibold">{{ Auth::user()->telepon ?? '-' }}</p>
+                <p class="text-gray-800 font-semibold">{{ Auth::user()->no_hp ?? '-' }}</p>
             </div>
             <div>
                 <h3 class="text-gray-500 text-sm font-medium mb-1">Role</h3>
