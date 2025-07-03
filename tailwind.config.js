@@ -9,7 +9,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Lexend Deca', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        'sans': ['Lexend Deca', 'sans-serif'],
       },
     },
   },

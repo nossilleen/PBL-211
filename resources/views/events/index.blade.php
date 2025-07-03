@@ -23,52 +23,96 @@
         <!-- Main Content Wrapper -->
         <main class="overflow-x-hidden">
             <!-- Hero Section for Articles -->
-            <section class="h-[60vh] flex items-center relative">
-                <!-- Background image layer -->
-                <div class="absolute inset-0 z-0">
-                    <img src="{{ asset('images/bg1.jpeg') }}" class="w-full h-full object-cover" alt="Background">
-                </div>
-                
-                <!-- Overlay -->
-                <div class="absolute inset-0 bg-green-900/50 z-10"></div>
-                
-                <!-- Content -->
-                <div class="container mx-auto px-6 md:px-8 relative z-20 py-16 md:py-20">
+            <section class="min-h-[60vh] flex items-center relative hero-gradient floating-elements">
+                <div class="container mx-auto px-6 md:px-8 relative z-20 py-20">
                     <div class="max-w-4xl mx-auto text-center">
+                        <div class="flex justify-center mb-8 fade-in">
+                            <div class="relative">
+                                <img src="{{ asset('images/Logo.jpg') }}" alt="EcoZense Logo" class="h-20 md:h-24 w-auto rounded-2xl shadow-2xl">
+                                <div class="absolute inset-0 bg-white rounded-2xl opacity-20 pulse-animation"></div>
+                            </div>
+                        </div>
                         <h1 class="text-4xl md:text-5xl font-bold text-white mb-4 animate-fade-in">
                             Event & Kegiatan
                         </h1>
                         <p class="text-xl text-green-100 animate-slide-up mb-8">
                             Temukan berbagai acara edukatif dan kolaboratif seputar eco enzim, daur ulang, dan lingkungan hijau.
                         </p>
-                        
-                        <!-- Search Bar -->
-                        <div class="max-w-xl mx-auto mt-8 relative">
-                            <form method="GET" action="{{ route('events.index') }}" class="relative flex items-center max-w-lg mx-auto">
-                                <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari acara..." class="w-full pl-4 pr-12 py-3 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent shadow-sm"/>
-                                <input type="hidden" name="sort" value="{{ request('sort', 'terbaru') }}" />
-                                <button type="submit" class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-green-500 hover:bg-green-600 text-white p-2 rounded-full transition-colors">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                                    </svg>
-                                </button>
+                        <!-- Search Bar mirip browse toko -->
+                        <div class="max-w-2xl mx-auto mt-12 slide-in">
+                            <form method="GET" action="{{ route('events.index') }}" class="relative">
+                                <div class="floating-card rounded-2xl p-2">
+                                    <div class="flex items-center">
+                                        <div class="flex-1 relative">
+                                            <input 
+                                                type="text" 
+                                                name="search" 
+                                                value="{{ request('search') }}" 
+                                                placeholder="Cari acara..." 
+                                                class="w-full pl-12 pr-4 py-4 bg-transparent border-none focus:outline-none focus:ring-0 text-gray-700 placeholder-gray-400 text-lg font-medium search-glow rounded-xl"
+                                            />
+                                            <div class="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400">
+                                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                                                </svg>
+                                            </div>
+                                        </div>
+                                        <input type="hidden" name="sort" value="{{ request('sort', 'terbaru') }}" />
+                                        <button type="submit" class="modern-button ml-2">
+                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
                             </form>
+                        </div>
+                        <!-- Stats mirip browse toko -->
+                        <div class="flex justify-center mt-12 space-x-8 fade-in">
+                            @php
+                                $totalEventsRaw = $events->total() ?? 0;
+                                $totalLokasiRaw = $events->pluck('location')->unique()->count();
+                                $totalPenulisRaw = $events->pluck('user_id')->unique()->count();
+                                $totalEvents = $totalEventsRaw >= 20 ? '20+' : $totalEventsRaw;
+                                $totalLokasi = $totalLokasiRaw >= 4 ? '4' : $totalLokasiRaw;
+                                $totalPenulis = $totalPenulisRaw > 15 ? '15+' : $totalPenulisRaw;
+                            @endphp
+                            <div class="text-center">
+                                <div class="text-3xl font-bold text-white">{{ $totalEvents }}</div>
+                                <div class="text-emerald-200 text-sm">Acara</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-3xl font-bold text-white">{{ $totalLokasi }}</div>
+                                <div class="text-emerald-200 text-sm">Lokasi</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-3xl font-bold text-white">{{ $totalPenulis }}</div>
+                                <div class="text-emerald-200 text-sm">Penulis</div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <!-- Filter Tabs Section -->
+            <!-- Filter Tabs Section (tab highlight mirip artikel) -->
             <section class="bg-white border-b border-gray-200">
                 <div class="container mx-auto px-4">
-                    <div class="flex space-x-6 py-4">
-                        @php
-                            $currentSort = request('sort', 'terbaru');
-                            $query = request()->all();
-                        @endphp
-                        <a href="{{ route('events.index', array_merge($query, ['sort' => 'populer'])) }}" class="text-gray-700 hover:text-green-600 border-b-2 {{ $currentSort === 'populer' ? 'border-green-600' : 'border-transparent' }} px-1 py-2 font-medium">Terpopuler</a>
-                        <a href="{{ route('events.index', array_merge($query, ['sort' => 'terbaru'])) }}" class="text-gray-700 hover:text-green-600 border-b-2 {{ $currentSort === 'terbaru' ? 'border-green-600' : 'border-transparent' }} px-1 py-2 font-medium">Terbaru</a>
-                    </div>
+                    <form id="filterForm" method="GET" action="{{ route('events.index') }}" class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 py-4">
+                        <div class="flex space-x-6 justify-end md:justify-end w-full">
+                            @php
+                                $currentSort = request('sort', 'terbaru');
+                                $query = request()->all();
+                            @endphp
+                            <a href="{{ route('events.index', array_merge($query, ['sort' => 'populer'])) }}"
+                               class="px-6 py-3 rounded-lg font-medium transition-all duration-300 {{ $currentSort === 'populer' ? 'bg-white text-emerald-600 shadow-md' : 'text-gray-600 hover:text-emerald-600' }}">
+                                🔥 Terpopuler
+                            </a>
+                            <a href="{{ route('events.index', array_merge($query, ['sort' => 'terbaru'])) }}"
+                               class="px-6 py-3 rounded-lg font-medium transition-all duration-300 {{ !request('sort') || $currentSort === 'terbaru' ? 'bg-white text-emerald-600 shadow-md' : 'text-gray-600 hover:text-emerald-600' }}">
+                                ⭐ Terbaru
+                            </a>
+                        </div>
+                    </form>
                 </div>
             </section>
 
@@ -266,5 +310,5 @@
                 });
             }
         </script>
-    </body>
+    </body>
 </html>
