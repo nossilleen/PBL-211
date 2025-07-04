@@ -21,6 +21,13 @@ return new class extends Migration
             $table->string('password', 255);
             $table->string('no_hp', 15);
             $table->rememberToken();
+            $table->enum('jenis_kelamin', ['Laki-laki', 'Perempuan'])->nullable();
+            $table->date('tanggal_lahir')->nullable(); 
+            $table->string('alamat', 255)->nullable();
+            $table->string('kecamatan', 100)->nullable();
+            $table->string('kelurahan', 100)->nullable();
+            $table->string('kode_pos', 10)->nullable();
+
             $table->enum('role', ['admin', 'nasabah', 'pengelola'])->default('nasabah');
             $table->unsignedBigInteger('points')->default(0);
             $table->text('deskripsi_toko')->nullable();

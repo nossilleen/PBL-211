@@ -49,6 +49,8 @@ Route::get('/home', function () {
     return redirect('/');
 })->name('home');
 Route::get('/profile', [HomeController::class, 'index'])->name('profile');
+Route::get('/profile/edit', [HomeController::class, 'edit'])->name('profile.edit');
+Route::put('/profile', [App\Http\Controllers\Workspace\ProfileController::class, 'update'])->name('profile.update');
 
 // Admin routes
 Route::prefix('admin')->middleware(['auth', 'role:admin'])->name('admin.')->group(function () {

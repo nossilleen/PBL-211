@@ -95,6 +95,11 @@
                 @include('favorit', ['produkFavorit' => $produkFavorit, 'artikelFavorit' => $artikelFavorit])
             </div>
 
+            <!-- Edit Profile Section (Hidden by Default) -->
+            <div id="edit-profile-section" class="hidden">
+                <x-profile.edit-profile />
+            </div>
+
         </div>
     </div>
 </div>
@@ -122,12 +127,10 @@
         function showSection(sectionId) {
             hideAllSections();
             resetAllNavLinks();
-            
             const section = document.getElementById(sectionId);
             if (section) {
                 section.classList.remove('hidden');
             }
-            
             const navId = sectionId.replace('-section', '');
             const navLink = document.getElementById('nav-' + navId);
             if (navLink) {
@@ -135,6 +138,7 @@
                 navLink.classList.remove('border-transparent', 'hover:border-green-600');
             }
         }
+        window.showSection = showSection;
 
         navLinks.forEach(link => {
             link.addEventListener('click', function(e) {
@@ -294,6 +298,18 @@
         </form>
     </div>
 </div>
+
+@if(session('error') || $errors->has('email'))
+    <div id="modalEmailError" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50">
+        <div class="bg-white rounded-lg shadow-lg p-8 max-w-sm w-full text-center">
+            <h2 class="text-2xl font-bold mb-4 text-red-600">Email tidak valid!</h2>
+            <p class="mb-6 text-gray-700">
+                {{ session('error') ?? $errors->first('email') ?? 'Email yang dimasukkan tidak valid atau sudah digunakan.' }}
+            </p>
+            <button onclick="document.getElementById('modalEmailError').classList.add('hidden')" class="bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded">Tutup</button>
+        </div>
+    </div>
+@endif
 
     </body>
     
