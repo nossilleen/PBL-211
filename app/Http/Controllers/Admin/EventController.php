@@ -38,7 +38,7 @@ class EventController extends Controller
         try {
             if ($hasCropped) {
                 $data = $request->input('cropped_gambar');
-                $data = preg_replace('/^data:image\/(png|jpg|jpeg);base64,/', '', $data);
+                $data = preg_replace('/^data:image\\/(png|jpg|jpeg);base64,/', '', $data);
                 $data = str_replace(' ', '+', $data);
                 $fileName = uniqid() . '.jpg';
                 $destinationPath = public_path('storage/events');
@@ -86,28 +86,45 @@ class EventController extends Controller
             'description' => 'required|string',
             'date' => 'required|date',
             'location' => 'required|string|max:255',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
+            'banner' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
 
         try {
-            if ($request->hasFile('image')) {
-                // Delete old banner
-                if ($event->image) {
-                    Storage::delete(str_replace('/storage', 'public', $event->image));
+            if ($request->filled('cropped_banner')) {
+                $data = $request->input('cropped_banner');
+                $data = preg_replace('/^data:image\\/\\w+;base64,/', '', $data);
+                $data = str_replace(' ', '+', $data);
+                $fileName = uniqid() . '.jpg';
+                $destinationPath = public_path('storage/events');
+                if (!file_exists($destinationPath)) {
+                    mkdir($destinationPath, 0777, true);
                 }
-                $file = $request->file('image');
+                file_put_contents($destinationPath . '/' . $fileName, base64_decode($data));
+                // Hapus banner lama jika ada
+                if ($event->image && file_exists(public_path($event->image))) {
+                    @unlink(public_path($event->image));
+                }
+                $event->image = 'storage/events/' . $fileName;
+            } else if ($request->hasFile('banner')) {
+                // Hapus banner lama jika ada
+                if ($event->image && file_exists(public_path($event->image))) {
+                    @unlink(public_path($event->image));
+                }
+                $file = $request->file('banner');
                 $fileName = uniqid() . '.' . $file->getClientOriginalExtension();
                 $destinationPath = public_path('storage/events');
+                if (!file_exists($destinationPath)) {
+                    mkdir($destinationPath, 0777, true);
+                }
                 $file->move($destinationPath, $fileName);
                 $event->image = 'storage/events/' . $fileName;
             }
 
-            $event->update([
-                'title' => $request->title,
-                'description' => $request->description,
-                'date' => $request->date,
-                'location' => $request->location
-            ]);
+            $event->title = $request->title;
+            $event->description = $request->description;
+            $event->date = $request->date;
+            $event->location = $request->location;
+            $event->save();
 
             return redirect()->route('admin.artikel.index')
                 ->with('success', 'Event berhasil diperbarui');

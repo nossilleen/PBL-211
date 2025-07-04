@@ -13,6 +13,7 @@ class FeedbackController extends Controller
     {
         $request->validate([
             'komentar' => 'required|string|max:1000',
+            'parent_id' => 'nullable|exists:feedback,feedback_id'
         ]);
 
         $artikel = Artikel::findOrFail($artikel_id);
@@ -21,7 +22,7 @@ class FeedbackController extends Controller
             'komentar' => $request->komentar,
             'user_id' => Auth::id(),
             'artikel_id' => $artikel->artikel_id,
-            'created_at' => now(),
+            'parent_id' => $request->parent_id
         ]);
 
         return redirect()->route('artikel.show', $artikel->artikel_id)

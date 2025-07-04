@@ -82,6 +82,20 @@ class ArtikelController extends Controller
                 'judul' => $artikel->judul,
             ]);
         }
+        // Penanganan hasil crop gambar (base64)
+        elseif ($request->filled('cropped_gambar')) {
+            $data = $request->input('cropped_gambar');
+            $data = preg_replace('/^data:image\/(\w+);base64,/', '', $data);
+            $data = base64_decode($data);
+            $filename = 'artikel_' . time() . '.jpg';
+            $path = 'artikel_gambar/' . $filename;
+            \Storage::disk('public')->put($path, $data);
+            ArtikelGambar::create([
+                'artikel_id' => $artikel->artikel_id,
+                'file_path' => 'storage/' . $path,
+                'judul' => $artikel->judul,
+            ]);
+        }
 
         return redirect()->route('admin.artikel.index')->with('success', 'Artikel berhasil dibuat!');
     }
@@ -177,17 +191,22 @@ class ArtikelController extends Controller
 
     public function show($id)
     {
-    $artikel = Artikel::with(['user', 'gambar', 'feedback.user', 'likes'])->findOrFail($id);
-
-        $sort = request()->get('sort', 'terbaru');
-        $sortedFeedback = $sort === 'terlama'
-            ? $artikel->feedback->sortBy('created_at')
-            : $artikel->feedback->sortByDesc('created_at');
-
+        // Eager load relasi replies secara rekursif
+        $artikel = Artikel::with([
+            'user', 
+            'gambar', 
+            'likes', 
+            'feedback' => function ($query) {
+                $query->whereNull('parent_id')->orderBy('created_at', 'desc');
+            }, 
+            'feedback.user', 
+            'feedback.replies'
+        ])->findOrFail($id);
+    
         $relatedArticles = Artikel::where('artikel_id', '!=', $id)->latest()->take(4)->get();
-        $artikel->feedback_count = $artikel->feedback->count();
-
-        return view('article-detail', compact('artikel', 'relatedArticles', 'sortedFeedback'));
+        $artikel->feedback_count = $artikel->feedback()->count(); // Menghitung semua feedback
+    
+        return view('article-detail', compact('artikel', 'relatedArticles'));
     }
     
 public function like($id)

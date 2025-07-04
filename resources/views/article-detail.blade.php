@@ -141,35 +141,13 @@
 
 
                 {{-- Daftar Feedback --}}
-                <div class="mt-4" id="feedback-section">
-                    <h3 class="text-2xl font-semibold mb-4 border-b pb-2 border-gray-200">💬 Komentar dari Pembaca</h3>
-                    @php $i = 0; @endphp
-                    @forelse($sortedFeedback as $fb)
-                        <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-200 mb-4 hover:shadow-md transition {{ $i > 2 ? 'hidden extra-feedback' : '' }}">
-                            <div class="flex items-start space-x-3 mb-2">
-                                <img src="{{ $fb->user->profile_photo_url ?? 'https://ui-avatars.com/api/?name=' . urlencode($fb->user->nama ?? 'A') }}"
-                                    alt="Foto Profil" class="w-10 h-10 rounded-full object-cover border shadow-sm">
-                                <div class="flex-1">
-                                    <div class="flex justify-between items-center">
-                                        <div class="text-sm font-semibold text-gray-800">{{ $fb->user->nama ?? 'Anonim' }}</div>
-                                        <div class="text-xs text-gray-500">{{ $fb->created_at->format('d M Y H:i') }}</div>
-                                    </div>
-                                    <div class="mt-2 text-gray-700 text-base leading-relaxed">
-                                        {{ $fb->komentar }}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        @php $i++; @endphp
+                <div class="mt-4 space-y-4" id="feedback-section">
+                    <h3 class="text-2xl font-semibold mb-4 border-b pb-2 border-gray-200">💬 Komentar dari Pembaca ({{ $artikel->feedback_count }})</h3>
+                    @forelse($artikel->feedback as $comment)
+                        <x-artikel.comment-thread :comment="$comment" />
                     @empty
-                        <div class="text-gray-500 text-sm bg-white border border-gray-200 p-4 rounded-md">Belum ada feedback atau tanggapan.</div>
+                        <p class="text-gray-500 text-center py-4">Belum ada komentar. Jadilah yang pertama!</p>
                     @endforelse
-
-                    @if(count($sortedFeedback) > 3)
-                        <div class="text-center mt-4">
-                            <button id="showMoreBtn" class="text-blue-600 text-sm underline">Lihat feedback lainnya</button>
-                        </div>
-                    @endif
                 </div>
             </div>
 
@@ -202,6 +180,13 @@
 
 {{-- Script --}}
 <script>
+function toggleReplyForm(commentId) {
+    const form = document.getElementById('reply-form-' + commentId);
+    if (form) {
+        form.classList.toggle('hidden');
+    }
+}
+
 document.addEventListener('DOMContentLoaded', function () {
     const textarea = document.getElementById('komentarInput');
     const counter = document.getElementById('char-count');

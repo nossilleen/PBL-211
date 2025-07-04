@@ -168,12 +168,6 @@
     {{ $label }}
 </span>
 
-
-
-
-
-
-
         <!-- Judul -->
 <a href="{{ route('events.show', ['id' => $event->id]) }}" class="text-lg font-bold text-green-700 hover:underline hover:text-green-800 transition block">
     {{ $event->title }}
