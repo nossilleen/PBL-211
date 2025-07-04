@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
+@php
+    $eventStatus = isset($event) && $event->date ? (\Carbon\Carbon::parse($event->date)->isPast() ? 'Selesai' : 'Tersedia') : null;
+@endphp
 <div class="min-h-screen bg-gray-50">
     <!-- Hero Section dengan Background Image -->
     <div class="relative h-[60vh] w-full">
@@ -35,7 +38,7 @@
         <div class="max-w-4xl mx-auto">
             <!-- Description Card -->
             <div class="bg-white rounded-lg shadow-lg p-8 mb-8">
-                <h2 class="text-2xl font-semibold text-gray-800 mb-4">Deskripsi Event</h2>
+                <h2 class="text-2xl font-semibold text-gray-800 mb-4">Deskripsi Acara</h2>
                 <div class="prose max-w-none">
                     {!! nl2br(e($event->description)) !!}
                 </div>
@@ -60,15 +63,18 @@
                     <a href="{{ route('events.index') }}" 
                        class="inline-flex items-center px-6 py-3 border border-gray-300 text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
                         <i class="fas fa-arrow-left mr-2"></i>
-                        Kembali ke Daftar Event
+                        Kembali ke Daftar Acara
                     </a>
 
                     @if($eventStatus == 'Tersedia')
                         @if($event->link_form_acara)
-                            <a href="{{ $event->link_form_acara }}" target="_blank" rel="noopener" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                            <button
+                                type="button"
+                                onclick="showDaftarEventModal('{{ $event->link_form_acara }}')"
+                                class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
                                 <i class="fas fa-ticket-alt mr-2"></i>
-                                Daftar Event
-                            </a>
+                                Daftar Acara
+                            </button>
                         @else
                             <button class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-gray-400 cursor-not-allowed" disabled>
                                 <i class="fas fa-times-circle mr-2"></i>
@@ -94,6 +100,19 @@
 
 <x-home.footer />
 
+<!-- Modal Konfirmasi Daftar Event -->
+<div id="modalDaftarEvent" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50 hidden">
+    <div class="bg-white rounded-lg shadow-lg p-8 max-w-sm w-full text-center transform scale-90 opacity-0 transition-all duration-300" id="modalDaftarEventBox">
+        <h2 class="text-2xl font-bold mb-4 text-green-600">Konfirmasi Pendaftaran</h2>
+        <p class="mb-4 text-gray-700">Apakah anda ingin mendaftar acara tersebut?</p>
+        <p class="mb-6 text-gray-700 break-all">Link: <span id="eventLinkText" class="text-blue-600 underline"></span></p>
+        <div class="flex justify-center gap-4">
+            <button onclick="closeDaftarEventModal()" class="bg-gray-300 hover:bg-gray-400 text-gray-800 px-6 py-2 rounded">Batal</button>
+            <button id="btnKonfirmasiDaftar" class="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded">Ya, Daftar</button>
+        </div>
+    </div>
+</div>
+
 @push('scripts')
 <script>
     // Back to Top Button
@@ -115,6 +134,29 @@
             behavior: 'smooth'
         });
     });
+
+    function showDaftarEventModal(link) {
+        document.getElementById('modalDaftarEvent').classList.remove('hidden');
+        const box = document.getElementById('modalDaftarEventBox');
+        document.getElementById('eventLinkText').textContent = link;
+        setTimeout(() => {
+            box.classList.remove('scale-90', 'opacity-0');
+            box.classList.add('scale-100', 'opacity-100');
+        }, 10);
+        document.getElementById('btnKonfirmasiDaftar').onclick = function() {
+            window.open(link, '_blank');
+            closeDaftarEventModal();
+        };
+    }
+
+    function closeDaftarEventModal() {
+        const box = document.getElementById('modalDaftarEventBox');
+        box.classList.remove('scale-100', 'opacity-100');
+        box.classList.add('scale-90', 'opacity-0');
+        setTimeout(() => {
+            document.getElementById('modalDaftarEvent').classList.add('hidden');
+        }, 250);
+    }
 </script>
 @endpush
 @endsection
