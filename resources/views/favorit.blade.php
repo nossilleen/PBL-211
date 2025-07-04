@@ -31,7 +31,7 @@
                 <p class="text-gray-500 col-span-full text-center">Belum ada produk favorit.</p>
             @endforelse
         </div>
-        @if($produkFavorit->lastPage() > 1)
+        @if($produkFavorit->count() > 0 && $produkFavorit->lastPage() > 1)
         <div class="flex justify-center mt-2">
             <ul class="flex border border-gray-300 rounded-md overflow-hidden bg-white text-sm">
                 @if ($produkFavorit->onFirstPage())
@@ -72,7 +72,7 @@
         <h3 class="text-lg font-bold mb-2">Artikel</h3>
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 mb-6">
             @forelse($artikelFavorit as $artikel)
-                <div class="bg-white rounded-lg shadow-lg p-6 flex flex-col border border-green-200 hover:shadow-green-300 hover:ring-2 hover:ring-green-400 transition-all duration-300 h-full">
+                <div class="bg-white rounded-lg shadow-lg p-6 flex flex-col border border-green-200 hover:shadow-green-300 hover:ring-2 hover:ring-green-400 transition-all duration-300 h-full" id="artikel-favorit-{{ $artikel->artikel_id }}">
                     <div class="relative overflow-hidden rounded mb-4">
                         @php
                             $icons = [
@@ -90,7 +90,7 @@
                             <span>{{ ucfirst($kategori) }}</span>
                         </a>
                         <form method="POST" action="{{ route('artikel.like', $artikel->artikel_id) }}"
-                              class="absolute top-2 left-3 z-10">
+                              class="absolute top-2 left-3 z-10 unlike-artikel-form" data-artikel-id="{{ $artikel->artikel_id }}">
                             @csrf
                             <button type="submit"
                                     class="flex items-center gap-1 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full shadow hover:bg-white transition">
@@ -147,19 +147,49 @@
                     </li>
                 @endif
                 @foreach ($artikelFavorit->getUrlRange(1, $artikelFavorit->lastPage()) as $page => $url)
+                    @php
+                        // Pastikan url pagination artikel hanya mengandung artikel_page, hapus produk_page jika ada
+                        $parsedUrl = parse_url($url);
+                        $query = [];
+                        if (isset($parsedUrl['query'])) {
+                            parse_str($parsedUrl['query'], $query);
+                            unset($query['produk_page']);
+                        }
+                        $basePath = $parsedUrl['path'] ?? '';
+                        $finalUrl = $basePath . (count($query) ? ('?' . http_build_query($query)) : '');
+                    @endphp
                     @if ($page == $artikelFavorit->currentPage())
                         <li>
                             <span class="px-4 py-1.5 h-9 flex items-center font-bold text-white bg-green-600 border-r border-gray-300">{{ $page }}</span>
                         </li>
                     @else
                         <li>
-                            <a href="{{ $url }}#favorit" class="px-4 py-1.5 h-9 flex items-center text-gray-700 bg-white border-r border-gray-300 hover:bg-gray-100 transition">{{ $page }}</a>
+                            <a href="{{ $finalUrl }}#favorit" class="px-4 py-1.5 h-9 flex items-center text-gray-700 bg-white border-r border-gray-300 hover:bg-gray-100 transition">{{ $page }}</a>
                         </li>
                     @endif
                 @endforeach
-                @if ($artikelFavorit->hasMorePages())
+                @php
+                    // Cek apakah next page benar-benar ada data
+                    $nextPage = $artikelFavorit->currentPage() + 1;
+                    $perPage = $artikelFavorit->perPage();
+                    $total = $artikelFavorit->total();
+                    $nextPageFirstItem = ($nextPage - 1) * $perPage + 1;
+                    $nextPageHasData = $nextPageFirstItem <= $total;
+                @endphp
+                @if ($artikelFavorit->hasMorePages() && $nextPageHasData)
                     <li>
-                        <a href="{{ $artikelFavorit->nextPageUrl() }}#favorit" rel="next" class="px-4 py-1.5 h-9 flex items-center text-gray-700 bg-white hover:bg-gray-100 transition">Selanjutnya</a>
+                        @php
+                            $nextUrl = $artikelFavorit->nextPageUrl();
+                            $parsedUrl = parse_url($nextUrl);
+                            $query = [];
+                            if (isset($parsedUrl['query'])) {
+                                parse_str($parsedUrl['query'], $query);
+                                unset($query['produk_page']);
+                            }
+                            $basePath = $parsedUrl['path'] ?? '';
+                            $finalUrl = $basePath . (count($query) ? ('?' . http_build_query($query)) : '');
+                        @endphp
+                        <a href="{{ $finalUrl }}#favorit" rel="next" class="px-4 py-1.5 h-9 flex items-center text-gray-700 bg-white hover:bg-gray-100 transition">Selanjutnya</a>
                     </li>
                 @else
                     <li>
@@ -193,6 +223,103 @@
             listArtikel.classList.remove('hidden');
         }
     }
+
+    // Auto tab artikel jika ada artikel_page di URL
+    document.addEventListener('DOMContentLoaded', function () {
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.has('artikel_page')) {
+            showFavorit('artikel');
+        } else {
+            showFavorit('produk');
+        }
+        document.querySelectorAll('.unlike-artikel-form').forEach(function(form) {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                var artikelId = this.getAttribute('data-artikel-id');
+                var token = this.querySelector('input[name="_token"]').value;
+                fetch(this.action, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': token,
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'Accept': 'application/json',
+                    },
+                    body: new URLSearchParams({ _token: token })
+                })
+                .then(response => {
+                    if (response.ok) {
+                        // Hapus card artikel dari DOM
+                        var card = document.getElementById('artikel-favorit-' + artikelId);
+                        if (card) card.remove();
+                        // Reload ke tab artikel favorit (dengan artikel_page dan hash)
+                        var url = new URL(window.location.href);
+                        // Jika sudah ada artikel_page, tetap gunakan, jika tidak, set ke 1
+                        if (!url.searchParams.has('artikel_page')) {
+                            url.searchParams.set('artikel_page', '1');
+                        }
+                        url.hash = 'favorit';
+                        window.location.href = url.toString();
+                    } else {
+                        return response.json().then(data => { throw data; });
+                    }
+                })
+                .catch(err => {
+                    alert('Gagal unlike artikel. Silakan coba lagi.');
+                });
+            });
+        });
+        // Tambahkan event listener untuk unlike produk favorit (AJAX)
+        document.querySelectorAll('.unlike-produk-form').forEach(function(form) {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                var produkId = this.getAttribute('data-produk-id');
+                var token = this.querySelector('input[name="_token"]').value;
+                fetch(this.action, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': token,
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'Accept': 'application/json',
+                    },
+                    body: new URLSearchParams({ _token: token })
+                })
+                .then(response => {
+                    if (response.ok) {
+                        // Hapus card produk dari DOM
+                        var card = document.getElementById('produk-favorit-' + produkId);
+                        if (card) card.remove();
+                        // Cek sisa produk di halaman
+                        var sisa = document.querySelectorAll('#favorit-produk .x-browse-product-card, #favorit-produk .bg-white.rounded-lg').length;
+                        if (sisa <= 1) {
+                            // Jika produk habis di halaman ini, reload ke halaman sebelumnya jika ada
+                            var url = new URL(window.location.href);
+                            var page = parseInt(url.searchParams.get('produk_page') || '1');
+                            if (page > 1) {
+                                url.searchParams.set('produk_page', (page - 1).toString());
+                            } else {
+                                url.searchParams.set('produk_page', '1');
+                            }
+                            url.hash = 'favorit';
+                            window.location.href = url.toString();
+                        } else {
+                            // Tetap di halaman ini, reload agar paginator update
+                            var url = new URL(window.location.href);
+                            if (!url.searchParams.has('produk_page')) {
+                                url.searchParams.set('produk_page', '1');
+                            }
+                            url.hash = 'favorit';
+                            window.location.href = url.toString();
+                        }
+                    } else {
+                        return response.json().then(data => { throw data; });
+                    }
+                })
+                .catch(err => {
+                    alert('Gagal unlike produk. Silakan coba lagi.');
+                });
+            });
+        });
+    });
 </script>
 <style>
     .kategori-btn {

@@ -48,14 +48,16 @@
                                         data-liked="{{ auth()->check() && $product->likedByCurrentUser() ? '1' : '0' }}"
                                         @if(!auth()->check())
                                             onclick="window.location.href='{{ route('login') }}'"
+                                        @else
+                                            onclick="toggleLike({{ $product->produk_id }})"
                                         @endif
                                     >
-                                        <svg id="like-icon" class="w-5 h-5 {{ auth()->check() && $product->likedByCurrentUser() ? 'text-red-500' : 'text-gray-600' }}" 
+                                        <svg id="heart-{{ $product->produk_id }}" class="w-5 h-5 {{ auth()->check() && $product->likedByCurrentUser() ? 'text-red-500' : 'text-gray-600' }}"
                                             fill="{{ auth()->check() && $product->likedByCurrentUser() ? 'currentColor' : 'none' }}"
                                             stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
                                         </svg>
-                                        <span id="like-count" class="text-sm font-medium ml-2 {{ auth()->check() && $product->likedByCurrentUser() ? 'text-red-400' : 'text-gray-400' }}">{{ $product->suka ?? 0 }}</span>
+                                        <span id="like-count-{{ $product->produk_id }}" class="text-sm font-medium ml-2 {{ auth()->check() && $product->likedByCurrentUser() ? 'text-red-400' : 'text-gray-400' }}">{{ $product->suka ?? 0 }}</span>
                                     </button>
                                 </div>
                             </div>
