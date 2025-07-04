@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
     <meta name="description" content="Detail Produk - EcoZense" />
     <meta name="theme-color" content="#8DD363" />
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
     <title>{{ $product->nama_produk ?? 'Detail Produk - EcoZense' }}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -244,44 +245,6 @@
                 document.getElementById('total-poin').innerText = 'atau ' + (qty * poinSatuan).toLocaleString('id-ID') + ' Poin';
             }
         }
-
-        // AJAX Like/Unlike Produk
-        @if(auth()->check())
-        document.getElementById('like-btn').addEventListener('click', function(e) {
-            e.preventDefault();
-            var btn = this;
-            var icon = document.getElementById('like-icon');
-            var likeCount = document.getElementById('like-count');
-            var liked = btn.getAttribute('data-liked') === '1';
-            fetch("{{ route('product.like', $product->produk_id) }}", {
-                method: 'POST',
-                headers: {
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({})
-            })
-            .then(response => response.json())
-            .then(data => {
-                if(data.success) {
-                    btn.setAttribute('data-liked', data.isLiked ? '1' : '0');
-                    likeCount.textContent = data.suka;
-                    if(data.isLiked) {
-                        icon.setAttribute('fill', '#ef4444');
-                        icon.setAttribute('stroke', '#ef4444');
-                        likeCount.classList.remove('text-gray-400');
-                        likeCount.classList.add('text-red-400');
-                    } else {
-                        icon.setAttribute('fill', 'none');
-                        icon.setAttribute('stroke', '#9ca3af');
-                        likeCount.classList.remove('text-red-400');
-                        likeCount.classList.add('text-gray-400');
-                    }
-                }
-            });
-        });
-        @endif
 
         // Konfirmasi pembelian dengan poin (custom modal)
         const usePoinCheckbox = document.getElementById('use_poin');
