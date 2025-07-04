@@ -188,8 +188,11 @@ Route::middleware(['auth', 'role:pengelola'])->prefix('pengelola')->name('pengel
 
 // Like / Unlike produk (dapat diakses oleh semua user yang login)
 Route::middleware('auth')->post('/produk/{id}/like', [ProductController::class, 'toggleLike'])->name('produk.like');
+Route::post('/product/{id}/like', [ProductController::class, 'toggleLike'])->name('product.like')->middleware('auth');
 
 // Debug route (development only)
 Route::middleware('auth')->get('/debug-sentry', function () {
     throw new Exception('My first Sentry error!');
 })->name('debug.sentry');
+
+Route::get('/favorit', [\App\Http\Controllers\Workspace\ProfileController::class, 'favorit'])->name('favorit')->middleware('auth');

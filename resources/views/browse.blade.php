@@ -216,5 +216,93 @@
                 });
             }
         </script>
+        
+        <script>
+function toggleLike(productId) {
+    const heartIcon = document.getElementById(`heart-${productId}`);
+    const likeCount = document.getElementById(`like-count-${productId}`);
+    
+    // Get current state
+    const isCurrentlyLiked = heartIcon.getAttribute('fill') === 'currentColor';
+    
+    fetch(`/product/${productId}/like`, {
+        method: 'POST',
+        headers: {
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ isLiked: !isCurrentlyLiked }), // Send current state
+        credentials: 'same-origin'
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            // Toggle heart icon
+            if (data.isLiked) {
+                heartIcon.classList.add('text-red-500');
+                heartIcon.setAttribute('fill', 'currentColor');
+            } else {
+                heartIcon.classList.remove('text-red-500');
+                heartIcon.setAttribute('fill', 'none');
+            }
+            // Update like count next to status
+            const currentCount = parseInt(data.suka);
+            likeCount.textContent = `❤ ${currentCount}`;
+            likeCount.classList.add('like-count-update');
+            setTimeout(() => likeCount.classList.remove('like-count-update'), 300);
+        }
+    })
+    .catch(error => console.error('Error:', error));
+}
+</script>
+        
+        <script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.like-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            const produkId = this.getAttribute('data-produk-id');
+            fetch(`/product/${produkId}/like`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    'Accept': 'application/json'
+                }
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    this.querySelector('.like-count').textContent = data.suka;
+                    this.querySelector('.like-icon').textContent = data.isLiked ? '❤️' : '🤍';
+                }
+            });
+        });
+    });
+});
+</script>
+        
+        <style>
+            .like-button svg {
+                transition: all 0.2s ease-in-out;
+            }
+
+            .like-button:hover svg {
+                transform: scale(1.1);
+            }
+
+            .like-button svg.text-red-500 {
+                filter: drop-shadow(0 0 2px rgba(239, 68, 68, 0.5));
+            }
+
+            @keyframes likeScale {
+                0% { transform: scale(1); }
+                50% { transform: scale(1.2); }
+                100% { transform: scale(1); }
+            }
+
+            .like-count-update {
+                animation: likeScale 0.3s ease-in-out;
+            }
+        </style>
     </body>
 </html>

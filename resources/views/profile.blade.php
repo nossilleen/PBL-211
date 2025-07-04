@@ -37,7 +37,11 @@
         </script>
 
         <!-- Main Content -->
-        <main class="pt-16 min-h-screen">
+        <main x-data="{ showNotif: false, notifMsg: '', notifType: 'success' }" @show-like-notif.window="notifMsg = $event.detail.msg; notifType = $event.detail.type; showNotif = true; setTimeout(() => showNotif = false, 2000)">
+            <div x-show="showNotif" :class="notifType === 'success' ? 'bg-green-500' : 'bg-red-500'" class="fixed top-6 left-1/2 transform -translate-x-1/2 z-[9999] px-6 py-3 rounded-full text-white shadow-lg text-sm font-semibold animate-fade-in-out" x-transition>
+                <span x-text="notifMsg"></span>
+            </div>
+
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <!-- Profile Section -->
                 <div class="flex flex-col lg:flex-row mt-8 gap-8">
@@ -79,6 +83,16 @@
             <!-- Riwayat Transaksi Section (Hidden by Default) -->
             <div id="riwayat-section" class="hidden">
                 <x-profile.riwayat-transaksi :riwayatTransaksi="$riwayatTransaksi" />
+            </div>
+
+            <!-- Favorit Section (Hidden by Default) -->
+            <div id="favorit-section" class="hidden">
+                @php
+                    $user = auth()->user();
+                    $produkFavorit = \App\Models\Produk::whereIn('produk_id', \DB::table('product_likes')->where('user_id', $user->user_id)->pluck('produk_id'))->paginate(6, ['*'], 'produk_page');
+                    $artikelFavorit = \App\Models\Artikel::whereIn('artikel_id', \DB::table('artikel_likes')->where('user_id', $user->user_id)->pluck('artikel_id'))->paginate(6, ['*'], 'artikel_page');
+                @endphp
+                @include('favorit', ['produkFavorit' => $produkFavorit, 'artikelFavorit' => $artikelFavorit])
             </div>
 
         </div>
@@ -151,6 +165,8 @@
                 showSection('pesanan-section');
             } else if (hash === '#riwayat') {
                 showSection('riwayat-section');
+            } else if (hash === '#favorit') {
+                showSection('favorit-section');
             } else {
                 // Default to profile for nasabah
                 if (userRole === 'nasabah') {

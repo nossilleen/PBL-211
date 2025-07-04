@@ -34,6 +34,7 @@
                                 :createdAt="$product->created_at"
                                 :suka="$product->suka"
                                 :productId="$product->produk_id"
+                                :isLiked="auth()->check() ? \DB::table('product_likes')->where('user_id', auth()->id())->where('produk_id', $product->produk_id)->exists() : false"
                             >
 
                             </x-browse.product-card>
