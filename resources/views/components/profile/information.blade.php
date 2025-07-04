@@ -43,12 +43,12 @@
                     <p class="text-gray-800 font-semibold">{{ Auth::user()->alamat ?? '-' }}</p>
                 </div>
                 <div>
-                    <h3 class="text-gray-500 text-sm font-medium mb-1">Kota</h3>
-                    <p class="text-gray-800 font-semibold">{{ Auth::user()->kota ?? '-' }}</p>
+                    <h3 class="text-gray-500 text-sm font-medium mb-1">Kecamatan</h3>
+                    <p class="text-gray-800 font-semibold">{{ Auth::user()->kecamatan ?? '-' }}</p>
                 </div>
                 <div>
-                    <h3 class="text-gray-500 text-sm font-medium mb-1">Provinsi</h3>
-                    <p class="text-gray-800 font-semibold">{{ Auth::user()->provinsi ?? '-' }}</p>
+                    <h3 class="text-gray-500 text-sm font-medium mb-1">kelurahan</h3>
+                    <p class="text-gray-800 font-semibold">{{ Auth::user()->kelurahan ?? '-' }}</p>
                 </div>
                 <div>
                     <h3 class="text-gray-500 text-sm font-medium mb-1">Kode Pos</h3>

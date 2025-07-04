@@ -20,8 +20,8 @@ return new class extends Migration
             $table->enum('jenis_kelamin', ['Laki-laki', 'Perempuan'])->nullable();
             $table->date('tanggal_lahir')->nullable(); 
             $table->string('alamat', 255)->nullable();
-            $table->string('kota', 100)->nullable();
-            $table->string('provinsi', 100)->nullable();
+            $table->string('kecamatan', 100)->nullable();
+            $table->string('kelurahan', 100)->nullable();
             $table->string('kode_pos', 10)->nullable();
 
             $table->enum('role', ['admin', 'nasabah', 'pengelola'])->default('nasabah');

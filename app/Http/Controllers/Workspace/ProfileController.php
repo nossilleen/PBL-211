@@ -71,10 +71,10 @@ class ProfileController extends Controller
         $request->validate([
             'nama' => 'required|string|max:255',
             'email' => 'required|email|max:255',
-            'telepon' => 'nullable|string|max:20',
+            'telepon' => 'nullable|string|min:10|max:20', // Ubah: min 10 digit
             'alamat' => 'nullable|string|max:255',
-            'kota' => 'nullable|string|max:100',
-            'provinsi' => 'nullable|string|max:100',
+            'kecamatan' => 'nullable|string|max:100',
+            'kelurahan' => 'nullable|string|max:100',
             'kode_pos' => 'nullable|string|max:10',
             'jenis_kelamin' => 'nullable|in:Laki-laki,Perempuan',
             'tanggal_lahir' => 'nullable|date',
@@ -86,8 +86,8 @@ class ProfileController extends Controller
         $user->email = $request->email;
         $user->no_hp = $request->telepon;
         $user->alamat = $request->alamat;
-        $user->kota = $request->kota;
-        $user->provinsi = $request->provinsi;
+        $user->kecamatan = $request->kecamatan;
+        $user->kelurahan = $request->kelurahan;
         $user->kode_pos = $request->kode_pos;
         $user->jenis_kelamin = $request->jenis_kelamin;
         $user->tanggal_lahir = $request->tanggal_lahir;
