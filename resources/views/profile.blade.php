@@ -37,7 +37,11 @@
         </script>
 
         <!-- Main Content -->
-        <main class="pt-16 min-h-screen">
+        <main x-data="{ showNotif: false, notifMsg: '', notifType: 'success' }" @show-like-notif.window="notifMsg = $event.detail.msg; notifType = $event.detail.type; showNotif = true; setTimeout(() => showNotif = false, 2000)">
+            <div x-show="showNotif" :class="notifType === 'success' ? 'bg-green-500' : 'bg-red-500'" class="fixed top-6 left-1/2 transform -translate-x-1/2 z-[9999] px-6 py-3 rounded-full text-white shadow-lg text-sm font-semibold animate-fade-in-out" x-transition>
+                <span x-text="notifMsg"></span>
+            </div>
+
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <!-- Profile Section -->
                 <div class="flex flex-col lg:flex-row mt-8 gap-8">
@@ -81,6 +85,21 @@
                 <x-profile.riwayat-transaksi :riwayatTransaksi="$riwayatTransaksi" />
             </div>
 
+            <!-- Favorit Section (Hidden by Default) -->
+            <div id="favorit-section" class="hidden">
+                @php
+                    $user = auth()->user();
+                    $produkFavorit = \App\Models\Produk::whereIn('produk_id', \DB::table('product_likes')->where('user_id', $user->user_id)->pluck('produk_id'))->paginate(6, ['*'], 'produk_page');
+                    $artikelFavorit = \App\Models\Artikel::whereIn('artikel_id', \DB::table('artikel_likes')->where('user_id', $user->user_id)->pluck('artikel_id'))->paginate(6, ['*'], 'artikel_page');
+                @endphp
+                @include('favorit', ['produkFavorit' => $produkFavorit, 'artikelFavorit' => $artikelFavorit])
+            </div>
+
+            <!-- Edit Profile Section (Hidden by Default) -->
+            <div id="edit-profile-section" class="hidden">
+                <x-profile.edit-profile />
+            </div>
+
         </div>
     </div>
 </div>
@@ -108,12 +127,10 @@
         function showSection(sectionId) {
             hideAllSections();
             resetAllNavLinks();
-            
             const section = document.getElementById(sectionId);
             if (section) {
                 section.classList.remove('hidden');
             }
-            
             const navId = sectionId.replace('-section', '');
             const navLink = document.getElementById('nav-' + navId);
             if (navLink) {
@@ -121,6 +138,7 @@
                 navLink.classList.remove('border-transparent', 'hover:border-green-600');
             }
         }
+        window.showSection = showSection;
 
         navLinks.forEach(link => {
             link.addEventListener('click', function(e) {
@@ -151,6 +169,8 @@
                 showSection('pesanan-section');
             } else if (hash === '#riwayat') {
                 showSection('riwayat-section');
+            } else if (hash === '#favorit') {
+                showSection('favorit-section');
             } else {
                 // Default to profile for nasabah
                 if (userRole === 'nasabah') {
@@ -278,6 +298,18 @@
         </form>
     </div>
 </div>
+
+@if(session('error') || $errors->has('email'))
+    <div id="modalEmailError" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50">
+        <div class="bg-white rounded-lg shadow-lg p-8 max-w-sm w-full text-center">
+            <h2 class="text-2xl font-bold mb-4 text-red-600">Email tidak valid!</h2>
+            <p class="mb-6 text-gray-700">
+                {{ session('error') ?? $errors->first('email') ?? 'Email yang dimasukkan tidak valid atau sudah digunakan.' }}
+            </p>
+            <button onclick="document.getElementById('modalEmailError').classList.add('hidden')" class="bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded">Tutup</button>
+        </div>
+    </div>
+@endif
 
     </body>
     

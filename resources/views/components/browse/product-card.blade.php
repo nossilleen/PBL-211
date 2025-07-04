@@ -27,9 +27,7 @@
     $detailUrl = $href ?? ($productId ? route('product.detail', ['id' => $productId]) : '#');
 @endphp
 
-<div class="bg-white rounded-xl shadow-lg hover:shadow-2xl overflow-hidden flex flex-col h-full min-h-[420px] relative group transition-all duration-300 ease-in-out transform hover:-translate-y-2 hover:scale-[1.02] cursor-pointer border border-gray-100"
-     onclick="window.location.href='{{ $detailUrl }}'">
-    
+<div class="bg-white rounded-xl shadow-lg hover:shadow-2xl overflow-hidden flex flex-col h-full min-h-[420px] relative group transition-all duration-300 ease-in-out transform hover:-translate-y-2 hover:scale-[1.02] cursor-pointer border border-gray-100">
     {{-- Product Image with Like Button --}}
     <div class="relative h-52 overflow-hidden">
         <img src="{{ $image }}" 
@@ -39,12 +37,19 @@
         {{-- Gradient Overlay --}}
         <div class="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
         
+        @if($isNew)
+            <span class="absolute top-3 left-3 bg-gradient-to-r from-yellow-400 to-orange-500 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg animate-pulse">
+                ✨ Baru
+            </span>
+        @endif
         @if($showLike)
             <button type="button"
-                onclick="event.stopPropagation(); toggleLike({{ $productId }})" 
-                class="like-button absolute top-3 right-3 p-2.5 rounded-full bg-white/90 backdrop-blur-sm shadow-lg hover:bg-white hover:scale-110 transition-all duration-200 z-10">
-                <svg id="heart-{{ $productId }}" 
-                    class="w-5 h-5 {{ $isLiked ? 'text-red-500' : 'text-gray-600' }}" 
+                onclick="event.stopPropagation(); toggleLike({{ $productId }}); return false;"
+                tabindex="0"
+                class="like-button absolute top-3 right-3 p-2.5 rounded-full bg-white/90 backdrop-blur-sm shadow-lg hover:bg-white hover:scale-110 transition-all duration-200 z-10 flex items-center pointer-events-auto"
+                style="z-index:20;">
+                <svg id="heart-{{ $productId }}"
+                    class="w-5 h-5 {{ $isLiked ? 'text-red-500' : 'text-gray-600' }}"
                     fill="{{ $isLiked ? 'currentColor' : 'none' }}"
                     stroke="currentColor" 
                     viewBox="0 0 24 24">
@@ -53,12 +58,6 @@
                     </path>
                 </svg>
             </button>
-        @endif
-
-        @if($isNew)
-            <span class="absolute top-3 left-3 bg-gradient-to-r from-yellow-400 to-orange-500 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg animate-pulse">
-                ✨ Baru
-            </span>
         @endif
 
         {{-- Status Badge --}}
@@ -70,6 +69,7 @@
                 </span>
             </div>
         @endif
+        <div class="absolute inset-0" onclick="window.location.href='{{ $detailUrl }}'"></div>
     </div>
 
     {{-- Content Section --}}
@@ -116,7 +116,7 @@
                         <svg class="w-4 h-4 mr-1 text-red-400" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"/>
                         </svg>
-                        {{ $suka }}
+                        <span class="like-count-number">{{ $suka }}</span>
                     </span>
                 @endif
             </div>
@@ -150,3 +150,21 @@
         overflow: hidden;
     }
 </style>
+<script>
+function toggleLike(productId) {
+    fetch(`/product/${productId}/like`, {
+        method: 'POST',
+        headers: {
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+            'Accept': 'application/json',
+        },
+    })
+    .then(res => res.json())
+    .then(data => {
+        // Tidak ada notifikasi, hanya update UI jika perlu
+    })
+    .catch(() => {
+        // Tidak ada notifikasi
+    });
+}
+</script>
