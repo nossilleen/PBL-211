@@ -82,6 +82,20 @@ class ArtikelController extends Controller
                 'judul' => $artikel->judul,
             ]);
         }
+        // Penanganan hasil crop gambar (base64)
+        elseif ($request->filled('cropped_gambar')) {
+            $data = $request->input('cropped_gambar');
+            $data = preg_replace('/^data:image\/(\w+);base64,/', '', $data);
+            $data = base64_decode($data);
+            $filename = 'artikel_' . time() . '.jpg';
+            $path = 'artikel_gambar/' . $filename;
+            \Storage::disk('public')->put($path, $data);
+            ArtikelGambar::create([
+                'artikel_id' => $artikel->artikel_id,
+                'file_path' => 'storage/' . $path,
+                'judul' => $artikel->judul,
+            ]);
+        }
 
         return redirect()->route('admin.artikel.index')->with('success', 'Artikel berhasil dibuat!');
     }

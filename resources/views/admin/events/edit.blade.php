@@ -7,13 +7,13 @@
         <div class="mb-8">
             <div class="flex items-center justify-between">
                 <div>
-                    <h1 class="text-2xl font-bold text-gray-800">Edit Event</h1>
-                    <p class="text-gray-600 mt-1">Ubah informasi event sesuai kebutuhan</p>
+                    <h1 class="text-2xl font-bold text-gray-800">Edit Acara</h1>
+                    <p class="text-gray-600 mt-1">Ubah informasi acara sesuai kebutuhan</p>
                 </div>
                 <a href="{{ route('admin.events.index') }}" 
                    class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
                     <i class="fas fa-arrow-left mr-2"></i>
-                    Kembali ke Daftar Event
+                    Kembali ke Daftar Acara
                 </a>
             </div>
         </div>
@@ -39,7 +39,7 @@
                 
                 <!-- Title Input -->
                 <div class="bg-white rounded-lg shadow-sm p-6">
-                    <label for="title" class="block text-sm font-medium text-gray-700 mb-2">Judul Event</label>
+                    <label for="title" class="block text-sm font-medium text-gray-700 mb-2">Judul Acara</label>
                     <input type="text" 
                            id="title" 
                            name="title" 
@@ -94,35 +94,31 @@
                 </div>
 
                 <!-- Banner Upload -->
-                <div class="bg-white rounded-lg shadow-sm p-6">
-                    <label for="banner" class="block text-sm font-medium text-gray-700 mb-2">Banner Event</label>
-                    
-                    @if($event->image)
-                        <div class="mb-4">
-                            <p class="text-sm text-gray-600 mb-2">Banner Saat Ini:</p>
-                            <img src="{{ asset('storage/' . str_replace('public/', '', $event->image)) }}" 
-                                 alt="Current Banner" 
-                                 class="max-h-48 rounded-lg shadow-sm">
-                        </div>
-                    @endif
-
-                    <div class="mt-4">
-                        <div class="flex items-center justify-center w-full">
-                            <label for="banner" class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
-                                <div class="flex flex-col items-center justify-center pt-5 pb-6">
-                                    <i class="fas fa-cloud-upload-alt text-3xl text-gray-400 mb-2"></i>
-                                    <p class="mb-2 text-sm text-gray-500">
-                                        <span class="font-semibold">Klik untuk upload</span> atau drag and drop
-                                    </p>
-                                    <p class="text-xs text-gray-500">PNG, JPG atau GIF (MAX. 2MB)</p>
-                                </div>
-                                <input id="banner" 
-                                       name="banner" 
-                                       type="file" 
-                                       accept="image/*"
-                                       class="hidden"
-                                       @error('banner') aria-invalid="true" @enderror>
+                <div class="mb-6">
+                    <label class="block font-semibold mb-2">Banner Acara</label>
+                    <div class="flex flex-col md:flex-row gap-6">
+                        <!-- Area Upload & Cropper -->
+                        <div class="flex-1">
+                            <input type="file" id="banner" name="banner" accept="image/*" class="hidden">
+                            <label for="banner" class="cursor-pointer flex flex-col items-center justify-center w-full h-40 border-2 border-dashed border-gray-300 rounded-lg bg-gray-50 hover:bg-gray-100">
+                                <span class="text-gray-500">Klik untuk upload gambar baru</span>
                             </label>
+                            <div id="cropper-container" class="mt-4 hidden">
+                                <img id="cropper-image" class="max-h-64 mx-auto rounded shadow" alt="Cropper Preview">
+                                <div class="flex justify-center mt-2">
+                                    <button type="button" id="crop-btn" class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700">Crop & Gunakan</button>
+                                    <button type="button" id="cancel-crop-btn" class="ml-2 px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400">Batal</button>
+                                </div>
+                            </div>
+                            <input type="hidden" name="cropped_banner" id="cropped_banner">
+                        </div>
+                        <!-- Preview -->
+                        <div class="flex-1 flex flex-col items-center">
+                            <span class="text-sm text-gray-500 mb-2">Preview Banner Saat Ini:</span>
+                            <img id="cropped-preview"
+                                 src="{{ $event->image ? asset('storage/'.$event->image) : 'https://via.placeholder.com/400x200?text=No+Image' }}"
+                                 class="rounded shadow max-h-40 w-auto object-cover border"
+                                 alt="Preview Banner">
                         </div>
                     </div>
                     @error('banner')
@@ -144,27 +140,75 @@
 </div>
 
 @push('scripts')
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
 <script>
-    // Preview image before upload
-    document.getElementById('banner').addEventListener('change', function(e) {
-        const file = e.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const preview = document.createElement('img');
-                preview.src = e.target.result;
-                preview.className = 'max-h-48 rounded-lg shadow-sm mt-2';
-                
-                const previewContainer = document.querySelector('.flex.flex-col.items-center');
-                const existingPreview = previewContainer.querySelector('img');
-                if (existingPreview) {
-                    existingPreview.remove();
-                }
-                previewContainer.appendChild(preview);
-            }
-            reader.readAsDataURL(file);
+document.addEventListener('DOMContentLoaded', function() {
+    let cropper = null;
+    const input = document.getElementById('banner');
+    const cropperContainer = document.getElementById('cropper-container');
+    const cropperImage = document.getElementById('cropper-image');
+    const cropBtn = document.getElementById('crop-btn');
+    const cancelCropBtn = document.getElementById('cancel-crop-btn');
+    const croppedInput = document.getElementById('cropped_banner');
+    const croppedPreview = document.getElementById('cropped-preview');
+
+    function resetCropperUI() {
+        cropperContainer.classList.add('hidden');
+        cropperImage.src = '';
+        if (cropper) {
+            cropper.destroy();
+            cropper = null;
         }
+        input.value = '';
+    }
+
+    input.addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function(event) {
+            cropperImage.src = event.target.result;
+            cropperContainer.classList.remove('hidden');
+            if (cropper) cropper.destroy();
+            cropper = new Cropper(cropperImage, {
+                aspectRatio: 2, // 400x200, sesuaikan dengan kebutuhan
+                viewMode: 1,
+                autoCropArea: 1,
+                movable: true,
+                zoomable: true,
+                scalable: true,
+                rotatable: false,
+            });
+        };
+        reader.readAsDataURL(file);
     });
+
+    cropBtn.addEventListener('click', function() {
+        if (!cropper) return;
+        cropper.getCroppedCanvas({
+            width: 800, // resolusi crop, sesuaikan kebutuhan
+            height: 400
+        }).toBlob(function(blob) {
+            // Preview hasil crop
+            const url = URL.createObjectURL(blob);
+            croppedPreview.src = url;
+
+            // Convert blob to base64 for backend
+            const reader = new FileReader();
+            reader.onloadend = function() {
+                croppedInput.value = reader.result;
+            };
+            reader.readAsDataURL(blob);
+
+            resetCropperUI();
+        }, 'image/jpeg', 0.95);
+    });
+
+    cancelCropBtn.addEventListener('click', function() {
+        resetCropperUI();
+    });
+});
 </script>
 @endpush
-@endsection 
+@endsection
