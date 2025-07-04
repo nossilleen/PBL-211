@@ -45,8 +45,8 @@ class User extends Authenticatable
         'nomor_rekening',
         'nama_bank_rekening',
         'foto_toko',
-        'kota',
-        'provinsi',
+        'kecamatan',
+        'kelurahan',
         'kode_pos'
     ];
 

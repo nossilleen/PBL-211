@@ -66,39 +66,6 @@ class ProfileController extends Controller
         return response()->json(['success' => true]);
     }
 
-    public function update(Request $request)
-    {
-        $request->validate([
-            'nama' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
-            'telepon' => 'nullable|string|max:20',
-            'alamat' => 'nullable|string|max:255',
-            'kota' => 'nullable|string|max:100',
-            'provinsi' => 'nullable|string|max:100',
-            'kode_pos' => 'nullable|string|max:10',
-            'jenis_kelamin' => 'nullable|in:Laki-laki,Perempuan',
-            'tanggal_lahir' => 'nullable|date',
-            'password' => 'nullable|string|min:8',
-        ]);
-
-        $user = Auth::user();
-        $user->nama = $request->nama;
-        $user->email = $request->email;
-        $user->no_hp = $request->telepon;
-        $user->alamat = $request->alamat;
-        $user->kota = $request->kota;
-        $user->provinsi = $request->provinsi;
-        $user->kode_pos = $request->kode_pos;
-        $user->jenis_kelamin = $request->jenis_kelamin;
-        $user->tanggal_lahir = $request->tanggal_lahir;
-        if ($request->filled('password')) {
-            $user->password = bcrypt($request->password);
-        }
-        $user->save();
-
-        return redirect()->back()->with('success', 'Profil berhasil diperbarui.');
-    }
-
     public function favorit()
     {
         $user = auth()->user();
@@ -111,5 +78,43 @@ class ProfileController extends Controller
         })->get();
 
         return view('favorit', compact('produkFavorit', 'artikelFavorit'));
+    }
+
+    public function update(Request $request)
+    {
+        $request->validate([
+            'nama' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'telepon' => 'required|string|min:10|max:20',
+            'alamat' => 'required|string|max:255',
+            'kecamatan' => 'required|string|max:100',
+            'kelurahan' => 'required|string|max:100',
+            'kode_pos' => 'required|string|max:10',
+            'jenis_kelamin' => 'required|in:Laki-laki,Perempuan',
+            'tanggal_lahir' => 'required|date',
+            'password' => 'nullable|string|min:8',
+        ]);
+
+        try {
+            $user = Auth::user();
+            $user->nama = $request->nama;
+            $user->email = $request->email;
+            $user->no_hp = $request->telepon;
+            $user->alamat = $request->alamat;
+            $user->kecamatan = $request->kecamatan;
+            $user->kelurahan = $request->kelurahan;
+            $user->kode_pos = $request->kode_pos;
+            $user->jenis_kelamin = $request->jenis_kelamin;
+            $user->tanggal_lahir = $request->tanggal_lahir;
+            if ($request->filled('password')) {
+                $user->password = bcrypt($request->password);
+            }
+            $user->save();
+        } catch (\Illuminate\Database\QueryException $e) {
+            // Tangkap error constraint (misal: email tidak valid)
+            return redirect()->back()->with('error', 'Email yang dimasukkan tidak valid atau sudah digunakan.');
+        }
+
+        return redirect()->back()->with('success', 'Profil berhasil diperbarui.');
     }
 }
