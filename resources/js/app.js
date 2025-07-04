@@ -70,3 +70,45 @@ if (mobileMenuButton && mobileMenu) {
         mobileMenu.classList.toggle('hidden');
     });
 }
+
+window.toggleLike = function(productId) {
+    const btn = document.querySelector(`button[onclick*='toggleLike(${productId})']`);
+    const icon = document.getElementById(`heart-${productId}`);
+    // Update semua icon dan count yang punya id sama (card & detail)
+    const allIcons = document.querySelectorAll(`#heart-${productId}`);
+    const allCounts = document.querySelectorAll(`#like-count-${productId}`);
+    fetch(`/product/${productId}/like`, {
+        method: 'POST',
+        headers: {
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || window.Laravel?.csrfToken,
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({})
+    })
+    .then(response => response.json())
+    .then(data => {
+        if(data.success) {
+            allIcons.forEach(ic => {
+                if(data.isLiked) {
+                    ic.classList.add('text-red-500');
+                    ic.classList.remove('text-gray-600');
+                    ic.setAttribute('fill', 'currentColor');
+                } else {
+                    ic.classList.remove('text-red-500');
+                    ic.classList.add('text-gray-600');
+                    ic.setAttribute('fill', 'none');
+                }
+            });
+            allCounts.forEach(cnt => {
+                // Jika ada span.like-count-number di dalamnya, update itu saja
+                const numberSpan = cnt.querySelector('.like-count-number');
+                if(numberSpan) {
+                    numberSpan.textContent = data.suka;
+                } else {
+                    cnt.textContent = data.suka;
+                }
+            });
+        }
+    });
+}

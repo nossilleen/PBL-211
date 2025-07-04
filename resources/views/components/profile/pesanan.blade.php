@@ -45,7 +45,7 @@
                             {{ $pesanan->pay_method == 'poin' ? 'Poin' : 'Transfer' }}
                         </span>
                     </td>
-                    <td class="py-4 px-4">
+                    <td class="py-4 px-4 align-middle">
                         @php
                             $statusClass = [
                                 'belum dibayar' => 'bg-red-100 text-red-800',
@@ -57,7 +57,7 @@
                             $status = $pesanan->status ?? 'belum dibayar';
                             $statusText = ucwords($status);
                         @endphp
-                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ $statusClass[$status] ?? 'bg-gray-100 text-gray-800' }}">
+                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ $statusClass[$status] ?? 'bg-gray-100 text-gray-800' }} whitespace-nowrap">
                             {{ $statusText }}
                         </span>
                     </td>
@@ -82,6 +82,18 @@
                                     </svg>
                                     Lihat Detail
                                 </button>
+                            @endif
+
+                            @if($pesanan->status == 'belum dibayar')
+                                <form method="POST" action="{{ route('transaksi.cancel', $pesanan->transaksi_id) }}" onsubmit="return confirm('Yakin ingin membatalkan pesanan ini?');">
+                                    @csrf
+                                    <button type="submit" class="inline-flex items-center px-3 py-1.5 bg-red-500 text-white text-sm font-medium rounded-md hover:bg-red-600 transition-colors duration-150">
+                                        <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                                        </svg>
+                                        Batalkan
+                                    </button>
+                                </form>
                             @endif
                         </div>
                     </td>

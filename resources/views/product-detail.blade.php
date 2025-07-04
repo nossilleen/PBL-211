@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
     <meta name="description" content="Detail Produk - EcoZense" />
     <meta name="theme-color" content="#8DD363" />
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
     <title>{{ $product->nama_produk ?? 'Detail Produk - EcoZense' }}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -41,10 +42,22 @@
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
                                         </svg>
                                     </button>
-                                    <button class="w-9 h-9 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-500 hover:text-red-600 flex items-center justify-center transition" title="Favoritkan">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                                    <button id="like-btn"
+                                        class="like-button p-2.5 rounded-full bg-white/90 backdrop-blur-sm shadow-lg hover:bg-white hover:scale-110 transition-all duration-200 z-10 relative flex items-center justify-center"
+                                        style="background: none; border: none;"
+                                        data-liked="{{ auth()->check() && $product->likedByCurrentUser() ? '1' : '0' }}"
+                                        @if(!auth()->check())
+                                            onclick="window.location.href='{{ route('login') }}'"
+                                        @else
+                                            onclick="toggleLike({{ $product->produk_id }})"
+                                        @endif
+                                    >
+                                        <svg id="heart-{{ $product->produk_id }}" class="w-5 h-5 {{ auth()->check() && $product->likedByCurrentUser() ? 'text-red-500' : 'text-gray-600' }}"
+                                            fill="{{ auth()->check() && $product->likedByCurrentUser() ? 'currentColor' : 'none' }}"
+                                            stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
                                         </svg>
+                                        <span id="like-count-{{ $product->produk_id }}" class="text-sm font-medium ml-2 {{ auth()->check() && $product->likedByCurrentUser() ? 'text-red-400' : 'text-gray-400' }}">{{ $product->suka ?? 0 }}</span>
                                     </button>
                                 </div>
                             </div>
@@ -80,6 +93,8 @@
                                     <span class="text-xl font-semibold text-blue-700">/{{ number_format($product->harga_points) }} Poin</span>
                                 @endif
                             </div>
+
+                            
                         </div>
 
                         <div class="lg:col-span-3 w-full font-['Lexend_Deca',_sans-serif]"> 
@@ -177,6 +192,23 @@
     
     <x-home.footer />
     
+    <!-- Modal Konfirmasi Beli dengan Poin -->
+    <div id="modal-poin" class="fixed inset-0 z-[9999] flex items-center justify-center bg-black/40 hidden">
+        <div class="bg-white rounded-lg shadow-lg p-6 max-w-sm w-full text-center animate-fadeIn">
+            <div class="mb-4">
+                <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto h-12 w-12 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M12 20a8 8 0 100-16 8 8 0 000 16z" />
+                </svg>
+            </div>
+            <h3 class="text-lg font-bold mb-2">Konfirmasi Pembelian</h3>
+            <p class="mb-6 text-gray-700">Apakah Anda yakin ingin membeli produk ini dengan poin?</p>
+            <div class="flex justify-center gap-4">
+                <button id="modal-poin-ya" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded font-semibold">Ya</button>
+                <button id="modal-poin-tidak" class="bg-gray-300 hover:bg-gray-400 text-gray-700 px-4 py-2 rounded font-semibold">Tidak</button>
+            </div>
+        </div>
+    </div>
+    
     <script>
         window.addEventListener('load', function() {
             const preloader = document.getElementById('preloader');
@@ -214,6 +246,38 @@
             if (poinSatuan > 0) {
                 document.getElementById('total-poin').innerText = 'atau ' + (qty * poinSatuan).toLocaleString('id-ID') + ' Poin';
             }
+        }
+
+        // Konfirmasi pembelian dengan poin (custom modal)
+        const usePoinCheckbox = document.getElementById('use_poin');
+        const modalPoin = document.getElementById('modal-poin');
+        const modalPoinYa = document.getElementById('modal-poin-ya');
+        const modalPoinTidak = document.getElementById('modal-poin-tidak');
+        let lastPoinChecked = false;
+        if (usePoinCheckbox) {
+            usePoinCheckbox.addEventListener('change', function(e) {
+                if (this.checked) {
+                    lastPoinChecked = true;
+                    this.checked = false;
+                    modalPoin.classList.remove('hidden');
+                }
+            });
+        }
+        if (modalPoinYa) {
+            modalPoinYa.addEventListener('click', function() {
+                modalPoin.classList.add('hidden');
+                if (usePoinCheckbox && lastPoinChecked) {
+                    usePoinCheckbox.checked = true;
+                }
+            });
+        }
+        if (modalPoinTidak) {
+            modalPoinTidak.addEventListener('click', function() {
+                modalPoin.classList.add('hidden');
+                if (usePoinCheckbox) {
+                    usePoinCheckbox.checked = false;
+                }
+            });
         }
     </script>
 </body>

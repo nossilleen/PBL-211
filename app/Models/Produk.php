@@ -46,7 +46,7 @@ class Produk extends Model
     public function likedByCurrentUser()
     {
         return \DB::table('product_likes')
-            ->where('user_id', auth()->id())
+            ->where('user_id', auth()->user()->user_id)
             ->where('produk_id', $this->produk_id)
             ->exists();
     }
