@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('user', function (Blueprint $table) {
-            $table->softDeletes();
+        Schema::table('events', function (Blueprint $table) {
+            $table->dropColumn('date');
         });
     }
 
@@ -21,8 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('user', function (Blueprint $table) {
-            $table->dropSoftDeletes();
+        Schema::table('events', function (Blueprint $table) {
+            $table->dateTime('date')->nullable();
         });
     }
 };

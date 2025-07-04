@@ -28,7 +28,7 @@
                     <div class="mb-6 text-center">
                         <img src="{{ asset('images/logo.jpg') }}" alt="EcoZense Logo" class="h-20 mx-auto">
                     </div>
-                    <h1 class="text-2xl font-bold text-green-800 mb-6 text-center">LOGIN</h1>
+                    <h1 class="text-2xl font-bold text-green-800 mb-6 text-center">MASUK</h1>
                     <form method="POST" action="{{ route('login') }}" class="space-y-4">
                         @csrf
                         @if($errors->any())
@@ -68,14 +68,14 @@
                         <div class="flex items-center justify-between mb-8 mt-2">
                             <div class="flex items-center">
                                 <input type="checkbox" name="remember" id="remember" class="rounded border-gray-300">
-                                <label for="remember" class="ml-2 text-gray-700 text-sm">Remember me?</label>
+                                <label for="remember" class="ml-2 text-gray-700 text-sm">Ingat saya</label>
                             </div>
                             <a href="{{ route('password.request') }}" class="text-gray-400 hover:text-gray-700 text-sm">
-                                Forgot Password?
+                                Lupa Kata Sandi?
                             </a>
                         </div>
                         <button type="submit" class="w-full py-2 px-3 bg-yellow-300 hover:bg-yellow-400 text-green-900 font-semibold rounded-2xl transition duration-200 mt-4">
-                            LOGIN
+                            MASUK
                         </button>
                         <div class="text-center mt-2">
                             <p class="text-gray-500 text-sm">

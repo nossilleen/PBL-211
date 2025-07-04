@@ -66,7 +66,7 @@
                 data-aos="fade-left"
                 data-aos-delay="100"
             >
-                <span class="hidden sm:inline font-medium">Log in</span>
+                <span class="hidden sm:inline font-medium">Masuk</span>
                 <span class="sm:hidden font-medium">Login</span>
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />

@@ -14,6 +14,7 @@ class Event extends Model
         'description',
         'image',
         'date',
-        'location'
+        'location',
+        'link_form_acara',
     ];
 }

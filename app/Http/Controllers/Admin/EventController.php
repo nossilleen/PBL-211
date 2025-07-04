@@ -23,12 +23,14 @@ class EventController extends Controller
 
     public function store(Request $request)
     {
+        // dd($request->all()); // untuk debug testing event ()
         $hasCropped = $request->filled('cropped_gambar');
         $rules = [
             'title' => 'required|string|max:255',
             'description' => 'required|string',
             'date' => 'required|date',
             'location' => 'required|string|max:255',
+            'link_form_acara' => 'nullable|url',
         ];
         if (!$hasCropped) {
             $rules['image'] = 'required|image|mimes:jpeg,png,jpg,gif|max:2048';
@@ -62,7 +64,8 @@ class EventController extends Controller
                 'description' => $request->description,
                 'date' => $request->date,
                 'location' => $request->location,
-                'image' => $imagePath
+                'image' => $imagePath,
+                'link_form_acara' => $request->link_form_acara,
             ]);
 
             return redirect()->route('admin.artikel.index')
@@ -86,7 +89,8 @@ class EventController extends Controller
             'description' => 'required|string',
             'date' => 'required|date',
             'location' => 'required|string|max:255',
-            'banner' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
+            'banner' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'link_form_acara' => 'nullable|url',
         ]);
 
         try {
@@ -124,6 +128,7 @@ class EventController extends Controller
             $event->description = $request->description;
             $event->date = $request->date;
             $event->location = $request->location;
+            $event->link_form_acara = $request->link_form_acara;
             $event->save();
 
             return redirect()->route('admin.artikel.index')

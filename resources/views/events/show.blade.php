@@ -76,14 +76,21 @@
                     </a>
 
                     @if($eventStatus == 'Tersedia')
-                        <button class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
-                            <i class="fas fa-ticket-alt mr-2"></i>
-                            Daftar Event
-                        </button>
+                        @if($event->link_form_acara)
+                            <a href="{{ $event->link_form_acara }}" target="_blank" rel="noopener" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                                <i class="fas fa-ticket-alt mr-2"></i>
+                                Daftar Event
+                            </a>
+                        @else
+                            <button class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-gray-400 cursor-not-allowed" disabled>
+                                <i class="fas fa-times-circle mr-2"></i>
+                                Link Pendaftaran Belum Tersedia
+                            </button>
+                        @endif
                     @else
                         <button class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-gray-400 cursor-not-allowed" disabled>
                             <i class="fas fa-times-circle mr-2"></i>
-                            Event Telah Selesai
+                            Acara Telah Selesai
                         </button>
                     @endif
                 </div>

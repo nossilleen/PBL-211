@@ -87,16 +87,6 @@ class User extends Authenticatable
     
     // use App\Models\User; ← pastikan ini ada di atas
 
-public function likes()
-{
-    return $this->belongsToMany(User::class, 'artikel_likes', 'artikel_id', 'user_id')->withTimestamps();
-}
-
-public function isLikedBy($user)
-{
-    return $this->likes()->where('artikel_likes.user_id', $user?->id)->exists();
-}
-
 public function likedArtikels() {
     return $this->belongsToMany(Artikel::class, 'artikel_likes', 'user_id', 'artikel_id')->withTimestamps();
 }

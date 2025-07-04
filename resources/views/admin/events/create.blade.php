@@ -56,6 +56,16 @@
                 </div>
 
                 <div class="mb-3">
+                    <label for="link_form_acara" class="form-label">Link Form Acara</label>
+                    <input type="url" class="form-control @error('link_form_acara') is-invalid @enderror" 
+                           id="link_form_acara" name="link_form_acara" value="{{ old('link_form_acara') }}" placeholder="Masukkan link Google Form/Docs">
+                    <small class="text-muted">Opsional. Contoh: https://forms.gle/xxxx</small>
+                    @error('link_form_acara')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="mb-3">
                     <label for="banner" class="form-label">Banner Event</label>
                     <input type="file" class="form-control @error('banner') is-invalid @enderror" 
                            id="banner" name="banner" accept="image/*" required>
