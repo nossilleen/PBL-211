@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="mb-6">
-    <h1 class="text-2xl font-bold text-gray-800">Manage Products</h1>
+    <h1 class="text-2xl font-bold text-gray-800">Manajemen Produk</h1>
     <p class="text-gray-600 mt-1">Add, edit and manage your products inventory</p>
 </div>
 
@@ -245,6 +245,15 @@
     </form>
 </div>
 
+<!-- Modal Custom untuk Validasi -->
+<div id="modalTokoAlert" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50 hidden">
+    <div class="bg-white rounded-lg shadow-lg p-8 max-w-sm w-full text-center">
+        <h2 class="text-2xl font-bold mb-4 text-red-600">Peringatan!</h2>
+        <p class="mb-6 text-gray-700">Semua kolom wajib diisi. Silakan lengkapi data toko Anda!</p>
+        <button onclick="closeTokoModalAlert()" class="bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded">Tutup</button>
+    </div>
+</div>
+
 <script>
 function openProductModal(product = null) {
     const modal = document.getElementById('productModal');
@@ -284,5 +293,34 @@ function openProductModal(product = null) {
 function closeProductModal() {
     document.getElementById('productModal').classList.add('hidden');
 }
+
+function showTokoModalAlert() {
+    document.getElementById('modalTokoAlert').classList.remove('hidden');
+}
+
+function closeTokoModalAlert() {
+    document.getElementById('modalTokoAlert').classList.add('hidden');
+}
+
+document.querySelector('form[action*="pengelola.toko.update"]').addEventListener('submit', function(e) {
+    var requiredFields = [
+        'jam_operasional', 'nomor_rekening', 'nama_bank_rekening', 'deskripsi_toko'
+    ];
+    var isValid = true;
+    requiredFields.forEach(function(field) {
+        var input = document.querySelector('[name="' + field + '"]');
+        if (input && !input.value.trim()) {
+            input.classList.add('border-red-500');
+            isValid = false;
+        } else if (input) {
+            input.classList.remove('border-red-500');
+        }
+    });
+    if (!isValid) {
+        showTokoModalAlert();
+        e.preventDefault();
+        return;
+    }
+});
 </script>
 @endsection

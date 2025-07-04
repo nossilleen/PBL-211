@@ -57,8 +57,42 @@
     </form>
 </div>
 
+<!-- Modal Custom untuk Validasi -->
+<div id="modalAlert" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50 hidden">
+    <div class="bg-white rounded-lg shadow-lg p-8 max-w-sm w-full text-center">
+        <h2 class="text-2xl font-bold mb-4 text-red-600">Peringatan!</h2>
+        <p class="mb-6 text-gray-700">Semua kolom wajib diisi!</p>
+        <button onclick="closeModalAlert()" class="bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded">Tutup</button>
+    </div>
+</div>
+
 <script>
+function showModalAlert() {
+    document.getElementById('modalAlert').classList.remove('hidden');
+}
+function closeModalAlert() {
+    document.getElementById('modalAlert').classList.add('hidden');
+}
+
 document.getElementById('editProfileForm').addEventListener('submit', function(e) {
+    var requiredFields = [
+        'nama', 'telepon', 'email', 'tanggal_lahir', 'jenis_kelamin', 'alamat', 'kecamatan', 'kelurahan', 'kode_pos'
+    ];
+    var isValid = true;
+    requiredFields.forEach(function(field) {
+        var input = document.querySelector('[name="' + field + '"]');
+        if (input && !input.value.trim()) {
+            input.classList.add('border-red-500');
+            isValid = false;
+        } else if (input) {
+            input.classList.remove('border-red-500');
+        }
+    });
+    if (!isValid) {
+        showModalAlert();
+        e.preventDefault();
+        return;
+    }
     var telepon = document.getElementById('teleponInput').value.trim();
     var errorSpan = document.getElementById('teleponError');
     errorSpan.textContent = '';

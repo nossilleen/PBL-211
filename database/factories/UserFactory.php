@@ -26,9 +26,8 @@ class UserFactory extends Factory
         return [
             'nama' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
-            'email_verified_at' => now(),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-            'no_hp' => fake()->phoneNumber(),
+            'no_hp' => fake()->numerify('08##########'), // Format: 08123456789 (11 digit),
             'role' => fake()->randomElement(['admin', 'nasabah', 'pengelola']),
             'points' => fake()->numberBetween(0, 1000),
             'deskripsi_toko' => fake()->optional()->paragraph(),
