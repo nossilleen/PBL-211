@@ -13,6 +13,11 @@ class ArtikelController extends Controller
 {
     public function create()
     {
+        // Cek izin membuat artikel
+        $user = Auth::user();
+        if ($user->role === 'admin' && !$user->can_create_article) {
+            abort(403, 'Anda tidak memiliki izin untuk membuat artikel');
+        }
         return view('admin.artikel.create');
     }
 
@@ -58,6 +63,11 @@ class ArtikelController extends Controller
 
     public function store(Request $request)
     {
+        $user = Auth::user();
+        if ($user->role === 'admin' && !$user->can_create_article) {
+            abort(403, 'Anda tidak memiliki izin untuk membuat artikel');
+        }
+
         $request->validate([
             'kategori' => 'required|string|max:100',
             'judul' => 'required|string|max:255',

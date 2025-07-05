@@ -40,6 +40,8 @@ class User extends Authenticatable
         'no_hp',
         'role',
         'points',
+        'can_create_article',
+        'can_create_event',
         'deskripsi_toko',
         'jam_operasional',
         'nomor_rekening',
@@ -70,6 +72,8 @@ class User extends Authenticatable
         'password' => 'hashed',
         'poin' => 'integer',  // Add this to ensure proper type casting
         'deleted_at' => 'datetime',
+        'can_create_article' => 'boolean',
+        'can_create_event' => 'boolean',
     ];
 
     /**

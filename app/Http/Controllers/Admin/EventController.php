@@ -23,6 +23,12 @@ class EventController extends Controller
 
     public function store(Request $request)
     {
+        // Cek izin membuat event
+        $user = auth()->user();
+        if ($user->role === 'admin' && !$user->can_create_event) {
+            abort(403, 'Anda tidak memiliki izin untuk membuat event');
+        }
+
         // dd($request->all()); // untuk debug testing event ()
         $hasCropped = $request->filled('cropped_gambar');
         $rules = [

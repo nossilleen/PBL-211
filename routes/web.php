@@ -53,12 +53,16 @@ Route::get('/profile/edit', [HomeController::class, 'edit'])->name('profile.edit
 Route::put('/profile', [App\Http\Controllers\Workspace\ProfileController::class, 'update'])->name('profile.update');
 
 // Admin routes
-Route::prefix('admin')->middleware(['auth', 'role:admin'])->name('admin.')->group(function () {
+Route::prefix('admin')->middleware(['auth', 'role:admin,superadmin'])->name('admin.')->group(function () {
     Route::get('/', [AdminController::class, 'index'])->name('index');
     Route::get('/api/visit-stats', [AdminController::class, 'getVisitStats'])->name('api.visit_stats');
     Route::get('/pengajuan', [AdminController::class, 'pengajuan'])->name('pengajuan');
     Route::get('/user', [AdminController::class, 'user'])->name('user');
     Route::delete('/user/{id}', [AdminController::class, 'deleteUser'])->name('user.destroy');
+    // Superadmin specific actions
+    Route::post('/user/store-admin', [AdminController::class, 'storeAdmin'])->name('user.storeAdmin');
+    Route::patch('/user/{id}/promote', [AdminController::class, 'promoteAdmin'])->name('user.promote');
+    Route::patch('/user/{id}/permissions', [AdminController::class, 'updatePermissions'])->name('user.permissions');
     Route::middleware(['auth'])->group(function () {
     Route::get('/profil', [ArtikelController::class, 'favoritSaya'])->name('nasabah.profil');
 });
@@ -89,7 +93,7 @@ Route::get('/profil', [ArtikelController::class, 'showProfil'])->middleware('aut
 });
 
 // Pengajuan routes
-Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
+Route::prefix('admin')->middleware(['auth', 'role:admin,superadmin'])->group(function () {
     Route::get('/pengajuan', [AdminController::class, 'pengajuan'])->name('admin.pengajuan');
     Route::patch('/pengajuan/{id}/approve', [AdminController::class, 'approvePengajuan'])->name('admin.pengajuan.approve');
     Route::patch('/pengajuan/{id}/reject', [AdminController::class, 'rejectPengajuan'])->name('admin.pengajuan.reject');
@@ -168,7 +172,7 @@ Route::middleware(['auth', 'role:pengelola'])->group(function () {
 });
 
 // Admin password reset routes
-Route::middleware(['auth', 'role:admin'])->group(function () {
+Route::middleware(['auth', 'role:admin,superadmin'])->group(function () {
     Route::post('/admin/users/{user}/reset-password', [App\Http\Controllers\Admin\UserPasswordController::class, 'resetPassword'])
         ->name('admin.users.reset-password');
 });
