@@ -91,7 +91,7 @@
                         <a href="/profile" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Profile</a>
                     @endif
                     
-                    @if(Auth::user()->role === 'admin')
+                    @if(in_array(Auth::user()->role, ['admin','superadmin']))
                         @if(Request::is('admin*'))
                             <a href="/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Kembali ke Beranda</a>
                         @else
@@ -189,7 +189,7 @@
             >
             @endif
             
-            @if(Auth::user()->role === 'admin')
+            @if(in_array(Auth::user()->role, ['admin','superadmin']))
             <a
                 href="/admin"
                 class="block text-green-800 hover:text-green-600 py-3 px-2 transition-all duration-300 border-l-4 border-transparent hover:border-green-600 hover:bg-green-50 rounded"
