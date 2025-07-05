@@ -10,7 +10,7 @@
 
 <nav
     id="main-navbar"
-    class="py-1 sm:py-2 fixed top-0 left-0 right-0 z-50 navbar-fixed {{ $isDashboard || $isDetailPage ? 'navbar-solid' : 'bg-transparent' }} transition-all duration-300"
+    class="py-1 sm:py-2 fixed top-0 left-0 right-0 z-50 {{ $isDashboard || $isDetailPage ? 'navbar-solid' : 'bg-transparent' }} transition-all duration-300"
 >
     <div class="container mx-auto px-4 md:px-6 flex justify-between items-center">
         <!-- Logo - Far Left -->
@@ -20,7 +20,7 @@
             </div>
         </a>
         
-        <!-- Navigation Links - Center (Improved Centering) -->
+        <!-- Navigation Links - Center -->
         @if(!(Auth::check() && ((Auth::user()->role === 'admin' && Request::is('admin*')) || (Auth::user()->role === 'pengelola' && Request::is('pengelola*')))))
         <div class="hidden lg:flex space-x-4 xl:space-x-8 mx-auto justify-center flex-grow" data-aos="fade-down" data-aos-delay="200">
             <a
@@ -246,33 +246,14 @@
         e.stopPropagation();
         const mobileMenu = document.querySelector('.mobile-menu');
         mobileMenu.classList.toggle('hidden');
-        
-        // Menambahkan event listener hanya sekali
-        if (!window.mobileMenuInitialized) {
-            // Close menu when clicking outside
-            document.addEventListener('click', function(event) {
-                const mobileMenu = document.querySelector('.mobile-menu');
-                const isClickInsideMenu = mobileMenu.contains(event.target);
-                const isClickOnButton = event.target.closest('.mobile-menu-button');
-                
-                if (!isClickInsideMenu && !isClickOnButton && !mobileMenu.classList.contains('hidden')) {
-                    mobileMenu.classList.add('hidden');
-                }
-            });
-            
-            window.mobileMenuInitialized = true;
-        }
     });
-    
+
     // Close mobile menu on window resize if screen becomes large
     window.addEventListener('resize', function() {
         if (window.innerWidth >= 1024) { // lg breakpoint
             document.querySelector('.mobile-menu').classList.add('hidden');
         }
     });
-    
-    // Jalankan scroll check saat halaman dimuat
-    window.dispatchEvent(new Event('scroll'));
 </script>
 
 <style>

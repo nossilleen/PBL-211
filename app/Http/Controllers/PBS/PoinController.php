@@ -118,7 +118,7 @@ class PoinController extends Controller
         } catch (\Exception $e) {
             DB::rollBack();
             Log::error('Gagal konversi poin: ' . $e->getMessage());
-            return back()->with('error', 'Terjadi kesalahan pada server. Silakan coba lagi.');
+            return back()->with('error', 'Terjadi kesalahan. Silakan coba lagi.');
         }
     }
 } 
