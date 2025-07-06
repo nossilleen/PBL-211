@@ -124,7 +124,7 @@
     </div>
 
     {{-- Hover Effect Indicator --}}
-    <div class="absolute inset-x-0 bottom-0 h-1 bg-gradient-to-r from-blue-500 to-purple-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
+    <div class="absolute inset-x-0 bottom-0 h-1 bg-gradient-to-r from-green-500 to-emerald-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
     
     {{-- Custom Slot Content (if provided) --}}
     @if(!$slot->isEmpty())

@@ -100,14 +100,6 @@
                                                  ($totalProducts >= 25 ? '25+' : $totalProducts . '+'));
                             @endphp
                             
-                            <!-- Debug info -->
-                            @if(auth()->check() && auth()->user()->role === 'admin')
-                                <div class="fixed top-4 right-4 bg-white p-4 rounded-lg shadow-lg z-50">
-                                    <p>Debug Info:</p>
-                                    <p>Total Stores (raw): {{ $totalStores }}</p>
-                                    <p>Display Value: {{ $displayStores }}</p>
-                                </div>
-                            @endif
 
                             <div class="text-center">
                                 <div class="text-3xl font-bold text-white">{{ $displayStores }}</div>

@@ -9,8 +9,8 @@
         </h2>
 
         <p class="text-center text-lg max-w-3xl mx-auto mb-16 text-white opacity-90" data-aos="fade-up" data-aos-delay="100">
-            Dengan pendekatan berbasis edukasi, produk ramah lingkungan, dan kegiatan komunitas, EcoZense menawarkan pengalaman berkelanjutan yang nyata. 
-            Kami hadir untuk mendukung langkah sadar lingkunganmu secara menyeluruh.
+        Dengan pendekatan berbasis edukasi, produk ramah lingkungan, dan kegiatan komunitas, EcoZense menawarkan pengalaman berkelanjutan yang nyata. 
+        Kami hadir untuk mendukung langkah sadar lingkunganmu secara menyeluruh.
         </p>
 
         <div class="grid md:grid-cols-3 gap-8">
