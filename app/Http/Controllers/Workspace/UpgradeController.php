@@ -23,8 +23,6 @@ class UpgradeController extends Controller
 
         $request->validate([
             'nama_bank_sampah' => 'required|string|max:255',
-            'alamat_lengkap' => 'required|string|max:500',
-            'kota' => 'required|string|max:100',
             'alasan_pengajuan' => 'required|string|max:1000',
         ]);
 
@@ -32,8 +30,8 @@ class UpgradeController extends Controller
             Upgrade::create([
                 'user_id' => auth()->id(),
                 'nama_bank_sampah' => $request->nama_bank_sampah,
-                'alamat_lengkap' => $request->alamat_lengkap,
-                'kota' => $request->kota,
+                'alamat_lengkap' => '-',
+                'kota' => '-',
                 'alasan_pengajuan' => $request->alasan_pengajuan,
                 'status' => 'pending',
             ]);

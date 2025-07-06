@@ -17,8 +17,7 @@
                 <thead class="bg-gray-100">
                     <tr>
                         <th class="px-6 py-4 text-left text-sm font-medium text-gray-500">Nama</th>
-                        <th class="px-6 py-4 text-left text-sm font-medium text-gray-500">Alamat</th>
-                        <th class="px-6 py-4 text-left text-sm font-medium text-gray-500">Kota</th>
+                        <th class="px-6 py-4 text-left text-sm font-medium text-gray-500">Nama Bank Sampah</th>
                         <th class="px-6 py-4 text-left text-sm font-medium text-gray-500">Alasan</th>
                         <th class="px-6 py-4 text-left text-sm font-medium text-gray-500">Aksi</th>
                     </tr>
@@ -30,10 +29,7 @@
                                 <div class="text-sm text-gray-900">{{ $item->user->nama}}</div>
                             </td>
                             <td class="px-6 py-4">
-                                <div class="text-sm text-gray-900">{{ $item->alamat_lengkap }}</div>
-                            </td>
-                            <td class="px-6 py-4">
-                                <div class="text-sm text-gray-900">{{ $item->kota }}</div>
+                                <div class="text-sm text-gray-900">{{ $item->nama_bank_sampah }}</div>
                             </td>
                             <td class="px-6 py-4">
                                 <div class="text-sm text-gray-900">{{ $item->alasan_pengajuan }}</div>
@@ -59,7 +55,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="5" class="px-6 py-4 text-center text-gray-500">
+                            <td colspan="4" class="px-6 py-4 text-center text-gray-500">
                                 Tidak ada pengajuan yang perlu diverifikasi.
                             </td>
                         </tr>
