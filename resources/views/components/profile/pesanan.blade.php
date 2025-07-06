@@ -95,6 +95,18 @@
                                     </button>
                                 </form>
                             @endif
+
+                            @if($pesanan->status == 'sedang dikirim')
+                                <form method="POST" action="{{ route('transaksi.complete', $pesanan->transaksi_id) }}" onsubmit="return confirm('Pesanan sudah diterima dan selesai?');">
+                                    @csrf
+                                    <button type="submit" class="inline-flex items-center px-3 py-1.5 bg-green-600 text-white text-sm font-medium rounded-md hover:bg-green-700 transition-colors duration-150">
+                                        <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                        </svg>
+                                        Tandai Selesai
+                                    </button>
+                                </form>
+                            @endif
                         </div>
                     </td>
                 </tr>

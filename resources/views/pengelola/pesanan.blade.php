@@ -159,10 +159,7 @@
             </div>
             @elseif($pesanan->status == 'sedang dikirim')
             <div class="bg-gray-50 p-4 flex justify-end space-x-3">
-                <button onclick="handleSelesai('{{ $pesanan->transaksi_id }}')"
-                        class="px-4 py-2 bg-green-600 text-white rounded-lg text-sm font-medium hover:bg-green-700">
-                    Tandai Selesai
-                </button>
+                <!-- Tombol Tandai Selesai dihapus: kini hanya nasabah yang dapat menandai pesanan sebagai selesai -->
             </div>
             @endif
         </div>
