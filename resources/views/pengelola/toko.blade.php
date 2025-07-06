@@ -310,54 +310,41 @@
                 <input type="hidden" id="productId" name="_method" value="POST">
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <!-- Image Upload -->
+                    <!-- Image Upload (Gabungan UI drag & drop + fitur multiple images) -->
                     <div class="md:col-span-2">
-                        <label for="image" class="block text-sm font-semibold text-gray-700 mb-2">Product Image</label>
-                        <div class="border-2 border-dashed border-gray-300 rounded-xl p-6 text-center hover:border-green-500 transition-colors">
-                            <input type="file" name="image" id="image" 
+                        <label for="images" class="block text-sm font-semibold text-gray-700 mb-2">Product Images *</label>
+                        <div class="border-2 border-dashed border-gray-300 rounded-xl p-6 text-center hover:border-green-500 transition-colors relative">
+                            <input type="file" name="images[]" id="images" multiple required
                                    class="hidden"
                                    accept="image/*"
-                                   onchange="previewImage(this)">
-                            <div id="imagePreview" class="hidden">
-                                <img id="preview" class="mx-auto h-32 w-32 object-cover rounded-lg">
+                                   onchange="handleImageUpload(this)">
+                            <div id="imagePreview" class="mt-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 hidden">
+                                <!-- Preview images will be inserted here -->
                             </div>
                             <div id="uploadPlaceholder">
                                 <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48">
                                     <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
                                 </svg>
                                 <p class="mt-2 text-sm text-gray-600">Click to upload or drag and drop</p>
+                                <label id="chooseFileInBox" for="images" class="mt-3 inline-flex items-center px-4 py-2 bg-gray-100 text-gray-700 rounded-lg cursor-pointer hover:bg-gray-200 transition-colors">
+                                    Choose File
+                                </label>
+                                <p class="text-xs text-gray-500 mt-1">Pilih 1-5 gambar (JPG, PNG)</p>
                             </div>
-                            <label for="image" class="mt-3 inline-flex items-center px-4 py-2 bg-gray-100 text-gray-700 rounded-lg cursor-pointer hover:bg-gray-200 transition-colors">
-                                Choose File
-                            </label>
+                            <div id="chooseFileBelow" class="w-full flex justify-center mt-2 hidden">
+                                <label for="images" class="inline-flex items-center px-4 py-2 bg-gray-100 text-gray-700 rounded-lg cursor-pointer hover:bg-gray-200 transition-colors">
+                                    Choose File
+                                </label>
+                            </div>
+                            <p id="imageCount" class="text-xs text-green-600 mt-1 hidden">0 gambar dipilih</p>
+                            @error('images')
+                                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                            @enderror
+                            @error('images.*')
+                                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                            @enderror
                         </div>
-                        @error('image')
-                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                        @enderror
                     </div>
-            <!-- Multiple Images Upload -->
-            <div class="mb-4">
-                <label for="images" class="block text-gray-700 font-medium mb-2">Product Images *</label>
-                <input type="file" name="images[]" id="images" multiple
-                       class="w-full border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500 @error('images') border-red-500 @enderror"
-                       accept="image/*" onchange="handleImageUpload(this)">
-                <p class="text-xs text-gray-500 mt-1">Pilih 1-5 gambar (JPG, PNG)</p>
-                <p id="imageCount" class="text-xs text-green-600 mt-1 hidden">0 gambar dipilih</p>
-                @error('images')
-                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                @enderror
-                @error('images.*')
-                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                @enderror
-                
-                <!-- Image Preview -->
-                <div id="imagePreview" class="mt-2 grid grid-cols-3 gap-2 hidden">
-                    <!-- Preview images will be inserted here -->
-                </div>
-            </div>
-
-            <!-- Hidden input for image replacement (for edit mode) -->
-            <input type="hidden" name="replace_image_index" id="replaceImageIndex" value="">
 
                     <!-- Product Name -->
                     <div class="md:col-span-2">
@@ -482,6 +469,8 @@ function openProductModal(product = null) {
     const imagesInput = document.getElementById('images');
     const previewContainer = document.getElementById('imagePreview');
     const placeholder = document.getElementById('uploadPlaceholder');
+    const chooseFileBelow = document.getElementById('chooseFileBelow');
+    const chooseFileInBox = document.getElementById('chooseFileInBox');
 
     // Reset preview
     previewContainer.classList.add('hidden');
@@ -518,6 +507,10 @@ function openProductModal(product = null) {
     document.getElementById('imagePreview').classList.add('hidden');
     document.getElementById('imageCount').classList.add('hidden');
     
+    // Reset tombol choose file
+    if (chooseFileBelow) chooseFileBelow.classList.add('hidden');
+    if (chooseFileInBox) chooseFileInBox.classList.remove('hidden');
+
     // Clear file input
     document.getElementById('images').value = '';
 
@@ -545,75 +538,72 @@ let allSelectedFiles = [];
 function handleImageUpload(input) {
     const preview = document.getElementById('imagePreview');
     const files = Array.from(input.files);
-    
+    const placeholder = document.getElementById('uploadPlaceholder');
+    const chooseFileBelow = document.getElementById('chooseFileBelow');
+    const chooseFileInBox = document.getElementById('chooseFileInBox');
     // Check if adding new files would exceed limit
     if (allSelectedFiles.length + files.length > 5) {
         alert('Maksimal hanya bisa upload 5 gambar!');
         return;
     }
-    
     // Add new files to existing files
     allSelectedFiles = [...allSelectedFiles, ...files];
-    
     // Update the input files
     const dt = new DataTransfer();
     allSelectedFiles.forEach(file => dt.items.add(file));
     input.files = dt.files;
-    
     if (allSelectedFiles.length === 0) {
         preview.classList.add('hidden');
         document.getElementById('imageCount').classList.add('hidden');
+        placeholder.classList.remove('hidden');
+        chooseFileBelow.classList.add('hidden');
+        if (chooseFileInBox) chooseFileInBox.classList.remove('hidden');
         return;
     }
-    
     preview.innerHTML = '';
     preview.classList.remove('hidden');
-    
     // Update image count
     const imageCount = document.getElementById('imageCount');
     imageCount.textContent = `${allSelectedFiles.length} gambar dipilih`;
     imageCount.classList.remove('hidden');
-    
+    // Sembunyikan placeholder, tampilkan tombol choose file di bawah, sembunyikan di dalam kotak
+    placeholder.classList.add('hidden');
+    chooseFileBelow.classList.remove('hidden');
+    if (chooseFileInBox) chooseFileInBox.classList.add('hidden');
     allSelectedFiles.forEach((file, index) => {
         const reader = new FileReader();
-        
         reader.onload = function(e) {
             const previewItem = document.createElement('div');
             previewItem.className = 'relative group';
             previewItem.innerHTML = `
-                <img src="${e.target.result}" alt="Preview" class="w-full h-16 object-cover rounded">
-                <button type="button" onclick="removeImage(${index})" class="absolute top-0 right-0 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs opacity-0 group-hover:opacity-100 transition-opacity">
+                <img src="${e.target.result}" alt="Preview" class="w-20 h-20 object-cover rounded-lg border shadow">
+                <button type="button" data-index="${index}" class="remove-image-btn absolute top-0 right-0 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs opacity-80 group-hover:opacity-100 transition-opacity z-10">
                     ×
                 </button>
             `;
             preview.appendChild(previewItem);
         };
-        
         reader.readAsDataURL(file);
     });
+    // Setelah forEach render preview, tambahkan event listener ke semua .remove-image-btn
+    document.getElementById('imagePreview').onclick = function(e) {
+        if (e.target.classList.contains('remove-image-btn')) {
+            e.preventDefault();
+            const idx = parseInt(e.target.dataset.index);
+            window.removeImage(idx);
+        }
+    };
 }
 
-function removeImage(index) {
-    console.log('Removing image at index:', index);
+window.removeImage = function(index) {
     const input = document.getElementById('images');
-    
-    if (!input) {
-        console.error('Input element not found');
-        return;
-    }
-    
-    // Remove file from array
+    if (!input) return;
     allSelectedFiles.splice(index, 1);
-    console.log('Remaining files:', allSelectedFiles.length);
-    
-    // Update input files
     const dt = new DataTransfer();
     allSelectedFiles.forEach(file => dt.items.add(file));
     input.files = dt.files;
-    
-    // Re-render preview
     handleImageUpload(input);
-}
+};
 
 // Store form validation
 document.querySelector('form[action*="pengelola.toko.update"]').addEventListener('submit', function(e) {
@@ -651,6 +641,19 @@ document.getElementById('productModal').addEventListener('click', function(e) {
 document.getElementById('modalTokoAlert').addEventListener('click', function(e) {
     if (e.target === this) {
         closeTokoModalAlert();
+    }
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    var chooseFileBelow = document.getElementById('chooseFileBelow');
+    var inputImages = document.getElementById('images');
+    if (chooseFileBelow && inputImages) {
+        chooseFileBelow.addEventListener('click', function(e) {
+            // Jika yang diklik adalah label, biarkan default
+            if (e.target.tagName !== 'LABEL') {
+                inputImages.click();
+            }
+        });
     }
 });
 </script>
