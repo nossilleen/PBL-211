@@ -34,7 +34,7 @@ class UserFactory extends Factory
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             // Nomor HP: hanya digit, max 15 karakter sesuai schema
             'no_hp' => '08'.fake()->numerify('###########'),
-            'role' => fake()->randomElement(['admin', 'nasabah', 'pengelola']),
+            'role' => fake()->randomElement(['superadmin', 'admin', 'nasabah', 'pengelola']),
             'points' => fake()->numberBetween(0, 1000),
             'deskripsi_toko' => fake()->optional()->paragraph(),
             'jam_operasional' => fake()->optional()->time(),

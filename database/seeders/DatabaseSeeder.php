@@ -36,7 +36,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'arshafin@gmail.com',
             'password' => Hash::make('arshafin123'),
             'no_hp' => '081234567890',
-            'role' => 'admin',
+            'role' => 'superadmin',
         ]);
         
         // Pengelola
