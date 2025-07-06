@@ -151,7 +151,7 @@
 </form>
 
 
-                                <img src="{{ asset($artikel->gambar->first()->file_path ?? 'images/default.jpg') }}"
+                                <img src="{{ asset($artikel->gambar ?? 'images/default.jpg') }}"
                                      class="w-full h-48 object-cover transition-transform duration-300 ease-in-out hover:scale-105"
                                      alt="Gambar Artikel">
                             </div>
