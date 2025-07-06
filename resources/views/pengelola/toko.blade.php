@@ -9,9 +9,13 @@
 </div>
 
 <!-- Add Product Button -->
-<div class="mb-6">
+<div class="mb-6 flex space-x-3">
     <button onclick="openProductModal()" class="px-6 py-3 bg-green-600 text-white font-medium rounded-md hover:bg-green-700 transition-all">
         Add New Product
+    </button>
+    <!-- Edit Availability Button -->
+    <button onclick="openAvailabilityModal()" class="px-6 py-3 bg-yellow-500 text-white font-medium rounded-md hover:bg-yellow-600 transition-all">
+        Edit Ketersediaan
     </button>
 </div>
 
@@ -254,6 +258,47 @@
     </div>
 </div>
 
+<!-- Availability Modal -->
+<div id="availabilityModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 hidden">
+    <div class="bg-white rounded-lg shadow-lg max-w-xl w-full p-6 relative">
+        <button onclick="closeAvailabilityModal()" class="absolute top-3 right-3 text-gray-400 hover:text-red-600 text-2xl font-bold">&times;</button>
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">Edit Ketersediaan Produk</h2>
+        <form method="POST" action="{{ route('pengelola.products.updateAvailability') }}">
+            @csrf
+            <!-- Select All Checkbox -->
+            <div class="flex items-center mb-4">
+                <input type="checkbox" id="selectAllProducts" class="mr-2" onclick="toggleSelectAllProducts(this)">
+                <label for="selectAllProducts" class="font-medium text-gray-700">Pilih Semua</label>
+            </div>
+            <div class="overflow-y-auto max-h-64 mb-4 border rounded">
+                <table class="min-w-full divide-y divide-gray-200 text-sm">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-4 py-2 text-left font-medium text-gray-700">Nama Produk</th>
+                            <th class="px-4 py-2 text-left font-medium text-gray-700">Pilih</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                        @foreach($allProducts as $prod)
+                            <tr>
+                                <td class="px-4 py-2 text-gray-800">{{ $prod->nama_produk }}</td>
+                                <td class="px-4 py-2">
+                                    <input type="checkbox" name="produk_ids[]" value="{{ $prod->produk_id }}" class="produk-checkbox">
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+            <!-- Action Buttons -->
+            <div class="flex justify-end space-x-3">
+                <button type="submit" name="status_ketersediaan" value="Available" class="px-5 py-2 bg-green-600 text-white rounded-md hover:bg-green-700">Tersedia</button>
+                <button type="submit" name="status_ketersediaan" value="Unavailable" class="px-5 py-2 bg-red-600 text-white rounded-md hover:bg-red-700">Tidak Tersedia</button>
+            </div>
+        </form>
+    </div>
+</div>
+
 <script>
 function openProductModal(product = null) {
     const modal = document.getElementById('productModal');
@@ -322,5 +367,17 @@ document.querySelector('form[action*="pengelola.toko.update"]').addEventListener
         return;
     }
 });
+
+// Availability modal functions
+function openAvailabilityModal() {
+    document.getElementById('availabilityModal').classList.remove('hidden');
+}
+function closeAvailabilityModal() {
+    document.getElementById('availabilityModal').classList.add('hidden');
+}
+function toggleSelectAllProducts(source) {
+    const checkboxes = document.querySelectorAll('.produk-checkbox');
+    checkboxes.forEach(cb => cb.checked = source.checked);
+}
 </script>
 @endsection

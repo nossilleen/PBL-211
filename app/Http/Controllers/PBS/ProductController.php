@@ -14,9 +14,11 @@ class ProductController extends Controller
 {
     public function index()
     {
-        // Use paginate instead of all()
-        $products = Produk::paginate(12);
-        return view('pengelola.toko', compact('products'));
+        // Use paginate for current user's products
+        $products = Produk::where('user_id', auth()->id())->paginate(12);
+        $allProducts = Produk::where('user_id', auth()->id())->get();
+        $user = auth()->user();
+        return view('pengelola.toko', compact('products', 'allProducts', 'user'));
     }
 
     public function create()
@@ -181,8 +183,11 @@ class ProductController extends Controller
     public function toko()
     {
         $user = auth()->user();
+        // Paginate for grid display
         $products = Produk::where('user_id', auth()->id())->paginate(12);
-        return view('pengelola.toko', compact('products', 'user'));
+        // Fetch full list for availability modal
+        $allProducts = Produk::where('user_id', auth()->id())->get();
+        return view('pengelola.toko', compact('products', 'allProducts', 'user'));
     }
 
     public function updateToko(Request $request)
@@ -272,5 +277,21 @@ class ProductController extends Controller
             ->orderBy('suka', 'desc')
             ->take(4)
             ->get();
+    }
+
+    public function bulkUpdateAvailability(Request $request)
+    {
+        $validated = $request->validate([
+            'produk_ids' => 'required|array',
+            'status_ketersediaan' => 'required|in:Available,Unavailable',
+        ]);
+
+        // Ensure only products owned by current user are updated
+        Produk::whereIn('produk_id', $validated['produk_ids'])
+            ->where('user_id', auth()->id())
+            ->update(['status_ketersediaan' => $validated['status_ketersediaan']]);
+
+        return redirect()->route('pengelola.toko')
+            ->with('success', 'Status ketersediaan produk berhasil diperbarui');
     }
 }

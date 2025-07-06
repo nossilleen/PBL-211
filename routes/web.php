@@ -151,6 +151,9 @@ Route::middleware(['auth', 'role:pengelola'])->group(function () {
     // Product routes khusus pengelola (gunakan prefix /pengelola/products dari resource)
     Route::resource('/pengelola/products', ProductController::class);
     Route::put('/pengelola/toko/update', [ProductController::class, 'updateToko'])->name('pengelola.toko.update');
+    
+    // Bulk update availability for products
+    Route::post('/pengelola/products/update-availability', [ProductController::class, 'bulkUpdateAvailability'])->name('pengelola.products.updateAvailability');
 });
 
 Route::get('/stores', [\App\Http\Controllers\PBS\PengelolaController::class, 'stores'])->name('stores.index');
