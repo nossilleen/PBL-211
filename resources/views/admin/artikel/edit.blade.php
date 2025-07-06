@@ -24,13 +24,34 @@
 
             <div class="mb-4">
                 <label for="gambar" class="block text-sm font-medium text-gray-700">Gambar</label>
-                <input type="file" name="gambar" id="gambar" class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-green-50 file:text-green-700 hover:file:bg-green-100">
-                @if($artikel->gambar && $artikel->gambar->count())
+                <input type="file" name="gambar" id="gambar" accept="image/*" class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-green-50 file:text-green-700 hover:file:bg-green-100">
+                
+                @if($artikel->gambar)
                     <div class="mt-2">
                         <span class="text-xs text-gray-500">Gambar saat ini:</span>
-                        <img src="{{ asset($artikel->gambar->first()->file_path) }}" alt="Gambar Artikel" class="h-20 mt-1 rounded">
+                        <div class="flex items-center space-x-4 mt-1">
+                            <img src="{{ asset($artikel->gambar) }}" alt="Gambar Artikel" class="h-20 rounded">
+                            <button type="button" id="crop-current-btn" class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm">
+                                Crop Gambar Ini
+                            </button>
+                        </div>
                     </div>
                 @endif
+                
+                <div id="cropper-container" class="mt-4" style="display:none;">
+                    <img id="cropper-image" style="max-width:100%; max-height:300px;">
+                    <div class="mt-2 space-x-2">
+                        <button type="button" id="crop-btn" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded">Crop Gambar</button>
+                        <button type="button" id="cancel-crop-btn" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded">Batal</button>
+                    </div>
+                </div>
+                <input type="hidden" name="cropped_gambar" id="cropped_gambar">
+                <div id="cropped-preview" class="mt-2"></div>
+                <div id="clear-preview" class="mt-2" style="display:none;">
+                    <button type="button" id="clear-preview-btn" class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm">
+                        Hapus Preview
+                    </button>
+                </div>
             </div>
 
             <div class="mb-4">
@@ -71,3 +92,103 @@
         </div>
     @endif
 @endsection
+
+@push('styles')
+<link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" rel="stylesheet"/>
+@endpush
+
+@push('scripts')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+<script>
+let cropper;
+const input = document.getElementById('gambar');
+const cropperContainer = document.getElementById('cropper-container');
+const cropperImage = document.getElementById('cropper-image');
+const cropBtn = document.getElementById('crop-btn');
+const cropCurrentBtn = document.getElementById('crop-current-btn');
+const cancelCropBtn = document.getElementById('cancel-crop-btn');
+const croppedInput = document.getElementById('cropped_gambar');
+const croppedPreview = document.getElementById('cropped-preview');
+const clearPreview = document.getElementById('clear-preview');
+const clearPreviewBtn = document.getElementById('clear-preview-btn');
+
+input.addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(event) {
+            cropperImage.src = event.target.result;
+            cropperContainer.style.display = 'block';
+            if (cropper) cropper.destroy();
+            cropper = new Cropper(cropperImage, {
+                aspectRatio: 16 / 9,
+                viewMode: 1,
+                autoCropArea: 1,
+            });
+        };
+        reader.readAsDataURL(file);
+    }
+});
+
+cropBtn.addEventListener('click', function() {
+    if (cropper) {
+        const canvas = cropper.getCroppedCanvas({
+            width: 1280,
+            height: 720
+        });
+        canvas.toBlob(function(blob) {
+            const reader = new FileReader();
+            reader.onloadend = function() {
+                croppedInput.value = reader.result;
+                croppedPreview.innerHTML = '<img src="' + reader.result + '" class="mt-2 rounded shadow" style="max-width:100%;">';
+                clearPreview.style.display = 'block';
+            };
+            reader.readAsDataURL(blob);
+        }, 'image/jpeg');
+    }
+});
+
+// Cancel crop
+if (cancelCropBtn) {
+    cancelCropBtn.addEventListener('click', function() {
+        cropperContainer.style.display = 'none';
+        if (cropper) cropper.destroy();
+        croppedInput.value = '';
+        croppedPreview.innerHTML = '';
+        clearPreview.style.display = 'none';
+    });
+}
+
+// Clear preview
+if (clearPreviewBtn) {
+    clearPreviewBtn.addEventListener('click', function() {
+        croppedInput.value = '';
+        croppedPreview.innerHTML = '';
+        clearPreview.style.display = 'none';
+    });
+}
+
+// Crop gambar yang sudah ada
+if (cropCurrentBtn) {
+    cropCurrentBtn.addEventListener('click', function() {
+        const currentImageSrc = '{{ asset($artikel->gambar) }}';
+        cropperImage.src = currentImageSrc;
+        cropperContainer.style.display = 'block';
+        if (cropper) cropper.destroy();
+        cropper = new Cropper(cropperImage, {
+            aspectRatio: 16 / 9,
+            viewMode: 1,
+            autoCropArea: 1,
+        });
+    });
+}
+
+// Saat submit, jika ada cropped_gambar, hapus input file asli agar hanya cropped yang dikirim
+const form = input.closest('form');
+form.addEventListener('submit', function(e) {
+    if (croppedInput.value) {
+        input.removeAttribute('name');
+    }
+});
+</script>
+@endpush

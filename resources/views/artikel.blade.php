@@ -178,7 +178,7 @@
                                         <span class="text-xs text-gray-600 ml-1">{{ $artikel->likes->count() }} suka</span>
                                     </button>
                                 </form>
-                                <img src="{{ asset($artikel->gambar->first()->file_path ?? 'images/default.jpg') }}" class="w-full h-48 object-cover transition-transform duration-300 ease-in-out hover:scale-105" alt="Gambar Artikel">
+                                <img src="{{ asset($artikel->gambar ?? 'images/default.jpg') }}" class="w-full h-48 object-cover transition-transform duration-300 ease-in-out hover:scale-105" alt="Gambar Artikel">
                             </div>
                             <div class="flex items-center gap-2 mb-2">
                                 <a href="{{ route('artikel.show', $artikel->artikel_id) }}" class="text-xl font-bold text-green-700 hover:underline hover:text-green-800 transition-all duration-200 ease-in-out hover:-translate-y-0.5 inline-block">

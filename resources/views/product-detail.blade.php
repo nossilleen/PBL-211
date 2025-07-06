@@ -28,9 +28,7 @@
                 <div class="bg-white rounded-lg shadow-sm p-6">
                     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 relative"> 
                         <div class="lg:col-span-5 w-full"> 
-                            <div class="bg-gray-100 rounded-lg overflow-hidden shadow-sm">
-                                <img id="mainImage" src="{{ asset($product->image_url) }}" alt="{{ $product->nama_produk }}" class="w-full h-auto object-cover">
-                            </div>
+                            <x-product-image-slider :images="$product->gambar" :productName="$product->nama_produk" />
                         </div>
 
                         <div class="lg:col-span-4 w-full space-y-4"> {{-- Adjusted overall space-y --}}

@@ -697,6 +697,63 @@ img {
   z-index: 1;
 }
 
+/* Product Image Slider Styles */
+.product-image-slider {
+  position: relative;
+}
+
+.product-image-slider img {
+  transition: opacity 0.3s ease-in-out;
+}
+
+.thumbnail-btn {
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.thumbnail-btn:hover {
+  transform: scale(1.05);
+}
+
+.thumbnail-btn.active {
+  border-color: #10b981 !important;
+  box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
+}
+
+/* Navigation arrows */
+.product-image-slider button[id^="prev"], 
+.product-image-slider button[id^="next"] {
+  transition: all 0.2s ease-in-out;
+}
+
+.product-image-slider button[id^="prev"]:hover, 
+.product-image-slider button[id^="next"]:hover {
+  background-color: white !important;
+  transform: scale(1.1);
+}
+
+/* Image preview in forms */
+#imagePreview img {
+  transition: all 0.2s ease-in-out;
+}
+
+#imagePreview img:hover {
+  transform: scale(1.05);
+}
+
+/* Responsive adjustments for slider */
+@media (max-width: 768px) {
+  .product-image-slider .thumbnail-btn {
+    width: 3rem;
+    height: 3rem;
+  }
+  
+  .product-image-slider button[id^="prev"], 
+  .product-image-slider button[id^="next"] {
+    padding: 0.5rem;
+  }
+}
+
 :root {
   --primary-gradient: linear-gradient(135deg, #B0D85D 0%, #90D65C 50%, #3ED260 100%);
   --secondary-gradient: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);

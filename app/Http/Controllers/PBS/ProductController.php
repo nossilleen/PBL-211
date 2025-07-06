@@ -33,7 +33,8 @@ class ProductController extends Controller
             'harga_points' => 'nullable|numeric|min:0',
             'deskripsi' => 'nullable|string',
             'kategori' => 'required|string',
-            'image' => 'required|image|mimes:jpeg,png,jpg|max:2048'
+            'images.*' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+            'images' => 'required|array|min:1|max:5'
         ]);
 
         try {
@@ -49,18 +50,17 @@ class ProductController extends Controller
                 'suka' => 0
             ]);
 
-            // Handle image upload
-            if ($request->hasFile('image')) {
-                $image = $request->file('image');
-                $imageName = time() . '.' . $image->extension();
-                // Update storage path
-                $path = $image->storeAs('products', $imageName, 'public');
+            // Handle multiple image uploads
+            if ($request->hasFile('images')) {
+                foreach ($request->file('images') as $image) {
+                    $imageName = time() . '_' . uniqid() . '.' . $image->extension();
+                    $path = $image->storeAs('products', $imageName, 'public');
 
-                // Update file path in database
-                ProdukGambar::create([
-                    'produk_id' => $product->produk_id,
-                    'file_path' => $path
-                ]);
+                    ProdukGambar::create([
+                        'produk_id' => $product->produk_id,
+                        'file_path' => $path
+                    ]);
+                }
             }
 
             return redirect()->route('pengelola.toko')
@@ -75,8 +75,14 @@ class ProductController extends Controller
 
     public function edit($id)
     {
-        // Show the form to edit an existing product
-        $product = Produk::findOrFail($id); // Use the correct model
+        // Show the form to edit an existing product with images
+        $product = Produk::with('gambar')->findOrFail($id);
+        
+        // Check if user owns this product
+        if ($product->user_id !== auth()->id()) {
+            return redirect()->route('pengelola.toko')->with('error', 'Unauthorized action.');
+        }
+        
         return view('pengelola.products.edit', compact('product'));
     }
 
@@ -89,7 +95,9 @@ class ProductController extends Controller
             'deskripsi' => 'required|string',
             'kategori' => 'required|in:eco_enzim,sembako',
             'status_ketersediaan' => 'required|in:Available,Unavailable', // Updated to match enum
-            'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048'
+            'images.*' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'images' => 'nullable|array|max:5',
+            'replace_image_index' => 'nullable|integer|min:0|max:4'
         ]);
 
         try {
@@ -108,22 +116,26 @@ class ProductController extends Controller
                 'status_ketersediaan' => $validated['status_ketersediaan']
             ]);
 
-            if ($request->hasFile('image')) {
-                $image = $request->file('image');
-                $imageName = time() . '.' . $image->extension();
-                $path = $image->storeAs('products', $imageName, 'public');
-
-                // Delete old image if exists
-                if ($product->gambar()->exists()) {
-                    Storage::disk('public')->delete($product->gambar->first()->file_path);
-                    $product->gambar()->delete();
+            // Handle image replacement
+            if ($request->hasFile('images') && $request->has('replace_image_index')) {
+                $replaceIndex = $request->input('replace_image_index');
+                $newImage = $request->file('images')[0]; // Only one image for replacement
+                
+                // Get current images
+                $currentImages = $product->gambar()->orderBy('gambar_id')->get();
+                
+                if ($currentImages->count() > $replaceIndex) {
+                    // Delete the specific image
+                    $imageToReplace = $currentImages[$replaceIndex];
+                    Storage::disk('public')->delete($imageToReplace->file_path);
+                    
+                    // Upload new image
+                    $imageName = time() . '_' . uniqid() . '.' . $newImage->extension();
+                    $path = $newImage->storeAs('products', $imageName, 'public');
+                    
+                    // Update the specific image record
+                    $imageToReplace->update(['file_path' => $path]);
                 }
-
-                // Create new image record
-                ProdukGambar::create([
-                    'produk_id' => $product->produk_id,
-                    'file_path' => $path
-                ]);
             }
 
             return redirect()->route('pengelola.toko')
@@ -181,7 +193,7 @@ class ProductController extends Controller
     public function toko()
     {
         $user = auth()->user();
-        $products = Produk::where('user_id', auth()->id())->paginate(12);
+        $products = Produk::with('gambar')->where('user_id', auth()->id())->paginate(12);
         return view('pengelola.toko', compact('products', 'user'));
     }
 

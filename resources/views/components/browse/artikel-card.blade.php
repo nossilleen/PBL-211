@@ -12,7 +12,7 @@
 @endphp
 <div class="bg-white rounded-xl shadow-lg hover:shadow-2xl overflow-hidden flex flex-col h-full min-h-[420px] relative group transition-all duration-300 ease-in-out transform hover:-translate-y-2 hover:scale-[1.02] cursor-pointer border border-gray-100">
     <div class="relative h-52 overflow-hidden">
-        <img src="{{ asset($artikel->gambar->first()->file_path ?? 'images/default.jpg') }}" alt="{{ $artikel->judul }}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+        <img src="{{ asset($artikel->gambar ?? 'images/default.jpg') }}" alt="{{ $artikel->judul }}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
         <a href="{{ route('artikel.index', ['kategori' => $kategori]) }}" class="absolute top-3 right-2 z-10 bg-green-100 text-green-800 text-xs font-semibold px-3 py-1 rounded-full shadow flex items-center gap-1 hover:bg-green-200">
             <span>{{ $icon }}</span>
             <span>{{ ucfirst($kategori) }}</span>

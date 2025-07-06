@@ -15,6 +15,7 @@ class Artikel extends Model
         'kategori', 
         'judul', 
         'konten', 
+        'gambar',
         'tanggal_publikasi', 
         'user_id'
     ];
@@ -42,9 +43,12 @@ public function likedByUsers() {
 }
 
     
-    public function gambar()
+    /**
+     * Get the image URL for the artikel
+     */
+    public function getImageUrlAttribute()
     {
-        return $this->hasMany(ArtikelGambar::class, 'artikel_id');
+        return $this->gambar ? asset($this->gambar) : asset('images/default-artikel.jpg');
     }
     
    

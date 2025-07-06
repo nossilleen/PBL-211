@@ -7,7 +7,7 @@
 
         {{-- Gambar Utama Artikel --}}
         <div class="bg-white rounded-xl shadow-md hover:shadow-lg transition mb-8 overflow-hidden">
-            <img src="{{ asset($artikel->gambar->first()->file_path ?? 'images/default.jpg') }}" alt="Hero Artikel" class="w-full h-auto object-cover">
+            <img src="{{ asset($artikel->gambar ?? 'images/default.jpg') }}" alt="Hero Artikel" class="w-full h-auto object-cover">
             <div class="flex items-center justify-between px-6 py-3 border-b">
                 <div class="flex items-center space-x-2 text-xs text-gray-600">
     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -159,7 +159,7 @@
                         @foreach($relatedArticles as $related)
                         <li class="flex items-start space-x-3 hover:bg-gray-50 p-2 rounded-lg transition">
                             <a href="{{ route('artikel.show', $related->artikel_id) }}" class="flex space-x-3">
-                                <img src="{{ $related->gambar->first()->file_path ?? '/images/default.jpg' }}" class="w-16 h-16 object-cover rounded" alt="{{ $related->judul }}">
+                                <img src="{{ $related->gambar ?? '/images/default.jpg' }}" class="w-16 h-16 object-cover rounded" alt="{{ $related->judul }}">
                                 <div>
                                     <div class="font-medium text-sm text-gray-800">{{ $related->judul }}</div>
                                     <div class="text-xs text-gray-500">{{ Str::limit(strip_tags($related->konten), 50) }}</div>

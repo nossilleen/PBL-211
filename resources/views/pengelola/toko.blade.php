@@ -60,9 +60,10 @@
             <div class="group bg-white rounded-xl shadow-md hover:shadow-xl border border-gray-100 overflow-hidden transition-all duration-300 hover:scale-105">
                 <!-- Product Image -->
                 <div class="relative h-48 overflow-hidden">
-                    <img src="{{ Storage::url($item->gambar->first()?->file_path) ?? asset('images/default-image.jpg') }}" 
-                         alt="{{ $item->nama_produk }}" 
-                         class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
+                    @if($item->gambar && count($item->gambar) > 0)
+                        <img src="{{ Storage::url($item->gambar->first()->file_path) }}" 
+                             alt="{{ $item->nama_produk }}" 
+                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
                     
                     <!-- Category Badge -->
                     <div class="absolute top-3 left-3">
@@ -87,6 +88,18 @@
                             <span class="text-xs text-white font-medium">{{ $item->suka }}</span>
                         </div>
                     </div>
+                        @if(count($item->gambar) > 1)
+                            <div class="absolute top-2 right-2 bg-black bg-opacity-50 text-white text-xs px-2 py-1 rounded-full">
+                                +{{ count($item->gambar) - 1 }} gambar
+                            </div>
+                        @endif
+                    @else
+                        <div class="w-full h-full bg-gray-200 flex items-center justify-center">
+                            <svg class="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                            </svg>
+                        </div>
+                    @endif
                 </div>
                 
                 <!-- Product Info -->
@@ -322,6 +335,29 @@
                             <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                         @enderror
                     </div>
+            <!-- Multiple Images Upload -->
+            <div class="mb-4">
+                <label for="images" class="block text-gray-700 font-medium mb-2">Product Images *</label>
+                <input type="file" name="images[]" id="images" multiple
+                       class="w-full border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500 @error('images') border-red-500 @enderror"
+                       accept="image/*" onchange="handleImageUpload(this)">
+                <p class="text-xs text-gray-500 mt-1">Pilih 1-5 gambar (JPG, PNG)</p>
+                <p id="imageCount" class="text-xs text-green-600 mt-1 hidden">0 gambar dipilih</p>
+                @error('images')
+                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                @enderror
+                @error('images.*')
+                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                @enderror
+                
+                <!-- Image Preview -->
+                <div id="imagePreview" class="mt-2 grid grid-cols-3 gap-2 hidden">
+                    <!-- Preview images will be inserted here -->
+                </div>
+            </div>
+
+            <!-- Hidden input for image replacement (for edit mode) -->
+            <input type="hidden" name="replace_image_index" id="replaceImageIndex" value="">
 
                     <!-- Product Name -->
                     <div class="md:col-span-2">
@@ -443,7 +479,7 @@ function openProductModal(product = null) {
     const form = document.getElementById('productForm');
     const modalTitle = document.getElementById('modalTitle');
     const methodInput = document.getElementById('productId');
-    const imageInput = document.getElementById('image');
+    const imagesInput = document.getElementById('images');
     const previewContainer = document.getElementById('imagePreview');
     const placeholder = document.getElementById('uploadPlaceholder');
 
@@ -464,17 +500,26 @@ function openProductModal(product = null) {
         document.getElementById('kategori').value = product.kategori;
         document.getElementById('status_ketersediaan').value = product.status_ketersediaan;
         
-        // Make image optional for editing
-        imageInput.removeAttribute('required');
+        // Make images optional for editing
+        imagesInput.removeAttribute('required');
     } else {
         modalTitle.textContent = 'Add Product';
         form.action = '{{ route('products.store') }}';
         methodInput.value = 'POST';
         form.reset();
         
-        // Make image required for new products
-        imageInput.setAttribute('required', 'required');
+        // Make images required for new products
+        imagesInput.setAttribute('required', 'required');
     }
+
+    // Clear image preview and reset global array
+    allSelectedFiles = [];
+    document.getElementById('imagePreview').innerHTML = '';
+    document.getElementById('imagePreview').classList.add('hidden');
+    document.getElementById('imageCount').classList.add('hidden');
+    
+    // Clear file input
+    document.getElementById('images').value = '';
 
     modal.classList.remove('hidden');
     document.body.style.overflow = 'hidden';
@@ -492,7 +537,82 @@ function showTokoModalAlert() {
 
 function closeTokoModalAlert() {
     document.getElementById('modalTokoAlert').classList.add('hidden');
-    document.body.style.overflow = 'auto';
+}
+
+// Global variable to store all selected files
+let allSelectedFiles = [];
+
+function handleImageUpload(input) {
+    const preview = document.getElementById('imagePreview');
+    const files = Array.from(input.files);
+    
+    // Check if adding new files would exceed limit
+    if (allSelectedFiles.length + files.length > 5) {
+        alert('Maksimal hanya bisa upload 5 gambar!');
+        return;
+    }
+    
+    // Add new files to existing files
+    allSelectedFiles = [...allSelectedFiles, ...files];
+    
+    // Update the input files
+    const dt = new DataTransfer();
+    allSelectedFiles.forEach(file => dt.items.add(file));
+    input.files = dt.files;
+    
+    if (allSelectedFiles.length === 0) {
+        preview.classList.add('hidden');
+        document.getElementById('imageCount').classList.add('hidden');
+        return;
+    }
+    
+    preview.innerHTML = '';
+    preview.classList.remove('hidden');
+    
+    // Update image count
+    const imageCount = document.getElementById('imageCount');
+    imageCount.textContent = `${allSelectedFiles.length} gambar dipilih`;
+    imageCount.classList.remove('hidden');
+    
+    allSelectedFiles.forEach((file, index) => {
+        const reader = new FileReader();
+        
+        reader.onload = function(e) {
+            const previewItem = document.createElement('div');
+            previewItem.className = 'relative group';
+            previewItem.innerHTML = `
+                <img src="${e.target.result}" alt="Preview" class="w-full h-16 object-cover rounded">
+                <button type="button" onclick="removeImage(${index})" class="absolute top-0 right-0 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs opacity-0 group-hover:opacity-100 transition-opacity">
+                    ×
+                </button>
+            `;
+            preview.appendChild(previewItem);
+        };
+        
+        reader.readAsDataURL(file);
+    });
+}
+
+function removeImage(index) {
+    console.log('Removing image at index:', index);
+    const input = document.getElementById('images');
+    
+    if (!input) {
+        console.error('Input element not found');
+        return;
+    }
+    
+    // Remove file from array
+    allSelectedFiles.splice(index, 1);
+    console.log('Remaining files:', allSelectedFiles.length);
+    
+    // Update input files
+    const dt = new DataTransfer();
+    allSelectedFiles.forEach(file => dt.items.add(file));
+    input.files = dt.files;
+    
+    // Re-render preview
+    handleImageUpload(input);
 }
 
 // Store form validation

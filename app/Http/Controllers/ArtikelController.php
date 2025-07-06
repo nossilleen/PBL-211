@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Artikel;
-use App\Models\ArtikelGambar;
 use App\Models\Notification;
 use App\Models\ArtikelLike;
 use Illuminate\Http\Request;
@@ -76,11 +75,7 @@ class ArtikelController extends Controller
         if ($request->hasFile('gambar')) {
             $file = $request->file('gambar');
             $path = $file->store('artikel_gambar', 'public');
-            ArtikelGambar::create([
-                'artikel_id' => $artikel->artikel_id,
-                'file_path' => 'storage/' . $path,
-                'judul' => $artikel->judul,
-            ]);
+            $artikel->update(['gambar' => 'storage/' . $path]);
         }
         // Penanganan hasil crop gambar (base64)
         elseif ($request->filled('cropped_gambar')) {
@@ -90,11 +85,7 @@ class ArtikelController extends Controller
             $filename = 'artikel_' . time() . '.jpg';
             $path = 'artikel_gambar/' . $filename;
             \Storage::disk('public')->put($path, $data);
-            ArtikelGambar::create([
-                'artikel_id' => $artikel->artikel_id,
-                'file_path' => 'storage/' . $path,
-                'judul' => $artikel->judul,
-            ]);
+            $artikel->update(['gambar' => 'storage/' . $path]);
         }
 
         return redirect()->route('admin.artikel.index')->with('success', 'Artikel berhasil dibuat!');
@@ -102,7 +93,7 @@ class ArtikelController extends Controller
 
     public function edit($id)
     {
-        $artikel = Artikel::with('gambar')->findOrFail($id);
+        $artikel = Artikel::findOrFail($id);
         return view('admin.artikel.edit', compact('artikel'));
     }
 
@@ -122,21 +113,29 @@ class ArtikelController extends Controller
         $artikel->update($request->only(['judul', 'konten', 'kategori', 'tanggal_publikasi']));
 
         if ($request->hasFile('gambar')) {
-            if ($artikel->gambar && $artikel->gambar->count()) {
-                $oldImage = $artikel->gambar->first();
-                if ($oldImage && file_exists(public_path($oldImage->file_path))) {
-                    @unlink(public_path($oldImage->file_path));
-                }
-                $oldImage->delete();
+            // Delete old image if exists
+            if ($artikel->gambar && file_exists(public_path($artikel->gambar))) {
+                @unlink(public_path($artikel->gambar));
             }
 
             $file = $request->file('gambar');
             $path = $file->store('artikel_gambar', 'public');
-            ArtikelGambar::create([
-                'artikel_id' => $artikel->artikel_id,
-                'file_path' => 'storage/' . $path,
-                'judul' => $artikel->judul,
-            ]);
+            $artikel->update(['gambar' => 'storage/' . $path]);
+        }
+        // Penanganan hasil crop gambar (base64)
+        elseif ($request->filled('cropped_gambar')) {
+            // Delete old image if exists
+            if ($artikel->gambar && file_exists(public_path($artikel->gambar))) {
+                @unlink(public_path($artikel->gambar));
+            }
+            
+            $data = $request->input('cropped_gambar');
+            $data = preg_replace('/^data:image\/(\w+);base64,/', '', $data);
+            $data = base64_decode($data);
+            $filename = 'artikel_' . time() . '.jpg';
+            $path = 'artikel_gambar/' . $filename;
+            \Storage::disk('public')->put($path, $data);
+            $artikel->update(['gambar' => 'storage/' . $path]);
         }
 
         return redirect()->route('admin.artikel.index')->with('success', 'Artikel berhasil diperbarui!');
@@ -144,13 +143,11 @@ class ArtikelController extends Controller
 
     public function destroy($id)
     {
-        $artikel = Artikel::with('gambar')->findOrFail($id);
+        $artikel = Artikel::findOrFail($id);
 
-        foreach ($artikel->gambar as $gambar) {
-            if ($gambar->file_path && file_exists(public_path($gambar->file_path))) {
-                @unlink(public_path($gambar->file_path));
-            }
-            $gambar->delete();
+        // Delete image file if exists
+        if ($artikel->gambar && file_exists(public_path($artikel->gambar))) {
+            @unlink(public_path($artikel->gambar));
         }
 
         $artikel->delete();
@@ -194,7 +191,6 @@ class ArtikelController extends Controller
         // Eager load relasi replies secara rekursif
         $artikel = Artikel::with([
             'user', 
-            'gambar', 
             'likes', 
             'feedback' => function ($query) {
                 $query->whereNull('parent_id')->orderBy('created_at', 'desc');
