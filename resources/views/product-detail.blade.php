@@ -102,6 +102,7 @@
                             
                         </div>
 
+                        @if($product->status_ketersediaan == 'Available')
                         <div class="lg:col-span-3 w-full font-['Lexend_Deca',_sans-serif]"> 
                             <form action="{{ route('produk.beli') }}" method="POST" class="bg-white rounded-xl shadow-2xl p-8 relative">
                                 @csrf
@@ -144,6 +145,7 @@
                                 </div>
                             </form>
                         </div>
+                        @endif
                     </div>
                 </div>
             </div>

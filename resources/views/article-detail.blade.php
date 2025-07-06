@@ -27,21 +27,18 @@
 
 
     {{-- Tombol Like --}}
-    <form method="POST" action="{{ route('artikel.like', $artikel->artikel_id) }}">
-    @csrf
-    <button type="submit"
+    <button type="button" onclick="toggleLikeArtikel({{ $artikel->artikel_id }});"
         class="inline-flex items-center bg-blue-100 text-blue-700 px-4 py-2 rounded-full text-sm font-medium space-x-2 hover:bg-blue-200 transition">
-        <svg xmlns="http://www.w3.org/2000/svg"
+        <svg id="heart-article-{{ $artikel->artikel_id }}" xmlns="http://www.w3.org/2000/svg"
              class="w-5 h-5 {{ $liked ? 'text-red-500' : 'text-gray-500' }}"
-             viewBox="0 0 24 24" fill="currentColor">
+             fill="{{ $liked ? 'currentColor' : 'none' }}" stroke="currentColor" viewBox="0 0 24 24">
             <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 
                      2 6.01 4.01 4 6.5 4c1.74 0 3.41 1.01 4.13 2.44h1.74C14.09 5.01 
                      15.76 4 17.5 4 19.99 4 22 6.01 22 8.5c0 3.78-3.4 6.86-8.55 
                      11.54L12 21.35z" />
         </svg>
-        <span>{{ $artikel->likes()->count() }}</span>
+        <span id="like-count-article-{{ $artikel->artikel_id }}">{{ $artikel->likes()->count() }}</span>
     </button>
-</form>
 
 
 
@@ -210,5 +207,40 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 });
+</script>
+
+<script>
+if (typeof toggleLikeArtikel === 'undefined') {
+function toggleLikeArtikel(artikelId) {
+    const heartIcon = document.getElementById(`heart-article-${artikelId}`);
+    const likeCountEl = document.getElementById(`like-count-article-${artikelId}`);
+    fetch(`/artikel/${artikelId}/like`, {
+        method: 'POST',
+        headers: {
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+            'Accept': 'application/json'
+        },
+        credentials: 'same-origin'
+    })
+    .then(res => {
+        if (res.status === 401) { window.location.href = '/login'; return null; }
+        return res.json();
+    })
+    .then(data => {
+        if (!data) return;
+        if (data.isLiked) {
+            heartIcon.classList.add('text-red-500');
+            heartIcon.classList.remove('text-gray-500');
+            heartIcon.setAttribute('fill','currentColor');
+        } else {
+            heartIcon.classList.remove('text-red-500');
+            heartIcon.classList.add('text-gray-500');
+            heartIcon.setAttribute('fill','none');
+        }
+        likeCountEl.textContent = data.suka;
+    })
+    .catch(console.error);
+}
+}
 </script>
 @endsection

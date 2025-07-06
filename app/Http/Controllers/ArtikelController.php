@@ -219,30 +219,30 @@ class ArtikelController extends Controller
     }
 
     public function landing(Request $request)
-{
-    $query = Artikel::with(['likes']);
+    {
+        $query = Artikel::with(['likes']);
 
-    if ($request->kategori) {
-        $query->where('kategori', $request->kategori);
+        if ($request->kategori) {
+            $query->where('kategori', $request->kategori);
+        }
+
+        if ($request->search) {
+            $query->where(function ($q) use ($request) {
+                $q->where('judul', 'like', '%' . $request->search . '%')
+                  ->orWhere('konten', 'like', '%' . $request->search . '%');
+            });
+        }
+
+        if ($request->sort === 'populer') {
+            $query->withCount('feedback')->orderByDesc('feedback_count');
+        } else {
+            $query->orderByDesc('tanggal_publikasi');
+        }
+
+        $artikels = $query->paginate(12)->withQueryString();
+
+        return view('artikel', compact('artikels'));
     }
-
-    if ($request->search) {
-        $query->where(function ($q) use ($request) {
-            $q->where('judul', 'like', '%' . $request->search . '%')
-              ->orWhere('konten', 'like', '%' . $request->search . '%');
-        });
-    }
-
-    if ($request->sort === 'populer') {
-        $query->withCount('feedback')->orderByDesc('feedback_count');
-    } else {
-        $query->orderByDesc('tanggal_publikasi');
-    }
-
-    $artikels = $query->paginate(12)->withQueryString();
-
-    return view('artikel', compact('artikels'));
-}
 
     public function show($id)
     {
@@ -264,40 +264,54 @@ class ArtikelController extends Controller
         return view('article-detail', compact('artikel', 'relatedArticles'));
     }
     
-public function like($id)
-{
-    $user = auth()->user();
-    $artikel = Artikel::findOrFail($id);
+    public function like($id)
+    {
+        $user = auth()->user();
+        if (!$user) {
+            return response()->json(['success' => false, 'message' => 'Unauthenticated'], 401);
+        }
 
-    // Cek apakah user sudah like
-    $existingLike = ArtikelLike::where('artikel_id', $id)
-        ->where('user_id', $user->user_id)
-        ->first();
+        $artikel = Artikel::findOrFail($id);
 
-    if ($existingLike) {
-        // Kalau sudah like → unlike
-        $existingLike->delete();
-    } else {
-        // Kalau belum like → like
-        ArtikelLike::create([
-            'artikel_id' => $id,
-            'user_id' => $user->user_id,
-        ]);
+        // Cek apakah user sudah like
+        $existingLike = ArtikelLike::where('artikel_id', $id)
+            ->where('user_id', $user->user_id)
+            ->first();
+
+        if ($existingLike) {
+            // Kalau sudah like → unlike
+            $existingLike->delete();
+            $isLiked = false;
+        } else {
+            // Kalau belum like → like
+            ArtikelLike::create([
+                'artikel_id' => $id,
+                'user_id' => $user->user_id,
+            ]);
+            $isLiked = true;
+        }
+
+        // Hitung ulang jumlah suka
+        $likesCount = ArtikelLike::where('artikel_id', $id)->count();
+
+        if (request()->expectsJson() || request()->ajax()) {
+            return response()->json([
+                'success' => true,
+                'isLiked' => $isLiked,
+                'suka'    => $likesCount,
+            ]);
+        }
+
+        return redirect()->back();
     }
 
+    public function showProfil()
+    {
+        $user = Auth::user();
 
-    return redirect()->back();
-}
-public function showProfil()
-{
-    $user = Auth::user();
+        // Pastikan relasi likedArtikels sudah didefinisikan di model User
+        $favoritArtikels = $user->likedArtikels()->with('kategori')->latest()->get();
 
-    // Pastikan relasi likedArtikels sudah didefinisikan di model User
-    $favoritArtikels = $user->likedArtikels()->with('kategori')->latest()->get();
-
-    return view('nasabah.profil', compact('favoritArtikels'));
-}
-
-
-
+        return view('nasabah.profil', compact('favoritArtikels'));
+    }
 }

@@ -66,9 +66,6 @@
                 </div>
             @endforeach
         </div>
-        <div class="mt-4">
-            <a href="{{ route('pengelola.riwayat') }}" class="text-green-600 hover:text-green-800 text-sm font-medium">Lihat semua aktivitas →</a>
-        </div>
     </div>
 
     <!-- Statistik Bulanan -->
