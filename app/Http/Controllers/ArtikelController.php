@@ -23,18 +23,39 @@ class ArtikelController extends Controller
 
     public function index(Request $request)
     {
-        $query = Artikel::withCount('feedback');
+        $query = Artikel::withCount(['feedback', 'likes']);
 
         if ($request->search) {
             $query->where('judul', 'like', '%' . $request->search . '%')
                   ->orWhere('konten', 'like', '%' . $request->search . '%');
         }
 
-        $sort = $request->input('sort', 'terbaru');
-        if ($sort === 'populer') {
-            $query->orderByDesc('feedback_count');
+        // Dynamic ordering
+        $orderBy = $request->input('order_by');
+        $direction = $request->input('direction', 'asc');
+
+        if ($orderBy) {
+            switch ($orderBy) {
+                case 'likes':
+                    $query->orderBy('likes_count', $direction);
+                    break;
+                case 'penulis':
+                    // Join users table for ordering by penulis (nama)
+                    $query->join('user as u', 'u.user_id', '=', 'artikel.user_id')
+                          ->select('artikel.*', 'u.nama')
+                          ->orderBy('u.nama', $direction);
+                    break;
+                default:
+                    $query->orderBy($orderBy, $direction);
+            }
         } else {
-            $query->orderByDesc('tanggal_publikasi');
+            // Existing sort logic
+            $sort = $request->input('sort', 'terbaru');
+            if ($sort === 'populer') {
+                $query->orderByDesc('feedback_count');
+            } else {
+                $query->orderByDesc('tanggal_publikasi');
+            }
         }
 
         $artikels = $query->paginate(6)->withQueryString();
@@ -48,15 +69,31 @@ class ArtikelController extends Controller
                       ->orWhere('description', 'like', '%' . $request->event_search . '%');
         }
         
-        // Sorting untuk events
-        $eventSort = $request->input('event_sort', 'terbaru');
-        if ($eventSort === 'terlama') {
-            $eventQuery->orderBy('created_at', 'asc');
+        // Event ordering enhancements
+        $orderByEvent = $request->input('event_order_by');
+        $directionEvent = $request->input('event_direction', 'asc');
+
+        if ($orderByEvent) {
+            $eventQuery->orderBy($orderByEvent, $directionEvent);
         } else {
-            $eventQuery->orderBy('created_at', 'desc');
+            $eventSort = $request->input('event_sort', 'terbaru');
+            if ($eventSort === 'terlama') {
+                $eventQuery->orderBy('created_at', 'asc');
+            } else {
+                $eventQuery->orderBy('created_at', 'desc');
+            }
         }
         
         $events = $eventQuery->paginate(6, ['*'], 'event_page')->withQueryString();
+
+        // Jika request AJAX, kembalikan hanya bagian yang diperlukan
+        if ($request->ajax()) {
+            if ($request->has('page')) {
+                return view('admin.artikel.partials.artikel_table', compact('artikels'))->render();
+            } elseif ($request->has('event_page')) {
+                return view('admin.artikel.partials.event_table', compact('events'))->render();
+            }
+        }
 
         return view('admin.artikel.index', compact('artikels', 'events'));
     }
@@ -156,6 +193,7 @@ class ArtikelController extends Controller
     {
         $artikel = Artikel::with('gambar')->findOrFail($id);
 
+        // Hapus gambar terkait
         foreach ($artikel->gambar as $gambar) {
             if ($gambar->file_path && file_exists(public_path($gambar->file_path))) {
                 @unlink(public_path($gambar->file_path));
@@ -163,6 +201,13 @@ class ArtikelController extends Controller
             $gambar->delete();
         }
 
+        // Hapus likes terkait
+        $artikel->likes()->delete();
+
+        // Hapus feedback (termasuk balasan) terkait
+        \App\Models\Feedback::where('artikel_id', $artikel->artikel_id)->delete();
+
+        // Setelah relasi dihapus, hapus artikel
         $artikel->delete();
 
         // Hapus notifikasi terkait artikel ini (jika ada)
