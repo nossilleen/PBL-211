@@ -30,8 +30,19 @@
                         <img src="{{ asset('images/logo.jpg') }}" alt="EcoZense Logo" class="h-10 mx-auto mb-2">
                     </div>
                     <h1 class="text-xl font-bold text-green-800 mb-3 text-center">REGISTER</h1>
+
+                    <!-- Wizard Indicators -->
+                    <div class="flex justify-center items-center space-x-2 mb-4">
+                        <div id="indicator-step-1" class="w-8 h-8 flex items-center justify-center rounded-full border-2 border-green-600 text-green-600 font-semibold bg-green-100">1</div>
+                        <div class="w-12 h-0.5 bg-green-600"></div>
+                        <div id="indicator-step-2" class="w-8 h-8 flex items-center justify-center rounded-full border-2 border-green-600 text-green-600 font-semibold">2</div>
+                    </div>
+
                     <form method="POST" action="{{ route('register') }}" class="space-y-3" id="registerForm">
                         @csrf
+
+                        <!-- STEP 1 -->
+                        <div id="step-1">
                         @if($errors->any())
                         <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded relative mb-3 text-sm">
                             <ul>
@@ -60,10 +71,6 @@
                                 <label class="block text-gray-700 text-sm">Nomor Telepon</label>
                                 <input type="tel" name="phone" class="w-full pl-3 pr-3 py-2 rounded-xl bg-white shadow border border-green-100 focus:outline-none" required>
                             </div>
-                            <div class="space-y-1">
-                                <label class="block text-gray-700 text-sm">Tanggal Lahir</label>
-                                <input type="date" name="birth_date" class="w-full pl-3 pr-3 py-2 rounded-xl bg-white shadow border border-green-100 focus:outline-none" required>
-                            </div>
                         </div>
 
                         <!-- Password -->
@@ -80,31 +87,81 @@
                             </div>
                         </div>
 
-                        <!-- Baris 3 -->
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                            <div class="space-y-1">
-                                <label class="block text-gray-700 text-sm">Jenis Kelamin</label>
-                                <select name="gender" class="w-full pl-3 pr-3 py-2 rounded-xl bg-white shadow border border-green-100 focus:outline-none" required>
-                                    <option value="">Pilih Jenis Kelamin</option>
-                                    <option value="L">Laki-laki</option>
-                                    <option value="P">Perempuan</option>
-                                </select>
-                            </div>
-                            <div class="space-y-1">
-                                <label class="block text-gray-700 text-sm">Alamat</label>
-                                <textarea name="address" rows="2" class="w-full pl-3 pr-3 py-2 rounded-xl bg-white shadow border border-green-100 focus:outline-none resize-none"></textarea>
+                        <!-- Konfirmasi Password -->
+                        <div class="space-y-1 mt-3">
+                            <label class="block text-gray-700 text-sm">Konfirmasi Password</label>
+                            <div class="relative">
+                                <input type="password" name="password_confirmation" class="w-full pl-3 pr-3 py-2 rounded-xl bg-white shadow border border-green-100 focus:outline-none" required>
                             </div>
                         </div>
 
-                        <!-- Tombol Submit & Cancel -->
+                        <!-- Tombol Step 1 -->
                         <div class="flex space-x-4 mt-8">
-                            <button type="submit" class="w-1/2 py-3 px-4 bg-yellow-400 hover:bg-yellow-500 text-green-900 font-semibold rounded-xl transition duration-200">
-                                Submit
-                            </button>
                             <button type="button" onclick="window.history.back()" class="w-1/2 py-3 px-4 bg-red-500 hover:bg-red-600 text-white font-semibold rounded-xl transition duration-200">
-                                Cancel
+                                Batal
+                            </button>
+                            <button type="button" id="nextBtn" class="w-1/2 py-3 px-4 bg-yellow-400 hover:bg-yellow-500 text-green-900 font-semibold rounded-xl transition duration-200">
+                                Selanjutnya
                             </button>
                         </div>
+
+                        </div> <!-- end step-1 -->
+
+                        <!-- STEP 2 -->
+                        <div id="step-2" class="hidden">
+
+                            <!-- Baris tanggal lahir dan jenis kelamin -->
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                <div class="space-y-1">
+                                    <label class="block text-gray-700 text-sm">Tanggal Lahir</label>
+                                    <input type="date" name="birth_date" class="w-full pl-3 pr-3 py-2 rounded-xl bg-white shadow border border-green-100 focus:outline-none" required>
+                                </div>
+                                <div class="space-y-1">
+                                    <label class="block text-gray-700 text-sm">Jenis Kelamin</label>
+                                    <select name="gender" class="w-full pl-3 pr-3 py-2 rounded-xl bg-white shadow border border-green-100 focus:outline-none" required>
+                                        <option value="">Pilih Jenis Kelamin</option>
+                                        <option value="L">Laki-laki</option>
+                                        <option value="P">Perempuan</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Baris alamat (sudah ditambahkan sebelumnya) -->
+                            <!-- Baris 4 -->
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                <div class="space-y-1">
+                                    <label class="block text-gray-700 text-sm">Alamat</label>
+                                    <textarea name="address" rows="2" class="w-full pl-3 pr-3 py-2 rounded-xl bg-white shadow border border-green-100 focus:outline-none resize-none" required></textarea>
+                                </div>
+                                <div class="space-y-1">
+                                    <label class="block text-gray-700 text-sm">Kelurahan</label>
+                                    <input type="text" name="kelurahan" class="w-full pl-3 pr-3 py-2 rounded-xl bg-white shadow border border-green-100 focus:outline-none" required>
+                                </div>
+                            </div>
+
+                            <!-- Baris 5 -->
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                <div class="space-y-1">
+                                    <label class="block text-gray-700 text-sm">Kecamatan</label>
+                                    <input type="text" name="kecamatan" class="w-full pl-3 pr-3 py-2 rounded-xl bg-white shadow border border-green-100 focus:outline-none" required>
+                                </div>
+                                <div class="space-y-1">
+                                    <label class="block text-gray-700 text-sm">Kode Pos</label>
+                                    <input type="text" name="kode_pos" class="w-full pl-3 pr-3 py-2 rounded-xl bg-white shadow border border-green-100 focus:outline-none" required>
+                                </div>
+                            </div>
+
+                            <!-- Tombol Step 2 -->
+                            <div class="flex space-x-4 mt-8">
+                                <button type="button" id="backBtn" class="w-1/2 py-3 px-4 bg-gray-300 hover:bg-gray-400 text-green-900 font-semibold rounded-xl transition duration-200">
+                                    Kembali
+                                </button>
+                                <button type="submit" class="w-1/2 py-3 px-4 bg-yellow-400 hover:bg-yellow-500 text-green-900 font-semibold rounded-xl transition duration-200">
+                                    Daftar
+                                </button>
+                            </div>
+
+                        </div> <!-- end step-2 -->
 
                         <!-- Link Login -->
                         <div class="text-center mt-2">
@@ -148,6 +205,37 @@
                 btn.disabled = true;
                 btn.innerHTML = '<span class="animate-spin inline-block mr-2 w-4 h-4 border-2 border-gray-200 border-t-green-300 rounded-full"></span>Loading...';
             }
+        });
+
+        // Helper to switch indicator styles
+        function setActiveStep(step) {
+            const step1 = document.getElementById('indicator-step-1');
+            const step2 = document.getElementById('indicator-step-2');
+            if (step === 1) {
+                step1.classList.add('bg-green-100');
+                step1.classList.remove('bg-green-600', 'text-white');
+                step2.classList.add('text-green-600');
+                step2.classList.remove('bg-green-100', 'bg-green-600', 'text-white');
+            } else {
+                step1.classList.remove('bg-green-100');
+                step1.classList.add('text-green-600');
+                step2.classList.add('bg-green-100');
+            }
+        }
+
+        setActiveStep(1);
+
+        // Wizard navigation
+        document.getElementById('nextBtn').addEventListener('click', function() {
+            document.getElementById('step-1').classList.add('hidden');
+            document.getElementById('step-2').classList.remove('hidden');
+            setActiveStep(2);
+        });
+
+        document.getElementById('backBtn').addEventListener('click', function() {
+            document.getElementById('step-2').classList.add('hidden');
+            document.getElementById('step-1').classList.remove('hidden');
+            setActiveStep(1);
         });
     </script>
 </body>

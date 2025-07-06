@@ -47,6 +47,7 @@ class User extends Authenticatable
         'nomor_rekening',
         'nama_bank_rekening',
         'foto_toko',
+        'alamat',
         'kecamatan',
         'kelurahan',
         'kode_pos'
