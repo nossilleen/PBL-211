@@ -57,6 +57,12 @@ class LoginController extends Controller
             return redirect()->intended('/admin');
         }
 
+        // Redirect pengelola ke dashboard pengelola
+        if ($user->role === 'pengelola') {
+            session()->flash('welcome', 'Selamat datang kembali, ' . $user->nama . ' Senang melihatmu lagi di EcoZense.');
+            return redirect()->intended('/pengelola');
+        }
+
         // Set flash message untuk notifikasi selamat datang dengan nama user
         // Memastikan pesan menampilkan nama user yang sedang login
         $userName = $user->name ?? ''; // Fallback jika nama tidak tersedia
