@@ -58,7 +58,7 @@
                                 </div>
                             </th>
                             <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Lokasi
+                                Nama Bank Sampah
                             </th>
                             <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Alasan Pengajuan
@@ -88,8 +88,7 @@
                                 </td>
                                 <td class="px-6 py-4">
                                     <div class="text-sm text-gray-900">
-                                        <div class="font-medium">{{ $item->kota }}</div>
-                                        <div class="text-gray-500 text-xs mt-1">{{ $item->alamat_lengkap }}</div>
+                                        <div class="font-medium">{{ $item->nama_bank_sampah }}</div>
                                     </div>
                                 </td>
                                 <td class="px-6 py-4">

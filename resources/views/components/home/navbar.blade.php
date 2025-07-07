@@ -77,8 +77,8 @@
             <div class="relative" x-data="{ open: false }">
                 <button @click="open = !open" class="flex items-center space-x-2 focus:outline-none">
                     <div class="w-8 h-8 rounded-full bg-green-600 flex items-center justify-center text-white overflow-hidden">
-                        @if(Auth::user()->role === 'pengelola' && Auth::user()->foto_toko)
-                            <img src="{{ Storage::url(Auth::user()->foto_toko) }}" alt="Foto Toko" class="w-full h-full object-cover">
+                        @if(Auth::user()->foto_toko)
+                            <img src="{{ asset('storage/' . Auth::user()->foto_toko) }}" alt="Foto Profil" class="w-full h-full object-cover">
                         @else
                             <span class="text-sm font-semibold">{{ substr(Auth::user()->nama, 0, 1) }}</span>
                         @endif
@@ -91,7 +91,7 @@
                         <a href="/profile" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Profile</a>
                     @endif
                     
-                    @if(Auth::user()->role === 'admin')
+                    @if(in_array(Auth::user()->role, ['admin','superadmin']))
                         @if(Request::is('admin*'))
                             <a href="/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Kembali ke Beranda</a>
                         @else
@@ -189,7 +189,7 @@
             >
             @endif
             
-            @if(Auth::user()->role === 'admin')
+            @if(in_array(Auth::user()->role, ['admin','superadmin']))
             <a
                 href="/admin"
                 class="block text-green-800 hover:text-green-600 py-3 px-2 transition-all duration-300 border-l-4 border-transparent hover:border-green-600 hover:bg-green-50 rounded"

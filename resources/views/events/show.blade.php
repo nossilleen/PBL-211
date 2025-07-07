@@ -2,7 +2,14 @@
 
 @section('content')
 @php
-    $eventStatus = isset($event) && $event->date ? (\Carbon\Carbon::parse($event->date)->isPast() ? 'Selesai' : 'Tersedia') : null;
+    $eventStatus = null;
+    if(isset($event)) {
+        if($event->expired_at) {
+            $eventStatus = (\Carbon\Carbon::parse($event->expired_at)->isPast() ? 'Selesai' : 'Tersedia');
+        } elseif($event->date) {
+            $eventStatus = (\Carbon\Carbon::parse($event->date)->isPast() ? 'Selesai' : 'Tersedia');
+        }
+    }
 @endphp
 <div class="min-h-screen bg-gray-50">
     <!-- Hero Section dengan Background Image -->

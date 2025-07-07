@@ -12,23 +12,49 @@ class ArtikelController extends Controller
 {
     public function create()
     {
+        // Cek izin membuat artikel
+        $user = Auth::user();
+        if ($user->role === 'admin' && !$user->can_create_article) {
+            abort(403, 'Anda tidak memiliki izin untuk membuat artikel');
+        }
         return view('admin.artikel.create');
     }
 
     public function index(Request $request)
     {
-        $query = Artikel::withCount('feedback');
+        $query = Artikel::withCount(['feedback', 'likes']);
 
         if ($request->search) {
             $query->where('judul', 'like', '%' . $request->search . '%')
                   ->orWhere('konten', 'like', '%' . $request->search . '%');
         }
 
-        $sort = $request->input('sort', 'terbaru');
-        if ($sort === 'populer') {
-            $query->orderByDesc('feedback_count');
+        // Dynamic ordering
+        $orderBy = $request->input('order_by');
+        $direction = $request->input('direction', 'asc');
+
+        if ($orderBy) {
+            switch ($orderBy) {
+                case 'likes':
+                    $query->orderBy('likes_count', $direction);
+                    break;
+                case 'penulis':
+                    // Join users table for ordering by penulis (nama)
+                    $query->join('user as u', 'u.user_id', '=', 'artikel.user_id')
+                          ->select('artikel.*', 'u.nama')
+                          ->orderBy('u.nama', $direction);
+                    break;
+                default:
+                    $query->orderBy($orderBy, $direction);
+            }
         } else {
-            $query->orderByDesc('tanggal_publikasi');
+            // Existing sort logic
+            $sort = $request->input('sort', 'terbaru');
+            if ($sort === 'populer') {
+                $query->orderByDesc('feedback_count');
+            } else {
+                $query->orderByDesc('tanggal_publikasi');
+            }
         }
 
         $artikels = $query->paginate(6)->withQueryString();
@@ -42,21 +68,42 @@ class ArtikelController extends Controller
                       ->orWhere('description', 'like', '%' . $request->event_search . '%');
         }
         
-        // Sorting untuk events
-        $eventSort = $request->input('event_sort', 'terbaru');
-        if ($eventSort === 'terlama') {
-            $eventQuery->orderBy('created_at', 'asc');
+        // Event ordering enhancements
+        $orderByEvent = $request->input('event_order_by');
+        $directionEvent = $request->input('event_direction', 'asc');
+
+        if ($orderByEvent) {
+            $eventQuery->orderBy($orderByEvent, $directionEvent);
         } else {
-            $eventQuery->orderBy('created_at', 'desc');
+            $eventSort = $request->input('event_sort', 'terbaru');
+            if ($eventSort === 'terlama') {
+                $eventQuery->orderBy('created_at', 'asc');
+            } else {
+                $eventQuery->orderBy('created_at', 'desc');
+            }
         }
         
         $events = $eventQuery->paginate(6, ['*'], 'event_page')->withQueryString();
+
+        // Jika request AJAX, kembalikan hanya bagian yang diperlukan
+        if ($request->ajax()) {
+            if ($request->has('page')) {
+                return view('admin.artikel.partials.artikel_table', compact('artikels'))->render();
+            } elseif ($request->has('event_page')) {
+                return view('admin.artikel.partials.event_table', compact('events'))->render();
+            }
+        }
 
         return view('admin.artikel.index', compact('artikels', 'events'));
     }
 
     public function store(Request $request)
     {
+        $user = Auth::user();
+        if ($user->role === 'admin' && !$user->can_create_article) {
+            abort(403, 'Anda tidak memiliki izin untuk membuat artikel');
+        }
+
         $request->validate([
             'kategori' => 'required|string|max:100',
             'judul' => 'required|string|max:255',
@@ -150,6 +197,13 @@ class ArtikelController extends Controller
             @unlink(public_path($artikel->gambar));
         }
 
+        // Hapus likes terkait
+        $artikel->likes()->delete();
+
+        // Hapus feedback (termasuk balasan) terkait
+        \App\Models\Feedback::where('artikel_id', $artikel->artikel_id)->delete();
+
+        // Setelah relasi dihapus, hapus artikel
         $artikel->delete();
 
         // Hapus notifikasi terkait artikel ini (jika ada)
@@ -161,30 +215,30 @@ class ArtikelController extends Controller
     }
 
     public function landing(Request $request)
-{
-    $query = Artikel::with(['likes']);
+    {
+        $query = Artikel::with(['likes']);
 
-    if ($request->kategori) {
-        $query->where('kategori', $request->kategori);
+        if ($request->kategori) {
+            $query->where('kategori', $request->kategori);
+        }
+
+        if ($request->search) {
+            $query->where(function ($q) use ($request) {
+                $q->where('judul', 'like', '%' . $request->search . '%')
+                  ->orWhere('konten', 'like', '%' . $request->search . '%');
+            });
+        }
+
+        if ($request->sort === 'populer') {
+            $query->withCount('feedback')->orderByDesc('feedback_count');
+        } else {
+            $query->orderByDesc('tanggal_publikasi');
+        }
+
+        $artikels = $query->paginate(12)->withQueryString();
+
+        return view('artikel', compact('artikels'));
     }
-
-    if ($request->search) {
-        $query->where(function ($q) use ($request) {
-            $q->where('judul', 'like', '%' . $request->search . '%')
-              ->orWhere('konten', 'like', '%' . $request->search . '%');
-        });
-    }
-
-    if ($request->sort === 'populer') {
-        $query->withCount('feedback')->orderByDesc('feedback_count');
-    } else {
-        $query->orderByDesc('tanggal_publikasi');
-    }
-
-    $artikels = $query->paginate(12)->withQueryString();
-
-    return view('artikel', compact('artikels'));
-}
 
     public function show($id)
     {
@@ -205,40 +259,54 @@ class ArtikelController extends Controller
         return view('article-detail', compact('artikel', 'relatedArticles'));
     }
     
-public function like($id)
-{
-    $user = auth()->user();
-    $artikel = Artikel::findOrFail($id);
+    public function like($id)
+    {
+        $user = auth()->user();
+        if (!$user) {
+            return response()->json(['success' => false, 'message' => 'Unauthenticated'], 401);
+        }
 
-    // Cek apakah user sudah like
-    $existingLike = ArtikelLike::where('artikel_id', $id)
-        ->where('user_id', $user->user_id)
-        ->first();
+        $artikel = Artikel::findOrFail($id);
 
-    if ($existingLike) {
-        // Kalau sudah like → unlike
-        $existingLike->delete();
-    } else {
-        // Kalau belum like → like
-        ArtikelLike::create([
-            'artikel_id' => $id,
-            'user_id' => $user->user_id,
-        ]);
+        // Cek apakah user sudah like
+        $existingLike = ArtikelLike::where('artikel_id', $id)
+            ->where('user_id', $user->user_id)
+            ->first();
+
+        if ($existingLike) {
+            // Kalau sudah like → unlike
+            $existingLike->delete();
+            $isLiked = false;
+        } else {
+            // Kalau belum like → like
+            ArtikelLike::create([
+                'artikel_id' => $id,
+                'user_id' => $user->user_id,
+            ]);
+            $isLiked = true;
+        }
+
+        // Hitung ulang jumlah suka
+        $likesCount = ArtikelLike::where('artikel_id', $id)->count();
+
+        if (request()->expectsJson() || request()->ajax()) {
+            return response()->json([
+                'success' => true,
+                'isLiked' => $isLiked,
+                'suka'    => $likesCount,
+            ]);
+        }
+
+        return redirect()->back();
     }
 
+    public function showProfil()
+    {
+        $user = Auth::user();
 
-    return redirect()->back();
-}
-public function showProfil()
-{
-    $user = Auth::user();
+        // Pastikan relasi likedArtikels sudah didefinisikan di model User
+        $favoritArtikels = $user->likedArtikels()->with('kategori')->latest()->get();
 
-    // Pastikan relasi likedArtikels sudah didefinisikan di model User
-    $favoritArtikels = $user->likedArtikels()->with('kategori')->latest()->get();
-
-    return view('nasabah.profil', compact('favoritArtikels'));
-}
-
-
-
+        return view('nasabah.profil', compact('favoritArtikels'));
+    }
 }

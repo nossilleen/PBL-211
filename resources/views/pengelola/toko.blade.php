@@ -10,12 +10,19 @@
             <h1 class="text-3xl font-bold text-gray-900 mb-2">Product Management</h1>
             <p class="text-gray-600">Manage your eco-friendly products inventory</p>
         </div>
-        <div class="mt-4 md:mt-0">
+        <div class="mt-4 md:mt-0 flex flex-row space-x-3">
             <button onclick="openProductModal()" class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-green-600 to-green-700 text-white font-semibold rounded-xl shadow-lg hover:from-green-700 hover:to-green-800 transform hover:scale-105 transition-all duration-200">
                 <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
                 </svg>
                 Add New Product
+            </button>
+            <button onclick="openAvailabilityModal()" class="inline-flex items-center px-6 py-3 bg-yellow-500 text-white font-semibold rounded-xl shadow-lg hover:bg-yellow-600 transform hover:scale-105 transition-all duration-200">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4"></path>
+                </svg>
+                Edit Ketersediaan
             </button>
         </div>
     </div>
@@ -60,7 +67,7 @@
             <div class="group bg-white rounded-xl shadow-md hover:shadow-xl border border-gray-100 overflow-hidden transition-all duration-300 hover:scale-105">
                 <!-- Product Image -->
                 <div class="relative h-48 overflow-hidden">
-                    @if($item->gambar && count($item->gambar) > 0)
+                    @if($item->gambar && $item->gambar->count() > 0 && $item->gambar->first())
                         <img src="{{ Storage::url($item->gambar->first()->file_path) }}" 
                              alt="{{ $item->nama_produk }}" 
                              class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
@@ -88,9 +95,9 @@
                             <span class="text-xs text-white font-medium">{{ $item->suka }}</span>
                         </div>
                     </div>
-                        @if(count($item->gambar) > 1)
+                        @if($item->gambar && $item->gambar->count() > 1)
                             <div class="absolute top-2 right-2 bg-black bg-opacity-50 text-white text-xs px-2 py-1 rounded-full">
-                                +{{ count($item->gambar) - 1 }} gambar
+                                +{{ $item->gambar->count() - 1 }} gambar
                             </div>
                         @endif
                     @else
@@ -424,23 +431,56 @@
         </div>
     </div>
 </div>
+    </form>
+</div>
 
-<!-- Alert Modal -->
-<div id="modalTokoAlert" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm z-50 hidden">
-    <div class="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full mx-4">
-        <div class="text-center">
-            <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-red-100 mb-4">
-                <svg class="h-6 w-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16c-.77.833.192 2.5 1.732 2.5z"></path>
-                </svg>
+<!-- Modal Custom untuk Validasi -->
+<div id="modalTokoAlert" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50 hidden">
+    <div class="bg-white rounded-lg shadow-lg p-8 max-w-sm w-full text-center">
+        <h2 class="text-2xl font-bold mb-4 text-red-600">Peringatan!</h2>
+        <p class="mb-6 text-gray-700">Semua kolom wajib diisi. Silakan lengkapi data toko Anda!</p>
+        <button onclick="closeTokoModalAlert()" class="bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded">Tutup</button>
+    </div>
+</div>
+
+<!-- Availability Modal -->
+<div id="availabilityModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 hidden">
+    <div class="bg-white rounded-lg shadow-lg max-w-xl w-full p-6 relative">
+        <button onclick="closeAvailabilityModal()" class="absolute top-3 right-3 text-gray-400 hover:text-red-600 text-2xl font-bold">&times;</button>
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">Edit Ketersediaan Produk</h2>
+        <form method="POST" action="{{ route('pengelola.products.updateAvailability') }}">
+            @csrf
+            <!-- Select All Checkbox -->
+            <div class="flex items-center mb-4">
+                <input type="checkbox" id="selectAllProducts" class="mr-2" onclick="toggleSelectAllProducts(this)">
+                <label for="selectAllProducts" class="font-medium text-gray-700">Pilih Semua</label>
             </div>
-            <h3 class="text-lg font-semibold text-gray-900 mb-2">Incomplete Information!</h3>
-            <p class="text-gray-600 mb-6">Please fill in all required fields to complete your store setup.</p>
-            <button onclick="closeTokoModalAlert()" 
-                    class="w-full px-6 py-3 bg-red-600 text-white rounded-xl hover:bg-red-700 transition-colors">
-                Close
-            </button>
-        </div>
+            <div class="overflow-y-auto max-h-64 mb-4 border rounded">
+                <table class="min-w-full divide-y divide-gray-200 text-sm">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-4 py-2 text-left font-medium text-gray-700">Nama Produk</th>
+                            <th class="px-4 py-2 text-left font-medium text-gray-700">Pilih</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                        @foreach($allProducts as $prod)
+                            <tr>
+                                <td class="px-4 py-2 text-gray-800">{{ $prod->nama_produk }}</td>
+                                <td class="px-4 py-2">
+                                    <input type="checkbox" name="produk_ids[]" value="{{ $prod->produk_id }}" class="produk-checkbox">
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+            <!-- Action Buttons -->
+            <div class="flex justify-end space-x-3">
+                <button type="submit" name="status_ketersediaan" value="Available" class="px-5 py-2 bg-green-600 text-white rounded-md hover:bg-green-700">Tersedia</button>
+                <button type="submit" name="status_ketersediaan" value="Unavailable" class="px-5 py-2 bg-red-600 text-white rounded-md hover:bg-red-700">Tidak Tersedia</button>
+            </div>
+        </form>
     </div>
 </div>
 
@@ -630,6 +670,18 @@ document.querySelector('form[action*="pengelola.toko.update"]').addEventListener
         return;
     }
 });
+
+// Availability modal functions
+function openAvailabilityModal() {
+    document.getElementById('availabilityModal').classList.remove('hidden');
+}
+function closeAvailabilityModal() {
+    document.getElementById('availabilityModal').classList.add('hidden');
+}
+function toggleSelectAllProducts(source) {
+    const checkboxes = document.querySelectorAll('.produk-checkbox');
+    checkboxes.forEach(cb => cb.checked = source.checked);
+}
 
 // Close modal when clicking outside
 document.getElementById('productModal').addEventListener('click', function(e) {

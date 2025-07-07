@@ -8,6 +8,26 @@
                     <!-- <br>Setor 3kg sampah lagi untuk tukar 1 produk Eco Enzim!</p> -->
             </div>
             <div class="flex items-center">
+                @if(Auth::user()->expired_at)
+                    <div class="mr-4 text-xs text-gray-500" id="expired-timer"></div>
+                    <script>
+                        const expiredAt = new Date("{{ \Carbon\Carbon::parse(Auth::user()->expired_at)->toIso8601String() }}").getTime();
+                        function updateTimer() {
+                            const now = new Date().getTime();
+                            let distance = expiredAt - now;
+                            if (distance < 0) {
+                                document.getElementById('expired-timer').innerText = "Poin Expired";
+                                return;
+                            }
+                            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                            document.getElementById('expired-timer').innerText = `${days} Hari, ${hours} Jam, ${minutes} Menit`;
+                        }
+                        updateTimer();
+                        setInterval(updateTimer, 60000);
+                    </script>
+                @endif
                 <!-- <label for="lokasi" class="mr-2 text-sm font-medium">Lokasi</label>
                 <select id="lokasi" class="border border-gray-300 rounded px-2 py-1 text-sm">
                     <option value="semua">Semua</option>

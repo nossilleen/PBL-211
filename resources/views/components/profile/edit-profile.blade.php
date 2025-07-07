@@ -1,6 +1,6 @@
 <div class="max-w-2xl mx-auto bg-white rounded-lg shadow p-8 mt-8">
     <h2 class="text-2xl font-bold mb-6">Edit Profil</h2>
-    <form method="POST" action="{{ route('profile.update') }}" class="space-y-5" id="editProfileForm">
+    <form method="POST" action="{{ route('profile.update') }}" class="space-y-5" id="editProfileForm" enctype="multipart/form-data">
         @csrf
         @method('PUT')
         <div>

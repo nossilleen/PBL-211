@@ -14,6 +14,9 @@ class ProfileController extends Controller
     public function index()
     {
         $user = Auth::user();
+        if ($user->role === 'pengelola') {
+            return redirect()->route('pengelola.index');
+        }
         $artikelFavorit = $user->artikelFavorit()->latest()->get();
 
         return view('profil', compact('artikelFavorit'));
@@ -116,5 +119,35 @@ class ProfileController extends Controller
         }
 
         return redirect()->back()->with('success', 'Profil berhasil diperbarui.');
+    }
+
+    public function updatePhoto(Request $request)
+    {
+        $request->validate([
+            'cropped_foto_toko' => 'required|string',
+        ]);
+        $user = Auth::user();
+        try {
+            if ($request->filled('cropped_foto_toko')) {
+                $data = $request->input('cropped_foto_toko');
+                $data = preg_replace('/^data:image\/(png|jpg|jpeg);base64,/', '', $data);
+                $data = str_replace(' ', '+', $data);
+                $fileName = uniqid() . '.jpg';
+                $destinationPath = public_path('storage/profil');
+                if (!file_exists($destinationPath)) {
+                    mkdir($destinationPath, 0777, true);
+                }
+                file_put_contents($destinationPath . '/' . $fileName, base64_decode($data));
+                // Hapus foto lama jika ada
+                if ($user->foto_toko && file_exists(public_path('storage/' . $user->foto_toko))) {
+                    @unlink(public_path('storage/' . $user->foto_toko));
+                }
+                $user->foto_toko = 'profil/' . $fileName;
+                $user->save();
+            }
+            return redirect()->back()->with('success', 'Foto profil berhasil diperbarui.');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Gagal memperbarui foto profil.');
+        }
     }
 }

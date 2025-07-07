@@ -20,7 +20,7 @@ class DataController extends Controller
             'users' => User::all(),
             'lokasi' => Lokasi::all(),
             'produk' => Produk::with('gambar')->get(),
-            'artikel' => Artikel::with('gambar')->get(),
+            'artikel' => Artikel::all(),
             'poin' => Poin::with(['user', 'lokasi'])->get(),
             'transaksi' => Transaksi::with(['user', 'produk', 'lokasi'])->get(),
             'feedback' => Feedback::with(['user', 'artikel'])->get(),

@@ -41,11 +41,14 @@ class User extends Authenticatable implements MustVerifyEmail
         'no_hp',
         'role',
         'points',
+        'can_create_article',
+        'can_create_event',
         'deskripsi_toko',
         'jam_operasional',
         'nomor_rekening',
         'nama_bank_rekening',
         'foto_toko',
+        'alamat',
         'kecamatan',
         'kelurahan',
         'kode_pos'
@@ -71,6 +74,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'password' => 'hashed',
         'poin' => 'integer',  // Add this to ensure proper type casting
         'deleted_at' => 'datetime',
+        'can_create_article' => 'boolean',
+        'can_create_event' => 'boolean',
     ];
 
     /**

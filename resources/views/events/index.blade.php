@@ -117,7 +117,7 @@
             </section>
 
             <!-- Event List Section -->
-            <section class="py-12 bg-gray-100">
+            <section id="eventsSection" class="py-12 bg-gray-100">
                 <div class="container mx-auto px-4">
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         @foreach($events as $event)
@@ -311,6 +311,37 @@
                     });
                 });
             }
+        </script>
+
+        <script>
+            // AJAX pagination untuk events list
+            function loadEventsPage(url) {
+                fetch(url, { headers: { 'X-Requested-With': 'XMLHttpRequest' }})
+                    .then(res => res.text())
+                    .then(html => {
+                        const doc = new DOMParser().parseFromString(html, 'text/html');
+                        const newSec = doc.querySelector('#eventsSection');
+                        if (newSec) {
+                            document.querySelector('#eventsSection').innerHTML = newSec.innerHTML;
+                            document.querySelector('#eventsSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }
+                        window.history.pushState({}, '', url);
+                    })
+                    .catch(err => console.error(err));
+            }
+
+            document.addEventListener('click', function(e) {
+                const link = e.target.closest('a');
+                if (!link) return;
+                if (link.closest('#eventsSection') && link.href.includes('page=')) {
+                    e.preventDefault();
+                    loadEventsPage(link.href);
+                }
+            });
+
+            window.addEventListener('popstate', () => {
+                loadEventsPage(window.location.href);
+            });
         </script>
     </body>
 </html>

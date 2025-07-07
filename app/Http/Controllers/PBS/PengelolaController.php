@@ -14,13 +14,16 @@ class PengelolaController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        // Izinkan akses tanpa login ke halaman browse dan stores
+        $this->middleware('auth')->except(['browse', 'stores']);
+
+        // Middleware role-based hanya diterapkan jika pengguna telah login
         $this->middleware(function ($request, $next) {
-            if (!in_array(Auth::user()->role, ['pengelola', 'admin', 'nasabah'])) {
+            if (Auth::check() && !in_array(Auth::user()->role, ['pengelola', 'admin', 'superadmin', 'nasabah'])) {
                 return redirect('/')->with('error', 'Unauthorized access');
             }
             return $next($request);
-        });
+        })->except(['browse', 'stores']);
     }
 
     public function update(Request $request)
@@ -202,14 +205,17 @@ class PengelolaController extends Controller
             });
         }
 
-        // Sorting
+        // Pastikan produk "Available" muncul lebih dulu
+        $productsQuery->orderByRaw("CASE WHEN LOWER(status_ketersediaan) = 'available' THEN 0 ELSE 1 END");
+
+        // Pertahankan urutan asli (populer / terbaru) di dalam masing-masing kelompok
         if ($request->sort === 'populer') {
             $productsQuery->orderByDesc('suka');
         } else { // default terbaru
             $productsQuery->orderByDesc('created_at');
         }
 
-        $products = $productsQuery->paginate(12)->withQueryString();
+        $products = $productsQuery->paginate(15, ['*'], 'product_page')->withQueryString();
 
         // Tandai apakah produk sudah dilike oleh user saat ini
         $products->getCollection()->transform(function ($product) {
@@ -241,7 +247,7 @@ class PengelolaController extends Controller
             $shopsQuery->orderByDesc('created_at');
         }
 
-        $shops = $shopsQuery->paginate(12)->withQueryString();
+        $shops = $shopsQuery->paginate(15, ['*'], 'shop_page')->withQueryString();
 
         return view('browse', compact('products', 'shops'));
     }

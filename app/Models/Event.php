@@ -16,5 +16,6 @@ class Event extends Model
         'date',
         'location',
         'link_form_acara',
+        'expired_at',
     ];
 }

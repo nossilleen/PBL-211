@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Schema;
 use App\Models\Notification;
+use Carbon\Carbon;
 
 class EventController extends Controller
 {
@@ -36,20 +37,21 @@ class EventController extends Controller
         ]);
 
         try {
+            $bannerPath = null;
             if ($request->hasFile('banner')) {
                 $bannerPath = $request->file('banner')->store('events', 'public');
-                
-                Event::create([
-                    'title' => $request->title,
-                    'description' => $request->description,
-                    'date' => $request->date,
-                    'location' => $request->location,
-                    'image' => $bannerPath
-                ]);
-
-                return redirect()->route('admin.events.index')
-                    ->with('success', 'Event berhasil dibuat');
             }
+            Event::create([
+                'title' => $request->title,
+                'description' => $request->description,
+                'date' => $request->date,
+                'location' => $request->location,
+                'image' => $bannerPath,
+                'expired_at' => Carbon::parse($request->date)->addDays(7),
+            ]);
+
+            return redirect()->route('admin.events.index')
+                ->with('success', 'Event berhasil dibuat');
         } catch (\Exception $e) {
             return redirect()->back()
                 ->with('error', 'Terjadi kesalahan: ' . $e->getMessage())

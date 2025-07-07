@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
     <meta name="description" content="Artikel EcoZense - Informasi dan Edukasi tentang Bank Sampah dan Eco Enzim di Batam" />
     <meta name="theme-color" content="#8DD363" />
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
     <title>Artikel - EcoZense</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -144,7 +145,7 @@
         </section>
 
         {{-- Artikel Cards Section --}}
-        <section class="py-16 bg-gradient-to-br from-gray-50 to-emerald-50">
+        <section id="artikelSection" class="py-16 bg-gradient-to-br from-gray-50 to-emerald-50">
             <div class="container mx-auto px-6">
                 <div class="text-center mb-12">
                     <h2 class="text-4xl md:text-5xl font-bold gradient-text mb-4">Daftar Artikel</h2>
@@ -169,15 +170,12 @@
                                     <span>{{ $icon }}</span>
                                     <span>{{ ucfirst($kategori) }}</span>
                                 </a>
-                                <form method="POST" action="{{ route('artikel.like', $artikel->artikel_id) }}" class="absolute top-2 left-3 z-10">
-                                    @csrf
-                                    <button type="submit" class="flex items-center gap-1 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full shadow hover:bg-white transition">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 {{ $artikel->isLikedBy(auth()->user()) ? 'text-red-500' : 'text-gray-400' }}" viewBox="0 0 24 24" fill="currentColor">
-                                            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41 0.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
-                                        </svg>
-                                        <span class="text-xs text-gray-600 ml-1">{{ $artikel->likes->count() }} suka</span>
-                                    </button>
-                                </form>
+                                <button type="button" onclick="event.stopPropagation(); toggleLikeArtikel({{ $artikel->artikel_id }});" class="absolute top-2 left-3 z-10 flex items-center gap-1 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full shadow hover:bg-white transition">
+                                    <svg id="heart-article-{{ $artikel->artikel_id }}" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 {{ $artikel->isLikedBy(auth()->user()) ? 'text-red-500' : 'text-gray-400' }}" fill="{{ $artikel->isLikedBy(auth()->user()) ? 'currentColor' : 'none' }}" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41 0.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                                    </svg>
+                                    <span id="like-count-article-{{ $artikel->artikel_id }}" class="text-xs text-gray-600 ml-1">{{ $artikel->likes->count() }} suka</span>
+                                </button>
                                 <img src="{{ asset($artikel->gambar ?? 'images/default.jpg') }}" class="w-full h-48 object-cover transition-transform duration-300 ease-in-out hover:scale-105" alt="Gambar Artikel">
                             </div>
                             <div class="flex items-center gap-2 mb-2">
@@ -305,6 +303,75 @@
                     arrow.classList.remove('rotate-180');
                 }
             });
+        }
+
+        // AJAX pagination untuk artikel
+        function loadArtikelPage(url) {
+            fetch(url, { headers: { 'X-Requested-With': 'XMLHttpRequest' }})
+                .then(res => res.text())
+                .then(html => {
+                    const doc = new DOMParser().parseFromString(html, 'text/html');
+                    const newSection = doc.querySelector('#artikelSection');
+                    if (newSection) {
+                        document.querySelector('#artikelSection').innerHTML = newSection.innerHTML;
+                        document.querySelector('#artikelSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                    window.history.pushState({}, '', url);
+                })
+                .catch(err => console.error(err));
+        }
+
+        document.addEventListener('click', function(e) {
+            const link = e.target.closest('a');
+            if (!link) return;
+            if (link.closest('#artikelSection') && link.href.includes('page=')) {
+                e.preventDefault();
+                loadArtikelPage(link.href);
+            }
+        });
+
+        window.addEventListener('popstate', () => {
+            loadArtikelPage(window.location.href);
+        });
+
+        // Toggle like artikel
+        function toggleLikeArtikel(artikelId) {
+            const heartIcon = document.getElementById(`heart-article-${artikelId}`);
+            const likeCountEl = document.getElementById(`like-count-article-${artikelId}`);
+            const isCurrentlyLiked = heartIcon.classList.contains('text-red-500');
+
+            fetch(`/artikel/${artikelId}/like`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                credentials: 'same-origin'
+            })
+            .then(res => {
+                if (res.status === 401) {
+                    window.location.href = '/login';
+                    return null;
+                }
+                return res.json();
+            })
+            .then(data => {
+                if (!data) return;
+                if (data.success) {
+                    if (data.isLiked) {
+                        heartIcon.classList.add('text-red-500');
+                        heartIcon.classList.remove('text-gray-400');
+                        heartIcon.setAttribute('fill', 'currentColor');
+                    } else {
+                        heartIcon.classList.remove('text-red-500');
+                        heartIcon.classList.add('text-gray-400');
+                        heartIcon.setAttribute('fill', 'none');
+                    }
+                    likeCountEl.textContent = data.suka + ' suka';
+                }
+            })
+            .catch(err => console.error(err));
         }
     </script>
 </body>

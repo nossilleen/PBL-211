@@ -252,7 +252,7 @@
                 <div class="bg-gray-50 rounded-lg p-4">
                     <div class="flex items-center space-x-4">
                         <div class="w-16 h-16 bg-white rounded-lg overflow-hidden shadow-sm border border-gray-200">
-                            <img src="{{ asset('storage/' . $pesanan->produk->gambar_utama) }}" 
+                            <img src="{{ $pesanan->produk && $pesanan->produk->gambar && $pesanan->produk->gambar->first() ? asset('storage/' . $pesanan->produk->gambar->first()->file_path) : asset('/images/produk/default.jpg') }}" 
                                  alt="{{ $pesanan->produk->nama_produk }}" 
                                  class="w-full h-full object-cover">
                         </div>
@@ -302,14 +302,8 @@
                 </button>
             </div>
             @elseif($pesanan->status == 'sedang dikirim')
-            <div class="bg-gray-50 px-6 py-4 flex justify-end">
-                <button onclick="handleSelesai('{{ $pesanan->transaksi_id }}')"
-                        class="inline-flex items-center space-x-2 px-6 py-2 bg-gradient-to-r from-green-600 to-green-700 text-white rounded-lg text-sm font-medium hover:from-green-700 hover:to-green-800 shadow-sm hover:shadow-md transition-all duration-200">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-                    </svg>
-                    <span>Tandai Selesai</span>
-                </button>
+            <div class="bg-gray-50 p-4 flex justify-end space-x-3">
+                <!-- Tombol Tandai Selesai dihapus: kini hanya nasabah yang dapat menandai pesanan sebagai selesai -->
             </div>
             @endif
         </div>

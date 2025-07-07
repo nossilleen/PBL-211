@@ -34,6 +34,8 @@ return new class extends Migration
             $table->string('nomor_rekening')->nullable();
             $table->string('nama_bank_rekening')->nullable();
             $table->string('foto_toko')->nullable();
+            $table->string('foto')->nullable();
+            $table->timestamp('expired_at')->nullable();
             $table->timestamps();
             $table->softDeletes();
             

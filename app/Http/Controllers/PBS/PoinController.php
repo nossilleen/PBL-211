@@ -110,6 +110,8 @@ class PoinController extends Controller
 
             // 3. Update poin pengguna
             $user->increment('points', $points);
+            $user->expired_at = now()->addDays(30);
+            $user->save();
 
             DB::commit();
 

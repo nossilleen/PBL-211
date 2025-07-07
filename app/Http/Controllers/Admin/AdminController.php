@@ -12,6 +12,7 @@ use App\Models\Artikel;
 use App\Models\Visit;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
@@ -20,7 +21,7 @@ class AdminController extends Controller
         $this->middleware('auth');
         // Check if user is admin
         $this->middleware(function ($request, $next) {
-            if (Auth::user()->role !== 'admin') {
+            if (!in_array(Auth::user()->role, ['admin', 'superadmin'])) {
                 return redirect('/')->with('error', 'Unauthorized access');
             }
             return $next($request);
@@ -207,10 +208,30 @@ class AdminController extends Controller
         return redirect()->route('admin.pengajuan')->with('success', 'Pengajuan berhasil ditolak.');
     }
     
-    public function user()
+    public function user(Request $request)
     {
-        $users = User::all();
-        return view('admin.user.index', compact('users'));
+        $query = User::query();
+
+        if ($search = $request->query('search')) {
+            $query->where(function ($q) use ($search) {
+                $q->where('nama', 'like', "%{$search}%")
+                  ->orWhere('email', 'like', "%{$search}%");
+            });
+        }
+
+        $allowedSorts = ['nama', 'email', 'role', 'created_at'];
+        $sort = $request->query('sort');
+        $direction = $request->query('direction', 'asc') === 'desc' ? 'desc' : 'asc';
+
+        if ($sort && in_array($sort, $allowedSorts)) {
+            $query->orderBy($sort, $direction);
+        } else {
+            $query->orderByDesc('created_at');
+        }
+
+        $users = $query->get();
+
+        return view('admin.user.index', compact('users', 'search'));
     }
 
     // Add method to delete user
@@ -229,6 +250,99 @@ class AdminController extends Controller
 
         return redirect()->route('admin.user')->with([
             'message' => 'User berhasil dihapus.',
+            'type' => 'success'
+        ]);
+    }
+
+    /* =========================================================
+     *  Fitur SUPERADMIN
+     * =======================================================*/
+
+    /**
+     * Simpan akun admin baru. Hanya superadmin yang boleh memanggil.
+     */
+    public function storeAdmin(Request $request)
+    {
+        if (Auth::user()->role !== 'superadmin') {
+            abort(403, 'Unauthorized');
+        }
+
+        $validated = $request->validate([
+            'nama' => 'required|string|max:50',
+            'email' => 'required|email|max:100|unique:user,email',
+            'password' => 'required|min:6|confirmed',
+            'no_hp' => 'required|string|min:10|max:15',
+        ]);
+
+        $user = User::create([
+            'nama' => $validated['nama'],
+            'email' => $validated['email'],
+            'password' => Hash::make($validated['password']),
+            'no_hp' => $validated['no_hp'],
+            'role' => 'admin',
+            // izin default true
+            'can_create_article' => true,
+            'can_create_event' => true,
+        ]);
+
+        return redirect()->route('admin.user')->with([
+            'message' => 'Akun admin berhasil dibuat.',
+            'type' => 'success'
+        ]);
+    }
+
+    /**
+     * Promote admin menjadi superadmin.
+     */
+    public function promoteAdmin($id)
+    {
+        if (Auth::user()->role !== 'superadmin') {
+            abort(403, 'Unauthorized');
+        }
+
+        $user = User::findOrFail($id);
+
+        if ($user->role !== 'admin') {
+            return redirect()->route('admin.user')->with([
+                'message' => 'Hanya admin yang dapat dipromosikan.',
+                'type' => 'error'
+            ]);
+        }
+
+        $user->update(['role' => 'superadmin']);
+
+        return redirect()->route('admin.user')->with([
+            'message' => 'Admin berhasil dipromosikan menjadi superadmin.',
+            'type' => 'success'
+        ]);
+    }
+
+    /**
+     * Update akses per admin (artikel & event create toggle).
+     */
+    public function updatePermissions(Request $request, $id)
+    {
+        if (Auth::user()->role !== 'superadmin') {
+            abort(403, 'Unauthorized');
+        }
+
+        $user = User::findOrFail($id);
+
+        // pastikan target user admin (atau superadmin lain?)
+        if (!in_array($user->role, ['admin', 'superadmin'])) {
+            return redirect()->route('admin.user')->with([
+                'message' => 'Target user bukan admin/superadmin.',
+                'type' => 'error'
+            ]);
+        }
+
+        $user->update([
+            'can_create_article' => $request->boolean('can_create_article'),
+            'can_create_event' => $request->boolean('can_create_event'),
+        ]);
+
+        return redirect()->route('admin.user')->with([
+            'message' => 'Hak akses berhasil diperbarui.',
             'type' => 'success'
         ]);
     }

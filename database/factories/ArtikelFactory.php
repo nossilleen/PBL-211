@@ -17,11 +17,12 @@ class ArtikelFactory extends Factory
     {
         $judul = $this->faker->sentence();
         return [
-            'kategori' => $this->faker->randomElement(['event','artikel']),
+            'kategori' => $this->faker->randomElement(['Eco Enzim','Bank Sampah', 'Tips & Trik', 'Berita']),
             'judul' => $judul,
             'konten' => '<p>'.implode('</p><p>',$this->faker->paragraphs(rand(3,7))).'</p>',
             'tanggal_publikasi' => $this->faker->date(),
             'user_id' => User::factory(),
+            'gambar' => 'storage/artikel_gambar/artikel_1751878520.jpg'
         ];
     }
 } 

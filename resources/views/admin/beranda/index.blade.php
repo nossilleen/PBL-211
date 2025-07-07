@@ -39,6 +39,49 @@
         </div>
     </div>
 
+    <!-- Quick Links Section -->
+    <div class="bg-white rounded-lg shadow-sm p-6 mb-8">
+        <h2 class="text-xl font-bold text-gray-800 mb-6">Pintasan</h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <a href="{{ route('admin.artikel.index') }}" class="flex items-center p-4 bg-green-50 hover:bg-green-100 rounded-lg transition">
+                <div class="rounded-full bg-green-100 p-3 mr-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                    </svg>
+                </div>
+                <div>
+                    <h4 class="font-medium text-gray-800">Buat Artikel & Acara</h4>
+                    <p class="text-sm text-gray-600 mt-1">Tambah artikel atau acara baru</p>
+                </div>
+            </a>
+            
+            <a href="{{ route('admin.pengajuan') }}" class="flex items-center p-4 bg-yellow-50 hover:bg-yellow-100 rounded-lg transition">
+                <div class="rounded-full bg-yellow-100 p-3 mr-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-yellow-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                    </svg>
+                </div>
+                <div>
+                    <h4 class="font-medium text-gray-800">Pengajuan</h4>
+                    <p class="text-sm text-gray-600 mt-1">Kelola pengajuan user</p>
+                </div>
+            </a>
+            
+            <a href="{{ route('admin.user') }}" class="flex items-center p-4 bg-blue-50 hover:bg-blue-100 rounded-lg transition">
+                <div class="rounded-full bg-blue-100 p-3 mr-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                    </svg>
+                </div>
+                <div>
+                    <h4 class="font-medium text-gray-800">Data Pengguna</h4>
+                    <p class="text-sm text-gray-600 mt-1">Kelola data pengguna</p>
+                </div>
+            </a>
+        </div>
+    </div>
+    
     <!-- Peta Lokasi Bank Sampah Section (Card Style) -->
     <div class="max-w-8xl mx-auto bg-white rounded-lg shadow-lg p-6 mb-8 mt-20">
         <h2 class="text-2xl font-bold text-center mb-6">Peta Lokasi Bank Sampah</h2>
@@ -146,49 +189,6 @@
         </div>
     </div>
 
-    <!-- Quick Links Section -->
-    <div class="bg-white rounded-lg shadow-sm p-6 mb-8">
-        <h2 class="text-xl font-bold text-gray-800 mb-6">Pintasan</h2>
-        
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <a href="{{ route('artikel.index') }}" class="flex items-center p-4 bg-green-50 hover:bg-green-100 rounded-lg transition">
-                <div class="rounded-full bg-green-100 p-3 mr-4">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                    </svg>
-                </div>
-                <div>
-                    <h4 class="font-medium text-gray-800">Artikel & Acara</h4>
-                    <p class="text-sm text-gray-600 mt-1">Kelola artikel dan acara</p>
-                </div>
-            </a>
-            
-            <a href="{{ route('admin.pengajuan') }}" class="flex items-center p-4 bg-yellow-50 hover:bg-yellow-100 rounded-lg transition">
-                <div class="rounded-full bg-yellow-100 p-3 mr-4">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-yellow-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-                    </svg>
-                </div>
-                <div>
-                    <h4 class="font-medium text-gray-800">Pengajuan</h4>
-                    <p class="text-sm text-gray-600 mt-1">Kelola pengajuan user</p>
-                </div>
-            </a>
-            
-            <a href="{{ route('admin.user') }}" class="flex items-center p-4 bg-blue-50 hover:bg-blue-100 rounded-lg transition">
-                <div class="rounded-full bg-blue-100 p-3 mr-4">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
-                    </svg>
-                </div>
-                <div>
-                    <h4 class="font-medium text-gray-800">Data Pengguna</h4>
-                    <p class="text-sm text-gray-600 mt-1">Kelola data pengguna</p>
-                </div>
-            </a>
-        </div>
-    </div>
-    
     <!-- Statistik Kunjungan Section -->
     <div class="bg-white rounded-lg shadow-sm p-6 mb-8">
         <div class="flex justify-between items-center mb-4">
@@ -211,149 +211,6 @@
         </div>
     </div>
 
-    <!-- Produk Terlaris Section -->
-    <!-- <div class="bg-white rounded-lg shadow-sm p-6 mb-8">
-        <div class="flex justify-between items-center mb-6">
-            <h2 class="text-xl font-bold text-gray-800">Produk Terlaris</h2>
-            <a href="#" class="text-sm text-blue-500 hover:text-blue-700">Lihat Semua Produk</a>
-        </div>
-
-        <div class="overflow-x-auto">
-            <table class="min-w-full divide-y divide-gray-200">
-                <thead>
-                    <tr class="text-left text-xs font-medium text-gray-500 uppercase tracking-wider bg-gray-50">
-                        <th scope="col" class="px-6 py-4 w-2/5">PRODUK</th>
-                        <th scope="col" class="px-6 py-4">KATEGORI</th>
-                        <th scope="col" class="px-6 py-4">TERJUAL</th>
-                        <th scope="col" class="px-6 py-4">PENDAPATAN</th>
-                        <th scope="col" class="px-6 py-4">TREND</th>
-                    </tr>
-                </thead>
-                <tbody class="bg-white divide-y divide-gray-100">
-                    <tr class="hover:bg-gray-50 transition-colors">
-                        <td class="px-6 py-4">
-                            <div class="flex items-center">
-                                <div class="flex-shrink-0 h-10 w-10 rounded-full overflow-hidden border border-gray-200">
-                                    <img class="h-full w-full object-cover" src="{{ asset('images/produk/eco-enzyme.jpg') }}" alt="Eco Enzyme">
-                                </div>
-                                <div class="ml-4">
-                                    <div class="text-sm font-medium text-gray-900">Eco Enzyme Premium</div>
-                                    <div class="text-xs text-gray-500">SKU: ECO-001</div>
-                                </div>
-                            </div>
-                        </td>
-                        <td class="px-6 py-4">
-                            <div class="text-sm text-gray-900">Enzim</div>
-                        </td>
-                        <td class="px-6 py-4">
-                            <div class="text-sm text-gray-900">168 unit</div>
-                        </td>
-                        <td class="px-6 py-4">
-                            <div class="text-sm text-gray-900">Rp 8.400.000</div>
-                        </td>
-                        <td class="px-6 py-4">
-                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
-                                </svg>
-                                12%
-                            </span>
-                        </td>
-                    </tr>
-                    <tr class="hover:bg-gray-50 transition-colors">
-                        <td class="px-6 py-4">
-                            <div class="flex items-center">
-                                <div class="flex-shrink-0 h-10 w-10 rounded-full overflow-hidden border border-gray-200">
-                                    <img class="h-full w-full object-cover" src="{{ asset('images/produk/pupuk-cair.jpg') }}" alt="Pupuk Cair">
-                                </div>
-                                <div class="ml-4">
-                                    <div class="text-sm font-medium text-gray-900">Pupuk Cair Organik</div>
-                                    <div class="text-xs text-gray-500">SKU: PCO-002</div>
-                                </div>
-                            </div>
-                        </td>
-                        <td class="px-6 py-4">
-                            <div class="text-sm text-gray-900">Pupuk</div>
-                        </td>
-                        <td class="px-6 py-4">
-                            <div class="text-sm text-gray-900">132 unit</div>
-                        </td>
-                        <td class="px-6 py-4">
-                            <div class="text-sm text-gray-900">Rp 5.280.000</div>
-                        </td>
-                        <td class="px-6 py-4">
-                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
-                                </svg>
-                                8%
-                            </span>
-                        </td>
-                    </tr>
-                    <tr class="hover:bg-gray-50 transition-colors">
-                        <td class="px-6 py-4">
-                            <div class="flex items-center">
-                                <div class="flex-shrink-0 h-10 w-10 rounded-full overflow-hidden border border-gray-200">
-                                    <img class="h-full w-full object-cover" src="{{ asset('images/produk/sabun-cair.jpg') }}" alt="Sabun Cair">
-                                </div>
-                                <div class="ml-4">
-                                    <div class="text-sm font-medium text-gray-900">Sabun Cair Eco Enzyme</div>
-                                    <div class="text-xs text-gray-500">SKU: SCE-003</div>
-                                </div>
-                            </div>
-                        </td>
-                        <td class="px-6 py-4">
-                            <div class="text-sm text-gray-900">Pembersih</div>
-                        </td>
-                        <td class="px-6 py-4">
-                            <div class="text-sm text-gray-900">95 unit</div>
-                        </td>
-                        <td class="px-6 py-4">
-                            <div class="text-sm text-gray-900">Rp 2.850.000</div>
-                        </td>
-                        <td class="px-6 py-4">
-                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-                                </svg>
-                                3%
-                            </span>
-                        </td>
-                    </tr>
-                    <tr class="hover:bg-gray-50 transition-colors">
-                        <td class="px-6 py-4">
-                            <div class="flex items-center">
-                                <div class="flex-shrink-0 h-10 w-10 rounded-full overflow-hidden border border-gray-200">
-                                    <img class="h-full w-full object-cover" src="{{ asset('images/produk/kit-pembuatan.jpg') }}" alt="Kit Pembuatan">
-                                </div>
-                                <div class="ml-4">
-                                    <div class="text-sm font-medium text-gray-900">Starter Kit Pembuatan</div>
-                                    <div class="text-xs text-gray-500">SKU: KIT-004</div>
-                                </div>
-                            </div>
-                        </td>
-                        <td class="px-6 py-4">
-                            <div class="text-sm text-gray-900">Peralatan</div>
-                        </td>
-                        <td class="px-6 py-4">
-                            <div class="text-sm text-gray-900">76 unit</div>
-                        </td>
-                        <td class="px-6 py-4">
-                            <div class="text-sm text-gray-900">Rp 7.600.000</div>
-                        </td>
-                        <td class="px-6 py-4">
-                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
-                                </svg>
-                                15%
-                            </span>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div> -->
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>

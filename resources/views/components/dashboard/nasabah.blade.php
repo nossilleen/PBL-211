@@ -51,14 +51,6 @@
                         <input type="text" name="nama_bank_sampah" class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-400" placeholder="Contoh: Bank Sampah Sejahtera" required>
                     </div>
                     <div class="mb-4">
-                        <label class="block text-gray-700 text-sm font-semibold mb-2">Alamat Lengkap</label>
-                        <textarea name="alamat_lengkap" class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-400" rows="2" placeholder="Alamat lengkap lokasi bank sampah" required></textarea>
-                    </div>
-                    <div class="mb-4">
-                        <label class="block text-gray-700 text-sm font-semibold mb-2">Kota</label>
-                        <input type="text" name="kota" class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-400" placeholder="Kota" required>
-                    </div>
-                    <div class="mb-4">
                         <label class="block text-gray-700 text-sm font-semibold mb-2">Alasan Pengajuan</label>
                         <textarea name="alasan_pengajuan" class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-400" rows="2" placeholder="Mengapa Anda ingin menjadi pengelola?" required></textarea>
                     </div>

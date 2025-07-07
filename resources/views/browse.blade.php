@@ -188,9 +188,11 @@
                         if (category === 'products') {
                             storesSection.classList.add('hidden');
                             productsSection.classList.remove('hidden');
+                            updateCategoryCategoryParam('products');
                         } else if (category === 'stores') {
                             storesSection.classList.remove('hidden');
                             productsSection.classList.add('hidden');
+                            updateCategoryCategoryParam('stores');
                         } else {
                             // 'all' or default
                             storesSection.classList.remove('hidden');
@@ -206,6 +208,22 @@
                         arrow.classList.remove('rotate-180');
                     }
                 });
+            }
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const initialCategory = urlParams.get('category');
+            if (initialCategory === 'products') {
+                storesSection.classList.add('hidden');
+                productsSection.classList.remove('hidden');
+                currentCategory.textContent = '🧪 Produk Eco Enzim';
+            } else if (initialCategory === 'stores') {
+                // default already storesSection visible
+            }
+
+            function updateCategoryCategoryParam(category) {
+                const params = new URLSearchParams(window.location.search);
+                params.set('category', category);
+                window.history.pushState({}, '', `${window.location.pathname}?${params.toString()}`);
             }
         </script>
         
@@ -296,5 +314,47 @@ document.addEventListener('DOMContentLoaded', function() {
                 animation: likeScale 0.3s ease-in-out;
             }
         </style>
+
+        <script>
+            // AJAX pagination for products & shops
+            function loadSection(url, sectionId) {
+                fetch(url, { headers: { 'X-Requested-With': 'XMLHttpRequest' }})
+                    .then(res => res.text())
+                    .then(html => {
+                        const parser = new DOMParser();
+                        const doc = parser.parseFromString(html, 'text/html');
+                        const newSection = doc.querySelector('#' + sectionId);
+                        const currentSection = document.getElementById(sectionId);
+                        if (newSection && currentSection) {
+                            currentSection.innerHTML = newSection.innerHTML;
+                            // re-scroll to top of section
+                            currentSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }
+                        // push new url with category param to history
+                        const newUrlObj = new URL(url, window.location.origin);
+                        newUrlObj.searchParams.set('category', sectionId === 'productsSection' ? 'products' : 'stores');
+                        window.history.pushState({}, '', newUrlObj.href);
+                    })
+                    .catch(err => console.error('Pagination fetch error:', err));
+            }
+
+            document.addEventListener('click', function(e) {
+                const link = e.target.closest('a');
+                if (!link) return;
+                if (link.closest('#productsSection')) {
+                    e.preventDefault();
+                    loadSection(link.href, 'productsSection');
+                } else if (link.closest('#storesSection')) {
+                    e.preventDefault();
+                    loadSection(link.href, 'storesSection');
+                }
+            });
+
+            // Handle back/forward navigation
+            window.addEventListener('popstate', function() {
+                const visibleSection = !document.getElementById('productsSection').classList.contains('hidden') ? 'productsSection' : 'storesSection';
+                loadSection(window.location.href, visibleSection);
+            });
+        </script>
     </body>
 </html>
