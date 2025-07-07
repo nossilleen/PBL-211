@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Notification;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Transaksi;
+use Illuminate\Support\Facades\DB;
 
 class ProfileController extends Controller
 {
@@ -17,9 +18,21 @@ class ProfileController extends Controller
         if ($user->role === 'pengelola') {
             return redirect()->route('pengelola.index');
         }
-        $artikelFavorit = $user->artikelFavorit()->latest()->get();
+        $artikelFavorit = \App\Models\Artikel::whereIn('artikel_id', DB::table('artikel_likes')->where('user_id', $user->user_id)->pluck('artikel_id'))->paginate(6, ['*'], 'artikel_page');
 
-        return view('profil', compact('artikelFavorit'));
+        $notifications = \App\Models\Notification::where('user_id', $user->user_id)
+            ->orderByDesc('created_at')
+            ->paginate(20);
+
+        $pesananAktif = \App\Models\Transaksi::where('user_id', $user->user_id)
+            ->where('status', 'aktif')
+            ->get();
+
+        $riwayatTransaksi = \App\Models\Transaksi::where('user_id', $user->user_id)
+            ->orderByDesc('created_at')
+            ->get();
+
+        return view('profile', compact('artikelFavorit', 'notifications', 'pesananAktif', 'riwayatTransaksi'));
     }
 
     /**

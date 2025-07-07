@@ -17,9 +17,10 @@ class EventFactory extends Factory
         return [
             'title' => $this->faker->sentence(),
             'description' => $this->faker->paragraphs(3, true),
-            'image' => 'images/events/1.png',
+            'image' => $this->faker->randomElement(['storage/events/default1.jpg','storage/events/default2.jpg', 'storage/events/default3.jpeg']),
             'date' => $this->faker->dateTimeBetween('now', '+1 year'),
             'location' => $this->faker->city(),
+            'link_form_acara' => $this->faker->randomElement(['https://docs.google.com/forms/d/e/1FAIpQLSfpfT_CKiwNJWW8XrrpyEuoDnhBSiYX-v5s6j5PGLzKLu2y4A/viewform?usp=dialog',''])
         ];
     }
 } 

@@ -23,9 +23,29 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
-        // Gunakan satu kata nama dan jadikan email "nama@gmail.com"
         $firstName = fake()->unique()->firstName();
-        $emailLocal = Str::slug($firstName, ''); // hilangkan karakter non-alphanumeric
+        $emailLocal = Str::slug($firstName, '');
+
+        $role = fake()->randomElement(['superadmin', 'admin', 'nasabah', 'pengelola']);
+
+        // Define available images for each role
+        $nasabahImages = [
+            'Reimu1.png',
+            'Logo1.jpeg'
+        ];
+        $pengelolaImages = [
+            'Logo1.jpeg'
+        ];
+        
+
+        $fotoToko = 'Logo1.jpeg';
+        if ($role === 'nasabah') {
+            $fotoToko = 'profil/' . fake()->randomElement($nasabahImages);
+        } elseif ($role === 'pengelola') {
+            $fotoToko = 'toko-photos/' . fake()->randomElement($pengelolaImages);
+        } else {
+            $fotoToko = 'toko-photos/Logo1.jpeg';
+        }
 
         return [
             'nama' => $firstName,
@@ -34,13 +54,13 @@ class UserFactory extends Factory
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             // Nomor HP: hanya digit, max 15 karakter sesuai schema
             'no_hp' => '08'.fake()->numerify('###########'),
-            'role' => fake()->randomElement(['superadmin', 'admin', 'nasabah', 'pengelola']),
+            'role' => $role,
             'points' => fake()->numberBetween(0, 1000),
             'deskripsi_toko' => fake()->optional()->paragraph(),
             'jam_operasional' => fake()->optional()->time(),
             'nomor_rekening' => fake()->optional()->bankAccountNumber(),
             'nama_bank_rekening' => fake()->optional()->randomElement(['BCA', 'BNI', 'BRI', 'Mandiri']),
-            'foto_toko' => fake()->optional()->imageUrl(),
+            'foto_toko' => $fotoToko,
             'remember_token' => Str::random(10),
         ];
     }

@@ -22,7 +22,7 @@ class ArtikelFactory extends Factory
             'konten' => '<p>'.implode('</p><p>',$this->faker->paragraphs(rand(3,7))).'</p>',
             'tanggal_publikasi' => $this->faker->date(),
             'user_id' => User::factory(),
-            'gambar' => 'storage/artikel_gambar/artikel_1751878520.jpg'
+            'gambar' => $this->faker->randomElement(['storage/artikel_gambar/default1.jpg','storage/artikel_gambar/default2.jpg', 'storage/artikel_gambar/default3.jpeg'])
         ];
     }
 } 

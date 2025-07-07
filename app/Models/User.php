@@ -128,11 +128,6 @@ public function likedArtikels() {
         return $this->hasMany(Produk::class, 'user_id');
     }
     
-    public function poin()
-    {
-        return $this->hasMany(Poin::class, 'user_id');
-    }
-    
     public function transaksi()
     {
         return $this->hasMany(Transaksi::class, 'user_id');
@@ -170,3 +165,5 @@ public function likedArtikels() {
     }
 
 }
+
+
