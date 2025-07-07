@@ -30,7 +30,7 @@ class UserFactory extends Factory
         return [
             'nama' => $firstName,
             'email' => strtolower($emailLocal).'@gmail.com',
-            'email_verified_at' => now(),
+            // 'email_verified_at' => now(),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             // Nomor HP: hanya digit, max 15 karakter sesuai schema
             'no_hp' => '08'.fake()->numerify('###########'),

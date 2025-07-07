@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\{User,Lokasi,Produk,ProdukGambar,Artikel,ArtikelGambar,Transaksi,Feedback,Upgrade,PointHistory,ProductLike,Event};
+use App\Models\{User,Lokasi,Produk,ProdukGambar,Artikel,Transaksi,Feedback,Upgrade,PointHistory,ProductLike,Event};
 use Illuminate\Support\Collection;
 
 class FactorySeeder extends Seeder
@@ -30,11 +30,10 @@ class FactorySeeder extends Seeder
             $allProducts = $allProducts->concat($products);
         }
 
-        // ---------------- ARTIKEL & GAMBAR ----------------
+        // ---------------- ARTIKEL ----------------
         $articles = Artikel::factory()
             ->count(30)
             ->for($admin, 'user')
-            ->has(ArtikelGambar::factory()->count(2), 'gambar')
             ->create();
 
         // ---------------- EVENTS ----------------
