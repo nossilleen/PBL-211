@@ -96,7 +96,7 @@
                         </div>
                     </div>
                         @if($item->gambar && $item->gambar->count() > 1)
-                            <div class="absolute top-2 right-2 bg-black bg-opacity-50 text-white text-xs px-2 py-1 rounded-full">
+                            <div class="absolute bottom-2 left-2 bg-black bg-opacity-50 text-white text-xs px-2 py-1 rounded-full">
                                 +{{ $item->gambar->count() - 1 }} gambar
                             </div>
                         @endif
@@ -431,8 +431,6 @@
         </div>
     </div>
 </div>
-    </form>
-</div>
 
 <!-- Modal Custom untuk Validasi -->
 <div id="modalTokoAlert" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50 hidden">
@@ -572,61 +570,54 @@ function closeTokoModalAlert() {
     document.getElementById('modalTokoAlert').classList.add('hidden');
 }
 
-// Global variable to store all selected files
+// ======  LOGIKA BARU UPLOAD GAMBAR  ======
 let allSelectedFiles = [];
 
-function handleImageUpload(input) {
-    const preview = document.getElementById('imagePreview');
-    const files = Array.from(input.files);
-    const placeholder = document.getElementById('uploadPlaceholder');
+function renderImagePreview() {
+    const preview      = document.getElementById('imagePreview');
+    const placeholder  = document.getElementById('uploadPlaceholder');
+    const imageCountEl = document.getElementById('imageCount');
     const chooseFileBelow = document.getElementById('chooseFileBelow');
     const chooseFileInBox = document.getElementById('chooseFileInBox');
-    // Check if adding new files would exceed limit
-    if (allSelectedFiles.length + files.length > 5) {
-        alert('Maksimal hanya bisa upload 5 gambar!');
-        return;
-    }
-    // Add new files to existing files
-    allSelectedFiles = [...allSelectedFiles, ...files];
-    // Update the input files
-    const dt = new DataTransfer();
-    allSelectedFiles.forEach(file => dt.items.add(file));
-    input.files = dt.files;
+
+    // Tampilkan / sembunyikan placeholder & counter
     if (allSelectedFiles.length === 0) {
         preview.classList.add('hidden');
-        document.getElementById('imageCount').classList.add('hidden');
+        imageCountEl.classList.add('hidden');
         placeholder.classList.remove('hidden');
         chooseFileBelow.classList.add('hidden');
         if (chooseFileInBox) chooseFileInBox.classList.remove('hidden');
         return;
     }
-    preview.innerHTML = '';
-    preview.classList.remove('hidden');
-    // Update image count
-    const imageCount = document.getElementById('imageCount');
-    imageCount.textContent = `${allSelectedFiles.length} gambar dipilih`;
-    imageCount.classList.remove('hidden');
-    // Sembunyikan placeholder, tampilkan tombol choose file di bawah, sembunyikan di dalam kotak
+
     placeholder.classList.add('hidden');
     chooseFileBelow.classList.remove('hidden');
     if (chooseFileInBox) chooseFileInBox.classList.add('hidden');
+
+    // Perbarui counter
+    imageCountEl.textContent = `${allSelectedFiles.length} gambar dipilih`;
+    imageCountEl.classList.remove('hidden');
+
+    // Render ulang preview
+    preview.innerHTML = '';
+    preview.classList.remove('hidden');
+
     allSelectedFiles.forEach((file, index) => {
         const reader = new FileReader();
         reader.onload = function(e) {
             const previewItem = document.createElement('div');
             previewItem.className = 'relative group';
             previewItem.innerHTML = `
-                <img src="${e.target.result}" alt="Preview" class="w-20 h-20 object-cover rounded-lg border shadow">
-                <button type="button" data-index="${index}" class="remove-image-btn absolute top-0 right-0 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs opacity-80 group-hover:opacity-100 transition-opacity z-10">
-                    ×
-                </button>
+                <img src="${e.target.result}" alt="Preview" class="w-20 h-20 object-cover rounded-lg border shadow" />
+                <button type="button" data-index="${index}" class="remove-image-btn absolute top-0 right-0 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs opacity-80 group-hover:opacity-100 transition-opacity z-10">&times;</button>
             `;
             preview.appendChild(previewItem);
         };
         reader.readAsDataURL(file);
     });
-    // Setelah forEach render preview, tambahkan event listener ke semua .remove-image-btn
-    document.getElementById('imagePreview').onclick = function(e) {
+
+    // Tambahkan event listener untuk menghapus gambar
+    preview.onclick = function(e) {
         if (e.target.classList.contains('remove-image-btn')) {
             e.preventDefault();
             const idx = parseInt(e.target.dataset.index);
@@ -635,15 +626,42 @@ function handleImageUpload(input) {
     };
 }
 
-window.removeImage = function(index) {
-    const input = document.getElementById('images');
-    if (!input) return;
-    allSelectedFiles.splice(index, 1);
+function handleImageUpload(input) {
+    const newFiles = Array.from(input.files);
+
+    // Validasi jumlah maksimal file
+    if (allSelectedFiles.length + newFiles.length > 5) {
+        alert('Maksimal hanya bisa upload 5 gambar!');
+        // Reset input agar bisa pilih ulang
+        input.value = '';
+        return;
+    }
+
+    // Tambahkan file baru ke koleksi global
+    allSelectedFiles = [...allSelectedFiles, ...newFiles];
+
+    // Sinkronkan kembali fileList pada input
     const dt = new DataTransfer();
     allSelectedFiles.forEach(file => dt.items.add(file));
     input.files = dt.files;
-    handleImageUpload(input);
+
+    renderImagePreview();
+}
+
+window.removeImage = function(index) {
+    const input = document.getElementById('images');
+    if (!input) return;
+
+    allSelectedFiles.splice(index, 1);
+
+    // Update input.files setelah penghapusan
+    const dt = new DataTransfer();
+    allSelectedFiles.forEach(file => dt.items.add(file));
+    input.files = dt.files;
+
+    renderImagePreview();
 };
+// ======  END LOGIKA BARU  ======
 
 // Store form validation
 document.querySelector('form[action*="pengelola.toko.update"]').addEventListener('submit', function(e) {

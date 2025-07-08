@@ -121,74 +121,72 @@
 </div>
 
 <script>
-// Global variable to store all selected files
+// ======  LOGIKA BARU UPLOAD GAMBAR ======
 let allSelectedFiles = [];
 
-function handleImageUpload(input) {
+function renderImagePreview() {
     const preview = document.getElementById('imagePreview');
-    const files = Array.from(input.files);
-    
-    // Check if adding new files would exceed limit
-    if (allSelectedFiles.length + files.length > 5) {
-        alert('Maksimal hanya bisa upload 5 gambar!');
-        return;
-    }
-    
-    // Add new files to existing files
-    allSelectedFiles = [...allSelectedFiles, ...files];
-    
-    // Update the input files
-    const dt = new DataTransfer();
-    allSelectedFiles.forEach(file => dt.items.add(file));
-    input.files = dt.files;
-    
+
     if (allSelectedFiles.length === 0) {
         preview.classList.add('hidden');
+        preview.innerHTML = '';
         return;
     }
-    
+
     preview.innerHTML = '';
     preview.classList.remove('hidden');
-    
+
     allSelectedFiles.forEach((file, index) => {
         const reader = new FileReader();
-        
         reader.onload = function(e) {
             const previewItem = document.createElement('div');
             previewItem.className = 'relative group';
             previewItem.innerHTML = `
-                <img src="${e.target.result}" alt="Preview" class="w-full h-24 object-cover rounded-lg">
-                <button type="button" onclick="removeImage(${index})" class="absolute top-1 right-1 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                    ×
-                </button>
+                <img src="${e.target.result}" alt="Preview" class="w-full h-24 object-cover rounded-lg" />
+                <button type="button" data-index="${index}" class="absolute top-1 right-1 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">×</button>
             `;
             preview.appendChild(previewItem);
         };
-        
         reader.readAsDataURL(file);
     });
+
+    // Event listener hapus gambar
+    preview.onclick = function(e){
+        if(e.target.dataset.index){
+            removeImage(parseInt(e.target.dataset.index));
+        }
+    };
 }
 
-function removeImage(index) {
-    console.log('Removing image at index:', index);
-    const input = document.getElementById('images');
-    
-    if (!input) {
-        console.error('Input element not found');
+function handleImageUpload(input){
+    const newFiles = Array.from(input.files);
+
+    if (allSelectedFiles.length + newFiles.length > 5) {
+        alert('Maksimal hanya bisa upload 5 gambar!');
+        input.value = '';
         return;
     }
-    
-    // Remove file from array
-    allSelectedFiles.splice(index, 1);
-    console.log('Remaining files:', allSelectedFiles.length);
-    
-    // Update input files
+
+    allSelectedFiles = [...allSelectedFiles, ...newFiles];
+
     const dt = new DataTransfer();
-    allSelectedFiles.forEach(file => dt.items.add(file));
+    allSelectedFiles.forEach(file=>dt.items.add(file));
     input.files = dt.files;
-    
-    // Re-render preview
-    handleImageUpload(input);
+
+    renderImagePreview();
 }
+
+function removeImage(index){
+    const input = document.getElementById('images');
+    if(!input) return;
+
+    allSelectedFiles.splice(index,1);
+    const dt = new DataTransfer();
+    allSelectedFiles.forEach(file=>dt.items.add(file));
+    input.files = dt.files;
+
+    renderImagePreview();
+}
+// ====== END LOGIKA BARU ======
 </script>
 @endsection 
