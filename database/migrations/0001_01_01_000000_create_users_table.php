@@ -16,7 +16,6 @@ return new class extends Migration
             $table->id('user_id');
             $table->string('nama', 50);
             $table->string('email', 100)->unique();
-            $table->timestamp('email_verified_at')->nullable();
             $table->string('password', 255);
             $table->string('no_hp', 15);
             $table->rememberToken();
@@ -27,7 +26,10 @@ return new class extends Migration
             $table->string('kelurahan', 100)->nullable();
             $table->string('kode_pos', 10)->nullable();
 
-            $table->enum('role', ['admin', 'nasabah', 'pengelola'])->default('nasabah');
+            $table->enum('role', ['superadmin', 'admin', 'nasabah', 'pengelola'])->default('nasabah');
+            $table->boolean('can_create_article')->default(true);
+            $table->boolean('can_create_event')->default(true);
+
             $table->unsignedBigInteger('points')->default(0);
             $table->text('deskripsi_toko')->nullable();
             $table->string('jam_operasional')->nullable();

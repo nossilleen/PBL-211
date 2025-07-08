@@ -59,6 +59,9 @@
                         @endphp
                         <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ $statusClass[$status] ?? 'bg-gray-100 text-gray-800' }} whitespace-nowrap">
                             {{ $statusText }}
+                            @if($status == 'sedang dikirim' && $pesanan->estimasi_hari)
+                                (Sisa {{ $pesanan->sisa_hari }} / {{ $pesanan->estimasi_hari }} hari)
+                            @endif
                         </span>
                     </td>
                     <td class="py-4 px-4 text-sm font-medium">

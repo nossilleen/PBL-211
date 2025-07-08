@@ -32,6 +32,7 @@ class TransaksiFactory extends Factory
             'jumlah_produk' => $jumlah,
             'harga_total' => $harga * $jumlah,
             'poin_used' => $payMethod === 'poin' ? $harga * $jumlah : null,
+            'estimasi_hari' => $this->faker->numberBetween(2, 14),
             'tanggal' => $this->faker->dateTimeBetween('-2 months', 'now'),
             'status' => $status,
             'pay_method' => $payMethod,

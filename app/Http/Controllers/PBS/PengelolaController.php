@@ -332,9 +332,17 @@ class PengelolaController extends Controller
         if ($transaksi->status !== 'menunggu konfirmasi') {
             return back()->with('error', 'Status tidak valid');
         }
+
+        // Validasi input estimasi_hari
+        request()->validate([
+            'estimasi_hari' => 'required|integer|min:1'
+        ]);
+
+        $transaksi->estimasi_hari = request('estimasi_hari');
         $transaksi->status = 'sedang dikirim';
         $transaksi->save();
-        return back()->with('success', 'Pesanan telah diverifikasi dan diproses');
+
+        return back()->with('success', 'Pesanan telah diverifikasi dan diproses dengan estimasi '.request('estimasi_hari').' hari');
     }
 
     // Tandai selesai

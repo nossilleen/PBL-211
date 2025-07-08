@@ -20,6 +20,7 @@ return new class extends Migration
             $table->integer('jumlah_produk')->unsigned()->default(1);
             $table->integer('harga_total')->unsigned();
             $table->integer('poin_used')->unsigned()->nullable();
+            $table->unsignedInteger('estimasi_hari')->nullable();
             $table->dateTime('tanggal');
             $table->enum('status', ['belum dibayar', 'menunggu konfirmasi', 'sedang dikirim', 'selesai', 'dibatalkan'])->default('belum dibayar');
             $table->enum('pay_method', ['transfer', 'poin'])->default('transfer');

@@ -195,6 +195,9 @@
                             <div class="flex items-center space-x-2 px-3 py-1 {{ $config['bg'] }} rounded-full">
                                 <div class="w-2 h-2 {{ $config['dot'] }} rounded-full {{ $pesanan->status == 'menunggu konfirmasi' ? 'animate-pulse' : '' }}"></div>
                                 <span class="text-sm font-medium {{ $config['text'] }}">{{ ucfirst($pesanan->status) }}</span>
+                                @if($pesanan->status == 'sedang dikirim' && $pesanan->estimasi_hari)
+                                    <span class="ml-2 text-xs text-gray-600">(Sisa {{ $pesanan->sisa_hari }} / {{ $pesanan->estimasi_hari }} hari)</span>
+                                @endif
                             </div>
                             <div class="flex items-center space-x-2 text-gray-500">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -412,7 +415,9 @@
 
     <!-- Hidden forms for actions -->
     <form id="tolakForm" method="POST" class="hidden">@csrf</form>
-    <form id="verifikasiForm" method="POST" class="hidden">@csrf</form>
+    <form id="verifikasiForm" method="POST" class="hidden">@csrf
+        <input type="hidden" name="estimasi_hari" id="estimasi_hari_input">
+    </form>
     <form id="selesaiForm" method="POST" class="hidden">@csrf</form>
 
     <!-- SweetAlert2 CSS and JS -->
@@ -438,13 +443,22 @@
     function handleVerifikasi(transaksiId) {
         Swal.fire({
             title: 'Verifikasi Pesanan?',
-            text: "Pesanan akan diproses setelah diverifikasi",
+            html: '<p class="mb-2">Tolong estimasikan total jumlah hari dari tanggal pembuatan produk + hari pengiriman.</p>' +
+                  '<input id="swal-input-estimasi" type="number" min="1" class="swal2-input" placeholder="Jumlah hari">',
+            focusConfirm: false,
             icon: 'question',
             showCancelButton: true,
             confirmButtonColor: '#22c55e',
             cancelButtonColor: '#64748b',
-            confirmButtonText: 'Ya, Verifikasi',
+            confirmButtonText: 'Simpan & Proses',
             cancelButtonText: 'Batal',
+            preConfirm: () => {
+                const value = document.getElementById('swal-input-estimasi').value;
+                if (!value || parseInt(value) < 1) {
+                    Swal.showValidationMessage('Masukkan jumlah hari (>=1)');
+                }
+                return value;
+            },
             customClass: {
                 popup: 'rounded-2xl',
                 confirmButton: 'rounded-lg',
@@ -453,6 +467,7 @@
         }).then((result) => {
             if (result.isConfirmed) {
                 const form = document.getElementById('verifikasiForm');
+                document.getElementById('estimasi_hari_input').value = result.value;
                 form.action = `{{ url('pengelola/pesanan') }}/${transaksiId}/verifikasi`;
                 form.submit();
             }
