@@ -175,6 +175,7 @@
     </div>
 
     <!-- Enhanced Order Cards -->
+    <div class="ajax-pagination">
     <div class="space-y-6">
         @foreach($pesananMasuk as $pesanan)
         <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-all duration-300">
@@ -415,6 +416,7 @@
             </div>
         @endif
     </div>
+    </div><!-- /.ajax-pagination -->
 
     <!-- Enhanced Modal for Bukti Transfer -->
     <div id="buktiTransferModal" class="fixed inset-0 z-50 hidden overflow-y-auto">

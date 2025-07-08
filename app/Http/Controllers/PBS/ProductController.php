@@ -195,7 +195,7 @@ class ProductController extends Controller
     public function toko()
     {
         $user = auth()->user();
-        $products = Produk::with('gambar')->where('user_id', auth()->id())->paginate(12);
+        $products = Produk::with('gambar')->where('user_id', auth()->id())->paginate(8)->withQueryString();
         // Fetch full list for availability modal
         $allProducts = Produk::where('user_id', auth()->id())->get();
         return view('pengelola.toko', compact('products', 'allProducts', 'user'));

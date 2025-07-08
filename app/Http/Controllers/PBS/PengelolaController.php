@@ -406,7 +406,8 @@ class PengelolaController extends Controller
                 $q->where('user_id', $pengelolaId);
             })
             ->orderByDesc('tanggal')
-            ->get();
+            ->paginate(10)
+            ->withQueryString();
         return view('pengelola.riwayat', compact('riwayatTransaksi'));
     }
 }
