@@ -163,6 +163,18 @@
         @php
             $sort = request('sort', 'terbaru');
             $label = $sort === 'populer' ? 'Terpopuler' : 'Terbaru';
+
+            // Persiapan tanggal dan status event
+            $startCarbon        = \Carbon\Carbon::parse($event->date);
+            $endCarbon          = $event->expired_at ? \Carbon\Carbon::parse($event->expired_at) : null;
+            $nowCarbon          = \Carbon\Carbon::now();
+
+            $startDateFormatted = $startCarbon->translatedFormat('l, d F Y - H:i');
+            $endDateFormatted   = $endCarbon ? $endCarbon->translatedFormat('l, d F Y - H:i') : null;
+
+            $notStarted = $nowCarbon->lt($startCarbon);
+            $closed     = $endCarbon ? $nowCarbon->gt($endCarbon) : false;
+            $isOpen     = !$closed && !$notStarted;
         @endphp
         <span class="absolute top-6 right-0 bg-red-500 text-white text-xs font-semibold px-4 py-1 rounded-l-full shadow z-20">
     {{ $label }}
@@ -181,19 +193,20 @@
     {{ $event->location }}
 </p>
         <p class="text-sm text-gray-600 mt-1">
-            {{ \Carbon\Carbon::parse($event->date)->translatedFormat('l, d F Y - H:i') }}
+            {{ $startDateFormatted }} @if($endDateFormatted) &ndash; {{ $endDateFormatted }} @endif
         </p>
-        @php
-    $isUpcoming = \Carbon\Carbon::parse($event->date)->isFuture();
-@endphp
 
-@if($isUpcoming)
+@if($isOpen)
     <span class="inline-block bg-green-100 text-green-800 text-xs font-semibold px-3 py-1 rounded-full mb-2">
         <svg class="w-4 h-4 inline mr-1 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="#22c55e"/>
           <path stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4"/>
         </svg>
         Tersedia
+    </span>
+@elseif($notStarted)
+    <span class="inline-block bg-yellow-100 text-yellow-800 text-xs font-semibold px-3 py-1 rounded-full mb-2">
+        ⏳ Belum Dimulai
     </span>
 @else
     <span class="inline-block bg-red-100 text-red-800 text-xs font-semibold px-3 py-1 rounded-full mb-2">
@@ -208,13 +221,17 @@
 
         <!-- Tombol -->
         <div class="mt-4 flex gap-2">
-    @if($isUpcoming)
+    @if($isOpen)
         <a href="{{ route('events.show', ['id' => $event->id]) }}" class="flex-1 bg-green-600 hover:bg-green-700 text-white text-center py-2 px-4 rounded-lg text-sm font-medium">
             Daftar Acara
         </a>
+    @elseif($notStarted)
+        <button disabled class="flex-1 bg-yellow-400 text-white text-center py-2 px-4 rounded-lg text-sm font-medium cursor-not-allowed">
+            Acara Belum Dimulai
+        </button>
     @else
         <button disabled class="flex-1 bg-gray-400 text-white text-center py-2 px-4 rounded-lg text-sm font-medium cursor-not-allowed">
-            Event Acara
+            Acara Sudah Ditutup
         </button>
     @endif
     <a href="{{ route('events.show', ['id' => $event->id]) }}" class="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 text-center py-2 px-4 rounded-lg text-sm font-medium">

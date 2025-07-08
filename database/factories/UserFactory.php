@@ -30,7 +30,6 @@ class UserFactory extends Factory
 
         // Define available images for each role
         $nasabahImages = [
-            'Reimu1.png',
             'Logo1.jpeg'
         ];
         $pengelolaImages = [

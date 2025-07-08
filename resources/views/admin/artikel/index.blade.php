@@ -122,8 +122,13 @@
                         <textarea name="description" id="description" rows="3" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"></textarea>
                     </div>
                     <div class="mb-4">
-                        <label for="date" class="block text-sm font-medium text-gray-700">Tanggal & Waktu</label>
+                        <label for="date" class="block text-sm font-medium text-gray-700">Tanggal & Waktu Mulai</label>
                         <input type="datetime-local" name="date" id="date" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="expired_at" class="block text-sm font-medium text-gray-700">Tanggal & Waktu Berakhir</label>
+                        <input type="datetime-local" name="expired_at" id="expired_at" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
                     </div>
                     <div class="mb-4">
                         <label for="location" class="block text-sm font-medium text-gray-700">Lokasi</label>

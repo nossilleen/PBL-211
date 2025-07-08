@@ -35,6 +35,7 @@ class EventController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'required|string',
             'date' => 'required|date',
+            'expired_at' => 'required|date|after:date',
             'location' => 'required|string|max:255',
             'link_form_acara' => 'nullable|url',
         ];
@@ -72,7 +73,7 @@ class EventController extends Controller
                 'location' => $request->location,
                 'image' => $imagePath,
                 'link_form_acara' => $request->link_form_acara,
-                'expired_at' => \Carbon\Carbon::parse($request->date)->addDays(7),
+                'expired_at' => $request->expired_at,
             ]);
 
             return redirect()->route('admin.artikel.index')
@@ -95,6 +96,7 @@ class EventController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'required|string',
             'date' => 'required|date',
+            'expired_at' => 'required|date|after:date',
             'location' => 'required|string|max:255',
             'banner' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'link_form_acara' => 'nullable|url',
@@ -135,6 +137,7 @@ class EventController extends Controller
             $event->description = $request->description;
             $event->date = $request->date;
             $event->location = $request->location;
+            $event->expired_at = $request->expired_at;
             $event->link_form_acara = $request->link_form_acara;
             $event->save();
 

@@ -47,6 +47,15 @@
                 </div>
 
                 <div class="mb-3">
+                    <label for="expired_at" class="form-label">Tanggal & Waktu Berakhir</label>
+                    <input type="datetime-local" class="form-control @error('expired_at') is-invalid @enderror" 
+                           id="expired_at" name="expired_at" value="{{ old('expired_at') }}" required>
+                    @error('expired_at')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="mb-3">
                     <label for="location" class="form-label">Lokasi</label>
                     <input type="text" class="form-control @error('location') is-invalid @enderror" 
                            id="location" name="location" value="{{ old('location') }}" required>

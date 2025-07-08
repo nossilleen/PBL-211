@@ -67,7 +67,7 @@
                 <!-- Date and Location Inputs -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div class="bg-white rounded-lg shadow-sm p-6">
-                        <label for="date" class="block text-sm font-medium text-gray-700 mb-2">Tanggal & Waktu</label>
+                        <label for="date" class="block text-sm font-medium text-gray-700 mb-2">Tanggal & Waktu Mulai</label>
                         <input type="datetime-local" 
                                id="date" 
                                name="date" 
@@ -88,6 +88,19 @@
                                class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500 @error('location') border-red-500 @enderror"
                                required>
                         @error('location')
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div class="bg-white rounded-lg shadow-sm p-6">
+                        <label for="expired_at" class="block text-sm font-medium text-gray-700 mb-2">Tanggal & Waktu Berakhir</label>
+                        <input type="datetime-local" 
+                               id="expired_at" 
+                               name="expired_at" 
+                               value="{{ old('expired_at', $event->expired_at ? \Carbon\Carbon::parse($event->expired_at)->format('Y-m-d\\TH:i') : null) }}"
+                               class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500 @error('expired_at') border-red-500 @enderror"
+                               required>
+                        @error('expired_at')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
                     </div>

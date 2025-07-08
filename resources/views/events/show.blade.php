@@ -2,12 +2,21 @@
 
 @section('content')
 @php
-    $eventStatus = null;
-    if(isset($event)) {
-        if($event->expired_at) {
-            $eventStatus = (\Carbon\Carbon::parse($event->expired_at)->isPast() ? 'Selesai' : 'Tersedia');
-        } elseif($event->date) {
-            $eventStatus = (\Carbon\Carbon::parse($event->date)->isPast() ? 'Selesai' : 'Tersedia');
+    $now = \Carbon\Carbon::now();
+    $start = \Carbon\Carbon::parse($event->date);
+    $end   = $event->expired_at ? \Carbon\Carbon::parse($event->expired_at) : null;
+
+    if($now->lt($start)) {
+        $eventStatus = 'Belum'; // belum dimulai
+        $countdownTs = $start->timestamp;
+        $countdownLabel = 'Acara akan dimulai dalam';
+    } elseif($end && $now->gt($end)) {
+        $eventStatus = 'Selesai';
+    } else {
+        $eventStatus = 'Tersedia';
+        if($end) {
+            $countdownTs = $end->timestamp;
+            $countdownLabel = 'Acara akan ditutup dalam';
         }
     }
 @endphp
@@ -28,7 +37,11 @@
                     <div class="flex flex-wrap gap-4 text-white">
                         <div class="flex items-center">
                             <i class="fas fa-calendar-alt mr-2"></i>
-                            <span>{{ \Carbon\Carbon::parse($event->date)->format('d F Y H:i') }}</span>
+                            @php
+                                $startDateFormatted = \Carbon\Carbon::parse($event->date)->format('d F Y H:i');
+                                $endDateFormatted = $event->expired_at ? \Carbon\Carbon::parse($event->expired_at)->format('d F Y H:i') : null;
+                            @endphp
+                            <span>{{ $startDateFormatted }} @if($endDateFormatted) – {{ $endDateFormatted }} @endif</span>
                         </div>
                         <div class="flex items-center">
                             <i class="fas fa-map-marker-alt mr-2"></i>
@@ -58,7 +71,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                     <div class="bg-gray-50 p-4 rounded-lg">
                         <h3 class="text-lg font-medium text-gray-700 mb-2">Tanggal & Waktu</h3>
-                        <p class="text-gray-600">{{ \Carbon\Carbon::parse($event->date)->format('d F Y H:i') }}</p>
+                        <p class="text-gray-600">{{ $startDateFormatted }} @if($endDateFormatted) – {{ $endDateFormatted }} @endif</p>
                     </div>
                     <div class="bg-gray-50 p-4 rounded-lg">
                         <h3 class="text-lg font-medium text-gray-700 mb-2">Lokasi</h3>
@@ -66,7 +79,7 @@
                     </div>
                 </div>
 
-                <div class="flex flex-col sm:flex-row gap-4 justify-between items-center">
+                <div class="flex flex-col sm:flex-row gap-4 justify-between items-center" id="registrationSection">
                     <a href="{{ route('events.index') }}" 
                        class="inline-flex items-center px-6 py-3 border border-gray-300 text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
                         <i class="fas fa-arrow-left mr-2"></i>
@@ -88,6 +101,11 @@
                                 Link Pendaftaran Belum Tersedia
                             </button>
                         @endif
+                    @elseif($eventStatus == 'Belum')
+                        <button class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-yellow-500 cursor-not-allowed" disabled>
+                            <i class="fas fa-clock mr-2"></i>
+                            Acara Belum Dimulai
+                        </button>
                     @else
                         <button class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-gray-400 cursor-not-allowed" disabled>
                             <i class="fas fa-times-circle mr-2"></i>
@@ -95,6 +113,11 @@
                         </button>
                     @endif
                 </div>
+                @if(isset($countdownTs))
+                <div class="mt-4 text-center text-sm text-gray-700" id="countdownWrapper">
+                    <span>{{ $countdownLabel }} <span id="countdown"></span></span>
+                </div>
+                @endif
             </div>
         </div>
     </div>
@@ -164,6 +187,25 @@
             document.getElementById('modalDaftarEvent').classList.add('hidden');
         }, 250);
     }
+
+    @if(isset($countdownTs))
+    function updateCountdown() {
+        const target = {{ $countdownTs }} * 1000;
+        const now = Date.now();
+        const diff = target - now;
+        if(diff <= 0) { location.reload(); return; }
+        const sec = Math.floor(diff / 1000) % 60;
+        const min = Math.floor(diff / (1000*60)) % 60;
+        const hrs = Math.floor(diff / (1000*60*60)) % 24;
+        const days= Math.floor(diff / (1000*60*60*24));
+        const parts = [];
+        if(days) parts.push(days+'h');
+        parts.push(String(hrs).padStart(2,'0')+':'+String(min).padStart(2,'0')+':'+String(sec).padStart(2,'0'));
+        document.getElementById('countdown').textContent = parts.join(' ');
+    }
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+    @endif
 </script>
 @endpush
 @endsection
