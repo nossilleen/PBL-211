@@ -25,10 +25,11 @@ class ProfileController extends Controller
             ->paginate(20);
 
         $pesananAktif = \App\Models\Transaksi::where('user_id', $user->user_id)
-            ->where('status', 'aktif')
+            ->whereIn('status', ['belum dibayar', 'menunggu konfirmasi', 'sedang dikirim'])
             ->get();
 
         $riwayatTransaksi = \App\Models\Transaksi::where('user_id', $user->user_id)
+            ->where('status', 'selesai')
             ->orderByDesc('created_at')
             ->get();
 

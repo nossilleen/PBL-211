@@ -492,69 +492,6 @@
                 </div>
             </section>
             
-            <!-- Stats Section - Enhanced with modern design -->
-            <section class="py-12 md:py-20 bg-cover bg-center relative" style="background-image: url('{{ asset('images/bg5.jpeg') }}')">
-                <div class="absolute inset-0 bg-green-900/70"></div>
-                <div class="container mx-auto px-4 relative z-10">
-                    <div class="text-center mb-10 md:mb-16" data-aos="fade-up">
-                        <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Dampak Kami</h2>
-                        <div class="w-16 md:w-24 h-1 bg-green-300 mx-auto mb-6 md:mb-8"></div>
-                        <p class="text-green-100 max-w-2xl mx-auto text-sm md:text-base px-2">
-                            Dengan dukungan dari berbagai pihak, kami telah mencapai dampak positif yang signifikan untuk lingkungan dan masyarakat.
-                        </p>
-                    </div>
-                    
-                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8">
-                        <div class="bg-white/10 backdrop-blur-sm rounded-xl p-4 md:p-8 text-center transform transition-all hover:scale-105 hover:bg-white/20" data-aos="fade-up" data-aos-delay="100">
-                            <div class="w-12 h-12 md:w-20 md:h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4 md:mb-6">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 md:h-10 md:w-10 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
-                                </svg>
-                            </div>
-                            <div class="text-3xl md:text-5xl font-bold mb-2 md:mb-4 text-white" data-count="600">
-                                <span class="counter">0</span>+
-                            </div>
-                            <div class="text-green-100 font-medium text-sm md:text-lg">Pengguna Aktif</div>
-                        </div>
-                        
-                        <div class="bg-white/10 backdrop-blur-sm rounded-xl p-4 md:p-8 text-center transform transition-all hover:scale-105 hover:bg-white/20" data-aos="fade-up" data-aos-delay="200">
-                            <div class="w-12 h-12 md:w-20 md:h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4 md:mb-6">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 md:h-10 md:w-10 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3" />
-                                </svg>
-                            </div>
-                            <div class="text-3xl md:text-5xl font-bold mb-2 md:mb-4 text-white">
-                                <span class="counter">2.5</span> ton
-                            </div>
-                            <div class="text-green-100 font-medium text-sm md:text-lg">Sampah Organik</div>
-                        </div>
-                        
-                        <div class="bg-white/10 backdrop-blur-sm rounded-xl p-4 md:p-8 text-center transform transition-all hover:scale-105 hover:bg-white/20" data-aos="fade-up" data-aos-delay="300">
-                            <div class="w-12 h-12 md:w-20 md:h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4 md:mb-6">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 md:h-10 md:w-10 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-                                </svg>
-                            </div>
-                            <div class="text-3xl md:text-5xl font-bold mb-2 md:mb-4 text-white" data-count="150">
-                                <span class="counter">0</span>+
-                            </div>
-                            <div class="text-green-100 font-medium text-sm md:text-lg">Produk Eco Enzim</div>
-                        </div>
-                        
-                        <div class="bg-white/10 backdrop-blur-sm rounded-xl p-4 md:p-8 text-center transform transition-all hover:scale-105 hover:bg-white/20" data-aos="fade-up" data-aos-delay="400">
-                            <div class="w-12 h-12 md:w-20 md:h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4 md:mb-6">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 md:h-10 md:w-10 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                                </svg>
-                            </div>
-                            <div class="text-3xl md:text-5xl font-bold mb-2 md:mb-4 text-white" data-count="12">
-                                <span class="counter">0</span>
-                            </div>
-                            <div class="text-green-100 font-medium text-sm md:text-lg">Bank Sampah</div>
-                        </div>
-                    </div>
-                </div>
-                
                 <!-- Script for counter animation -->
                 <script>
                     document.addEventListener('DOMContentLoaded', () => {
