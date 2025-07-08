@@ -222,8 +222,10 @@
 
             <!-- Order Details -->
             <div class="p-6">
-                <div class="flex items-center justify-between mb-4">
-                    <div class="flex items-center space-x-3">
+                <!-- Grid dua kolom: kiri = detail customer, kanan = detail produk -->
+                <div class="grid lg:grid-cols-2 gap-6 mb-4">
+                    <!-- Kolom Customer -->
+                    <div class="flex items-start space-x-3">
                         <div class="w-12 h-12 bg-gradient-to-br from-green-100 to-green-200 rounded-lg flex items-center justify-center">
                             <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
@@ -231,64 +233,83 @@
                         </div>
                         <div>
                             <h3 class="text-lg font-semibold text-gray-900">{{ $pesanan->user->nama }}</h3>
+                            <!-- Tanggal order -->
                             <p class="text-sm text-gray-500 flex items-center space-x-1">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                 </svg>
                                 <span>{{ $pesanan->tanggal->format('d M Y, H:i') }}</span>
                             </p>
+                            <!-- Nomor HP -->
+                            @if($pesanan->user->no_hp)
+                            <p class="text-sm text-gray-500 flex items-center space-x-1 mt-1">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.95.684l1.56 4.686a1 1 0 01-.216.97l-2.197 2.197a11.042 11.042 0 005.516 5.516l2.197-2.197a1 1 0 01.97-.216l4.686 1.56A1 1 0 0121 17.72V21a2 2 0 01-2 2h-1C9.163 23 1 14.837 1 4V3A2 2 0 013 1h2" />
+                                </svg>
+                                <span>{{ $pesanan->user->no_hp }}</span>
+                            </p>
+                            @endif
+                            <!-- Alamat Lengkap -->
+                            <p class="text-sm text-gray-500 flex items-start space-x-1 mt-1">
+                                <svg class="w-4 h-4 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11c1.657 0 3-1.343 3-3S13.657 5 12 5 9 6.343 9 8s1.343 3 3 3zm0 0c-4.418 0-8 1.79-8 4v3h16v-3c0-2.21-3.582-4-8-4z" />
+                                </svg>
+                                <span>{{ $pesanan->user->full_alamat ?: '-' }}</span>
+                            </p>
                         </div>
                     </div>
-                    @if($pesanan->bukti_transfer)
-                        <button onclick="showBuktiTransfer('{{ $pesanan->bukti_transfer }}')" 
-                                class="inline-flex items-center space-x-2 px-4 py-2 bg-gradient-to-r from-blue-50 to-blue-100 border border-blue-200 rounded-lg text-sm font-medium text-blue-700 hover:from-blue-100 hover:to-blue-200 transition-all duration-200">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
-                            </svg>
-                            <span>Lihat Bukti Transfer</span>
-                        </button>
-                    @endif
-                </div>
-
-                <!-- Product Details -->
-                <div class="bg-gray-50 rounded-lg p-4">
-                    <div class="flex items-center space-x-4">
-                        <div class="w-16 h-16 bg-white rounded-lg overflow-hidden shadow-sm border border-gray-200">
-                            <img src="{{ $pesanan->produk && $pesanan->produk->gambar && $pesanan->produk->gambar->first() ? asset('storage/' . $pesanan->produk->gambar->first()->file_path) : asset('/images/produk/default.jpg') }}" 
-                                 alt="{{ $pesanan->produk->nama_produk }}" 
-                                 class="w-full h-full object-cover">
-                        </div>
-                        <div class="flex-1">
-                            <h4 class="font-semibold text-gray-900 mb-1">{{ $pesanan->produk->nama_produk }}</h4>
-                            <div class="flex items-center space-x-4 text-sm text-gray-600">
-                                <span class="flex items-center space-x-1">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/>
-                                    </svg>
-                                    <span>{{ $pesanan->jumlah_produk }} item</span>
-                                </span>
-                                <span class="flex items-center space-x-1">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"/>
-                                    </svg>
-                                    <span>
-                                        @if($pesanan->pay_method == 'poin')
-                                            {{ number_format($pesanan->produk->harga_points, 0, ',', '.') }} Poin/item
-                                        @else
-                                            Rp{{ number_format($pesanan->produk->harga, 0, ',', '.') }}/item
-                                        @endif
-                                    </span>
-                                </span>
+                    <!-- Kolom Produk -->
+                    <div>
+                        <div class="bg-gray-50 rounded-lg p-4">
+                            <div class="flex items-center space-x-4">
+                                <div class="w-16 h-16 bg-white rounded-lg overflow-hidden shadow-sm border border-gray-200">
+                                    <img src="{{ $pesanan->produk && $pesanan->produk->gambar && $pesanan->produk->gambar->first() ? asset('storage/' . $pesanan->produk->gambar->first()->file_path) : asset('/images/produk/default.jpg') }}" 
+                                         alt="{{ $pesanan->produk->nama_produk }}" 
+                                         class="w-full h-full object-cover">
+                                </div>
+                                <div class="flex-1">
+                                    <h4 class="font-semibold text-gray-900 mb-1">{{ $pesanan->produk->nama_produk }}</h4>
+                                    <div class="flex items-center space-x-4 text-sm text-gray-600">
+                                        <span class="flex items-center space-x-1">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/>
+                                            </svg>
+                                            <span>{{ $pesanan->jumlah_produk }} item</span>
+                                        </span>
+                                        <span class="flex items-center space-x-1">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"/>
+                                            </svg>
+                                            <span>
+                                                @if($pesanan->pay_method == 'poin')
+                                                    {{ number_format($pesanan->produk->harga_points, 0, ',', '.') }} Poin/item
+                                                @else
+                                                    Rp{{ number_format($pesanan->produk->harga, 0, ',', '.') }}/item
+                                                @endif
+                                            </span>
+                                        </span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <!-- END grid -->
             </div>
 
             <!-- Actions -->
             @if($pesanan->status == 'menunggu konfirmasi')
-            <div class="bg-gray-50 px-6 py-4 flex justify-end space-x-3">
+            <div class="bg-gray-50 px-6 py-4 flex flex-wrap justify-end gap-3">
+                @if($pesanan->bukti_transfer)
+                <button onclick="showBuktiTransfer('{{ $pesanan->bukti_transfer }}')" 
+                        class="inline-flex items-center space-x-2 px-4 py-2 bg-gradient-to-r from-blue-50 to-blue-100 border border-blue-200 rounded-lg text-sm font-medium text-blue-700 hover:from-blue-100 hover:to-blue-200 transition-all duration-200">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                    </svg>
+                    <span>Bukti Transfer</span>
+                </button>
+                @endif
                 <button onclick="handleTolak('{{ $pesanan->transaksi_id }}')"
                         class="inline-flex items-center space-x-2 px-4 py-2 bg-white border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 hover:border-gray-400 transition-all duration-200">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -305,8 +326,18 @@
                 </button>
             </div>
             @elseif($pesanan->status == 'sedang dikirim')
-            <div class="bg-gray-50 p-4 flex justify-end space-x-3">
-                <!-- Tombol Tandai Selesai dihapus: kini hanya nasabah yang dapat menandai pesanan sebagai selesai -->
+            <div class="bg-gray-50 p-4 flex flex-wrap justify-end gap-3">
+                @if($pesanan->bukti_transfer)
+                <button onclick="showBuktiTransfer('{{ $pesanan->bukti_transfer }}')" 
+                        class="inline-flex items-center space-x-2 px-4 py-2 bg-gradient-to-r from-blue-50 to-blue-100 border border-blue-200 rounded-lg text-sm font-medium text-blue-700 hover:from-blue-100 hover:to-blue-200 transition-all duration-200">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                    </svg>
+                    <span>Bukti Transfer</span>
+                </button>
+                @endif
+                <!-- Tombol Tandai Selesai dihapus: pengelola tidak menandai selesai -->
             </div>
             @endif
         </div>
