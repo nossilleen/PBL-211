@@ -25,11 +25,16 @@ class VisitFactory extends Factory
     public function definition(): array
     {
         return [
-            'session_id' => $this->faker->sha1,
-            'ip_address' => $this->faker->ipv4,
-            'user_agent' => $this->faker->userAgent,
-            'url' => $this->faker->randomElement(['/', '/artikel', '/events', '/browse', '/product/1', '/store/1']),
-            'user_id' => null, // Kita biarkan null untuk mensimulasikan pengunjung anonim
+            // Kolom 'user_id' bisa null (anonim) atau acak dari user yang ada
+            'user_id' => $this->faker->optional(0.7)->randomElement(\App\Models\User::pluck('user_id')->toArray()),
+
+            // Kolom 'date' sesuai tipe di tabel (date, bisa hari ini atau acak dalam 30 hari terakhir)
+            'date' => $this->faker->dateTimeBetween('-30 days', 'now')->format('Y-m-d'),
+
+            // Kolom 'created_at' dan 'updated_at' otomatis diisi oleh Laravel jika tidak diisi, 
+            // tapi bisa juga diisi manual untuk keperluan seeding realistis
+            'created_at' => $this->faker->dateTimeBetween('-30 days', 'now'),
+            'updated_at' => $this->faker->dateTimeBetween('-30 days', 'now'),
         ];
     }
 }

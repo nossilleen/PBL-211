@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use App\Models\{User,Lokasi,Produk,ProdukGambar,Artikel,Transaksi,Feedback,Upgrade,PointHistory,ProductLike,Event};
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Schema;
 
 class FactorySeeder extends Seeder
 {
@@ -86,6 +87,27 @@ class FactorySeeder extends Seeder
             $prod->save();
         }
 
+        // ---------------- ARTIKEL LIKES ----------------
+        foreach ($nasabahUsers as $nasabah) {
+            $maxLikes = min(20, $articles->count());
+            $minLikes = min(5, $maxLikes);
+            $likedArticles = $articles->random(rand($minLikes, $maxLikes));
+            foreach ($likedArticles as $art) {
+                \App\Models\ArtikelLike::firstOrCreate([
+                    'user_id' => $nasabah->user_id,
+                    'artikel_id' => $art->artikel_id,
+                ]);
+            }
+        }
+
+        // Update suka count di artikel hanya jika kolom 'suka' memang ada
+        if (Schema::hasColumn('artikel', 'suka')) {
+            foreach ($articles as $art) {
+                $art->suka = \App\Models\ArtikelLike::where('artikel_id', $art->artikel_id)->count();
+                $art->save();
+            }
+        }
+
         // ---------------- POINT HISTORY ----------------
         $allTransactions = Transaksi::all();
         foreach ($allTransactions as $tx) {
@@ -122,5 +144,10 @@ class FactorySeeder extends Seeder
 
         // ---------------- UPGRADE REQUESTS ----------------
         Upgrade::factory()->count(10)->for($nasabahUsers->random(), 'user')->create();
+
+        // ---------------- VISIT SEEDER ----------------
+        // Seeder untuk Visit menggunakan VisitFactory
+        // Misal: generate 200 data visit acak
+        \App\Models\Visit::factory(200)->create();
     }
 } 

@@ -46,6 +46,39 @@ class UserFactory extends Factory
             $fotoToko = 'toko-photos/Logo1.jpeg';
         }
 
+        // Data spesifik Kepulauan Riau
+        $cities = ['Batam', 'Tanjung Pinang', 'Bintan', 'Karimun', 'Natuna', 'Lingga'];
+        $districts = ['Batam Kota', 'Sekupang', 'Lubuk Baja', 'Sagulung', 'Bengkong', 'Nongsa'];
+        $villages = ['Baloi Permai', 'Tiban Lama', 'Tiban Baru', 'Tanjung Sengkuang', 'Mangsang', 'Kabil'];
+
+        $jenisKelamin = $this->faker->randomElement(['Laki-laki', 'Perempuan']);
+        $tanggalLahir = $this->faker->dateTimeBetween('-45 years', '-18 years')->format('Y-m-d');
+        $alamatLengkap = $this->faker->streetAddress().', '.$this->faker->randomElement($villages).', '.$this->faker->randomElement($districts).', '.$this->faker->randomElement($cities).', Kepulauan Riau';
+        $kecamatan = $this->faker->randomElement($districts);
+        $kelurahan = $this->faker->randomElement($villages);
+        $kodePos = '29'.$this->faker->numberBetween(400, 499); // Kode pos di Batam 294xx
+
+        $canCreateArticle = in_array($role, ['superadmin','admin']);
+        $canCreateEvent   = in_array($role, ['superadmin','admin']);
+        // Ambil semua file gambar dari /storage/app/public/profile/ dengan ekstensi .jpeg, .jpg, atau .png
+        $profileDir = storage_path('app/public/profile');
+        $profileImages = [];
+        if (is_dir($profileDir)) {
+            $profileImages = collect(scandir($profileDir))
+                ->filter(function ($file) {
+                    return preg_match('/\.(jpe?g|png)$/i', $file);
+                })
+                ->values()
+                ->all();
+        }
+        // Jika tidak ada gambar, fallback ke default
+        $fotoProfil = count($profileImages) > 0
+            ? 'profil/' . $this->faker->randomElement($profileImages)
+            : 'profil/default.jpg';
+
+        // Expired at (contoh: akun pengelola kadaluarsa dalam 1-2 tahun), lainnya null
+        $expiredAt = $role === 'pengelola' ? $this->faker->dateTimeBetween('+1 years','+2 years') : null;
+
         return [
             'nama' => $firstName,
             'email' => strtolower($emailLocal).'@gmail.com',
@@ -61,6 +94,18 @@ class UserFactory extends Factory
             'nama_bank_rekening' => fake()->optional()->randomElement(['BCA', 'BNI', 'BRI', 'Mandiri']),
             'foto_toko' => $fotoToko,
             'remember_token' => Str::random(10),
+
+            // Kolom tambahan
+            'foto' => $fotoProfil,
+            'jenis_kelamin' => $jenisKelamin,
+            'tanggal_lahir' => $tanggalLahir,
+            'alamat' => $alamatLengkap,
+            'kecamatan' => $kecamatan,
+            'kelurahan' => $kelurahan,
+            'kode_pos' => (string)$kodePos,
+            'can_create_article' => $canCreateArticle,
+            'can_create_event' => $canCreateEvent,
+            'expired_at' => $expiredAt,
         ];
     }
 

@@ -17,10 +17,11 @@ class FeedbackFactory extends Factory
     public function definition(): array
     {
         return [
-            'komentar' => $this->faker->sentence(),
+            'komentar' => $this->faker->sentence(10),
             'user_id' => User::factory(),
             'artikel_id' => Artikel::factory(),
-            'created_at' => now(),
+            'parent_id' => null, // default tidak nested
+            'created_at' => $this->faker->dateTime(),
         ];
     }
 } 
