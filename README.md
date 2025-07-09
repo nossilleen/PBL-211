@@ -28,10 +28,10 @@ EcoZense adalah aplikasi berbasis web yang berfungsi sebagai pusat informasi dan
 - **Penukaran Sembako** - Penukaran poin dengan sembako
 - **Sistem Transaksi** - Pembayaran menggunakan poin atau transfer
 
-### 📅 Event & Kegiatan
-- **Informasi Event** - Kegiatan seputar eco enzim
-- **Pendaftaran Event** - Sistem registrasi peserta
-- **Pengelolaan Event** - Administrasi event oleh pengelola
+### 📅 Acara & Kegiatan
+- **Informasi Acara** - Kegiatan seputar eco enzim
+- **Pendaftaran Acara** - Sistem registrasi peserta
+- **Pengelolaan Acara** - Administrasi acara oleh pengelola
 
 ## ⚙️ Teknologi
 
@@ -151,7 +151,7 @@ npm run all
 
 ## 📝 Metode Pengembangan
 
-Proyek dikembangkan dengan metode Waterfall:
+Proyek dikembangkan dengan metode Scrum:
 1. Analisis Kebutuhan (2 minggu)
 2. Desain Sistem (2 minggu)
 3. Implementasi (5 minggu)
