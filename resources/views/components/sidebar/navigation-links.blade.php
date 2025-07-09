@@ -1,10 +1,10 @@
 <div>
     @if(Auth::user()->role === 'nasabah')
-    <a href="#" class="block px-6 py-3 bg-white flex items-center transition-colors border-l-4 border-green-600" id="nav-profile">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <a href="#" class="block px-6 py-3 hover:bg-white flex items-center transition-colors border-l-4 border-transparent hover:border-green-600 group" id="nav-profile">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3 text-gray-500 group-hover:text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
         </svg>
-        <span class="font-medium text-green-600">Profil</span>
+        <span class="font-medium group-hover:text-green-600">Profil</span>
     </a>
     @endif
     <a href="{{ Auth::user()->role === 'admin' ? '/admin' : (Auth::user()->role === 'pengelola' ? '/pengelola' : '#') }}" class="block px-6 py-3 {{ Auth::user()->role !== 'nasabah' ? 'bg-white border-green-600' : 'hover:bg-white border-transparent hover:border-green-600' }} flex items-center transition-colors border-l-4 group" id="nav-dashboard">
@@ -73,83 +73,88 @@
 </div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         const role = "{{ Auth::user()->role }}";
-        const favoritLink = document.getElementById('nav-favorit');
-const favoritSection = document.getElementById('favorit-section');
+        const navLinks = document.querySelectorAll('[id^="nav-"]');
 
-if (favoritLink) {
-    favoritLink.addEventListener('click', function(e) {
-        e.preventDefault();
-        hideAllSections();
-        if (favoritSection) favoritSection.classList.remove('hidden');
-        resetAllNavLinks();
-        favoritLink.classList.add('bg-white', 'border-green-600');
-        favoritLink.classList.remove('border-transparent', 'hover:border-green-600');
-    });
-}
+        /* ----------  Helper ---------- */
+        function updateChildColor(link, makeGreen) {
+            if (!link) return;
+            const svg = link.querySelector('svg');
+            const span = link.querySelector('span');
+            if (svg) {
+                svg.classList.toggle('text-green-600', makeGreen);
+                svg.classList.toggle('text-gray-500', !makeGreen);
+            }
+            if (span) {
+                span.classList.toggle('text-green-600', makeGreen);
+                span.classList.toggle('group-hover:text-green-600', !makeGreen);
+            }
+        }
 
-        // For admin and pengelola, always show dashboard
-        if (role !== 'nasabah') {
-            // Dashboard is already active by default for admin/pengelola
-        } else {
-            // For nasabah, check hash to determine what's active
+        function resetAllNavs() {
+            navLinks.forEach(link => {
+                link.classList.remove('bg-white', 'border-green-600');
+                link.classList.add('border-transparent', 'hover:border-green-600');
+                updateChildColor(link, false);
+            });
+        }
+
+        function setActive(link) {
+            if (!link) return;
+            link.classList.add('bg-white', 'border-green-600');
+            link.classList.remove('border-transparent', 'hover:border-green-600');
+            updateChildColor(link, true);
+        }
+
+        function activateById(idSuffix) {
+            resetAllNavs();
+            setActive(document.getElementById('nav-' + idSuffix));
+        }
+
+        // Alias agar skrip lama yang mungkin masih memanggil fungsi ini tidak error
+        window.resetAllNavLinks = resetAllNavs;
+
+        /* ----------  Inisialisasi aktif saat pertama kali dimuat ---------- */
+        (function initialiseActiveState() {
             const hash = window.location.hash;
-            
-            // If no specific hash, make profile active by default
-            if (!hash || hash === '') {
-                // Profile is active by default
-                document.getElementById('nav-profile').classList.add('bg-white', 'border-green-600');
-                document.getElementById('nav-profile').classList.remove('border-transparent', 'hover:border-green-600');
+            if (role !== 'nasabah') {
+                // Admin/Pengelola: dashboard selalu aktif
+                activateById('dashboard');
                 return;
             }
-            
-            // Otherwise check for specific sections
-            if (hash === '#dashboard') {
-                activateNav('dashboard');
-            } else if (hash === '#notifikasi') {
-                activateNav('notifikasi');
-            } else if (hash === '#poin-saya') {
-                activateNav('poin-saya');
-            } else if (hash === '#pesanan') {
-                activateNav('pesanan');
-            } else if (hash === '#riwayat') {
-                activateNav('riwayat');
-            } else if (hash === '#favorit') {
-                activateNav('favorit');
-            }
 
-        }
-        
-        // Helper function to activate a specific nav item
-        function activateNav(navId) {
-            // Reset all nav links first
-            resetAllNavs();
-            
-            // Activate the specified nav
-            const navElement = document.getElementById('nav-' + navId);
-            if (navElement) {
-                navElement.classList.add('bg-white', 'border-green-600');
-                navElement.classList.remove('border-transparent', 'hover:border-green-600');
+            if (!hash || hash === '#') {
+                activateById('profile');
+            } else {
+                activateById(hash.substring(1));
             }
-        }
-        
-        // Function to reset all nav links
-        function resetAllNavs() {
-            const navItems = document.querySelectorAll('[id^="nav-"]');
-            navItems.forEach(nav => {
-                if (nav.id !== 'nav-profile') {
-                    nav.classList.remove('bg-white', 'border-green-600');
-                    nav.classList.add('border-transparent', 'hover:border-green-600');
-                }
-            });
-            
-            // Reset profile nav separately
-            const profileNav = document.getElementById('nav-profile');
-            if (profileNav) {
-                profileNav.classList.remove('bg-white', 'border-green-600');
-                profileNav.classList.add('border-transparent', 'hover:border-green-600');
+        })();
+
+        /* ----------  Update aktif ketika hash berubah ---------- */
+        window.addEventListener('hashchange', () => {
+            const hash = window.location.hash;
+            if (!hash || hash === '#') {
+                activateById('profile');
+            } else {
+                activateById(hash.substring(1));
             }
-        }
+        });
+
+        /* ----------  Tambah listener click untuk link internal (#...) ---------- */
+        navLinks.forEach(link => {
+            const href = link.getAttribute('href');
+            if (href && href.startsWith('#')) {
+                link.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = href.length > 1 ? href.substring(1) : 'profile';
+                    // Opsional: fungsi hideAllSections() bisa dipanggil di sini bila ada
+                    if (typeof hideAllSections === 'function') hideAllSections();
+                    activateById(target);
+                    // Tulis hash agar bisa di-bookmark & trigger hashchange listener
+                    window.location.hash = href;
+                });
+            }
+        });
     });
 </script>
