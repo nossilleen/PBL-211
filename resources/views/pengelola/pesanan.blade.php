@@ -8,7 +8,7 @@
         <div class="flex items-center justify-between">
             <div>
                 <h1 class="text-3xl font-bold text-gray-900">Kelola Pesanan</h1>
-                <p class="text-gray-600 mt-2">Verifikasi dan proses pesanan produk dari nasabah</p>
+                <p class="text-gray-600 mt-2">konfirmasi dan proses pesanan produk dari nasabah</p>
             </div>
             <div class="flex items-center space-x-3">
                 <div class="bg-white rounded-lg shadow-sm border border-gray-200 px-4 py-2">
@@ -36,7 +36,7 @@
                         <h3 class="text-sm font-semibold text-blue-800">Pesanan Baru</h3>
                     </div>
                     <p class="text-3xl font-bold text-blue-700 mb-1">{{ $pesananBaru }}</p>
-                    <p class="text-xs text-blue-600">Menunggu verifikasi</p>
+                    <p class="text-xs text-blue-600">Menunggu konfirmasi</p>
                 </div>
                 <div class="absolute top-4 right-4 opacity-20 group-hover:opacity-30 transition-opacity">
                     <svg class="w-8 h-8 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
@@ -148,7 +148,7 @@
                     <a href="{{ route('pengelola.pesanan', ['status' => 'menunggu konfirmasi']) }}" 
                        class="flex items-center space-x-2 py-2 px-4 rounded-md text-sm font-medium transition-all duration-200 {{ $status == 'menunggu konfirmasi' ? 'bg-white text-green-600 shadow-sm' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100' }}">
                         <div class="w-2 h-2 bg-blue-500 rounded-full {{ $status == 'menunggu konfirmasi' ? 'animate-pulse' : '' }}"></div>
-                        <span>Menunggu Verifikasi</span>
+                        <span>Menunggu konfirmasi</span>
                         @if($status == 'menunggu konfirmasi')
                             <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">{{ $pesananBaru }}</span>
                         @endif
@@ -351,7 +351,7 @@
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
                     </svg>
-                    <span>Verifikasi & Proses</span>
+                    <span>Konfirmasi & Proses</span>
                 </button>
             </div>
             @elseif($pesanan->status == 'diproses')

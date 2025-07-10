@@ -197,7 +197,7 @@ class TransaksiController extends Controller
                     'harga_total' => 0,
                     'poin_used' => $totalPoinNeeded,
                     'tanggal' => now(),
-                    'status' => 'diproses',
+                    'status' => 'menunggu konfirmasi',
                     'pay_method' => 'poin',
                 ]);
 
