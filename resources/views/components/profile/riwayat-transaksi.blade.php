@@ -77,7 +77,7 @@
                     <td class="py-4 px-4 text-sm font-medium">
                         @if($transaksi->bukti_transfer)
                             <button type="button"
-                                onclick="showDetailModal('{{ $transaksi->bukti_transfer }}')"
+                                onclick="showRiwayatDetailModal('{{ $transaksi->bukti_transfer }}')"
                                 class="inline-flex items-center px-3 py-1.5 border border-gray-300 bg-gray-50 text-gray-700 text-sm font-medium rounded-md hover:bg-gray-100 transition-colors duration-150">
                                 <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
@@ -102,7 +102,7 @@
     </div>
 </div>
 
-<div id="buktiModal" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full flex items-center justify-center">
+<div id="riwayatBuktiModal" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full flex items-center justify-center">
     <div class="relative w-full max-w-2xl max-h-full">
         <!-- Modal content -->
         <div class="relative bg-white rounded-lg shadow">
@@ -111,7 +111,7 @@
                 <h3 class="text-xl font-semibold text-gray-900">
                     Bukti Transfer
                 </h3>
-                <button type="button" onclick="closeBuktiModal()" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center">
+                <button type="button" onclick="closeRiwayatBuktiModal()" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center">
                     <svg class="w-3 h-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                     </svg>
@@ -119,7 +119,7 @@
             </div>
             <!-- Modal body -->
             <div class="p-6 space-y-6">
-                <img id="modalImage" src="" alt="Bukti Transfer" class="w-full">
+                <img id="riwayatModalImage" src="" alt="Bukti Transfer" class="w-full">
             </div>
         </div>
     </div>
@@ -165,23 +165,23 @@
         }
     });
 
-    function showDetailModal(buktiTransfer) {
-        const modal = document.getElementById('buktiModal');
-        const modalImage = document.getElementById('modalImage');
+    function showRiwayatDetailModal(buktiTransfer) {
+        const modal = document.getElementById('riwayatBuktiModal');
+        const modalImage = document.getElementById('riwayatModalImage');
         modalImage.src = `/storage/${buktiTransfer}`;
         modal.classList.remove('hidden');
     }
 
-    function closeBuktiModal() {
-        const modal = document.getElementById('buktiModal');
+    function closeRiwayatBuktiModal() {
+        const modal = document.getElementById('riwayatBuktiModal');
         modal.classList.add('hidden');
     }
 
     // Close on background click
     document.addEventListener('click', function(event) {
-        const modal = document.getElementById('buktiModal');
+        const modal = document.getElementById('riwayatBuktiModal');
         if (event.target === modal) {
-            closeBuktiModal();
+            closeRiwayatBuktiModal();
         }
     });
 </script>
