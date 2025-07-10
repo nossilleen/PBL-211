@@ -263,7 +263,7 @@
                             </svg>
                         </div>
                         <div>
-                            <h3 class="text-lg font-semibold text-gray-900">{{ $pesanan->user->nama }}</h3>
+                            <h3 class="text-lg font-semibold text-gray-900">{{ optional($pesanan->user)->nama ?? '-' }}</h3>
                             <!-- Tanggal order -->
                             <p class="text-sm text-gray-500 flex items-center space-x-1">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -272,12 +272,12 @@
                                 <span>{{ $pesanan->tanggal->format('d M Y, H:i') }}</span>
                             </p>
                             <!-- Nomor HP -->
-                            @if($pesanan->user->no_hp)
+                            @if(optional($pesanan->user)->no_hp)
                             <p class="text-sm text-gray-500 flex items-center space-x-1 mt-1">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.95.684l1.56 4.686a1 1 0 01-.216.97l-2.197 2.197a11.042 11.042 0 005.516 5.516l2.197-2.197a1 1 0 01.97-.216l4.686 1.56A1 1 0 0121 17.72V21a2 2 0 01-2 2h-1C9.163 23 1 14.837 1 4V3A2 2 0 013 1h2" />
                                 </svg>
-                                <span>{{ $pesanan->user->no_hp }}</span>
+                                <span>{{ optional($pesanan->user)->no_hp ?? '-' }}</span>
                             </p>
                             @endif
                             <!-- Alamat Lengkap -->
@@ -285,7 +285,7 @@
                                 <svg class="w-4 h-4 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11c1.657 0 3-1.343 3-3S13.657 5 12 5 9 6.343 9 8s1.343 3 3 3zm0 0c-4.418 0-8 1.79-8 4v3h16v-3c0-2.21-3.582-4-8-4z" />
                                 </svg>
-                                <span>{{ $pesanan->user->full_alamat ?: '-' }}</span>
+                                <span>{{ optional($pesanan->user)->full_alamat ?: '-' }}</span>
                             </p>
                         </div>
                     </div>

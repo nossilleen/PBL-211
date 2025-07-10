@@ -26,7 +26,8 @@ class Artikel extends Model
     
     public function user()
     {
-        return $this->belongsTo(User::class, 'user_id', 'user_id');
+        // Sertakan user yang sudah di-soft-delete agar data artikel tetap aman
+        return $this->belongsTo(User::class, 'user_id', 'user_id')->withTrashed();
     }
     public function likes()
 {

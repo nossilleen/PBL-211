@@ -69,7 +69,8 @@ class Transaksi extends Model
     
     public function user()
     {
-        return $this->belongsTo(User::class, 'user_id', 'user_id');
+        // Sertakan user yang di-soft-delete agar transaksi tetap dapat diakses
+        return $this->belongsTo(User::class, 'user_id', 'user_id')->withTrashed();
     }
     
     public function lokasi()

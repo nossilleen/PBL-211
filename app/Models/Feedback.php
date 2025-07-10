@@ -28,7 +28,8 @@ class Feedback extends Model
     
 public function user()
 {
-    return $this->belongsTo(User::class, 'user_id');
+    // Include trashed (soft-deleted) users so their data is still accessible in feedback
+    return $this->belongsTo(User::class, 'user_id')->withTrashed();
 }
 
     public function artikel()

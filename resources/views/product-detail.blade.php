@@ -116,7 +116,7 @@
                                 <div class="mb-4">
                                     <div class="text-gray-700 font-semibold mb-1">Rekening Penjual</div>
                                     <div class="bg-gray-100 rounded px-4 py-2 text-gray-800 text-sm select-all">
-                                        {{ $product->user->nama_bank_rekening ?? 'Belum ditentukan' }} {{ $product->user->nomor_rekening ?? 'Belum ditentukan' }} a.n. {{ $product->user->nama }}
+                                        {{ $product->user->nama_bank_rekening ?? 'Belum ditentukan' }} {{ $product->user->nomor_rekening ?? 'Belum ditentukan' }} a.n. {{ optional($product->user)->nama ?? '-' }}
                                     </div>
                                 </div>
                                 <div class="mb-4 flex items-center justify-between">
@@ -189,7 +189,7 @@
                             :price="number_format($item->harga, 0, ',', '.')"
                             :harga_points="$item->harga_points"
                             :status="$item->status_ketersediaan"
-                            :bank="$product->user->nama"
+                            :bank="optional($product->user)->nama"
                             :createdAt="$item->created_at"
                             :suka="$item->suka"
                             :productId="$item->produk_id"

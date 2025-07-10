@@ -316,8 +316,8 @@
                                     </div>
                                 </div>
                                 <div class="ml-3">
-                                    <div class="text-sm font-medium text-gray-900">{{ $history->user->nama }}</div>
-                                    <div class="text-sm text-gray-500">{{ $history->user->user_id }}</div>
+                                    <div class="text-sm font-medium text-gray-900">{{ optional($history->user)->nama ?? '-' }}</div>
+                                    <div class="text-sm text-gray-500">{{ optional($history->user)->user_id ?? '-' }}</div>
                                 </div>
                             </div>
                         </td>

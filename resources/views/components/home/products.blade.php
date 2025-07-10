@@ -22,7 +22,7 @@
                                 :price="number_format($product->harga, 0, ',', '.')"
                                 :harga_points="$product->harga_points"
                                 :status="$product->status_ketersediaan"
-                                :bank="$product->user->nama"
+                                :bank="optional($product->user)->nama"
                                 :createdAt="$product->created_at"
                                 :suka="$product->suka"
                                 :productId="$product->produk_id"

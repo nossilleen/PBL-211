@@ -26,6 +26,7 @@ class Notification extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        // Sertakan user yang di-soft-delete
+        return $this->belongsTo(User::class, 'user_id')->withTrashed();
     }
 } 

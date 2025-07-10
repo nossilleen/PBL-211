@@ -1,5 +1,9 @@
 @props(['comment', 'level' => 0])
 
+@php
+    $userName = optional($comment->user)->nama ?? 'Pengguna';
+@endphp
+
 {{-- Wrapper untuk satu komentar dan semua balasannya --}}
 <div class="flex flex-col" id="comment-{{ $comment->feedback_id }}">
     {{-- Konten Komentar Utama --}}
@@ -10,11 +14,12 @@
                 <div class="h-full w-1 rounded bg-green-400"></div>
             </div>
         @endif
-        <img src="https://ui-avatars.com/api/?name={{ urlencode($comment->user->nama) }}&background=random" alt="Avatar" class="w-10 h-10 rounded-full z-10">
+        {{-- Gunakan nama pengguna atau fallback jika user sudah dihapus --}}
+        <img src="https://ui-avatars.com/api/?name={{ urlencode($userName) }}&background=random" alt="Avatar" class="w-10 h-10 rounded-full z-10">
         <div class="flex-1 z-10">
             <div class="flex items-center justify-between">
                 <div>
-                    <span class="font-semibold text-gray-800">{{ $comment->user->nama }}</span>
+                    <span class="font-semibold text-gray-800">{{ $userName }}</span>
                     <span class="text-xs text-gray-500 ml-2">{{ $comment->created_at->diffForHumans() }}</span>
                 </div>
             </div>

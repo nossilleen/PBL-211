@@ -15,11 +15,13 @@ class ProductLike extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'user_id', 'user_id');
+        // Sertakan user yang di-soft-delete
+        return $this->belongsTo(User::class, 'user_id', 'user_id')->withTrashed();
     }
 
     public function produk()
     {
-        return $this->belongsTo(Produk::class, 'produk_id', 'produk_id');
+        // Sertakan produk yang di-soft-delete
+        return $this->belongsTo(Produk::class, 'produk_id', 'produk_id')->withTrashed();
     }
 } 

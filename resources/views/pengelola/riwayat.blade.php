@@ -27,7 +27,7 @@
                         <tr>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">{{ $trx->formatted_tanggal }}</td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">{{ $trx->produk->nama_produk ?? '-' }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">{{ $trx->user->nama ?? '-' }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">{{ optional($trx->user)->nama ?? '-' }}</td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">{{ $trx->jumlah_produk }}</td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
                                 @if($trx->isUsingPoints())

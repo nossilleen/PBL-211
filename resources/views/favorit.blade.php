@@ -21,7 +21,7 @@
                     :price="number_format($produk->harga, 0, ',', '.')"
                     :harga_points="$produk->harga_points"
                     :status="$produk->status_ketersediaan"
-                    :bank="$produk->user->nama"
+                    :bank="optional($produk->user)->nama"
                     :createdAt="$produk->created_at"
                     :suka="$produk->suka"
                     :productId="$produk->produk_id"

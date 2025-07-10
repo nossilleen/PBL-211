@@ -76,12 +76,12 @@
                                         <div class="flex-shrink-0 h-10 w-10">
                                             <div class="h-10 w-10 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center">
                                                 <span class="text-white font-medium text-sm">
-                                                    {{ substr($item->user->nama, 0, 2) }}
+                                                    {{ substr(optional($item->user)->nama ?? '??', 0, 2) }}
                                                 </span>
                                             </div>
                                         </div>
                                         <div class="ml-4">
-                                            <div class="text-sm font-medium text-gray-900">{{ $item->user->nama }}</div>
+                                            <div class="text-sm font-medium text-gray-900">{{ optional($item->user)->nama ?? '-' }}</div>
                                             <div class="text-sm text-gray-500">ID: #{{ $item->id }}</div>
                                         </div>
                                     </div>

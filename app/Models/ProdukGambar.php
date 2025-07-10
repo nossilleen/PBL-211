@@ -24,7 +24,8 @@ class ProdukGambar extends Model
     // Define relationship with Produk model
     public function produk()
     {
-        return $this->belongsTo(Produk::class, 'produk_id', 'produk_id');
+        // Sertakan produk yang di-soft-delete untuk menghindari error
+        return $this->belongsTo(Produk::class, 'produk_id', 'produk_id')->withTrashed();
     }
 
     // Add accessor for full image URL
