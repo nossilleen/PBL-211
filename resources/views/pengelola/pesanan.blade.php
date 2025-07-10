@@ -22,7 +22,7 @@
     </div>
     
     <!-- Enhanced Statistics Cards -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-8">
         <!-- Pesanan Baru Card -->
         <div class="relative bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-6 shadow-sm border border-blue-200 hover:shadow-md transition-all duration-300 group">
             <div class="flex items-center justify-between">
@@ -69,6 +69,29 @@
             </div>
         </div>
         
+        <!-- Pesanan Dikirim Card -->
+        <div class="relative bg-gradient-to-br from-sky-50 to-sky-100 rounded-xl p-6 shadow-sm border border-sky-200 hover:shadow-md transition-all duration-300 group">
+            <div class="flex items-center justify-between">
+                <div>
+                    <div class="flex items-center space-x-2 mb-2">
+                        <div class="w-10 h-10 bg-sky-500 rounded-lg flex items-center justify-center">
+                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                            </svg>
+                        </div>
+                        <h3 class="text-sm font-semibold text-sky-800">Sedang Dikirim</h3>
+                    </div>
+                    <p class="text-3xl font-bold text-sky-700 mb-1">{{ $sedangDikirim }}</p>
+                    <p class="text-xs text-sky-600">Dalam pengiriman</p>
+                </div>
+                <div class="absolute top-4 right-4 opacity-20 group-hover:opacity-30 transition-opacity">
+                    <svg class="w-8 h-8 text-sky-600" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M21 8a2 2 0 00-2-2H7.414l-.707-.707A1 1 0 005.293 5H4a2 2 0 00-2 2v11a2 2 0 002 2h14a2 2 0 002-2V8z" />
+                    </svg>
+                </div>
+            </div>
+        </div>
+
         <!-- Pesanan Selesai Card -->
         <div class="relative bg-gradient-to-br from-emerald-50 to-emerald-100 rounded-xl p-6 shadow-sm border border-emerald-200 hover:shadow-md transition-all duration-300 group">
             <div class="flex items-center justify-between">
@@ -130,12 +153,22 @@
                             <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">{{ $pesananBaru }}</span>
                         @endif
                     </a>
+                    <a href="{{ route('pengelola.pesanan', ['status' => 'diproses']) }}"
+                       class="flex items-center space-x-2 py-2 px-4 rounded-md text-sm font-medium transition-all duration-200 {{ $status == 'diproses' ? 'bg-white text-green-600 shadow-sm' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100' }}">
+                        <div class="w-2 h-2 bg-amber-500 rounded-full {{ $status == 'diproses' ? 'animate-pulse' : '' }}"></div>
+                        <span>Diproses</span>
+                        @if($status == 'diproses')
+                            <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">{{ $sedangDiproses }}</span>
+                        @endif
+                    </a>
+
+                    <!-- Tab Sedang Dikirim -->
                     <a href="{{ route('pengelola.pesanan', ['status' => 'sedang dikirim']) }}"
                        class="flex items-center space-x-2 py-2 px-4 rounded-md text-sm font-medium transition-all duration-200 {{ $status == 'sedang dikirim' ? 'bg-white text-green-600 shadow-sm' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100' }}">
-                        <div class="w-2 h-2 bg-amber-500 rounded-full {{ $status == 'sedang dikirim' ? 'animate-pulse' : '' }}"></div>
-                        <span>Diproses</span>
+                        <div class="w-2 h-2 bg-blue-500 rounded-full {{ $status == 'sedang dikirim' ? 'animate-pulse' : '' }}"></div>
+                        <span>Sedang Dikirim</span>
                         @if($status == 'sedang dikirim')
-                            <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">{{ $sedangDiproses }}</span>
+                            <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">{{ $sedangDikirim ?? '' }}</span>
                         @endif
                     </a>
                     <a href="{{ route('pengelola.pesanan', ['status' => 'selesai']) }}"
@@ -181,7 +214,8 @@
                             @php
                                 $statusConfig = [
                                     'menunggu konfirmasi' => ['bg' => 'bg-blue-100', 'text' => 'text-blue-800', 'dot' => 'bg-blue-500'],
-                                    'sedang dikirim' => ['bg' => 'bg-amber-100', 'text' => 'text-amber-800', 'dot' => 'bg-amber-500'],
+                                    'diproses' => ['bg' => 'bg-amber-100', 'text' => 'text-amber-800', 'dot' => 'bg-amber-500'],
+                                    'sedang dikirim' => ['bg' => 'bg-blue-100', 'text' => 'text-blue-800', 'dot' => 'bg-blue-500'],
                                     'selesai' => ['bg' => 'bg-emerald-100', 'text' => 'text-emerald-800', 'dot' => 'bg-emerald-500'],
                                     'dibatalkan' => ['bg' => 'bg-red-100', 'text' => 'text-red-800', 'dot' => 'bg-red-500']
                                 ];
@@ -190,8 +224,8 @@
                             <div class="flex items-center space-x-2 px-3 py-1 {{ $config['bg'] }} rounded-full">
                                 <div class="w-2 h-2 {{ $config['dot'] }} rounded-full {{ $pesanan->status == 'menunggu konfirmasi' ? 'animate-pulse' : '' }}"></div>
                                 <span class="text-sm font-medium {{ $config['text'] }}">{{ ucfirst($pesanan->status) }}</span>
-                                @if($pesanan->status == 'sedang dikirim' && $pesanan->estimasi_hari)
-                                    <span class="ml-2 text-xs text-gray-600">(Sisa {{ $pesanan->sisa_hari }} / {{ $pesanan->estimasi_hari }} hari)</span>
+                                @if($pesanan->status == 'diproses' && $pesanan->estimasi_hari)
+                                    <span class="ml-2 text-xs text-gray-600">(Sisa {{ (int) $pesanan->sisa_hari }} / {{ $pesanan->estimasi_hari }} hari)</span>
                                 @endif
                             </div>
                             <div class="flex items-center space-x-2 text-gray-500">
@@ -320,6 +354,16 @@
                     <span>Verifikasi & Proses</span>
                 </button>
             </div>
+            @elseif($pesanan->status == 'diproses')
+            <div class="bg-gray-50 p-4 flex flex-wrap justify-end gap-3">
+                <button onclick="handleKirim('{{ $pesanan->transaksi_id }}')"
+                        class="inline-flex items-center space-x-2 px-6 py-2 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-lg text-sm font-medium hover:from-blue-700 hover:to-blue-800 shadow-sm hover:shadow-md transition-all duration-200">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                    </svg>
+                    <span>Tandai Dikirim</span>
+                </button>
+            </div>
             @elseif($pesanan->status == 'sedang dikirim')
             <div class="bg-gray-50 p-4 flex flex-wrap justify-end gap-3">
                 @if($pesanan->bukti_transfer)
@@ -446,6 +490,7 @@
         <input type="hidden" name="estimasi_hari" id="estimasi_hari_input">
     </form>
     <form id="selesaiForm" method="POST" class="hidden">@csrf</form>
+    <form id="kirimForm" method="POST" class="hidden">@csrf</form>
 
     <!-- SweetAlert2 CSS and JS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.32/dist/sweetalert2.min.css">
@@ -470,7 +515,7 @@
     function handleVerifikasi(transaksiId) {
         Swal.fire({
             title: 'Verifikasi Pesanan?',
-            html: '<p class="mb-2">Tolong estimasikan total jumlah hari dari tanggal pembuatan produk + hari pengiriman.</p>' +
+            html: '<p class="mb-2">Tolong estimasikan total jumlah hari dari  pembuatan produk.</p>' +
                   '<input id="swal-input-estimasi" type="number" min="1" class="swal2-input" placeholder="Jumlah hari">',
             focusConfirm: false,
             icon: 'question',
@@ -544,6 +589,29 @@
             if (result.isConfirmed) {
                 const form = document.getElementById('selesaiForm');
                 form.action = `{{ url('pengelola/pesanan') }}/${transaksiId}/selesai`;
+                form.submit();
+            }
+        });
+    }
+
+    function handleKirim(transaksiId) {
+        Swal.fire({
+            title: 'Tandai pesanan dikirim?',
+            icon: 'info',
+            showCancelButton: true,
+            confirmButtonColor: '#22c55e',
+            cancelButtonColor: '#64748b',
+            confirmButtonText: 'Ya, Kirim',
+            cancelButtonText: 'Batal',
+            customClass: {
+                popup: 'rounded-2xl',
+                confirmButton: 'rounded-lg',
+                cancelButton: 'rounded-lg'
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                const form = document.getElementById('kirimForm');
+                form.action = `{{ url('pengelola/pesanan') }}/${transaksiId}/kirim`;
                 form.submit();
             }
         });

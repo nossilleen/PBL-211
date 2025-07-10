@@ -41,7 +41,7 @@ class HomeController extends Controller
             // Pesanan aktif
             $pesananAktif = Transaksi::with('produk')
                 ->where('user_id', $user->user_id)
-                ->whereIn('status', ['belum dibayar', 'menunggu konfirmasi', 'sedang dikirim'])
+                ->whereIn('status', ['belum dibayar', 'menunggu konfirmasi', 'diproses', 'sedang dikirim'])
                 ->orderBy('created_at', 'desc')
                 ->get();
 

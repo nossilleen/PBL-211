@@ -22,8 +22,8 @@ class TransaksiFactory extends Factory
         $harga = $this->faker->numberBetween(5000, 100000);
         $payMethod = $this->faker->randomElement(['transfer','poin']);
         $statusOptions = $payMethod === 'poin'
-            ? ['menunggu konfirmasi', 'sedang dikirim', 'selesai']
-            : ['belum dibayar', 'menunggu konfirmasi', 'sedang dikirim', 'selesai'];
+            ? ['menunggu konfirmasi', 'diproses', 'sedang dikirim', 'selesai']
+            : ['belum dibayar', 'menunggu konfirmasi', 'diproses', 'sedang dikirim', 'selesai'];
         $status = $this->faker->randomElement($statusOptions);
         return [
             'user_id' => User::factory(),

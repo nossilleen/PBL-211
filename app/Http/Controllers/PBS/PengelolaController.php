@@ -294,7 +294,12 @@ class PengelolaController extends Controller
 
         $sedangDiproses = Transaksi::whereHas('produk', function($q) use ($pengelolaId) {
             $q->where('user_id', $pengelolaId);
-        })->whereIn('status', ['diproses', 'sedang dikirim'])->count();
+        })->where('status', 'diproses')->count();
+
+        // Hitung pesanan yang sedang dikirim
+        $sedangDikirim = Transaksi::whereHas('produk', function($q) use ($pengelolaId) {
+            $q->where('user_id', $pengelolaId);
+        })->where('status', 'sedang dikirim')->count();
 
         $pesananSelesai = Transaksi::whereHas('produk', function($q) use ($pengelolaId) {
             $q->where('user_id', $pengelolaId);
@@ -333,7 +338,8 @@ class PengelolaController extends Controller
             'sedangDiproses',
             'pesananSelesai',
             'totalPendapatan',
-            'status'
+            'status',
+            'sedangDikirim'
         ));
     }
 
@@ -351,7 +357,7 @@ class PengelolaController extends Controller
         ]);
 
         $transaksi->estimasi_hari = request('estimasi_hari');
-        $transaksi->status = 'sedang dikirim';
+        $transaksi->status = 'diproses';
         $transaksi->save();
 
         return back()->with('success', 'Pesanan telah diverifikasi dan diproses dengan estimasi '.request('estimasi_hari').' hari');
@@ -377,6 +383,18 @@ class PengelolaController extends Controller
         $transaksi->save();
 
         return redirect()->back()->with('success', 'Pesanan ditolak');
+    }
+
+    // Tandai pesanan sebagai dikirim
+    public function kirim($id)
+    {
+        $transaksi = Transaksi::findOrFail($id);
+        if ($transaksi->status !== 'diproses') {
+            return back()->with('error', 'Status tidak valid');
+        }
+        $transaksi->status = 'sedang dikirim';
+        $transaksi->save();
+        return back()->with('success', 'Pesanan telah ditandai sebagai sedang dikirim');
     }
 
     public function updateAlamat(Request $request)

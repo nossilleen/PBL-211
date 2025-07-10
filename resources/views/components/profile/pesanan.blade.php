@@ -50,6 +50,7 @@
                             $statusClass = [
                                 'belum dibayar' => 'bg-red-100 text-red-800',
                                 'menunggu konfirmasi' => 'bg-yellow-100 text-yellow-800',
+                                'diproses' => 'bg-amber-100 text-amber-800',
                                 'sedang dikirim' => 'bg-blue-100 text-blue-800',
                                 'selesai' => 'bg-green-100 text-green-800',
                                 'dibatalkan' => 'bg-gray-100 text-gray-800'
@@ -59,8 +60,9 @@
                         @endphp
                         <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ $statusClass[$status] ?? 'bg-gray-100 text-gray-800' }} whitespace-nowrap">
                             {{ $statusText }}
-                            @if($status == 'sedang dikirim' && $pesanan->estimasi_hari)
-                                (Sisa {{ $pesanan->sisa_hari }} / {{ $pesanan->estimasi_hari }} hari)
+                            @if($status == 'diproses' && $pesanan->estimasi_hari)
+                                <span>(Sisa {{ (int) $pesanan->sisa_hari }} / {{ $pesanan->estimasi_hari }} hari)</span>
+                            @elseif($status == 'sedang dikirim')
                             @endif
                         </span>
                     </td>

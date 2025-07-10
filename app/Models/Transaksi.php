@@ -104,6 +104,7 @@ class Transaksi extends Model
             'belum dibayar' => 'Belum Dibayar',
             'menunggu konfirmasi' => 'Menunggu Konfirmasi',
             'sedang dikirim' => 'Sedang Dikirim',
+            'diproses' => 'Diproses',
             'selesai' => 'Selesai',
             'dibatalkan' => 'Dibatalkan'
         ];
@@ -124,7 +125,7 @@ class Transaksi extends Model
 
         try {
             $daysPassed = Carbon::parse($this->tanggal)->diffInDays(now());
-            $remaining = (int) $this->estimasi_hari - $daysPassed;
+            $remaining = (int) round($this->estimasi_hari - $daysPassed);
             return $remaining < 0 ? 0 : $remaining;
         } catch (\Exception $e) {
             return $this->estimasi_hari;
