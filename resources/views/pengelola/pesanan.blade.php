@@ -145,7 +145,7 @@
             <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
                 <!-- Status Tabs -->
                 <div class="flex bg-gray-50 p-1 rounded-lg">
-                    <a href="{{ route('pengelola.pesanan', ['status' => 'menunggu konfirmasi']) }}" 
+                    <a href="{{ route('pengelola.pesanan', ['status' => 'menunggu konfirmasi', 'search' => request('search')]) }}" 
                        class="flex items-center space-x-2 py-2 px-4 rounded-md text-sm font-medium transition-all duration-200 {{ $status == 'menunggu konfirmasi' ? 'bg-white text-green-600 shadow-sm' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100' }}">
                         <div class="w-2 h-2 bg-blue-500 rounded-full {{ $status == 'menunggu konfirmasi' ? 'animate-pulse' : '' }}"></div>
                         <span>Menunggu konfirmasi</span>
@@ -153,7 +153,7 @@
                             <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">{{ $pesananBaru }}</span>
                         @endif
                     </a>
-                    <a href="{{ route('pengelola.pesanan', ['status' => 'diproses']) }}"
+                    <a href="{{ route('pengelola.pesanan', ['status' => 'diproses', 'search' => request('search')]) }}"
                        class="flex items-center space-x-2 py-2 px-4 rounded-md text-sm font-medium transition-all duration-200 {{ $status == 'diproses' ? 'bg-white text-green-600 shadow-sm' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100' }}">
                         <div class="w-2 h-2 bg-amber-500 rounded-full {{ $status == 'diproses' ? 'animate-pulse' : '' }}"></div>
                         <span>Diproses</span>
@@ -163,7 +163,7 @@
                     </a>
 
                     <!-- Tab Sedang Dikirim -->
-                    <a href="{{ route('pengelola.pesanan', ['status' => 'sedang dikirim']) }}"
+                    <a href="{{ route('pengelola.pesanan', ['status' => 'sedang dikirim', 'search' => request('search')]) }}"
                        class="flex items-center space-x-2 py-2 px-4 rounded-md text-sm font-medium transition-all duration-200 {{ $status == 'sedang dikirim' ? 'bg-white text-green-600 shadow-sm' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100' }}">
                         <div class="w-2 h-2 bg-blue-500 rounded-full {{ $status == 'sedang dikirim' ? 'animate-pulse' : '' }}"></div>
                         <span>Sedang Dikirim</span>
@@ -171,12 +171,12 @@
                             <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">{{ $sedangDikirim ?? '' }}</span>
                         @endif
                     </a>
-                    <a href="{{ route('pengelola.pesanan', ['status' => 'selesai']) }}"
+                    <a href="{{ route('pengelola.pesanan', ['status' => 'selesai', 'search' => request('search')]) }}"
                        class="flex items-center space-x-2 py-2 px-4 rounded-md text-sm font-medium transition-all duration-200 {{ $status == 'selesai' ? 'bg-white text-green-600 shadow-sm' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100' }}">
                         <div class="w-2 h-2 bg-emerald-500 rounded-full"></div>
                         <span>Selesai</span>
                     </a>
-                    <a href="{{ route('pengelola.pesanan', ['status' => 'dibatalkan']) }}"
+                    <a href="{{ route('pengelola.pesanan', ['status' => 'dibatalkan', 'search' => request('search')]) }}"
                        class="flex items-center space-x-2 py-2 px-4 rounded-md text-sm font-medium transition-all duration-200 {{ $status == 'dibatalkan' ? 'bg-white text-green-600 shadow-sm' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100' }}">
                         <div class="w-2 h-2 bg-red-500 rounded-full"></div>
                         <span>Dibatalkan</span>
@@ -187,7 +187,7 @@
                 <form method="GET" action="{{ route('pengelola.pesanan', ['status' => $status]) }}" class="flex items-center space-x-3">
                     <div class="relative">
                         <input type="text" name="search" value="{{ request('search') }}"
-                               placeholder="Cari pesanan atau nasabah..." 
+                               placeholder="Cari nama pembeli, produk, atau ID pesanan..." 
                                class="w-80 pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent text-sm">
                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                             <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -195,7 +195,9 @@
                             </svg>
                         </div>
                     </div>
-                    <button type="submit" class="hidden">Cari</button>
+                    <button type="submit" class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors">
+                        Cari
+                    </button>
                 </form>
             </div>
         </div>

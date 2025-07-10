@@ -321,8 +321,17 @@ class PengelolaController extends Controller
 
         // Jika ada kata kunci pencarian, filter berdasarkan nama pembeli
         if ($search) {
-            $pesananQuery->whereHas('user', function($q) use ($search) {
-                $q->where('nama', 'like', "%{$search}%");
+            $pesananQuery->where(function($query) use ($search) {
+                // Cari berdasarkan nama pembeli
+                $query->whereHas('user', function($q) use ($search) {
+                    $q->where('nama', 'like', "%{$search}%");
+                })
+                // ATAU cari berdasarkan nama produk
+                ->orWhereHas('produk', function($q) use ($search) {
+                    $q->where('nama_produk', 'like', "%{$search}%");
+                })
+                // ATAU cari berdasarkan ID transaksi
+                ->orWhere('transaksi_id', 'like', "%{$search}%");
             });
         }
 
