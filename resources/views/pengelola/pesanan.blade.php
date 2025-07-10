@@ -150,10 +150,10 @@
                     </a>
                 </div>
                 
-                <!-- Search and Filter -->
-                <div class="flex items-center space-x-3">
+                <!-- Search -->
+                <form method="GET" action="{{ route('pengelola.pesanan', ['status' => $status]) }}" class="flex items-center space-x-3">
                     <div class="relative">
-                        <input type="text" 
+                        <input type="text" name="search" value="{{ request('search') }}"
                                placeholder="Cari pesanan atau nasabah..." 
                                class="w-80 pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent text-sm">
                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -162,14 +162,8 @@
                             </svg>
                         </div>
                     </div>
-                    
-                    <select class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent text-sm">
-                        <option value="all">Semua Periode</option>
-                        <option value="today">Hari Ini</option>
-                        <option value="week">Minggu Ini</option>
-                        <option value="month">Bulan Ini</option>
-                    </select>
-                </div>
+                    <button type="submit" class="hidden">Cari</button>
+                </form>
             </div>
         </div>
     </div>

@@ -284,6 +284,8 @@ class PengelolaController extends Controller
     {
         $pengelolaId = auth()->id();
         $status = $request->get('status', 'menunggu konfirmasi');
+        // Ambil keyword pencarian (jika ada)
+        $search = $request->get('search');
 
         // Get statistics for cards
         $pesananBaru = Transaksi::whereHas('produk', function($q) use ($pengelolaId) {
@@ -305,15 +307,25 @@ class PengelolaController extends Controller
           ->where('pay_method', 'transfer')
           ->sum('harga_total');
 
-        // Update pesananMasuk query with proper pagination
-        $pesananMasuk = Transaksi::with(['user', 'produk'])
+        // Build query pesanan dengan filter status & pencarian nama pembeli
+        $pesananQuery = Transaksi::with(['user', 'produk'])
             ->whereHas('produk', function($q) use ($pengelolaId) {
                 $q->where('user_id', $pengelolaId);
             })
-            ->where('status', $status)  // Filter by status
+            ->where('status', $status);
+
+        // Jika ada kata kunci pencarian, filter berdasarkan nama pembeli
+        if ($search) {
+            $pesananQuery->whereHas('user', function($q) use ($search) {
+                $q->where('nama', 'like', "%{$search}%");
+            });
+        }
+
+        // Pagination & sorting
+        $pesananMasuk = $pesananQuery
             ->orderBy('created_at', 'desc')
-            ->paginate(5)  // Show 5 items per page
-            ->withQueryString();  // Preserve other query parameters
+            ->paginate(5)
+            ->withQueryString();
 
         return view('pengelola.pesanan', compact(
             'pesananMasuk',
