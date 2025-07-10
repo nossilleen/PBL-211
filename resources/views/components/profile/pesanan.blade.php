@@ -50,6 +50,7 @@
                             $statusClass = [
                                 'belum dibayar' => 'bg-red-100 text-red-800',
                                 'menunggu konfirmasi' => 'bg-yellow-100 text-yellow-800',
+                                'diproses' => 'bg-amber-100 text-amber-800',
                                 'sedang dikirim' => 'bg-blue-100 text-blue-800',
                                 'selesai' => 'bg-green-100 text-green-800',
                                 'dibatalkan' => 'bg-gray-100 text-gray-800'
@@ -59,6 +60,10 @@
                         @endphp
                         <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ $statusClass[$status] ?? 'bg-gray-100 text-gray-800' }} whitespace-nowrap">
                             {{ $statusText }}
+                            @if($status == 'diproses' && $pesanan->estimasi_hari)
+                                <span>(Sisa {{ (int) $pesanan->sisa_hari }} / {{ $pesanan->estimasi_hari }} hari)</span>
+                            @elseif($status == 'sedang dikirim')
+                            @endif
                         </span>
                     </td>
                     <td class="py-4 px-4 text-sm font-medium">
@@ -72,7 +77,7 @@
                                     </svg>
                                     Upload Bukti
                                 </button>
-                            @else
+                            @elseif($pesanan->pay_method != 'poin')
                                 <button type="button"
                                     onclick="showDetailModal('{{ $pesanan->bukti_transfer }}')"
                                     class="inline-flex items-center px-3 py-1.5 border border-gray-300 bg-gray-50 text-gray-700 text-sm font-medium rounded-md hover:bg-gray-100 transition-colors duration-150 min-w-[120px]">

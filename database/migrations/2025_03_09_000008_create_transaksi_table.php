@@ -20,8 +20,17 @@ return new class extends Migration
             $table->integer('jumlah_produk')->unsigned()->default(1);
             $table->integer('harga_total')->unsigned();
             $table->integer('poin_used')->unsigned()->nullable();
+            $table->unsignedInteger('estimasi_hari')->nullable();
             $table->dateTime('tanggal');
-            $table->enum('status', ['belum dibayar', 'menunggu konfirmasi', 'sedang dikirim', 'selesai', 'dibatalkan'])->default('belum dibayar');
+            // Status sudah termasuk 'diproses' sesuai migrasi 2025_07_10_000001
+            $table->enum('status', [
+                'belum dibayar',
+                'menunggu konfirmasi',
+                'diproses',
+                'sedang dikirim',
+                'selesai',
+                'dibatalkan'
+            ])->default('belum dibayar');
             $table->enum('pay_method', ['transfer', 'poin'])->default('transfer');
             $table->string('bukti_transfer', 255)->nullable()->comment('Path file bukti transfer');
             $table->timestamps();
@@ -43,8 +52,9 @@ return new class extends Migration
     {
         Schema::dropIfExists('transaksi');
 
+        // Drop constraints jika ada (urutan drop constraint setelah drop table tidak berpengaruh, tapi tetap dicantumkan)
         DB::statement('ALTER TABLE `transaksi` DROP CONSTRAINT IF EXISTS check_poin_used_pay_method');
         DB::statement('ALTER TABLE `transaksi` DROP CONSTRAINT IF EXISTS check_harga_total');
         DB::statement('ALTER TABLE `transaksi` DROP CONSTRAINT IF EXISTS check_jumlah_produk');
     }
-}; 
+};

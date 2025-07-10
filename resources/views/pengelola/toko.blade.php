@@ -53,6 +53,7 @@
 
 <!-- Products Section -->
 <div class="bg-white rounded-2xl shadow-xl p-8 mb-8 border border-gray-100">
+    <div class="ajax-pagination">
     <div class="flex items-center justify-between mb-6">
         <h2 class="text-2xl font-bold text-gray-900">Your Products</h2>
         <div class="flex items-center space-x-2 text-sm text-gray-500">
@@ -158,10 +159,84 @@
         @endforeach
     </div>
 
-    <!-- Pagination -->
-    <div class="mt-8 flex justify-center">
-        {{ $products->links() }}
+    {{-- Pagination custom --}}
+    @if ($products->hasPages())
+    <div class="mt-8">
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <div class="flex items-center justify-between">
+                <div class="hidden sm:block">
+                    <p class="text-sm text-gray-700">
+                        Menampilkan
+                        <span class="font-semibold text-gray-900">{{ $products->firstItem() }}</span>
+                        sampai
+                        <span class="font-semibold text-gray-900">{{ $products->lastItem() }}</span>
+                        dari
+                        <span class="font-semibold text-gray-900">{{ $products->total() }}</span>
+                        produk
+                    </p>
+                </div>
+
+                <div class="flex items-center space-x-2">
+                    {{-- Prev --}}
+                    @if ($products->onFirstPage())
+                        <span class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-400 bg-gray-50 border border-gray-300 rounded-lg cursor-not-allowed">
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+                            Sebelumnya
+                        </span>
+                    @else
+                        <a href="{{ $products->previousPageUrl() }}" class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 hover:text-gray-900 transition-all duration-200">
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+                            Sebelumnya
+                        </a>
+                    @endif
+
+                    {{-- Page numbers window 7 --}}
+                    <div class="hidden md:flex items-center space-x-1">
+                        @php
+                            $current = $products->currentPage();
+                            $last    = $products->lastPage();
+                            $start   = max(1, $current - 3);
+                            $end     = min($last, $start + 6);
+                            if (($end - $start) < 6) {
+                                $start = max(1, $end - 6);
+                            }
+                        @endphp
+
+                        @if ($start > 1)
+                            <span class="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-500 bg-gray-50 border border-gray-300 rounded-lg select-none">…</span>
+                        @endif
+
+                        @for ($i = $start; $i <= $end; $i++)
+                            @if ($i == $current)
+                                <span class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-green-600 border border-green-600 rounded-lg">{{ $i }}</span>
+                            @else
+                                <a href="{{ $products->url($i) }}" class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 hover:text-gray-900 transition-all duration-200">{{ $i }}</a>
+                            @endif
+                        @endfor
+
+                        @if ($end < $last)
+                            <span class="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-500 bg-gray-50 border border-gray-300 rounded-lg select-none">…</span>
+                        @endif
+                    </div>
+
+                    {{-- Next --}}
+                    @if ($products->hasMorePages())
+                        <a href="{{ $products->nextPageUrl() }}" class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 hover:text-gray-900 transition-all duration-200">
+                            Berikutnya
+                            <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                        </a>
+                    @else
+                        <span class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-400 bg-gray-50 border border-gray-300 rounded-lg cursor-not-allowed">
+                            Berikutnya
+                            <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                        </span>
+                    @endif
+                </div>
+            </div>
+        </div>
     </div>
+    @endif
+    </div><!-- /.ajax-pagination -->
 </div>
 
 <!-- Store Settings Section -->
@@ -214,7 +289,7 @@
 
             <!-- Operating Hours -->
             <div>
-                <label class="block text-sm font-semibold text-gray-700 mb-2">Operating Hours</label>
+                <label class="block text-sm font-semibold text-gray-700 mb-2">Operating Hours <span class="text-red-500">*</span></label>
                 <div class="relative">
                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                         <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -229,7 +304,7 @@
 
             <!-- Bank Name -->
             <div>
-                <label class="block text-sm font-semibold text-gray-700 mb-2">Bank Name</label>
+                <label class="block text-sm font-semibold text-gray-700 mb-2">Bank Name <span class="text-red-500">*</span></label>
                 <div class="relative">
                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                         <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -244,7 +319,7 @@
 
             <!-- Account Number -->
             <div>
-                <label class="block text-sm font-semibold text-gray-700 mb-2">Account Number</label>
+                <label class="block text-sm font-semibold text-gray-700 mb-2">Account Number <span class="text-red-500">*</span></label>
                 <div class="relative">
                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                         <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -259,7 +334,7 @@
 
             <!-- Store Description -->
             <div class="lg:col-span-2">
-                <label class="block text-sm font-semibold text-gray-700 mb-2">Store Description</label>
+                <label class="block text-sm font-semibold text-gray-700 mb-2">Store Description <span class="text-red-500">*</span></label>
                 <textarea name="deskripsi_toko" rows="4" 
                           class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition-colors resize-none"
                           placeholder="Tell customers about your store...">{{ $user->deskripsi_toko }}</textarea>
@@ -267,7 +342,7 @@
         </div>
 
         <div class="mt-8 flex justify-end">
-            <button type="submit" class="inline-flex items-center px-8 py-3 bg-gradient-to-r from-green-600 to-green-700 text-white font-semibold rounded-xl shadow-lg hover:from-green-700 hover:to-green-800 transform hover:scale-105 transition-all duration-200">
+            <button id="saveStoreBtn" type="submit" class="inline-flex items-center px-8 py-3 bg-gradient-to-r from-green-600 to-green-700 text-white font-semibold rounded-xl shadow-lg hover:from-green-700 hover:to-green-800 transform hover:scale-105 transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed">
                 <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                 </svg>
@@ -423,7 +498,7 @@
                             class="px-6 py-3 border border-gray-300 text-gray-700 rounded-xl hover:bg-gray-50 transition-colors">
                         Cancel
                     </button>
-                    <button type="submit" class="px-8 py-3 bg-gradient-to-r from-green-600 to-green-700 text-white font-semibold rounded-xl shadow-lg hover:from-green-700 hover:to-green-800 transform hover:scale-105 transition-all duration-200">
+                    <button id="saveProductBtn" type="submit" class="px-8 py-3 bg-gradient-to-r from-green-600 to-green-700 text-white font-semibold rounded-xl shadow-lg hover:from-green-700 hover:to-green-800 transform hover:scale-105 transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed">
                         Save Product
                     </button>
                 </div>
@@ -436,7 +511,7 @@
 <div id="modalTokoAlert" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50 hidden">
     <div class="bg-white rounded-lg shadow-lg p-8 max-w-sm w-full text-center">
         <h2 class="text-2xl font-bold mb-4 text-red-600">Peringatan!</h2>
-        <p class="mb-6 text-gray-700">Semua kolom wajib diisi. Silakan lengkapi data toko Anda!</p>
+        <p class="mb-6 text-gray-700">Kolom <span class="font-semibold">Bank Name</span> dan <span class="font-semibold">Account Number</span> wajib diisi. Silakan lengkapi sebelum menyimpan!</p>
         <button onclick="closeTokoModalAlert()" class="bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded">Tutup</button>
     </div>
 </div>
@@ -666,19 +741,43 @@ window.removeImage = function(index) {
 // Store form validation
 document.querySelector('form[action*="pengelola.toko.update"]').addEventListener('submit', function(e) {
     var requiredFields = [
-        'jam_operasional', 'nomor_rekening', 'nama_bank_rekening', 'deskripsi_toko'
+        'nama_bank_rekening', 'nomor_rekening'
     ];
     var isValid = true;
     
     requiredFields.forEach(function(field) {
         var input = document.querySelector('[name="' + field + '"]');
-        if (input && !input.value.trim()) {
-            input.classList.add('border-red-500', 'ring-red-500');
+        if (!input) return;
+
+        var errorId = field + '-error';
+        var existingError = document.getElementById(errorId);
+
+        if (!input.value.trim()) {
+            // Tambah styling kesalahan
+            input.classList.add('border-red-500', 'ring-2', 'ring-red-500', 'ring-offset-1', 'bg-red-50', 'placeholder-red-400');
             input.classList.remove('border-gray-300');
+
+            // Tambahkan pesan kesalahan jika belum ada
+            if (!existingError) {
+                var errorEl = document.createElement('p');
+                errorEl.id = errorId;
+                errorEl.className = 'text-red-500 text-xs mt-1';
+                errorEl.textContent = 'Kolom wajib diisi';
+                // cari parent terdekat yang logical untuk meletakkan pesan (biasanya wrapper div)
+                var parent = input.closest('div');
+                if (parent) {
+                    parent.appendChild(errorEl);
+                } else {
+                    input.parentNode.appendChild(errorEl);
+                }
+            }
+
             isValid = false;
-        } else if (input) {
-            input.classList.remove('border-red-500', 'ring-red-500');
+        } else {
+            // Hapus styling & pesan kesalahan
+            input.classList.remove('border-red-500', 'ring-2', 'ring-red-500', 'ring-offset-1', 'bg-red-50', 'placeholder-red-400');
             input.classList.add('border-gray-300');
+            if (existingError) existingError.remove();
         }
     });
     
@@ -725,6 +824,47 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
+    // Prevent duplicate submissions on product form
+    const productForm = document.getElementById('productForm');
+    if (productForm) {
+        productForm.addEventListener('submit', function () {
+            const btn = document.getElementById('saveProductBtn');
+            if (btn) {
+                btn.disabled = true;
+                btn.classList.add('opacity-60', 'cursor-not-allowed');
+                btn.innerHTML = 'Saving...';
+            }
+        });
+    }
+
+    /* ===== Dinamis disable/enable tombol Save Store Settings (dinonaktifkan agar alert tetap muncul ketika tombol diklik) =====
+    const storeForm = document.querySelector('form[action*="pengelola.toko.update"]');
+    if (storeForm) {
+        const saveStoreBtn = document.getElementById('saveStoreBtn');
+        const storeRequiredFields = ['nama_bank_rekening', 'nomor_rekening'];
+        function updateStoreSaveState() {
+            let allFilled = true;
+            storeRequiredFields.forEach(function(field) {
+                const input = storeForm.querySelector('[name="' + field + '"]');
+                if (input && !input.value.trim()) {
+                    allFilled = false;
+                }
+            });
+            if (saveStoreBtn) {
+                saveStoreBtn.disabled = !allFilled;
+                saveStoreBtn.classList.toggle('opacity-60', !allFilled);
+                saveStoreBtn.classList.toggle('cursor-not-allowed', !allFilled);
+            }
+        }
+        // updateStoreSaveState();
+        // storeRequiredFields.forEach(function(field) {
+        //     const input = storeForm.querySelector('[name="' + field + '"]');
+        //     if (input) {
+        //         input.addEventListener('input', updateStoreSaveState);
+        //     }
+        // });
+    }
+    */
 });
 </script>
 

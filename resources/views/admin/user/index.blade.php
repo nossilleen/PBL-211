@@ -69,6 +69,8 @@
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                             <div class="flex space-x-2">
+                                @if(!(Auth::user()->role === 'admin' && in_array($user->role, ['admin', 'superadmin'])) && 
+                                    !(Auth::id() === $user->user_id))
                                 <form action="{{ route('admin.user.destroy', $user->user_id) }}" method="POST"
                                       onsubmit="return confirm('Apakah Anda yakin?');">
                                     @csrf
@@ -77,6 +79,7 @@
                                         Delete
                                     </button>
                                 </form>
+                                @endif
                                 @if(Auth::user()->role === 'superadmin' && $user->role === 'admin')
                                 <form action="{{ route('admin.user.promote', $user->user_id) }}" method="POST" onsubmit="return confirm('Promosikan menjadi superadmin?');">
                                     @csrf

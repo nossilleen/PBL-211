@@ -39,7 +39,8 @@ class Transaksi extends Model
         'tanggal',
         'status',
         'pay_method',
-        'bukti_transfer'
+        'bukti_transfer',
+        'estimasi_hari'
     ];
     
     /**
@@ -52,6 +53,7 @@ class Transaksi extends Model
         'harga_total' => 'integer',
         'jumlah_produk' => 'integer',
         'poin_used' => 'integer',
+        'estimasi_hari' => 'integer',
     ];
     
     /**
@@ -62,6 +64,7 @@ class Transaksi extends Model
     protected $appends = [
         'formatted_tanggal',
         'status_label',
+        'sisa_hari',
     ];
     
     public function user()
@@ -76,7 +79,8 @@ class Transaksi extends Model
     
     public function produk()
     {
-        return $this->belongsTo(Produk::class, 'produk_id', 'produk_id');
+        // Sertakan produk yang sudah di-soft-delete agar transaksi tetap dapat diakses
+        return $this->belongsTo(Produk::class, 'produk_id', 'produk_id')->withTrashed();
     }
 
     /**
@@ -100,11 +104,32 @@ class Transaksi extends Model
             'belum dibayar' => 'Belum Dibayar',
             'menunggu konfirmasi' => 'Menunggu Konfirmasi',
             'sedang dikirim' => 'Sedang Dikirim',
+            'diproses' => 'Diproses',
             'selesai' => 'Selesai',
             'dibatalkan' => 'Dibatalkan'
         ];
 
         return $statusLabels[$this->status] ?? ucwords($this->status);
+    }
+
+    /**
+     * Hitung sisa hari berdasarkan estimasi_hari dan tanggal transaksi
+     * Jika estimasi tidak ada, kembalikan null.
+     * @return int|null
+     */
+    public function getSisaHariAttribute()
+    {
+        if (is_null($this->estimasi_hari)) {
+            return null;
+        }
+
+        try {
+            $daysPassed = Carbon::parse($this->tanggal)->diffInDays(now());
+            $remaining = (int) round($this->estimasi_hari - $daysPassed);
+            return $remaining < 0 ? 0 : $remaining;
+        } catch (\Exception $e) {
+            return $this->estimasi_hari;
+        }
     }
 
     /**

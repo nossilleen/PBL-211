@@ -4,19 +4,29 @@
 @php
     $now = \Carbon\Carbon::now();
     $start = \Carbon\Carbon::parse($event->date);
-    $end   = $event->expired_at ? \Carbon\Carbon::parse($event->expired_at) : null;
-
+    $end = $event->expired_at ? \Carbon\Carbon::parse($event->expired_at) : null;
+    
+    // Format untuk tampilan
+    $startDateFormatted = $start->format('d F Y H:i');
+    $endDateFormatted = $end ? $end->format('d F Y H:i') : null;
+    
+    // Perbaikan logika status event
     if($now->lt($start)) {
         $eventStatus = 'Belum'; // belum dimulai
         $countdownTs = $start->timestamp;
         $countdownLabel = 'Acara akan dimulai dalam';
+        $countdownEnd = $start->diffInSeconds($now);
     } elseif($end && $now->gt($end)) {
         $eventStatus = 'Selesai';
+        $countdownTs = null; // Tidak perlu countdown jika sudah selesai
     } else {
         $eventStatus = 'Tersedia';
         if($end) {
             $countdownTs = $end->timestamp;
             $countdownLabel = 'Acara akan ditutup dalam';
+            $countdownEnd = $end->diffInSeconds($now);
+        } else {
+            $countdownTs = null; // Tidak ada tanggal akhir
         }
     }
 @endphp
@@ -37,10 +47,6 @@
                     <div class="flex flex-wrap gap-4 text-white">
                         <div class="flex items-center">
                             <i class="fas fa-calendar-alt mr-2"></i>
-                            @php
-                                $startDateFormatted = \Carbon\Carbon::parse($event->date)->format('d F Y H:i');
-                                $endDateFormatted = $event->expired_at ? \Carbon\Carbon::parse($event->expired_at)->format('d F Y H:i') : null;
-                            @endphp
                             <span>{{ $startDateFormatted }} @if($endDateFormatted) – {{ $endDateFormatted }} @endif</span>
                         </div>
                         <div class="flex items-center">
@@ -113,7 +119,7 @@
                         </button>
                     @endif
                 </div>
-                @if(isset($countdownTs))
+                @if(isset($countdownTs) && $countdownTs > $now->timestamp)
                 <div class="mt-4 text-center text-sm text-gray-700" id="countdownWrapper">
                     <span>{{ $countdownLabel }} <span id="countdown"></span></span>
                 </div>
@@ -193,18 +199,40 @@
         const target = {{ $countdownTs }} * 1000;
         const now = Date.now();
         const diff = target - now;
-        if(diff <= 0) { location.reload(); return; }
+        
+        // Reload halaman jika countdown sudah selesai
+        if(diff <= 0) { 
+            console.log("Countdown selesai, memuat ulang halaman");
+            location.reload(); 
+            return; 
+        }
+        
+        // Format countdown
         const sec = Math.floor(diff / 1000) % 60;
         const min = Math.floor(diff / (1000*60)) % 60;
         const hrs = Math.floor(diff / (1000*60*60)) % 24;
         const days= Math.floor(diff / (1000*60*60*24));
+        
+        // Tampilkan dalam format yang lebih jelas
         const parts = [];
-        if(days) parts.push(days+'h');
-        parts.push(String(hrs).padStart(2,'0')+':'+String(min).padStart(2,'0')+':'+String(sec).padStart(2,'0'));
-        document.getElementById('countdown').textContent = parts.join(' ');
+        if(days > 0) parts.push(days + ' hari');
+        if(hrs > 0 || days > 0) parts.push(String(hrs).padStart(2,'0') + ' jam');
+        parts.push(String(min).padStart(2,'0') + ':' + String(sec).padStart(2,'0'));
+        
+        const countdownEl = document.getElementById('countdown');
+        if (countdownEl) {
+            countdownEl.textContent = parts.join(' ');
+        }
     }
+    
+    // Update countdown setiap detik
     updateCountdown();
-    setInterval(updateCountdown, 1000);
+    const countdownInterval = setInterval(updateCountdown, 1000);
+    
+    // Hentikan interval jika halaman berganti
+    window.addEventListener('beforeunload', function() {
+        clearInterval(countdownInterval);
+    });
     @endif
 </script>
 @endpush

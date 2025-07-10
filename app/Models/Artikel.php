@@ -54,7 +54,7 @@ public function likedByUsers() {
    
 public function feedback()
 {
-    return $this->hasMany(Feedback::class, 'artikel_id', 'artikel_id')->latest();
+    return $this->hasMany(Feedback::class, 'artikel_id', 'artikel_id');
 }
     
     public function setJudulAttribute($value)

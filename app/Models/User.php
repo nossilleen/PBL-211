@@ -152,6 +152,21 @@ public function likedArtikels() {
     return $this->belongsToMany(Artikel::class, 'artikel_likes')->withTimestamps();
 }
 
+    public function getFullAlamatAttribute()
+    {
+        // Gabungkan bagian alamat yang tersedia menjadi satu string rapi
+        $parts = [
+            $this->alamat,
+            $this->kelurahan,
+            $this->kecamatan,
+            $this->kode_pos,
+        ];
+
+        return collect($parts)
+            ->filter(fn($part) => !empty($part))
+            ->implode(', ');
+    }
+
     protected static function booted()
     {
         parent::booted();

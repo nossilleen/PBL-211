@@ -20,7 +20,7 @@ class TransaksiController extends Controller
         $userId = Auth::id();
         $pesananAktif = Transaksi::with('produk')
             ->where('user_id', $userId)
-            ->whereIn('status', ['belum dibayar', 'menunggu konfirmasi', 'sedang dikirim'])
+            ->whereIn('status', ['belum dibayar', 'menunggu konfirmasi', 'diproses', 'sedang dikirim'])
             ->orderBy('created_at', 'desc')
             ->get();
     return view('pesanan.index', compact('pesananAktif'));
@@ -197,7 +197,7 @@ class TransaksiController extends Controller
                     'harga_total' => 0,
                     'poin_used' => $totalPoinNeeded,
                     'tanggal' => now(),
-                    'status' => 'sedang dikirim',
+                    'status' => 'menunggu konfirmasi',
                     'pay_method' => 'poin',
                 ]);
 

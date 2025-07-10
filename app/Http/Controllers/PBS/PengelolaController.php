@@ -284,6 +284,8 @@ class PengelolaController extends Controller
     {
         $pengelolaId = auth()->id();
         $status = $request->get('status', 'menunggu konfirmasi');
+        // Ambil keyword pencarian (jika ada)
+        $search = $request->get('search');
 
         // Get statistics for cards
         $pesananBaru = Transaksi::whereHas('produk', function($q) use ($pengelolaId) {
@@ -292,7 +294,12 @@ class PengelolaController extends Controller
 
         $sedangDiproses = Transaksi::whereHas('produk', function($q) use ($pengelolaId) {
             $q->where('user_id', $pengelolaId);
-        })->whereIn('status', ['diproses', 'sedang dikirim'])->count();
+        })->where('status', 'diproses')->count();
+
+        // Hitung pesanan yang sedang dikirim
+        $sedangDikirim = Transaksi::whereHas('produk', function($q) use ($pengelolaId) {
+            $q->where('user_id', $pengelolaId);
+        })->where('status', 'sedang dikirim')->count();
 
         $pesananSelesai = Transaksi::whereHas('produk', function($q) use ($pengelolaId) {
             $q->where('user_id', $pengelolaId);
@@ -305,15 +312,34 @@ class PengelolaController extends Controller
           ->where('pay_method', 'transfer')
           ->sum('harga_total');
 
-        // Update pesananMasuk query with proper pagination
-        $pesananMasuk = Transaksi::with(['user', 'produk'])
+        // Build query pesanan dengan filter status & pencarian nama pembeli
+        $pesananQuery = Transaksi::with(['user', 'produk'])
             ->whereHas('produk', function($q) use ($pengelolaId) {
                 $q->where('user_id', $pengelolaId);
             })
-            ->where('status', $status)  // Filter by status
+            ->where('status', $status);
+
+        // Jika ada kata kunci pencarian, filter berdasarkan nama pembeli
+        if ($search) {
+            $pesananQuery->where(function($query) use ($search) {
+                // Cari berdasarkan nama pembeli
+                $query->whereHas('user', function($q) use ($search) {
+                    $q->where('nama', 'like', "%{$search}%");
+                })
+                // ATAU cari berdasarkan nama produk
+                ->orWhereHas('produk', function($q) use ($search) {
+                    $q->where('nama_produk', 'like', "%{$search}%");
+                })
+                // ATAU cari berdasarkan ID transaksi
+                ->orWhere('transaksi_id', 'like', "%{$search}%");
+            });
+        }
+
+        // Pagination & sorting
+        $pesananMasuk = $pesananQuery
             ->orderBy('created_at', 'desc')
-            ->paginate(5)  // Show 5 items per page
-            ->withQueryString();  // Preserve other query parameters
+            ->paginate(5)
+            ->withQueryString();
 
         return view('pengelola.pesanan', compact(
             'pesananMasuk',
@@ -321,7 +347,8 @@ class PengelolaController extends Controller
             'sedangDiproses',
             'pesananSelesai',
             'totalPendapatan',
-            'status'
+            'status',
+            'sedangDikirim'
         ));
     }
 
@@ -332,9 +359,17 @@ class PengelolaController extends Controller
         if ($transaksi->status !== 'menunggu konfirmasi') {
             return back()->with('error', 'Status tidak valid');
         }
-        $transaksi->status = 'sedang dikirim';
+
+        // Validasi input estimasi_hari
+        request()->validate([
+            'estimasi_hari' => 'required|integer|min:1'
+        ]);
+
+        $transaksi->estimasi_hari = request('estimasi_hari');
+        $transaksi->status = 'diproses';
         $transaksi->save();
-        return back()->with('success', 'Pesanan telah diverifikasi dan diproses');
+
+        return back()->with('success', 'Pesanan telah diverifikasi dan diproses dengan estimasi '.request('estimasi_hari').' hari');
     }
 
     // Tandai selesai
@@ -357,6 +392,18 @@ class PengelolaController extends Controller
         $transaksi->save();
 
         return redirect()->back()->with('success', 'Pesanan ditolak');
+    }
+
+    // Tandai pesanan sebagai dikirim
+    public function kirim($id)
+    {
+        $transaksi = Transaksi::findOrFail($id);
+        if ($transaksi->status !== 'diproses') {
+            return back()->with('error', 'Status tidak valid');
+        }
+        $transaksi->status = 'sedang dikirim';
+        $transaksi->save();
+        return back()->with('success', 'Pesanan telah ditandai sebagai sedang dikirim');
     }
 
     public function updateAlamat(Request $request)
@@ -398,7 +445,8 @@ class PengelolaController extends Controller
                 $q->where('user_id', $pengelolaId);
             })
             ->orderByDesc('tanggal')
-            ->get();
+            ->paginate(10)
+            ->withQueryString();
         return view('pengelola.riwayat', compact('riwayatTransaksi'));
     }
 }

@@ -163,8 +163,12 @@ Route::middleware(['auth', 'role:pengelola'])->group(function () {
     // Show pesanan table (make sure this uses pesananMasuk, not pesanan)
     Route::get('/pengelola/pesanan', [\App\Http\Controllers\PBS\PengelolaController::class, 'pesananMasuk'])->name('pengelola.pesanan');
 
-    // Verifikasi pesanan (set status to sedang dikirim)
+    // Verifikasi pesanan (set status to diproses)
     Route::post('/pengelola/pesanan/{id}/verifikasi', [\App\Http\Controllers\PBS\PengelolaController::class, 'verifikasi'])->name('pengelola.pesanan.verifikasi');
+
+    // Tandai pesanan dikirim
+    Route::post('/pengelola/pesanan/{id}/kirim', [\App\Http\Controllers\PBS\PengelolaController::class, 'kirim'])
+        ->name('pengelola.pesanan.kirim');
 
     // Tandai pesanan selesai
     Route::post('/pengelola/pesanan/{id}/selesai', [\App\Http\Controllers\PBS\PengelolaController::class, 'selesai'])->name('pengelola.pesanan.selesai');

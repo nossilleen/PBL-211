@@ -286,7 +286,8 @@
             </div>
         </div>
 
-        <!-- Table -->
+        <!-- Table & Pagination Wrapper -->
+        <div class="ajax-pagination">
         <div class="overflow-x-auto">
             <table class="min-w-full divide-y divide-gray-200">
                 <thead class="bg-gray-50">
@@ -371,12 +372,92 @@
         </div>
 
         <!-- Pagination -->
-        @if($histories->hasPages())
-        <div class="bg-white px-4 py-3 border-t border-gray-200">
-            {{ $histories->links() }}
+        @if ($histories->hasPages())
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <div class="flex items-center justify-between">
+                <div class="hidden sm:block">
+                    <p class="text-sm text-gray-700">
+                        Menampilkan
+                        <span class="font-semibold text-gray-900">{{ $histories->firstItem() }}</span>
+                        sampai
+                        <span class="font-semibold text-gray-900">{{ $histories->lastItem() }}</span>
+                        dari
+                        <span class="font-semibold text-gray-900">{{ $histories->total() }}</span>
+                        riwayat
+                    </p>
+                </div>
+
+                <div class="flex items-center space-x-2">
+                    @if ($histories->onFirstPage())
+                        <span class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-400 bg-gray-50 border border-gray-300 rounded-lg cursor-not-allowed">
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                            </svg>
+                            Sebelumnya
+                        </span>
+                    @else
+                        <a href="{{ $histories->previousPageUrl() }}" 
+                           class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 hover:text-gray-900 transition-all duration-200">
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                            </svg>
+                            Sebelumnya
+                        </a>
+                    @endif
+
+                    <div class="hidden md:flex items-center space-x-1">
+                        @php
+                            $current = $histories->currentPage();
+                            $last    = $histories->lastPage();
+                            // Hitung rentang agar maksimum 7 halaman yang ditampilkan
+                            $start = max(1, $current - 3);
+                            $end   = min($last, $start + 6);
+                            if (($end - $start) < 6) {
+                                $start = max(1, $end - 6);
+                            }
+                        @endphp
+
+                        {{-- Ellipsis di kiri --}}
+                        @if ($start > 1)
+                            <span class="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-500 bg-gray-50 border border-gray-300 rounded-lg cursor-default select-none">…</span>
+                        @endif
+
+                        {{-- Nomor halaman utama --}}
+                        @for ($i = $start; $i <= $end; $i++)
+                            @if ($i == $current)
+                                <span class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-green-600 border border-green-600 rounded-lg">{{ $i }}</span>
+                            @else
+                                <a href="{{ $histories->url($i) }}" class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 hover:text-gray-900 transition-all duration-200">{{ $i }}</a>
+                            @endif
+                        @endfor
+
+                        {{-- Ellipsis di kanan --}}
+                        @if ($end < $last)
+                            <span class="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-500 bg-gray-50 border border-gray-300 rounded-lg cursor-default select-none">…</span>
+                        @endif
+                    </div>
+
+                    @if ($histories->hasMorePages())
+                        <a href="{{ $histories->nextPageUrl() }}" 
+                           class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 hover:text-gray-900 transition-all duration-200">
+                            Berikutnya
+                            <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                            </svg>
+                        </a>
+                    @else
+                        <span class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-400 bg-gray-50 border border-gray-300 rounded-lg cursor-not-allowed">
+                            Berikutnya
+                            <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                            </svg>
+                        </span>
+                    @endif
+                </div>
+            </div>
         </div>
         @endif
-    </div>
+    </div></div><!-- /.ajax-pagination -->
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {

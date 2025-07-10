@@ -242,15 +242,22 @@ class ArtikelController extends Controller
 
     public function show($id)
     {
+        // Tentukan sort order dari parameter request
+        $sort = request('sort', 'terbaru');
+        $direction = $sort === 'terlama' ? 'asc' : 'desc';
+
         // Eager load relasi replies secara rekursif
         $artikel = Artikel::with([
             'user', 
             'likes', 
-            'feedback' => function ($query) {
-                $query->whereNull('parent_id')->orderBy('created_at', 'desc');
+            'feedback' => function ($query) use ($direction) {
+                $query->whereNull('parent_id')->orderBy('created_at', $direction);
             }, 
             'feedback.user', 
-            'feedback.replies'
+            'feedback.replies' => function ($query) use ($direction) {
+                $query->orderBy('created_at', $direction);
+            },
+            'feedback.replies.user'
         ])->findOrFail($id);
     
         $relatedArticles = Artikel::where('artikel_id', '!=', $id)->latest()->take(4)->get();

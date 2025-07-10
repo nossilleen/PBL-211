@@ -116,22 +116,18 @@
              @click.away="open = false"
              class="absolute z-50 mt-2 w-full bg-white border border-gray-200 rounded-xl shadow-xl overflow-hidden"
              x-cloak>
-            <form method="GET" action="{{ route('artikel.show', $artikel->artikel_id) }}">
-                <input type="hidden" name="sort" value="terbaru">
-                <button type="submit" @click="selected = 'terbaru'; open = false"
-                    class="w-full text-left px-4 py-2 text-sm hover:bg-green-100 text-gray-700 transition"
-                    :class="selected === 'terbaru' ? 'bg-green-500 text-white font-semibold' : ''">
-                    Terbaru
-                </button>
-            </form>
-            <form method="GET" action="{{ route('artikel.show', $artikel->artikel_id) }}">
-                <input type="hidden" name="sort" value="terlama">
-                <button type="submit" @click="selected = 'terlama'; open = false"
-                    class="w-full text-left px-4 py-2 text-sm hover:bg-green-100 text-gray-700 transition"
-                    :class="selected === 'terlama' ? 'bg-green-500 text-white font-semibold' : ''">
-                    Terlama
-                </button>
-            </form>
+            <a href="{{ route('artikel.show', ['id' => $artikel->artikel_id, 'sort' => 'terbaru']) }}"
+                @click="selected = 'terbaru'; open = false"
+                class="block w-full text-left px-4 py-2 text-sm hover:bg-green-100 text-gray-700 transition"
+                :class="selected === 'terbaru' ? 'bg-green-500 text-white font-semibold' : ''">
+                Terbaru
+            </a>
+            <a href="{{ route('artikel.show', ['id' => $artikel->artikel_id, 'sort' => 'terlama']) }}"
+                @click="selected = 'terlama'; open = false"
+                class="block w-full text-left px-4 py-2 text-sm hover:bg-green-100 text-gray-700 transition"
+                :class="selected === 'terlama' ? 'bg-green-500 text-white font-semibold' : ''">
+                Terlama
+            </a>
         </div>
     </div>
 </div>

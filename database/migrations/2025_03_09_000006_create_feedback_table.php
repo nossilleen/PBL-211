@@ -16,6 +16,11 @@ return new class extends Migration
             $table->string('komentar', 255);
             $table->foreignId('user_id')->constrained('user', 'user_id');
             $table->foreignId('artikel_id')->constrained('artikel', 'artikel_id');
+            $table->unsignedBigInteger('parent_id')->nullable();
+            $table->foreign('parent_id')
+                  ->references('feedback_id')
+                  ->on('feedback')
+                  ->onDelete('cascade');
             $table->timestamp('created_at')->useCurrent();
         });
     }
@@ -27,4 +32,4 @@ return new class extends Migration
     {
         Schema::dropIfExists('feedback');
     }
-}; 
+};

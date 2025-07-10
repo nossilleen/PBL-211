@@ -324,6 +324,77 @@
         });
     </script>
 
+{{-- ========================================================= --}}
+{{--  UNIVERSAL AJAX PAGINATION HANDLER  --}}
+<script>
+(function(){
+    const LOADING_CLASS = 'ajax-loading';
+
+    /* Tambah style minimal untuk efek loading */
+    const style = document.createElement('style');
+    style.innerHTML = `
+        .${LOADING_CLASS}{
+            opacity:.4;
+            pointer-events:none;
+            position:relative;
+        }
+        .${LOADING_CLASS}::after{
+            content:"";
+            position:absolute;
+            inset:0;
+            background:url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 style=%22margin:auto%3B background:none%3B display:block%3B shape-rendering:auto%3B%22 width=%2240px%22 height=%2240px%22 viewBox=%220 0 100 100%22 preserveAspectRatio=%22xMidYMid%22%3E%3Ccircle cx=%2250%22 cy=%2250%22 fill=%22none%22 stroke=%22%2332a852%22 stroke-width=%2210%22 r=%2235%22 stroke-dasharray=%22164.93361431346415 56.97787143782138%22 transform=%22rotate(294.027 50 50)%22%3E%3CanimateTransform attributeName=%22transform%22 type=%22rotate%22 repeatCount=%22indefinite%22 dur=%221s%22 values=%220 50 50;360 50 50%22 keyTimes=%220;1%22%3E%3C/animateTransform%3E%3C/circle%3E%3C/svg%3E') center /40px no-repeat;
+        }
+    `;
+    document.head.appendChild(style);
+
+    /** Muat ulang konten ajax-pagination */
+    async function loadAjaxPagination(url, push=true){
+        const containers = document.querySelectorAll('.ajax-pagination');
+        if(!containers.length){
+            window.location.href = url; // fallback
+            return;
+        }
+        // tampilkan state loading
+        containers.forEach(c=>c.classList.add(LOADING_CLASS));
+        try{
+            const response = await fetch(url, {headers:{'X-Requested-With':'XMLHttpRequest'}});
+            const html = await response.text();
+            const doc = new DOMParser().parseFromString(html,'text/html');
+            const newContainers = doc.querySelectorAll('.ajax-pagination');
+            if(!newContainers.length){
+                window.location.href = url; // fallback jika tidak ada kontainer
+                return;
+            }
+            // Sinkronkan satu per satu berdasarkan index
+            containers.forEach((node, idx)=>{
+                if(newContainers[idx]) node.innerHTML = newContainers[idx].innerHTML;
+            });
+            if(push) history.pushState(null,'',url);
+            window.scrollTo({top:0,behavior:'smooth'});
+        }catch(err){
+            console.error('AJAX pagination error:',err);
+            window.location.href = url;
+        }finally{
+            containers.forEach(c=>c.classList.remove(LOADING_CLASS));
+        }
+    }
+
+    // Delegasi klik untuk semua link di dalam .ajax-pagination
+    document.addEventListener('click', (e)=>{
+        const anchor = e.target.closest('.ajax-pagination a');
+        if(!anchor) return;
+        // abaikan klik modifier (ctrl, cmd, shift) atau target _blank
+        if(e.metaKey||e.ctrlKey||e.shiftKey||anchor.target==='_blank') return;
+        e.preventDefault();
+        loadAjaxPagination(anchor.href);
+    });
+
+    // Tangani tombol back/forward browser
+    window.addEventListener('popstate', ()=>loadAjaxPagination(location.href,false));
+})();
+</script>
+{{-- ========================================================= --}}
+
     @stack('scripts')
 </body>
 </html>

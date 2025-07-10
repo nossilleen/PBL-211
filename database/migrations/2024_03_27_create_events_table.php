@@ -14,7 +14,9 @@ return new class extends Migration
             $table->text('description');
             $table->string('image')->nullable();
             $table->dateTime('date');
+            $table->timestamp('expired_at')->nullable();
             $table->string('location');
+            $table->string('link_form_acara')->nullable();
             $table->timestamps();
         });
     }
@@ -23,4 +25,4 @@ return new class extends Migration
     {
         Schema::dropIfExists('events');
     }
-}; 
+};
