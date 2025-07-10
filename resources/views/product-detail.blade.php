@@ -104,6 +104,14 @@
                         <div class="lg:col-span-3 w-full font-['Lexend_Deca',_sans-serif]"> 
                             <form action="{{ route('produk.beli') }}" method="POST" class="bg-white rounded-xl shadow-2xl p-8 relative">
                                 @csrf
+                                @if(session('error'))
+                                    <div class="mb-4 flex items-start bg-red-50 border border-red-200 text-red-700 rounded-lg p-4 space-x-3">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01M21 12A9 9 0 113 12a9 9 0 0118 0z" />
+                                        </svg>
+                                        <span class="text-sm font-medium">{{ session('error') }}</span>
+                                    </div>
+                                @endif
                                 <h2 class="text-2xl font-bold text-green-700 mb-4 text-center">Detail Pembelian</h2>
                                 <div class="mb-4">
                                     <div class="text-gray-700 font-semibold mb-1">Rekening Penjual</div>
@@ -141,6 +149,7 @@
                                 <div class="flex flex-col gap-3">
                                     <button type="submit" class="bg-green-600 text-white py-2 rounded-md font-semibold hover:bg-green-700 transition">Bayar Sekarang</button>
                                 </div>
+                                <div id="poin-warning" class="text-red-600 text-sm mt-2 hidden">Poin tidak cukup.</div>
                             </form>
                         </div>
                         @endif
@@ -240,6 +249,7 @@
         // Harga satuan produk (ambil dari PHP)
         const hargaSatuan = {{ $product->harga ?? 0 }};
         const poinSatuan = {{ $product->harga_points ?? 0 }};
+        const userPoints = {{ auth()->check() ? (auth()->user()->points ?? 0) : 0 }};
         let qty = 1;
 
         function changeQty(val) {
@@ -250,6 +260,18 @@
             document.getElementById('total-harga').innerText = 'Rp' + (qty * hargaSatuan).toLocaleString('id-ID');
             if (poinSatuan > 0) {
                 document.getElementById('total-poin').innerText = 'atau ' + (qty * poinSatuan).toLocaleString('id-ID') + ' Poin';
+            }
+            checkPoinAvailability();
+        }
+
+        function checkPoinAvailability() {
+            const warning = document.getElementById('poin-warning');
+            if (!usePoinCheckbox || !warning) return;
+            const poinNeeded = qty * poinSatuan;
+            if (usePoinCheckbox.checked && poinSatuan > 0 && poinNeeded > userPoints) {
+                warning.classList.remove('hidden');
+            } else {
+                warning.classList.add('hidden');
             }
         }
 
@@ -266,6 +288,7 @@
                     this.checked = false;
                     modalPoin.classList.remove('hidden');
                 }
+                checkPoinAvailability();
             });
         }
         if (modalPoinYa) {
@@ -274,6 +297,7 @@
                 if (usePoinCheckbox && lastPoinChecked) {
                     usePoinCheckbox.checked = true;
                 }
+                checkPoinAvailability();
             });
         }
         if (modalPoinTidak) {
