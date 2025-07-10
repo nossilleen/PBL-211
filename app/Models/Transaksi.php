@@ -79,7 +79,8 @@ class Transaksi extends Model
     
     public function produk()
     {
-        return $this->belongsTo(Produk::class, 'produk_id', 'produk_id');
+        // Sertakan produk yang sudah di-soft-delete agar transaksi tetap dapat diakses
+        return $this->belongsTo(Produk::class, 'produk_id', 'produk_id')->withTrashed();
     }
 
     /**

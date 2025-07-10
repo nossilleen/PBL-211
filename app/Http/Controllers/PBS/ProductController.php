@@ -9,6 +9,7 @@ use App\Models\ProdukGambar;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Validation\Rule;
 
 class ProductController extends Controller
 {
@@ -30,7 +31,14 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'nama_produk' => 'required|string|max:255',
+            'nama_produk' => [
+                'required',
+                'string',
+                'max:255',
+                Rule::unique('produk', 'nama_produk')->where(function ($query) {
+                    return $query->where('user_id', auth()->id());
+                }),
+            ],
             'harga' => 'required|numeric|min:0',
             'harga_points' => 'nullable|numeric|min:0',
             'deskripsi' => 'nullable|string',
@@ -91,7 +99,14 @@ class ProductController extends Controller
     public function update(Request $request, $id)
     {
         $validated = $request->validate([
-            'nama_produk' => 'required|string|max:255',
+            'nama_produk' => [
+                'required',
+                'string',
+                'max:255',
+                Rule::unique('produk', 'nama_produk')->ignore($id, 'produk_id')->where(function ($query) {
+                    return $query->where('user_id', auth()->id());
+                }),
+            ],
             'harga' => 'required|numeric|min:0',
             'harga_points' => 'nullable|numeric|min:0',
             'deskripsi' => 'required|string',
@@ -165,7 +180,7 @@ class ProductController extends Controller
             }
             
             $product->gambar()->delete(); // Delete image records
-            $product->forceDelete(); // Permanently delete the product
+            $product->delete(); // Soft delete the product
 
             return redirect()->route('pengelola.toko')
                 ->with('success', 'Product deleted successfully!');

@@ -498,7 +498,7 @@
                             class="px-6 py-3 border border-gray-300 text-gray-700 rounded-xl hover:bg-gray-50 transition-colors">
                         Cancel
                     </button>
-                    <button type="submit" class="px-8 py-3 bg-gradient-to-r from-green-600 to-green-700 text-white font-semibold rounded-xl shadow-lg hover:from-green-700 hover:to-green-800 transform hover:scale-105 transition-all duration-200">
+                    <button id="saveProductBtn" type="submit" class="px-8 py-3 bg-gradient-to-r from-green-600 to-green-700 text-white font-semibold rounded-xl shadow-lg hover:from-green-700 hover:to-green-800 transform hover:scale-105 transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed">
                         Save Product
                     </button>
                 </div>
@@ -797,6 +797,18 @@ document.addEventListener('DOMContentLoaded', function() {
             // Jika yang diklik adalah label, biarkan default
             if (e.target.tagName !== 'LABEL') {
                 inputImages.click();
+            }
+        });
+    }
+    // Prevent duplicate submissions on product form
+    const productForm = document.getElementById('productForm');
+    if (productForm) {
+        productForm.addEventListener('submit', function () {
+            const btn = document.getElementById('saveProductBtn');
+            if (btn) {
+                btn.disabled = true;
+                btn.classList.add('opacity-60', 'cursor-not-allowed');
+                btn.innerHTML = 'Saving...';
             }
         });
     }
