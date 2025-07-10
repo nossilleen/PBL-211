@@ -77,7 +77,7 @@
                                     </svg>
                                     Upload Bukti
                                 </button>
-                            @else
+                            @elseif($pesanan->pay_method != 'poin')
                                 <button type="button"
                                     onclick="showDetailModal('{{ $pesanan->bukti_transfer }}')"
                                     class="inline-flex items-center px-3 py-1.5 border border-gray-300 bg-gray-50 text-gray-700 text-sm font-medium rounded-md hover:bg-gray-100 transition-colors duration-150 min-w-[120px]">
