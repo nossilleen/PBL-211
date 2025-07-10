@@ -246,6 +246,15 @@ class AdminController extends Controller
         }
 
         $user = User::findOrFail($id);
+        
+        // Prevent admin from deleting other admins or superadmins
+        if (Auth::user()->role === 'admin' && in_array($user->role, ['admin', 'superadmin'])) {
+            return redirect()->route('admin.user')->with([
+                'message' => 'Anda tidak memiliki izin untuk menghapus akun admin atau superadmin lain.',
+                'type' => 'error'
+            ]);
+        }
+        
         $user->delete();
 
         return redirect()->route('admin.user')->with([
