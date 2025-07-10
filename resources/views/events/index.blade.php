@@ -221,19 +221,6 @@
 
         <!-- Tombol -->
         <div class="mt-4 flex gap-2">
-    @if($isOpen)
-        <a href="{{ route('events.show', ['id' => $event->id]) }}" class="flex-1 bg-green-600 hover:bg-green-700 text-white text-center py-2 px-4 rounded-lg text-sm font-medium">
-            Daftar Acara
-        </a>
-    @elseif($notStarted)
-        <button disabled class="flex-1 bg-yellow-400 text-white text-center py-2 px-4 rounded-lg text-sm font-medium cursor-not-allowed">
-            Acara Belum Dimulai
-        </button>
-    @else
-        <button disabled class="flex-1 bg-gray-400 text-white text-center py-2 px-4 rounded-lg text-sm font-medium cursor-not-allowed">
-            Acara Sudah Ditutup
-        </button>
-    @endif
     <a href="{{ route('events.show', ['id' => $event->id]) }}" class="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 text-center py-2 px-4 rounded-lg text-sm font-medium">
         Lihat Detail
     </a>
