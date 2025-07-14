@@ -40,11 +40,13 @@ class ProductController extends Controller
                 }),
             ],
             'harga' => 'required|numeric|min:0',
-            'harga_points' => 'nullable|numeric|min:0',
+            'harga_points' => 'required|numeric|min:0',
             'deskripsi' => 'nullable|string',
             'kategori' => 'required|string',
             'images.*' => 'required|image|mimes:jpeg,png,jpg|max:2048',
             'images' => 'required|array|min:1|max:5'
+        ], [
+            'harga_points.required' => 'The points field is required.'
         ]);
 
         try {

@@ -10,14 +10,6 @@
                 <h1 class="text-3xl font-bold text-gray-900">Kelola Pesanan</h1>
                 <p class="text-gray-600 mt-2">konfirmasi dan proses pesanan produk dari nasabah</p>
             </div>
-            <div class="flex items-center space-x-3">
-                <div class="bg-white rounded-lg shadow-sm border border-gray-200 px-4 py-2">
-                    <div class="flex items-center space-x-2">
-                        <div class="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
-                        <span class="text-sm font-medium text-gray-700">Live Updates</span>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
     

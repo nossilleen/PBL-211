@@ -11,7 +11,7 @@
         <h2 class="text-3xl font-bold text-center mb-6" data-aos="fade-up">
             Produk Eco Enzim terlaris
         </h2>
-        <h3 class="text-xl text-center mb-12" data-aos="fade-up" data-aos-delay="100">bulan ini</h3>
+        <h3 class="text-xl text-center mb-12" data-aos="fade-up" data-aos-delay="100"></h3>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
                         @foreach ($bestSellers as $product)
@@ -35,7 +35,7 @@
         <div class="text-center mt-10" data-aos="fade-up" data-aos-delay="600">
             <a href="{{ route('browse') }}" 
                class="inline-block bg-white text-green-600 px-8 py-3 rounded-lg hover:bg-gray-50 transition button-hover-effect">
-                See more
+                Lihat
             </a>
         </div>
     </div>

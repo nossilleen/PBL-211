@@ -34,13 +34,13 @@
                         
                         <!-- Enhanced Title -->
                         <h1 class="text-5xl md:text-7xl font-bold text-white mb-6 slide-in">
-                            Welcome to <span class="relative">
+                            Selamat Datang di <span class="relative">
                                 EcoZense
                             </span>
                         </h1>
                         
                         <p class="text-xl md:text-2xl text-emerald-100 mb-8 slide-in max-w-3xl mx-auto">
-                            Discover the world's most comprehensive eco-enzyme marketplace
+                            Temukan marketplace eco-enzim terlengkap di Indonesia
                         </p>
                         
                         <!-- Enhanced Search Bar -->
@@ -53,7 +53,7 @@
                                                 type="text" 
                                                 name="search" 
                                                 value="{{ request('search') }}" 
-                                                placeholder="Search stores, products, or eco-enzymes..." 
+                                                placeholder="Cari toko, produk, atau eco-enzim..." 
                                                 class="w-full pl-12 pr-4 py-4 bg-transparent border-none focus:outline-none focus:ring-0 text-gray-700 placeholder-gray-400 text-lg font-medium search-glow rounded-xl"
                                             />
                                             <div class="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400">
@@ -103,15 +103,15 @@
 
                             <div class="text-center">
                                 <div class="text-3xl font-bold text-white">{{ $displayStores }}</div>
-                                <div class="text-emerald-200 text-sm">Eco Stores</div>
+                                <div class="text-emerald-200 text-sm">Toko</div>
                             </div>
                             <div class="text-center">
                                 <div class="text-3xl font-bold text-white">{{ $displayProducts }}</div>
-                                <div class="text-emerald-200 text-sm">Products</div>
+                                <div class="text-emerald-200 text-sm">Produk</div>
                             </div>
                             <div class="text-center">
                                 <div class="text-3xl font-bold text-white">100%</div>
-                                <div class="text-emerald-200 text-sm">Eco-Friendly</div>
+                                <div class="text-emerald-200 text-sm">Ramah Lingkungan</div>
                             </div>
                         </div>
                     </div>

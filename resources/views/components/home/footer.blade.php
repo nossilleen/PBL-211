@@ -40,8 +40,6 @@
 
         <div
             class="border-t border-white mt-12 pt-6 flex flex-col md:flex-row justify-between items-center"
-            data-aos="fade-up"
-            data-aos-delay="300"
         >
             <div>© 2025</div>
             <div class="flex space-x-4">
