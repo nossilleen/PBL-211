@@ -19,7 +19,7 @@
                 data-aos="fade-up"
                 data-aos-delay="300"
             >
-                Join
+                Gabung
             </a>
         </div>
     </div>

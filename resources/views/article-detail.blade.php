@@ -85,7 +85,7 @@
                     <div id="char-count" class="text-right text-xs text-gray-400 mt-1">500 karakter tersisa</div>
                     <button type="submit"
     class="mt-3 bg-green-600 hover:bg-green-700 text-white font-semibold px-6 py-2 rounded-md transition">
-    Kirim Feedback
+    Beri Tanggapan
 </button>
 
                 </form>

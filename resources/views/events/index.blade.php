@@ -33,7 +33,7 @@
                             </div>
                         </div>
                         <h1 class="text-4xl md:text-5xl font-bold text-white mb-4 animate-fade-in">
-                            Event & Kegiatan
+                            Acara & Kegiatan
                         </h1>
                         <p class="text-xl text-green-100 animate-slide-up mb-8">
                             Temukan berbagai acara edukatif dan kolaboratif seputar eco enzim, daur ulang, dan lingkungan hijau.

@@ -44,7 +44,8 @@
         @endif
         @if($showLike)
             <button type="button"
-                onclick="event.stopPropagation(); toggleLike({{ $productId }}); return false;"
+                data-product-id="{{ $productId }}"
+                onclick="handleLikeClick(this, event)"
                 tabindex="0"
                 class="like-button absolute top-3 right-3 p-2.5 rounded-full bg-white/90 backdrop-blur-sm shadow-lg hover:bg-white hover:scale-110 transition-all duration-200 z-10 flex items-center pointer-events-auto"
                 style="z-index:20;">
@@ -65,7 +66,7 @@
             <div class="absolute bottom-3 left-3">
                 <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold {{ $status == 'Available' ? 'bg-green-100 text-green-800 border border-green-200' : 'bg-red-100 text-red-800 border border-red-200' }}">
                     <span class="w-1.5 h-1.5 rounded-full {{ $status == 'Available' ? 'bg-green-500' : 'bg-red-500' }} mr-1.5"></span>
-                    {{ $status }}
+                    {{ $status == 'Available' ? 'Tersedia' : 'Tidak Tersedia' }}
                 </span>
             </div>
         @endif
@@ -166,5 +167,10 @@ function toggleLike(productId) {
     .catch(() => {
         // Tidak ada notifikasi
     });
+}
+function handleLikeClick(btn, event) {
+    event.stopPropagation();
+    const productId = btn.getAttribute('data-product-id');
+    toggleLike(productId);
 }
 </script>
