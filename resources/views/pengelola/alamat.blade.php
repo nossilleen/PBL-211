@@ -4,6 +4,7 @@
 
 @push('styles')
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
 <style>
     /* Import Google Fonts */
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
@@ -248,6 +249,19 @@
         position: relative;
     }
 
+    /* Responsive map height */
+    @media (max-width: 768px) {
+        #map {
+            height: 350px;
+        }
+    }
+    
+    @media (min-width: 1200px) {
+        #map {
+            height: 500px;
+        }
+    }
+
     .map-hint {
         margin-top: 1rem;
         padding: 1rem 1.5rem;
@@ -264,6 +278,43 @@
     .map-hint svg {
         margin-right: 0.75rem;
         flex-shrink: 0;
+    }
+    
+    /* Map Controls */
+    .map-controls {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        margin-top: 1rem;
+    }
+    
+    .map-btn {
+        padding: 0.75rem 1.25rem;
+        background: #f9fafb;
+        color: #374151;
+        border: 1px solid #e5e7eb;
+        border-radius: 12px;
+        font-size: 0.875rem;
+        font-weight: 500;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        transition: all 0.2s;
+    }
+    
+    .map-btn:hover {
+        background: #f3f4f6;
+        border-color: #d1d5db;
+    }
+    
+    .map-btn svg, .map-btn i {
+        margin-right: 0.5rem;
+    }
+    
+    .map-btn.active {
+        background: #3ED260;
+        color: white;
+        border-color: #3ED260;
     }
 
     /* Submit Button */
@@ -355,6 +406,15 @@
             width: 100%;
             justify-content: center;
         }
+        
+        .map-controls {
+            flex-direction: column;
+        }
+        
+        .map-btn {
+            width: 100%;
+            justify-content: center;
+        }
     }
 
     /* Animation Classes */
@@ -394,6 +454,35 @@
     input:focus-visible {
         outline: 2px solid #3ED260;
         outline-offset: 2px;
+    }
+    
+    /* Loading spinner */
+    .loading-spinner {
+        display: inline-block;
+        width: 1.5rem;
+        height: 1.5rem;
+        vertical-align: text-bottom;
+        border: 0.2em solid currentColor;
+        border-right-color: transparent;
+        border-radius: 50%;
+        animation: spinner-border .75s linear infinite;
+    }
+    
+    @keyframes spinner-border {
+        to { transform: rotate(360deg); }
+    }
+    
+    /* Leaflet Geocoder styles */
+    .leaflet-control-geocoder {
+        border-radius: 12px !important;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1) !important;
+    }
+    
+    .leaflet-control-geocoder-form input {
+        border-radius: 8px !important;
+        padding: 8px 12px !important;
+        font-size: 14px !important;
+        border: 1px solid #e5e7eb !important;
     }
 </style>
 @endpush
@@ -467,6 +556,10 @@
                     <!-- Map Section -->
                     <div class="map-section">
                         <label>🗺️ Pilih Lokasi pada Peta</label>
+                        
+                        <!-- Pencarian Alamat -->
+
+
                         <div class="map-wrapper">
                             <div id="map"></div>
                         </div>
@@ -479,18 +572,34 @@
                             </svg>
                             <span>Klik pada peta atau seret marker untuk menentukan lokasi yang tepat</span>
                         </div>
-
-                        <!-- Button: Use Current Location -->
-                        <div class="mt-4 text-right">
-                            <button type="button" id="use-current-location-btn" class="px-4 py-2 bg-green-600 text-white text-sm rounded-lg shadow transition hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500">
+                        
+                        <!-- Map Controls -->
+                        <div class="map-controls">
+                            <button type="button" id="use-current-location-btn" class="map-btn">
                                 📡 Gunakan Lokasi Saya
                             </button>
+                            <button type="button" id="center-on-batam-btn" class="map-btn">
+                                🏙️ Kembali ke Pusat Batam
+                            </button>
+                            <button type="button" id="toggle-satellite-btn" class="map-btn">
+                                🛰️ Tampilan Satelit
+                            </button>
+                        </div>
+                        
+                        <!-- Koordinat Info -->
+                        <div class="mt-4 bg-gray-50 p-4 rounded-lg border border-gray-100">
+                            <p class="text-sm text-gray-600">Koordinat yang dipilih: 
+                                <span class="font-medium" id="coords-display">
+                                    <span id="lat-display">{{ old('latitude', $lokasi->latitude ?? '-') }}</span>, 
+                                    <span id="lng-display">{{ old('longitude', $lokasi->longitude ?? '-') }}</span>
+                                </span>
+                            </p>
                         </div>
                     </div>
 
                     <!-- Submit Button -->
                     <div class="button-container">
-                        <button type="submit" class="btn-submit">
+                        <button type="submit" class="btn-submit" id="submit-btn">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                             </svg>
@@ -505,27 +614,66 @@
 
 @push('scripts')
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         // Initialize map
         var lat = {{ old('latitude', $lokasi->latitude ?? 1.0896407) }};
         var lng = {{ old('longitude', $lokasi->longitude ?? 104.0349734) }};
-        var map = L.map('map').setView([lat, lng], (lat && lng) ? 13 : 5);
-
-        // Add tile layer
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '© OpenStreetMap contributors',
-            minZoom: 2,
-            maxZoom: 18,
+        var map = L.map('map', {
+            zoomControl: false // Kita akan menambahkan zoom control di kanan atas
+        }).setView([lat, lng], (lat && lng) ? 13 : 10);
+        
+        // Tambahkan zoom control ke posisi kanan atas
+        L.control.zoom({
+            position: 'topright'
         }).addTo(map);
 
-        // Create custom marker icon
+        // Base tile layers
+        var osmLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors',
+            minZoom: 2,
+            maxZoom: 19,
+        });
+        
+        var satelliteLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+            attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community',
+            minZoom: 2,
+            maxZoom: 19,
+        });
+        
+        // Set default layer
+        osmLayer.addTo(map);
+        
+        // Variabel untuk melacak layer aktif
+        var currentLayer = 'osm';
+        
+        // Toggle button untuk satellite view
+        document.getElementById('toggle-satellite-btn').addEventListener('click', function() {
+            if (currentLayer === 'osm') {
+                map.removeLayer(osmLayer);
+                satelliteLayer.addTo(map);
+                currentLayer = 'satellite';
+                this.classList.add('active');
+                this.innerHTML = '🗺️ Tampilan Peta';
+            } else {
+                map.removeLayer(satelliteLayer);
+                osmLayer.addTo(map);
+                currentLayer = 'osm';
+                this.classList.remove('active');
+                this.innerHTML = '🛰️ Tampilan Satelit';
+            }
+        });
+        
+        // Create custom marker icon with improved design
         var customIcon = L.divIcon({
             html: '<div style="background: linear-gradient(135deg, #3ED260 0%, #2DD161 100%); width: 34px; height: 34px; border-radius: 50%; border: 4px solid #fff; box-shadow: 0 6px 18px rgba(62,210,96,0.35), 0 1.5px 0 #2DD161 inset; display: flex; align-items: center; justify-content: center; position: relative; animation: markerPop 0.5s cubic-bezier(.68,-0.55,.27,1.55);"><svg width="18" height="18" viewBox="0 0 20 20" fill="none" style="display:block;margin:auto;"><circle cx="10" cy="10" r="9" fill="#fff"/><path d="M10 4v6l4 2" stroke="#3ED260" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>',
             iconSize: [34, 34],
             iconAnchor: [17, 34],
+            popupAnchor: [0, -20],
             className: 'custom-marker-eco'
         });
+        
         // Animasi marker
         const style = document.createElement('style');
         style.innerHTML = `@keyframes markerPop {0%{transform:scale(0.7);} 80%{transform:scale(1.15);} 100%{transform:scale(1);}}`;
@@ -536,35 +684,87 @@
             draggable: true,
             icon: customIcon
         }).addTo(map);
-
-        // Update coordinates on drag
-        marker.on('dragend', function(e) {
-            var position = marker.getLatLng();
-            document.getElementById('latitude').value = position.lat.toFixed(6);
-            document.getElementById('longitude').value = position.lng.toFixed(6);
+        
+        // Popup dengan info posisi
+        var popup = L.popup({
+            closeButton: false,
+            closeOnClick: false,
+            className: 'location-popup'
         });
+        
+        function updatePopupContent() {
+            var position = marker.getLatLng();
+            return `<div style="text-align:center;">
+                       <b>Posisi Bank Sampah</b><br>
+                       <small style="color:#666;">${position.lat.toFixed(6)}, ${position.lng.toFixed(6)}</small>
+                   </div>`;
+        }
+        
+        marker.bindPopup(updatePopupContent());
+        marker.openPopup();
 
-        // Update coordinates on click
+        // Update koordinat dan popup saat marker di-drag
+        marker.on('dragend', function(e) {
+            updateCoordinates(marker.getLatLng());
+            marker.setPopupContent(updatePopupContent());
+        });
+        
+        // Update koordinat dan marker saat peta di-klik
         map.on('click', function(e) {
             marker.setLatLng(e.latlng);
-            document.getElementById('latitude').value = e.latlng.lat.toFixed(6);
-            document.getElementById('longitude').value = e.latlng.lng.toFixed(6);
+            updateCoordinates(e.latlng);
+            marker.setPopupContent(updatePopupContent());
+            marker.openPopup();
         });
+        
+        // Fungsi untuk update nilai koordinat
+        function updateCoordinates(latlng) {
+            document.getElementById('latitude').value = latlng.lat.toFixed(6);
+            document.getElementById('longitude').value = latlng.lng.toFixed(6);
+            document.getElementById('lat-display').textContent = latlng.lat.toFixed(6);
+            document.getElementById('lng-display').textContent = latlng.lng.toFixed(6);
+        }
 
         // Fix map display issues
         setTimeout(function() {
             map.invalidateSize();
         }, 300);
-
+        
+        // Tambahkan geocoder control
+        const geocoder = L.Control.geocoder({
+            defaultMarkGeocode: false,
+            position: 'topleft',
+            placeholder: 'Cari lokasi...',
+            errorMessage: 'Alamat tidak ditemukan',
+            suggestMinLength: 3,
+            suggestTimeout: 250,
+            queryMinLength: 3
+        }).addTo(map);
+        
+        // Handle hasil geocoding
+        geocoder.on('markgeocode', function(e) {
+            const result = e.geocode;
+            
+            // Update peta dan marker
+            map.fitBounds(result.bbox);
+            marker.setLatLng(result.center);
+            updateCoordinates(result.center);
+            marker.setPopupContent(updatePopupContent());
+            marker.openPopup();
+            
+        });
+        
         // Handler: Gunakan Lokasi Saya
-        document.getElementById('use-current-location-btn').addEventListener('click', function () {
+        document.getElementById('use-current-location-btn').addEventListener('click', function() {
             if (!navigator.geolocation) {
                 alert('Geolocation tidak didukung oleh browser Anda.');
                 return;
             }
 
-            this.disabled = true;
-            this.innerText = 'Memuat lokasi...';
+            const btn = this;
+            const originalText = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = '<span class="loading-spinner mr-2"></span>Memuat lokasi...';
 
             navigator.geolocation.getCurrentPosition(function(position) {
                 const userLat = position.coords.latitude;
@@ -573,49 +773,62 @@
                 // Perbarui marker & peta
                 marker.setLatLng([userLat, userLng]);
                 map.setView([userLat, userLng], 15);
+                updateCoordinates({lat: userLat, lng: userLng});
+                marker.setPopupContent(updatePopupContent());
+                marker.openPopup();
 
-                document.getElementById('latitude').value = userLat.toFixed(6);
-                document.getElementById('longitude').value = userLng.toFixed(6);
-
-                document.getElementById('use-current-location-btn').disabled = false;
-                document.getElementById('use-current-location-btn').innerText = '📡 Gunakan Lokasi Saya';
+                btn.disabled = false;
+                btn.innerHTML = originalText;
             }, function(err) {
-                alert('Gagal mendapatkan lokasi: ' + err.message);
-                document.getElementById('use-current-location-btn').disabled = false;
-                document.getElementById('use-current-location-btn').innerText = '📡 Gunakan Lokasi Saya';
-            });
-        });
-
-        // Add loading states for form submission
-        const form = document.querySelector('form');
-        const submitBtn = document.querySelector('.btn-submit');
-        const inputs = document.querySelectorAll('input[type="text"]');
-
-        form.addEventListener('submit', function() {
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = '<svg class="w-5 h-5 animate-spin mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>Menyimpan...';
-            
-            inputs.forEach(input => {
-                input.disabled = true;
-            });
-        });
-
-        // Add smooth animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('fade-in');
+                let errorMsg;
+                switch(err.code) {
+                    case 1:
+                        errorMsg = 'Akses lokasi ditolak. Mohon izinkan akses lokasi pada browser Anda.';
+                        break;
+                    case 2:
+                        errorMsg = 'Lokasi tidak tersedia saat ini.';
+                        break;
+                    case 3:
+                        errorMsg = 'Waktu permintaan lokasi habis.';
+                        break;
+                    default:
+                        errorMsg = 'Terjadi kesalahan saat mendapatkan lokasi: ' + err.message;
                 }
+                alert(errorMsg);
+                btn.disabled = false;
+                btn.innerHTML = originalText;
+            }, {
+                enableHighAccuracy: true,
+                timeout: 10000,
+                maximumAge: 0
             });
-        }, observerOptions);
-
-        document.querySelectorAll('.form-group').forEach(group => {
-            observer.observe(group);
+        });
+        
+        // Tombol kembali ke pusat Batam
+        document.getElementById('center-on-batam-btn').addEventListener('click', function() {
+            map.setView([1.1048, 104.0300], 12);
+        });
+        
+        // Validasi sebelum submit
+        document.querySelector('form').addEventListener('submit', function(event) {
+            const lat = document.getElementById('latitude').value;
+            const lng = document.getElementById('longitude').value;
+            
+            if (!lat || !lng || lat === '-' || lng === '-') {
+                event.preventDefault();
+                alert('Mohon tentukan lokasi pada peta terlebih dahulu!');
+                return false;
+            }
+            
+            // Menunjukkan loading state
+            const submitBtn = document.getElementById('submit-btn');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<span class="loading-spinner mr-2"></span>Menyimpan...';
+            
+            // Disable semua input
+            document.querySelectorAll('input, button:not(#submit-btn)').forEach(el => {
+                el.disabled = true;
+            });
         });
     });
 </script>
