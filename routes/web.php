@@ -179,18 +179,18 @@ Route::middleware(['auth', 'role:pengelola'])->group(function () {
 });
 
 // Admin password reset routes
-Route::middleware(['auth', 'role:admin,superadmin'])->group(function () {
-    Route::post('/admin/users/{user}/reset-password', [App\Http\Controllers\Admin\UserPasswordController::class, 'resetPassword'])
-        ->name('admin.users.reset-password');
-});
+// Route::middleware(['auth', 'role:admin,superadmin'])->group(function () {
+//     Route::post('/admin/users/{user}/reset-password', [App\Http\Controllers\Admin\UserPasswordController::class, 'resetPassword'])
+//         ->name('admin.users.reset-password');
+// });
 
 // Forced password change routes
-Route::middleware(['auth'])->group(function () {
-    Route::get('/password/force-change', [App\Http\Controllers\Admin\UserPasswordController::class, 'showForceChangeForm'])
-        ->name('password.force-change');
-    Route::post('/password/force-update', [App\Http\Controllers\Admin\UserPasswordController::class, 'forceChange'])
-        ->name('password.force-update');
-});
+// Route::middleware(['auth'])->group(function () {
+//     Route::get('/password/force-change', [App\Http\Controllers\Admin\UserPasswordController::class, 'showForceChangeForm'])
+//         ->name('password.force-change');
+//     Route::post('/password/force-update', [App\Http\Controllers\Admin\UserPasswordController::class, 'forceChange'])
+//         ->name('password.force-update');
+// });
 
 // Pengelola Poin management routes (role protected)
 Route::middleware(['auth', 'role:pengelola'])->prefix('pengelola')->name('pengelola.')->group(function () {

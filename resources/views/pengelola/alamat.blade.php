@@ -479,6 +479,13 @@
                             </svg>
                             <span>Klik pada peta atau seret marker untuk menentukan lokasi yang tepat</span>
                         </div>
+
+                        <!-- Button: Use Current Location -->
+                        <div class="mt-4 text-right">
+                            <button type="button" id="use-current-location-btn" class="px-4 py-2 bg-green-600 text-white text-sm rounded-lg shadow transition hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500">
+                                📡 Gunakan Lokasi Saya
+                            </button>
+                        </div>
                     </div>
 
                     <!-- Submit Button -->
@@ -514,11 +521,15 @@
 
         // Create custom marker icon
         var customIcon = L.divIcon({
-            html: '<div style="background: linear-gradient(135deg, #3ED260 0%, #2DD161 100%); width: 30px; height: 30px; border-radius: 50% 50% 50% 0; transform: rotate(-45deg); border: 3px solid white; box-shadow: 0 4px 12px rgba(62, 210, 96, 0.4);"></div>',
-            iconSize: [30, 30],
-            iconAnchor: [15, 30],
-            className: 'custom-marker'
+            html: '<div style="background: linear-gradient(135deg, #3ED260 0%, #2DD161 100%); width: 34px; height: 34px; border-radius: 50%; border: 4px solid #fff; box-shadow: 0 6px 18px rgba(62,210,96,0.35), 0 1.5px 0 #2DD161 inset; display: flex; align-items: center; justify-content: center; position: relative; animation: markerPop 0.5s cubic-bezier(.68,-0.55,.27,1.55);"><svg width="18" height="18" viewBox="0 0 20 20" fill="none" style="display:block;margin:auto;"><circle cx="10" cy="10" r="9" fill="#fff"/><path d="M10 4v6l4 2" stroke="#3ED260" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>',
+            iconSize: [34, 34],
+            iconAnchor: [17, 34],
+            className: 'custom-marker-eco'
         });
+        // Animasi marker
+        const style = document.createElement('style');
+        style.innerHTML = `@keyframes markerPop {0%{transform:scale(0.7);} 80%{transform:scale(1.15);} 100%{transform:scale(1);}}`;
+        document.head.appendChild(style);
 
         // Add marker
         var marker = L.marker([lat, lng], {
@@ -544,6 +555,36 @@
         setTimeout(function() {
             map.invalidateSize();
         }, 300);
+
+        // Handler: Gunakan Lokasi Saya
+        document.getElementById('use-current-location-btn').addEventListener('click', function () {
+            if (!navigator.geolocation) {
+                alert('Geolocation tidak didukung oleh browser Anda.');
+                return;
+            }
+
+            this.disabled = true;
+            this.innerText = 'Memuat lokasi...';
+
+            navigator.geolocation.getCurrentPosition(function(position) {
+                const userLat = position.coords.latitude;
+                const userLng = position.coords.longitude;
+
+                // Perbarui marker & peta
+                marker.setLatLng([userLat, userLng]);
+                map.setView([userLat, userLng], 15);
+
+                document.getElementById('latitude').value = userLat.toFixed(6);
+                document.getElementById('longitude').value = userLng.toFixed(6);
+
+                document.getElementById('use-current-location-btn').disabled = false;
+                document.getElementById('use-current-location-btn').innerText = '📡 Gunakan Lokasi Saya';
+            }, function(err) {
+                alert('Gagal mendapatkan lokasi: ' + err.message);
+                document.getElementById('use-current-location-btn').disabled = false;
+                document.getElementById('use-current-location-btn').innerText = '📡 Gunakan Lokasi Saya';
+            });
+        });
 
         // Add loading states for form submission
         const form = document.querySelector('form');
