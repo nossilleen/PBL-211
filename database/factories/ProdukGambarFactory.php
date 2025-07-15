@@ -17,7 +17,7 @@ class ProdukGambarFactory extends Factory
     {
         return [
             'produk_id' => Produk::factory(),
-            'file_path' => $this->faker->randomElement(['products/bottle.jpeg','products/jet.jpeg','products/pesticide.jpeg','products/soap.jpeg','products/spray.jpeg','products/spray1.jpeg'])
+            'file_path' => $this->faker->randomElement(['products/bottle.jpeg','products/cairan1.jpg','products/jeruk.jpg','products/ecoenzim1.jpg','products/spray.jpeg','products/spray1.jpeg'])
         ];
     }
 } 

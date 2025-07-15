@@ -14,9 +14,9 @@ class LokasiFactory extends Factory
 
     public function definition(): array
     {
-        // Koordinat kasar Kepulauan Riau (lat 0.8–3.8, long 103–106)
-        $latitude  = $this->faker->randomFloat(7, 0.8, 3.8);
-        $longitude = $this->faker->randomFloat(7, 103.0, 106.0);
+        // Koordinat lebih presisi untuk area Kota Batam saja (sekitar lat 1.02–1.22, long 103.90–104.15)
+        $latitude  = $this->faker->randomFloat(7, 1.02, 1.22);
+        $longitude = $this->faker->randomFloat(7, 103.90, 104.15);
 
         // Pilihan nama kecamatan untuk variasi
         $districts = ['Batam Kota', 'Sekupang', 'Lubuk Baja', 'Sagulung', 'Bengkong', 'Nongsa'];
