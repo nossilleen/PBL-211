@@ -249,27 +249,8 @@
         </div>
 
         <!-- Filters -->
-        <div class="px-6 py-4 bg-gray-50 border-b border-gray-100">
             <div class="flex flex-wrap gap-4 items-center justify-between">
                 <div class="flex items-center space-x-4">
-                    <div class="flex items-center space-x-2">
-                        <label class="text-sm font-medium text-gray-700">Periode:</label>
-                        <select id="periodFilter" name="period" class="rounded-lg border-gray-300 text-sm focus:ring-green-500 focus:border-green-500">
-                            <option value="all" @if(request('period') == 'all' || !request('period')) selected @endif>Semua</option>
-                            <option value="today" @if(request('period') == 'today') selected @endif>Hari Ini</option>
-                            <option value="this_week" @if(request('period') == 'this_week') selected @endif>Minggu Ini</option>
-                            <option value="this_month" @if(request('period') == 'this_month') selected @endif>Bulan Ini</option>
-                        </select>
-                    </div>
-                    <div class="flex items-center space-x-2">
-                        <label class="text-sm font-medium text-gray-700">Status:</label>
-                        <select id="statusFilter" name="status" class="rounded-lg border-gray-300 text-sm focus:ring-green-500 focus:border-green-500">
-                            <option value="all" @if(request('status') == 'all' || !request('status')) selected @endif>Semua</option>
-                            <option value="berhasil" @if(request('status') == 'berhasil') selected @endif>Berhasil</option>
-                            <option value="pending" @if(request('status') == 'pending') selected @endif>Pending</option>
-                            <option value="gagal" @if(request('status') == 'gagal') selected @endif>Gagal</option>
-                        </select>
-                    </div>
                 </div>
                 <form id="searchForm" class="relative">
                     <input type="text" 
